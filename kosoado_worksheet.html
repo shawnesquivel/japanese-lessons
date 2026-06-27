@@ -113,6 +113,11 @@
   }
   ol.q li .prompt{flex:1}
   ol.q li .prompt .hint{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px}
+  ol.q li .prompt .q-tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;
+    color:var(--ink-soft);background:#F3EEE1;border-radius:999px;
+    padding:1px 8px;margin-bottom:6px;
+  }
   ol.q li .ans{
     display:none;margin-top:10px;padding-top:10px;
     border-top:1px dashed var(--line-strong);
@@ -324,7 +329,25 @@
       </tbody>
     </table>
 
-    <h3>Asking for something</h3>
+    <h3>Wanting vs. asking for something</h3>
+    <p class="lead">Two different patterns — don't mix them up:</p>
+    <table class="tbl">
+      <thead><tr><th>Pattern</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td><span class="jp">___ が ほしい です。</span><span class="romaji">___ ga hoshii desu.</span></td><td class="en"><strong>I want ___</strong> — stating a desire</td></tr>
+        <tr><td><span class="jp">___ をください。</span><span class="romaji">___ o kudasai.</span></td><td class="en"><strong>Please give me ___</strong> — requesting/ordering</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:18px 0 8px;font-size:15px">"I want" — <span class="romaji">が ほしい です</span></h4>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="jp">___ が ほしい です。</span></td><td><span class="romaji">___ ga hoshii desu.</span></td><td class="en">I want ___.</td></tr>
+        <tr><td><span class="jp">りんご が ほしい です。</span></td><td><span class="romaji">ringo ga hoshii desu.</span></td><td class="en">I want an apple.</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:18px 0 8px;font-size:15px">"Please give me" — <span class="romaji">を ください</span></h4>
     <p class="lead">At a shop or restaurant, put the item before <span class="romaji">o kudasai</span>. Add <span class="romaji">onegaishimasu</span> to be extra polite.</p>
     <table class="tbl">
       <tbody>
@@ -338,9 +361,9 @@
   <!-- ===================== PRACTICE ===================== -->
   <section id="practice">
     <div class="sec-head"><span class="sec-kanji">練</span><h2>Let's practice!</h2></div>
-    <p class="lead">Tap a card to reveal the answer right on the card.</p>
+    <p class="lead">Tap a card to reveal the answer. Order shuffles every refresh.</p>
 
-    <div class="practice-deck">
+    <div class="practice-deck" id="practice-deck">
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
         <div class="deck-label">Where</div>
         <p class="q-jp">どこですか。</p>
@@ -382,10 +405,19 @@
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Requesting</div>
+        <div class="deck-label">I want</div>
+        <p class="q-jp">___ が ほしい です。</p>
+        <p class="q-en">I want ___</p>
+        <p class="a-jp">りんご<span class="hl">が ほしい です</span>。</p>
+        <p class="a-en">ringo ga hoshii desu. — I want an apple.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Please give me</div>
         <p class="q-jp">___ をください。<br>おねがいします。</p>
-        <p class="q-en">I want ___ / ___ please.</p>
-        <p class="a-jp">りんご をください。</p>
+        <p class="q-en">Please give me ___</p>
+        <p class="a-jp">りんご<span class="hl">をください</span>。</p>
         <p class="a-en">ringo o kudasai. onegaishimasu. — An apple, please.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
@@ -416,83 +448,9 @@
   <!-- ===================== EXERCISES ===================== -->
   <section id="exercises">
     <div class="sec-head"><span class="sec-kanji">試</span><h2>Exercises</h2></div>
-    <p class="lead">Answer in romaji. Tap any question to reveal the answer right on that card.</p>
+    <p class="lead">Answer in romaji. Tap any question to reveal the answer. Order and vocab shuffle every refresh.</p>
 
-    <div class="exgroup">
-      <span class="ex-tag">A · demonstratives</span>
-      <p class="ex-instr">Translate the phrase. Mind both the distance <em>and</em> the row.</p>
-      <ol class="q">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">this apple <span class="hint">+ noun · in your hand</span><div class="ans"><span class="jp">この りんご</span><span class="rj">kono ringo</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">that tomato <span class="hint">+ noun · by the listener</span><div class="ans"><span class="jp">その トマト</span><span class="rj">sono tomato</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">that grape over there <span class="hint">+ noun · far away</span><div class="ans"><span class="jp">あの ぶどう</span><span class="rj">ano budou</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">this <span class="hint">pronoun · the apple</span><div class="ans"><span class="jp">これ</span><span class="rj">kore</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">that one over there <span class="hint">pronoun · the far thing</span><div class="ans"><span class="jp">あれ</span><span class="rj">are</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">here <span class="hint">place · where you are</span><div class="ans"><span class="jp">ここ</span><span class="rj">koko</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">there <span class="hint">place · where the listener is</span><div class="ans"><span class="jp">そこ</span><span class="rj">soko</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">over there <span class="hint">place · far from both</span><div class="ans"><span class="jp">あそこ</span><span class="rj">asoko</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
-
-    <div class="exgroup">
-      <span class="ex-tag">B · asking questions</span>
-      <p class="ex-instr">Translate the whole question into Japanese (romaji).</p>
-      <ol class="q" start="9" style="counter-reset:q 8">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">What is this?<div class="ans"><span class="jp">これは なんですか。</span><span class="rj">kore wa nan desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Which one is it? <span class="hint">pronoun question</span><div class="ans"><span class="jp">どれですか。</span><span class="rj">dore desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Which carrot is it? <span class="hint">+ noun question</span><div class="ans"><span class="jp">どの にんじんですか。</span><span class="rj">dono ninjin desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Where is it?<div class="ans"><span class="jp">どこですか。</span><span class="rj">doko desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">"which strawberry" <span class="hint">just the phrase, no sentence</span><div class="ans"><span class="jp">どの いちご</span><span class="rj">dono ichigo</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
-
-    <div class="exgroup">
-      <span class="ex-tag">C · vocab</span>
-      <p class="ex-instr">Say each in Japanese (romaji).</p>
-      <ol class="q" style="counter-reset:q 13">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">potato<div class="ans"><span class="jp">じゃがいも</span><span class="rj">jagaimo</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">mandarin orange<div class="ans"><span class="jp">みかん</span><span class="rj">mikan</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">cucumber<div class="ans"><span class="jp">きゅうり</span><span class="rj">kyuuri</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">banana<div class="ans"><span class="jp">バナナ</span><span class="rj">banana</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">onion<div class="ans"><span class="jp">たまねぎ</span><span class="rj">tamanegi</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
-
-    <div class="exgroup">
-      <span class="ex-tag">D · full sentences</span>
-      <p class="ex-instr">Build the whole sentence. Everything from the lesson is fair game.</p>
-      <ol class="q" style="counter-reset:q 18">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">This is an apple.<div class="ans"><span class="jp">これは りんごです。</span><span class="rj">kore wa ringo desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">That (by you) is a tomato.<div class="ans"><span class="jp">それは トマトです。</span><span class="rj">sore wa tomato desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">That over there is a grape.<div class="ans"><span class="jp">あれは ぶどうです。</span><span class="rj">are wa budou desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">What is that (by the listener)?<div class="ans"><span class="jp">それは なんですか。</span><span class="rj">sore wa nan desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Which potato is it?<div class="ans"><span class="jp">どの じゃがいもですか。</span><span class="rj">dono jagaimo desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Where is the cucumber? <span class="hint">cucumber wa … ?</span><div class="ans"><span class="jp">きゅうりは どこですか。</span><span class="rj">kyuuri wa doko desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
-
-    <div class="exgroup">
-      <span class="ex-tag">E · at the market</span>
-      <p class="ex-instr">Picture it: you're holding a <strong>strawberry</strong>. The seller (the listener) has a <strong>carrot</strong>. A <strong>banana</strong> stand sits far across the market. Say each line.</p>
-      <ol class="q" style="counter-reset:q 24">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Point at the strawberry in your hand: "this strawberry."<div class="ans"><span class="jp">この いちご</span><span class="rj">kono ichigo</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Point at the seller's carrot: "that carrot."<div class="ans"><span class="jp">その にんじん</span><span class="rj">sono ninjin</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Nod toward the far stand: "that banana (over there)."<div class="ans"><span class="jp">あの バナナ</span><span class="rj">ano banana</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Ask the seller, holding your strawberry: "What is this?"<div class="ans"><span class="jp">これは なんですか。</span><span class="rj">kore wa nan desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Ask where the banana stand is: "Where is it?"<div class="ans"><span class="jp">どこですか。</span><span class="rj">doko desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
-
-    <div class="exgroup">
-      <span class="ex-tag">F · new patterns</span>
-      <p class="ex-instr">From today's slides — places, naming, requesting.</p>
-      <ol class="q" style="counter-reset:q 29">
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Answer: "It is here."<div class="ans"><span class="jp">ここです。</span><span class="rj">koko desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">What is this? (pointing at a fish)<div class="ans"><span class="jp">これは なんですか。</span><span class="rj">kore wa nan desu ka.</span> → <span class="jp">さかな</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">This is a tomato.<div class="ans"><span class="jp">これは トマトです。</span><span class="rj">kore wa tomato desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Which wallet is it?<div class="ans"><span class="jp">どの さいふですか。</span><span class="rj">dono saifu desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
-        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">An apple, please.<div class="ans"><span class="jp">りんご をください。おねがいします。</span><span class="rj">ringo o kudasai. onegaishimasu.</span></div><span class="tap-hint">tap for answer</span></div></li>
-      </ol>
-    </div>
+    <ol class="q" id="quiz-list"></ol>
 
     <div class="note" style="border-left-color:var(--ko);margin-top:24px">
       <strong>If you slipped:</strong> a noun right after "this/that" → use the <span class="romaji">kono / sono / ano / dono</span> row, never kore/sore. "Where/here/there" → the <span class="romaji">koko / soko / asoko / doko</span> place row. And the far place word stays irregular: <span class="romaji">asoko</span>.
@@ -503,19 +461,167 @@
 
 <script>
   (function(){
-    document.querySelectorAll('.flashcard').forEach(function(card){
-      function toggle(){
-        card.classList.toggle('revealed');
-        card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+    var VOCAB = [
+      { en:'apple', jp:'りんご', rj:'ringo' },
+      { en:'strawberry', jp:'いちご', rj:'ichigo' },
+      { en:'grape', jp:'ぶどう', rj:'budou' },
+      { en:'mandarin orange', jp:'みかん', rj:'mikan' },
+      { en:'banana', jp:'バナナ', rj:'banana' },
+      { en:'tomato', jp:'トマト', rj:'tomato' },
+      { en:'carrot', jp:'にんじん', rj:'ninjin' },
+      { en:'potato', jp:'じゃがいも', rj:'jagaimo' },
+      { en:'onion', jp:'たまねぎ', rj:'tamanegi' },
+      { en:'cucumber', jp:'きゅうり', rj:'kyuuri' }
+    ];
+
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
       }
-      card.addEventListener('click', toggle);
-      card.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){
-          e.preventDefault();
-          toggle();
-        }
+      return a;
+    }
+
+    function pickMany(n, exclude){
+      var pool = VOCAB.filter(function(v){
+        return !exclude || exclude.indexOf(v.rj) === -1;
       });
-    });
+      return shuffle(pool).slice(0, Math.min(n, pool.length));
+    }
+
+    function esc(s){
+      return String(s)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+
+    function cardHtml(item){
+      var hint = item.hint ? '<span class="hint">' + item.hint + '</span>' : '';
+      return '<li class="flashcard" tabindex="0" role="button" aria-expanded="false">' +
+        '<div class="prompt">' +
+          '<span class="q-tag">' + esc(item.tag) + '</span>' +
+          item.prompt + hint +
+          '<div class="ans">' + item.answer + '</div>' +
+          '<span class="tap-hint">tap for answer</span>' +
+        '</div></li>';
+    }
+
+    function ans(jp, rj){
+      return '<span class="jp">' + jp + '</span><span class="rj">' + rj + '</span>';
+    }
+
+    function buildQuiz(){
+      var w = pickMany(8);
+      while(w.length < 8){ w = w.concat(pickMany(8 - w.length)); }
+      var near = w[0], listener = w[1], far = w[2], q1 = w[3], q2 = w[4], q3 = w[5], q4 = w[6], q5 = w[7];
+      var vocabQuiz = pickMany(5);
+      var requestWord = pickMany(1)[0];
+
+      var items = [
+        { tag:'demonstrative', prompt:'this ' + near.en, hint:'+ noun · in your hand',
+          answer: ans('この ' + near.jp, 'kono ' + near.rj) },
+        { tag:'demonstrative', prompt:'that ' + listener.en, hint:'+ noun · by the listener',
+          answer: ans('その ' + listener.jp, 'sono ' + listener.rj) },
+        { tag:'demonstrative', prompt:'that ' + far.en + ' over there', hint:'+ noun · far away',
+          answer: ans('あの ' + far.jp, 'ano ' + far.rj) },
+        { tag:'demonstrative', prompt:'this', hint:'pronoun · near you',
+          answer: ans('これ', 'kore') },
+        { tag:'demonstrative', prompt:'that one over there', hint:'pronoun · far from both',
+          answer: ans('あれ', 'are') },
+        { tag:'demonstrative', prompt:'here', hint:'place · where you are',
+          answer: ans('ここ', 'koko') },
+        { tag:'demonstrative', prompt:'there', hint:'place · where the listener is',
+          answer: ans('そこ', 'soko') },
+        { tag:'demonstrative', prompt:'over there', hint:'place · far from both',
+          answer: ans('あそこ', 'asoko') },
+
+        { tag:'question', prompt:'What is this?',
+          answer: ans('これは なんですか。', 'kore wa nan desu ka.') },
+        { tag:'question', prompt:'Which one is it?', hint:'pronoun question',
+          answer: ans('どれですか。', 'dore desu ka.') },
+        { tag:'question', prompt:'Which ' + q1.en + ' is it?', hint:'+ noun question',
+          answer: ans('どの ' + q1.jp + 'ですか。', 'dono ' + q1.rj + ' desu ka.') },
+        { tag:'question', prompt:'Where is it?',
+          answer: ans('どこですか。', 'doko desu ka.') },
+        { tag:'question', prompt:'"which ' + q2.en + '"', hint:'just the phrase, no sentence',
+          answer: ans('どの ' + q2.jp, 'dono ' + q2.rj) },
+
+        { tag:'sentence', prompt:'This is a ' + q3.en + '.',
+          answer: ans('これは ' + q3.jp + 'です。', 'kore wa ' + q3.rj + ' desu.') },
+        { tag:'sentence', prompt:'That (by the listener) is a ' + q4.en + '.',
+          answer: ans('それは ' + q4.jp + 'です。', 'sore wa ' + q4.rj + ' desu.') },
+        { tag:'sentence', prompt:'That over there is a ' + far.en + '.',
+          answer: ans('あれは ' + far.jp + 'です。', 'are wa ' + far.rj + ' desu.') },
+        { tag:'sentence', prompt:'What is that (by the listener)?',
+          answer: ans('それは なんですか。', 'sore wa nan desu ka.') },
+        { tag:'sentence', prompt:'Which ' + q5.en + ' is it?',
+          answer: ans('どの ' + q5.jp + 'ですか。', 'dono ' + q5.rj + ' desu ka.') },
+        { tag:'sentence', prompt:'Where is the ' + listener.en + '?', hint: listener.rj + ' wa … ?',
+          answer: ans(listener.jp + 'は どこですか。', listener.rj + ' wa doko desu ka.') },
+
+        { tag:'market', prompt:'Point at the ' + near.en + ' in your hand: "this ' + near.en + '."',
+          answer: ans('この ' + near.jp, 'kono ' + near.rj) },
+        { tag:'market', prompt:'Point at the seller\'s ' + listener.en + ': "that ' + listener.en + '."',
+          answer: ans('その ' + listener.jp, 'sono ' + listener.rj) },
+        { tag:'market', prompt:'Nod toward the far stand: "that ' + far.en + ' (over there)."',
+          answer: ans('あの ' + far.jp, 'ano ' + far.rj) },
+        { tag:'market', prompt:'Ask the seller, holding your item: "What is this?"',
+          answer: ans('これは なんですか。', 'kore wa nan desu ka.') },
+        { tag:'market', prompt:'Ask where the stand is: "Where is it?"',
+          answer: ans('どこですか。', 'doko desu ka.') },
+
+        { tag:'pattern', prompt:'Answer: "It is here."',
+          answer: ans('ここです。', 'koko desu.') },
+        { tag:'pattern', prompt:'What is this? (pointing at a fish)',
+          answer: ans('これは なんですか。', 'kore wa nan desu ka.') + ' → <span class="jp">さかな</span>' },
+        { tag:'pattern', prompt:'This is a ' + q3.en + '.',
+          answer: ans('これは ' + q3.jp + 'です。', 'kore wa ' + q3.rj + ' desu.') },
+        { tag:'pattern', prompt:'Which wallet is it?',
+          answer: ans('どの さいふですか。', 'dono saifu desu ka.') },
+        { tag:'pattern', prompt:'I want a ' + requestWord.en + '. (state a desire)',
+          answer: ans(requestWord.jp + ' が ほしい です。', requestWord.rj + ' ga hoshii desu.') },
+        { tag:'pattern', prompt:'A ' + requestWord.en + ', please. (ask for it)',
+          answer: ans(requestWord.jp + ' をください。おねがいします。', requestWord.rj + ' o kudasai. onegaishimasu.') }
+      ];
+
+      vocabQuiz.forEach(function(v){
+        items.push({
+          tag:'vocab',
+          prompt: v.en,
+          answer: ans(v.jp, v.rj)
+        });
+      });
+
+      return shuffle(items);
+    }
+
+    function bindFlashcards(root){
+      root.querySelectorAll('.flashcard').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
+    }
+
+    function shuffleChildren(parent){
+      var nodes = Array.prototype.slice.call(parent.children);
+      shuffle(nodes).forEach(function(node){ parent.appendChild(node); });
+    }
+
+    document.getElementById('quiz-list').innerHTML = buildQuiz().map(cardHtml).join('');
+    shuffleChildren(document.getElementById('practice-deck'));
+    bindFlashcards(document);
   })();
 </script>
 </body>
