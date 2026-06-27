@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>こそあど Worksheet — Demonstratives with Fruit &amp; Veg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;
+    --card:#FFFFFF;
+    --ink:#2A2E24;
+    --ink-soft:#5C6150;
+    --line:#E6DFCF;
+    --line-strong:#D6CDB6;
+    --ko:#5C8A3A;   /* near speaker  */
+    --so:#E0962C;   /* near listener */
+    --a:#3F6E91;    /* far           */
+    --do:#CB4A2B;   /* question      */
+    --ko-bg:#EDF3E4;
+    --so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;
+    --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;
+    font-weight:400;
+    line-height:1.75;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+
+  /* ---------- header ---------- */
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{
+    font-family:"Zen Antique",serif;
+    font-weight:400;
+    font-size:clamp(46px,11vw,82px);
+    margin:6px 0 4px;
+    letter-spacing:.06em;
+    line-height:1;
+  }
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+
+  /* ---------- section scaffolding ---------- */
+  section{margin-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
+
+  .jp{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+
+  /* ---------- zone chips ---------- */
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-ko{background:var(--ko-bg);color:#3C5E25}
+  .c-so{background:var(--so-bg);color:#946012}
+  .c-a {background:var(--a-bg);color:#2C4D66}
+  .c-do{background:var(--do-bg);color:#9C3119}
+
+  /* ---------- tables ---------- */
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td .jp{display:block;font-size:1.2em;line-height:1.3}
+  .tbl td .rj{font-weight:500}
+  .tbl td .gl{color:var(--ink-soft);font-size:13px;display:block}
+  .rowlabel{background:#F7F3E8;font-weight:700;font-size:14px}
+
+  .grid th.h-ko{color:var(--ko)} .grid th.h-so{color:var(--so)}
+  .grid th.h-a{color:var(--a)}  .grid th.h-do{color:var(--do)}
+  .grid td{text-align:center}
+  .grid .rj{font-size:18px}
+  .grid .gl{font-size:12px}
+  .grid td.z-ko{background:var(--ko-bg)} .grid td.z-so{background:var(--so-bg)}
+  .grid td.z-a{background:var(--a-bg)}   .grid td.z-do{background:var(--do-bg)}
+
+  /* ---------- exercise ---------- */
+  .exgroup{margin:22px 0}
+  .ex-tag{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.04em;background:var(--ink);color:var(--paper);padding:3px 12px;border-radius:999px;margin-bottom:4px}
+  .ex-instr{color:var(--ink-soft);font-size:15px;margin:6px 0 14px}
+  ol.q{margin:0;padding-left:0;counter-reset:q;list-style:none}
+  ol.q li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:11px 0;border-bottom:1px dashed var(--line-strong);
+  }
+  ol.q li::before{
+    content:counter(q);
+    flex:0 0 30px;height:30px;border-radius:50%;
+    background:#F3EEE1;border:1px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;color:var(--ink-soft);
+  }
+  ol.q li .prompt{flex:1}
+  ol.q li .prompt .hint{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px}
+  .write{color:#B7AE97;font-size:14px}
+
+  /* ---------- answers ---------- */
+  #answers{margin-top:60px;border-top:2px solid var(--ink);padding-top:24px}
+  .reveal-btn{
+    font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+    background:var(--ink);color:var(--paper);border:none;border-radius:999px;
+    padding:11px 22px;transition:opacity .15s;
+  }
+  .reveal-btn:hover{opacity:.85}
+  .reveal-btn:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  #answer-body{margin-top:22px}
+  #answer-body[hidden]{display:none}
+  .akey{columns:2;column-gap:34px}
+  @media(max-width:640px){.akey{columns:1}}
+  .akey .ablock{break-inside:avoid;margin-bottom:18px}
+  .akey h4{margin:0 0 6px;font-size:14px;letter-spacing:.04em;color:var(--ink-soft);text-transform:uppercase}
+  .akey ol{margin:0;padding-left:22px}
+  .akey li{padding:3px 0;font-size:15px}
+  .akey .rj{font-weight:700}
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+
+  svg{display:block;width:100%;height:auto}
+  .figcap{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:2px}
+  a.skip{position:absolute;left:-999px}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese demonstratives · day 3</div>
+    <h1>こそあど</h1>
+    <div class="subtitle">this · that · that over there · which — with fruit &amp; vegetables</div>
+  </header>
+
+  <!-- ===================== LESSON ===================== -->
+  <section id="lesson">
+    <div class="sec-head"><span class="sec-kanji">習</span><h2>The lesson</h2></div>
+
+    <p class="lead">Every word in this family starts with one of four sounds. The starting sound tells you <strong>distance from the speaker</strong> — or, for <span class="chip c-do">do-</span>, that you're <em>asking</em>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Start</th><th>Means</th><th>Picture it as</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip c-ko">ko-</span></td><td>near the <strong>speaker</strong> (you)</td><td>in your hand</td></tr>
+        <tr><td><span class="chip c-so">so-</span></td><td>near the <strong>listener</strong></td><td>over by them</td></tr>
+        <tr><td><span class="chip c-a">a-</span></td><td><strong>far</strong> from both</td><td>across the street</td></tr>
+        <tr><td><span class="chip c-do">do-</span></td><td>the <strong>question</strong>: which? where?</td><td>you don't know yet</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Where each thing sits</h3>
+    <p class="lead">You are the <strong>Speaker</strong>. The produce below is placed at the three distances. The <span class="chip c-do">do-</span> words are what you say when you don't know which/where.</p>
+
+    <div class="card">
+      <svg viewBox="0 0 700 300" role="img" aria-label="A speaker on the left holds a strawberry (near, ko). A listener on the right stands by a carrot (so). A banana stand is far away (a). A question mark floats above for do.">
+        <!-- ground line -->
+        <line x1="30" y1="232" x2="670" y2="232" stroke="#D6CDB6" stroke-width="1.5"/>
+
+        <!-- far: banana stand -->
+        <rect x="300" y="62" width="100" height="40" rx="10" fill="var(--a-bg)" stroke="var(--a)" stroke-width="1.5"/>
+        <text x="350" y="80" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="#2C4D66">banana</text>
+        <text x="350" y="95" text-anchor="middle" font-family="Zen Maru Gothic" font-size="11" fill="#2C4D66">far stand</text>
+        <text x="350" y="124" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--a)">far → a-</text>
+
+        <!-- speaker (left) -->
+        <circle cx="120" cy="186" r="26" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
+        <rect x="92" y="214" width="56" height="20" rx="10" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
+        <text x="120" y="262" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="var(--ink)">Speaker</text>
+        <text x="120" y="280" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ink-soft)">(this is you)</text>
+        <!-- strawberry near speaker -->
+        <g transform="translate(176,150)">
+          <path d="M0,6 C-12,-2 -12,-14 0,-14 C12,-14 12,-2 0,6 Z" fill="#D8412B"/>
+          <path d="M-6,-13 L0,-20 L6,-13 Z" fill="#5C8A3A"/>
+        </g>
+        <rect x="160" y="166" width="86" height="20" rx="10" fill="var(--ko-bg)"/>
+        <text x="203" y="180" text-anchor="middle" font-family="Zen Maru Gothic" font-size="13" font-weight="700" fill="#3C5E25">strawberry</text>
+        <text x="203" y="202" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ko)">near you → ko-</text>
+
+        <!-- listener (right) -->
+        <circle cx="580" cy="186" r="26" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
+        <rect x="552" y="214" width="56" height="20" rx="10" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
+        <text x="580" y="262" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="var(--ink)">Listener</text>
+        <text x="580" y="280" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ink-soft)">(other person)</text>
+        <!-- carrot near listener -->
+        <g transform="translate(498,150)">
+          <path d="M0,8 L-7,-12 L7,-12 Z" fill="#E0892C"/>
+          <path d="M-7,-12 q7,-9 14,0" fill="none" stroke="#5C8A3A" stroke-width="3"/>
+        </g>
+        <rect x="462" y="166" width="72" height="20" rx="10" fill="var(--so-bg)"/>
+        <text x="498" y="180" text-anchor="middle" font-family="Zen Maru Gothic" font-size="13" font-weight="700" fill="#946012">carrot</text>
+        <text x="498" y="202" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--so)">near them → so-</text>
+
+        <!-- do? -->
+        <text x="350" y="200" text-anchor="middle" font-family="Zen Antique" font-size="40" fill="var(--do)">？</text>
+        <text x="350" y="222" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--do)">which? where? → do-</text>
+      </svg>
+      <div class="figcap">Distance is measured from <em>you</em>, the speaker — not from the page.</div>
+    </div>
+
+    <h3>The whole grid</h3>
+    <p class="lead">Four columns (the distances) × three rows (what kind of word). Read a column top-to-bottom and you get a matched set.</p>
+
+    <table class="tbl grid">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="h-ko">near you<br><span style="font-weight:400;font-size:12px">ko-</span></th>
+          <th class="h-so">near them<br><span style="font-weight:400;font-size:12px">so-</span></th>
+          <th class="h-a">far<br><span style="font-weight:400;font-size:12px">a-</span></th>
+          <th class="h-do">question<br><span style="font-weight:400;font-size:12px">do-</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rowlabel">thing<br>(pronoun)</td>
+          <td class="z-ko"><span class="rj">kore</span><span class="gl">これ · this one</span></td>
+          <td class="z-so"><span class="rj">sore</span><span class="gl">それ · that one</span></td>
+          <td class="z-a"><span class="rj">are</span><span class="gl">あれ · that one</span></td>
+          <td class="z-do"><span class="rj">dore</span><span class="gl">どれ · which one</span></td>
+        </tr>
+        <tr>
+          <td class="rowlabel">+ noun</td>
+          <td class="z-ko"><span class="rj">kono</span><span class="gl">この ___ · this ___</span></td>
+          <td class="z-so"><span class="rj">sono</span><span class="gl">その ___ · that ___</span></td>
+          <td class="z-a"><span class="rj">ano</span><span class="gl">あの ___ · that ___</span></td>
+          <td class="z-do"><span class="rj">dono</span><span class="gl">どの ___ · which ___</span></td>
+        </tr>
+        <tr>
+          <td class="rowlabel">place</td>
+          <td class="z-ko"><span class="rj">koko</span><span class="gl">ここ · here</span></td>
+          <td class="z-so"><span class="rj">soko</span><span class="gl">そこ · there</span></td>
+          <td class="z-a"><span class="rj">asoko</span><span class="gl">あそこ · over there</span></td>
+          <td class="z-do"><span class="rj">doko</span><span class="gl">どこ · where</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Two things to watch:</strong> the place word for "far" is <span class="romaji">asoko</span> (not "ako") — the one irregular cell. And a <em>+ noun</em> word can never stand alone: it's <span class="romaji">kono ringo</span>, never just "kono."</div>
+
+    <h3>Asking questions</h3>
+    <p class="lead">"What" is its own word: <span class="romaji">なに / なん nani / nan</span> (use <span class="romaji">nan</span> before <span class="romaji">desu</span>). Here are the four patterns your slides showed:</p>
+
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="jp">これは なんですか。</span></td><td><span class="romaji">kore wa nan desu ka.</span></td><td class="en">What is this?</td></tr>
+        <tr><td><span class="jp">どれですか。</span></td><td><span class="romaji">dore desu ka.</span></td><td class="en">Which one is it?</td></tr>
+        <tr><td><span class="jp">どの りんごですか。</span></td><td><span class="romaji">dono ringo desu ka.</span></td><td class="en">Which apple is it?</td></tr>
+        <tr><td><span class="jp">どこですか。</span></td><td><span class="romaji">doko desu ka.</span></td><td class="en">Where is it?</td></tr>
+      </tbody>
+    </table>
+    <p class="lead">Pattern to remember: <strong>[topic] wa [question word] desu ka.</strong> The little <span class="romaji">か ka</span> at the end is the spoken question mark.</p>
+  </section>
+
+  <!-- ===================== VOCAB ===================== -->
+  <section id="vocab">
+    <div class="sec-head"><span class="sec-kanji">語</span><h2>Vocab — fruit &amp; vegetables</h2></div>
+    <p class="lead">You'll use these in the exercises. Loanwords (banana, tomato) are in katakana; the rest are native words.</p>
+    <table class="tbl">
+      <thead><tr><th>English</th><th>Japanese</th><th>Romaji</th></tr></thead>
+      <tbody>
+        <tr><td>apple</td><td class="jp">りんご</td><td class="romaji">ringo</td></tr>
+        <tr><td>strawberry</td><td class="jp">いちご</td><td class="romaji">ichigo</td></tr>
+        <tr><td>grape</td><td class="jp">ぶどう</td><td class="romaji">budou</td></tr>
+        <tr><td>mandarin orange</td><td class="jp">みかん</td><td class="romaji">mikan</td></tr>
+        <tr><td>banana</td><td class="jp">バナナ</td><td class="romaji">banana</td></tr>
+        <tr><td>tomato</td><td class="jp">トマト</td><td class="romaji">tomato</td></tr>
+        <tr><td>carrot</td><td class="jp">にんじん</td><td class="romaji">ninjin</td></tr>
+        <tr><td>potato</td><td class="jp">じゃがいも</td><td class="romaji">jagaimo</td></tr>
+        <tr><td>onion</td><td class="jp">たまねぎ</td><td class="romaji">tamanegi</td></tr>
+        <tr><td>cucumber</td><td class="jp">きゅうり</td><td class="romaji">kyuuri</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXERCISES ===================== -->
+  <section id="exercises">
+    <div class="sec-head"><span class="sec-kanji">練</span><h2>Exercises</h2></div>
+    <p class="lead">Answer in romaji. Hints in grey tell you which <strong>row</strong> you need. Answers are at the very bottom — try a whole section before peeking.</p>
+
+    <div class="exgroup">
+      <span class="ex-tag">A · demonstratives</span>
+      <p class="ex-instr">Translate the phrase. Mind both the distance <em>and</em> the row.</p>
+      <ol class="q">
+        <li><div class="prompt">this apple <span class="hint">+ noun · in your hand</span></div></li>
+        <li><div class="prompt">that tomato <span class="hint">+ noun · by the listener</span></div></li>
+        <li><div class="prompt">that grape over there <span class="hint">+ noun · far away</span></div></li>
+        <li><div class="prompt">this <span class="hint">pronoun · the apple</span></div></li>
+        <li><div class="prompt">that one over there <span class="hint">pronoun · the far thing</span></div></li>
+        <li><div class="prompt">here <span class="hint">place · where you are</span></div></li>
+        <li><div class="prompt">there <span class="hint">place · where the listener is</span></div></li>
+        <li><div class="prompt">over there <span class="hint">place · far from both</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">B · asking questions</span>
+      <p class="ex-instr">Translate the whole question into Japanese (romaji).</p>
+      <ol class="q" start="9" style="counter-reset:q 8">
+        <li><div class="prompt">What is this?</div></li>
+        <li><div class="prompt">Which one is it? <span class="hint">pronoun question</span></div></li>
+        <li><div class="prompt">Which carrot is it? <span class="hint">+ noun question</span></div></li>
+        <li><div class="prompt">Where is it?</div></li>
+        <li><div class="prompt">"which strawberry" <span class="hint">just the phrase, no sentence</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">C · vocab</span>
+      <p class="ex-instr">Say each in Japanese (romaji).</p>
+      <ol class="q" style="counter-reset:q 13">
+        <li><div class="prompt">potato</div></li>
+        <li><div class="prompt">mandarin orange</div></li>
+        <li><div class="prompt">cucumber</div></li>
+        <li><div class="prompt">banana</div></li>
+        <li><div class="prompt">onion</div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">D · full sentences</span>
+      <p class="ex-instr">Build the whole sentence. Everything from the lesson is fair game.</p>
+      <ol class="q" style="counter-reset:q 18">
+        <li><div class="prompt">This is an apple.</div></li>
+        <li><div class="prompt">That (by you) is a tomato.</div></li>
+        <li><div class="prompt">That over there is a grape.</div></li>
+        <li><div class="prompt">What is that (by the listener)?</div></li>
+        <li><div class="prompt">Which potato is it?</div></li>
+        <li><div class="prompt">Where is the cucumber? <span class="hint">cucumber wa … ?</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">E · at the market</span>
+      <p class="ex-instr">Picture it: you're holding a <strong>strawberry</strong>. The seller (the listener) has a <strong>carrot</strong>. A <strong>banana</strong> stand sits far across the market. Say each line.</p>
+      <ol class="q" style="counter-reset:q 24">
+        <li><div class="prompt">Point at the strawberry in your hand: "this strawberry."</div></li>
+        <li><div class="prompt">Point at the seller's carrot: "that carrot."</div></li>
+        <li><div class="prompt">Nod toward the far stand: "that banana (over there)."</div></li>
+        <li><div class="prompt">Ask the seller, holding your strawberry: "What is this?"</div></li>
+        <li><div class="prompt">Ask where the banana stand is: "Where is it?"</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== ANSWERS ===================== -->
+  <section id="answers">
+    <div class="sec-head"><span class="sec-kanji">答</span><h2>Answer key</h2></div>
+    <p class="lead">Try everything first, then reveal.</p>
+    <button class="reveal-btn" id="toggle" aria-expanded="false" aria-controls="answer-body">Show answers</button>
+
+    <div id="answer-body" hidden>
+      <div class="akey">
+        <div class="ablock">
+          <h4>A · demonstratives</h4>
+          <ol>
+            <li><span class="rj">kono ringo</span></li>
+            <li><span class="rj">sono tomato</span></li>
+            <li><span class="rj">ano budou</span></li>
+            <li><span class="rj">kore</span></li>
+            <li><span class="rj">are</span></li>
+            <li><span class="rj">koko</span></li>
+            <li><span class="rj">soko</span></li>
+            <li><span class="rj">asoko</span></li>
+          </ol>
+        </div>
+        <div class="ablock">
+          <h4>B · asking questions</h4>
+          <ol start="9">
+            <li><span class="rj">kore wa nan desu ka.</span></li>
+            <li><span class="rj">dore desu ka.</span></li>
+            <li><span class="rj">dono ninjin desu ka.</span></li>
+            <li><span class="rj">doko desu ka.</span></li>
+            <li><span class="rj">dono ichigo</span></li>
+          </ol>
+        </div>
+        <div class="ablock">
+          <h4>C · vocab</h4>
+          <ol start="14">
+            <li><span class="rj">jagaimo</span></li>
+            <li><span class="rj">mikan</span></li>
+            <li><span class="rj">kyuuri</span></li>
+            <li><span class="rj">banana</span></li>
+            <li><span class="rj">tamanegi</span></li>
+          </ol>
+        </div>
+        <div class="ablock">
+          <h4>D · full sentences</h4>
+          <ol start="19">
+            <li><span class="rj">kore wa ringo desu.</span></li>
+            <li><span class="rj">sore wa tomato desu.</span></li>
+            <li><span class="rj">are wa budou desu.</span></li>
+            <li><span class="rj">sore wa nan desu ka.</span></li>
+            <li><span class="rj">dono jagaimo desu ka.</span></li>
+            <li><span class="rj">kyuuri wa doko desu ka.</span></li>
+          </ol>
+        </div>
+        <div class="ablock">
+          <h4>E · at the market</h4>
+          <ol start="25">
+            <li><span class="rj">kono ichigo</span></li>
+            <li><span class="rj">sono ninjin</span></li>
+            <li><span class="rj">ano banana</span></li>
+            <li><span class="rj">kore wa nan desu ka.</span></li>
+            <li><span class="rj">doko desu ka.</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="note" style="border-left-color:var(--ko);margin-top:24px">
+        <strong>If you slipped:</strong> a noun right after "this/that" → use the <span class="romaji">kono / sono / ano / dono</span> row, never kore/sore. "Where/here/there" → the <span class="romaji">koko / soko / asoko / doko</span> place row. And the far place word stays irregular: <span class="romaji">asoko</span>.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    var btn=document.getElementById('toggle');
+    var body=document.getElementById('answer-body');
+    btn.addEventListener('click',function(){
+      var open=body.hasAttribute('hidden');
+      if(open){body.removeAttribute('hidden');btn.textContent='Hide answers';btn.setAttribute('aria-expanded','true');}
+      else{body.setAttribute('hidden','');btn.textContent='Show answers';btn.setAttribute('aria-expanded','false');}
+    });
+  })();
+</script>
+</body>
+</html>
