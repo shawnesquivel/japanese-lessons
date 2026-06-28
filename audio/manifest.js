@@ -1,4 +1,4 @@
-{
+window.JL_LISTENING = {
   "generatedAt": "2026-06-28T20:15:00.477Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",

@@ -1,0 +1,253 @@
+window.JL_TIME = {
+  "generatedAt": "2026-06-28T20:15:00.478Z",
+  "voice": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": true,
+  "parts": [
+    {
+      "kana": "ごぜん",
+      "romaji": "gozen",
+      "id": "gozen",
+      "audio": "audio/time/gozen.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごご",
+      "romaji": "gogo",
+      "id": "gogo",
+      "audio": "audio/time/gogo.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "です",
+      "romaji": "desu",
+      "id": "desu",
+      "audio": "audio/time/desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "はん",
+      "romaji": "han",
+      "id": "han",
+      "audio": "audio/time/han.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いちじ",
+      "romaji": "ichi ji",
+      "id": "ichi-ji",
+      "audio": "audio/time/ichi-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にじ",
+      "romaji": "ni ji",
+      "id": "ni-ji",
+      "audio": "audio/time/ni-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "さんじ",
+      "romaji": "san ji",
+      "id": "san-ji",
+      "audio": "audio/time/san-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "よじ",
+      "romaji": "yo ji",
+      "id": "yo-ji",
+      "audio": "audio/time/yo-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごじ",
+      "romaji": "go ji",
+      "id": "go-ji",
+      "audio": "audio/time/go-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ろくじ",
+      "romaji": "roku ji",
+      "id": "roku-ji",
+      "audio": "audio/time/roku-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "しちじ",
+      "romaji": "shichi ji",
+      "id": "shichi-ji",
+      "audio": "audio/time/shichi-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "はちじ",
+      "romaji": "hachi ji",
+      "id": "hachi-ji",
+      "audio": "audio/time/hachi-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "くじ",
+      "romaji": "ku ji",
+      "id": "ku-ji",
+      "audio": "audio/time/ku-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "じゅうじ",
+      "romaji": "juu ji",
+      "id": "juu-ji",
+      "audio": "audio/time/juu-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "じゅういちじ",
+      "romaji": "juuichi ji",
+      "id": "juuichi-ji",
+      "audio": "audio/time/juuichi-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "じゅうにじ",
+      "romaji": "juuni ji",
+      "id": "juuni-ji",
+      "audio": "audio/time/juuni-ji.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いっぷん",
+      "romaji": "ippun",
+      "id": "ippun",
+      "audio": "audio/time/ippun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にふん",
+      "romaji": "nifun",
+      "id": "nifun",
+      "audio": "audio/time/nifun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "さんぷん",
+      "romaji": "sanpun",
+      "id": "sanpun",
+      "audio": "audio/time/sanpun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "よんぷん",
+      "romaji": "yonpun",
+      "id": "yonpun",
+      "audio": "audio/time/yonpun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごふん",
+      "romaji": "gofun",
+      "id": "gofun",
+      "audio": "audio/time/gofun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ろっぷん",
+      "romaji": "roppun",
+      "id": "roppun",
+      "audio": "audio/time/roppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ななふん",
+      "romaji": "nanafun",
+      "id": "nanafun",
+      "audio": "audio/time/nanafun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "はっぷん",
+      "romaji": "happun",
+      "id": "happun",
+      "audio": "audio/time/happun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "きゅうふん",
+      "romaji": "kyuufun",
+      "id": "kyuufun",
+      "audio": "audio/time/kyuufun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "じゅっぷん",
+      "romaji": "juppun",
+      "id": "juppun",
+      "audio": "audio/time/juppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にじゅっぷん",
+      "romaji": "nijuppun",
+      "id": "nijuppun",
+      "audio": "audio/time/nijuppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "さんじゅっぷん",
+      "romaji": "sanjuppun",
+      "id": "sanjuppun",
+      "audio": "audio/time/sanjuppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "よんじゅっぷん",
+      "romaji": "yonjuppun",
+      "id": "yonjuppun",
+      "audio": "audio/time/yonjuppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごじゅっぷん",
+      "romaji": "gojuppun",
+      "id": "gojuppun",
+      "audio": "audio/time/gojuppun.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "じゅう",
+      "romaji": "juu",
+      "id": "juu",
+      "audio": "audio/time/juu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にじゅう",
+      "romaji": "nijuu",
+      "id": "nijuu",
+      "audio": "audio/time/nijuu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "さんじゅう",
+      "romaji": "sanjuu",
+      "id": "sanjuu",
+      "audio": "audio/time/sanjuu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "よんじゅう",
+      "romaji": "yonjuu",
+      "id": "yonjuu",
+      "audio": "audio/time/yonjuu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごじゅう",
+      "romaji": "gojuu",
+      "id": "gojuu",
+      "audio": "audio/time/gojuu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    }
+  ]
+}

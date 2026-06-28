@@ -21,8 +21,10 @@ const AUDIO_DIR = join(ROOT, "audio");
 const MANIFEST_PATH = join(AUDIO_DIR, "manifest.json");
 const WORDS_DIR = join(AUDIO_DIR, "words");
 const AGE_DIR = join(AUDIO_DIR, "age");
+const TIME_DIR = join(AUDIO_DIR, "time");
 const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
 const AGE_MANIFEST_PATH = join(AUDIO_DIR, "age-days-months.json");
+const TIME_MANIFEST_PATH = join(AUDIO_DIR, "time-parts.json");
 
 // ---- minimal .env loader (no dependency) ----
 (function loadEnv() {
@@ -207,6 +209,38 @@ const L5_CONVO = [
   { speaker: "a", kana: "わたしはじゅうきゅうさいです。", romaji: "watashi wa juukyuu sai desu.", en: "I'm 19." },
 ];
 
+// ---- Time-telling component clips for the games page ----
+// The game plays a random time as a sequence of these clips (gozen/gogo +
+// hour + minute + desu), so any time 1:00–12:59 is covered by ~35 files.
+// romaji values MUST match the slugs the games page computes.
+const TIME_PARTS = [
+  { kana: "ごぜん", romaji: "gozen" },
+  { kana: "ごご", romaji: "gogo" },
+  { kana: "です", romaji: "desu" },
+  { kana: "はん", romaji: "han" },
+  // hours (number + じ)
+  { kana: "いちじ", romaji: "ichi ji" }, { kana: "にじ", romaji: "ni ji" },
+  { kana: "さんじ", romaji: "san ji" }, { kana: "よじ", romaji: "yo ji" },
+  { kana: "ごじ", romaji: "go ji" }, { kana: "ろくじ", romaji: "roku ji" },
+  { kana: "しちじ", romaji: "shichi ji" }, { kana: "はちじ", romaji: "hachi ji" },
+  { kana: "くじ", romaji: "ku ji" }, { kana: "じゅうじ", romaji: "juu ji" },
+  { kana: "じゅういちじ", romaji: "juuichi ji" }, { kana: "じゅうにじ", romaji: "juuni ji" },
+  // minute ones (1–9)
+  { kana: "いっぷん", romaji: "ippun" }, { kana: "にふん", romaji: "nifun" },
+  { kana: "さんぷん", romaji: "sanpun" }, { kana: "よんぷん", romaji: "yonpun" },
+  { kana: "ごふん", romaji: "gofun" }, { kana: "ろっぷん", romaji: "roppun" },
+  { kana: "ななふん", romaji: "nanafun" }, { kana: "はっぷん", romaji: "happun" },
+  { kana: "きゅうふん", romaji: "kyuufun" },
+  // minute exact tens (10,20,40,50 — 30 uses はん)
+  { kana: "じゅっぷん", romaji: "juppun" }, { kana: "にじゅっぷん", romaji: "nijuppun" },
+  { kana: "さんじゅっぷん", romaji: "sanjuppun" }, { kana: "よんじゅっぷん", romaji: "yonjuppun" },
+  { kana: "ごじゅっぷん", romaji: "gojuppun" },
+  // minute tens prefix for compounds (e.g. 25 = にじゅう + ごふん)
+  { kana: "じゅう", romaji: "juu" }, { kana: "にじゅう", romaji: "nijuu" },
+  { kana: "さんじゅう", romaji: "sanjuu" }, { kana: "よんじゅう", romaji: "yonjuu" },
+  { kana: "ごじゅう", romaji: "gojuu" },
+];
+
 function slug(romaji) {
   return romaji.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
@@ -217,6 +251,7 @@ function withMeta(items, audioPrefix, voice) {
 
 const phrases = withMeta(PHRASES, "audio");
 const words = withMeta(WORDS, "audio/words");
+const timeParts = withMeta(TIME_PARTS, "audio/time", VOICE_B);
 const l5Listen = withMeta(L5_LISTEN, "audio/age", VOICE_B);
 const l5Convo = L5_CONVO.map((p, i) => ({
   ...p,
@@ -225,7 +260,17 @@ const l5Convo = L5_CONVO.map((p, i) => ({
   voice: p.speaker === "a" ? VOICE_A : VOICE_B,
 }));
 
-function writeManifest(path, key, items, hasAudio) {
+// Write each manifest twice: a .json (for http/https fetch) and a .js companion
+// that assigns a global, so pages also work when opened directly via file://
+// (where fetch() of local files is blocked by the browser).
+function writeManifestFile(jsonPath, globalName, manifest) {
+  const json = JSON.stringify(manifest, null, 2) + "\n";
+  writeFileSync(jsonPath, json);
+  const jsPath = jsonPath.replace(/\.json$/, ".js");
+  writeFileSync(jsPath, `window.${globalName} = ${json}`);
+}
+
+function writeManifest(path, key, items, hasAudio, globalName) {
   const manifest = {
     generatedAt: hasAudio ? new Date().toISOString() : null,
     voiceId: VOICE_ID,
@@ -233,11 +278,21 @@ function writeManifest(path, key, items, hasAudio) {
     hasAudio,
   };
   manifest[key] = items;
-  writeFileSync(path, JSON.stringify(manifest, null, 2) + "\n");
+  writeManifestFile(path, globalName, manifest);
+}
+
+function writeTimeManifest(path, parts, hasAudio) {
+  writeManifestFile(path, "JL_TIME", {
+    generatedAt: hasAudio ? new Date().toISOString() : null,
+    voice: VOICE_B,
+    model: MODEL,
+    hasAudio,
+    parts,
+  });
 }
 
 function writeAgeManifest(path, listen, convo, hasAudio) {
-  const manifest = {
+  writeManifestFile(path, "JL_AGE", {
     generatedAt: hasAudio ? new Date().toISOString() : null,
     voiceA: VOICE_A,
     voiceB: VOICE_B,
@@ -245,8 +300,7 @@ function writeAgeManifest(path, listen, convo, hasAudio) {
     hasAudio,
     listen,
     convo,
-  };
-  writeFileSync(path, JSON.stringify(manifest, null, 2) + "\n");
+  });
 }
 
 async function generateSet(client, label, items) {
@@ -278,13 +332,15 @@ async function main() {
   mkdirSync(AUDIO_DIR, { recursive: true });
   mkdirSync(WORDS_DIR, { recursive: true });
   mkdirSync(AGE_DIR, { recursive: true });
+  mkdirSync(TIME_DIR, { recursive: true });
 
   if (!API_KEY) {
-    writeManifest(MANIFEST_PATH, "phrases", phrases, false);
-    writeManifest(FLASHCARDS_PATH, "words", words, false);
+    writeManifest(MANIFEST_PATH, "phrases", phrases, false, "JL_LISTENING");
+    writeManifest(FLASHCARDS_PATH, "words", words, false, "JL_FLASHCARDS");
     writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, false);
+    writeTimeManifest(TIME_MANIFEST_PATH, timeParts, false);
     console.log("No ELEVENLABS_API_KEY found.");
-    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo (hasAudio: false).`);
+    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts (hasAudio: false).`);
     console.log("The web UI will render the cards; add a key and re-run to enable playback.");
     return;
   }
@@ -297,11 +353,13 @@ async function main() {
   await generateSet(client, "flashcards", words);
   await generateSet(client, "age:listen", l5Listen);
   await generateSet(client, "age:convo", l5Convo);
+  await generateSet(client, "time:parts", timeParts);
 
-  writeManifest(MANIFEST_PATH, "phrases", phrases, true);
-  writeManifest(FLASHCARDS_PATH, "words", words, true);
+  writeManifest(MANIFEST_PATH, "phrases", phrases, true, "JL_LISTENING");
+  writeManifest(FLASHCARDS_PATH, "words", words, true, "JL_FLASHCARDS");
   writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, true);
-  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json");
+  writeTimeManifest(TIME_MANIFEST_PATH, timeParts, true);
+  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json");
 }
 
 main().catch((err) => {

@@ -81,6 +81,7 @@
   .status{color:var(--ink-soft)}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+<script src="audio/flashcards.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -89,7 +90,6 @@
     <div class="eyebrow">Japanese · review deck</div>
     <h1>FLASHCARDS</h1>
     <div class="subtitle">English → tap ▶ for a sound hint → tap the card for the answer</div>
-    <div class="nav"><a href="index.html">← こそあど worksheet</a> &nbsp; <a href="time.html">じかん · telling time →</a> &nbsp; <a href="age-days-months.html">さい・ようび · age &amp; days →</a> &nbsp; <a href="games.html">じかん games →</a></div>
   </header>
 
   <p class="lead" style="margin-top:24px">A catch-all deck to drill vocab. Cards shuffle every refresh. Read the English, try to say it, tap ▶ if you need a sound hint, then tap the card to check the romaji and kana.</p>
@@ -213,17 +213,24 @@
       });
     });
 
-    fetch('audio/flashcards.json', { cache: 'no-store' })
-      .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
-      .then(function(m){
-        allWords = (m && m.words) || [];
-        hasAudio = !!(m && m.hasAudio);
-        if(!allWords.length){ statusEl.textContent = 'No words found.'; return; }
-        buildGroups();
-        draw();
-      })
-      .catch(function(){ statusEl.textContent = 'Flashcard data not found. Run: npm run generate:audio'; });
+    function useFlashcards(m){
+      allWords = (m && m.words) || [];
+      hasAudio = !!(m && m.hasAudio);
+      if(!allWords.length){ statusEl.textContent = 'No words found.'; return; }
+      buildGroups();
+      draw();
+    }
+    // Prefer the global from audio/flashcards.js (works over file://);
+    // fall back to fetching the JSON (http/https).
+    if(window.JL_FLASHCARDS){ useFlashcards(window.JL_FLASHCARDS); }
+    else {
+      fetch('audio/flashcards.json', { cache: 'no-store' })
+        .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
+        .then(useFlashcards)
+        .catch(function(){ statusEl.textContent = 'Flashcard data not found. Run: npm run generate:audio'; });
+    }
   })();
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>

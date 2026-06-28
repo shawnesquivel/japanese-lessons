@@ -29,30 +29,6 @@
   h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(40px,9vw,74px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
   .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
 
-  /* ---------- hamburger menu ---------- */
-  .menu-btn{position:fixed;top:16px;left:16px;z-index:30;width:46px;height:46px;border-radius:12px;
-    border:1px solid var(--line-strong);background:#fff;cursor:pointer;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:5px;box-shadow:0 2px 8px rgba(42,46,36,.08);transition:background .12s}
-  .menu-btn:hover{background:#F3EEE1}
-  .menu-btn:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  .menu-btn span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
-  body.menu-open .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  body.menu-open .menu-btn span:nth-child(2){opacity:0}
-  body.menu-open .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .menu-overlay{position:fixed;inset:0;background:rgba(42,46,36,.4);opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;z-index:25}
-  body.menu-open .menu-overlay{opacity:1;visibility:visible}
-  .menu-drawer{position:fixed;top:0;left:0;height:100%;width:280px;max-width:84vw;background:var(--paper);
-    border-right:2px solid var(--ink);box-shadow:4px 0 20px rgba(42,46,36,.12);z-index:26;
-    transform:translateX(-100%);transition:transform .24s ease;padding:74px 0 24px;overflow-y:auto}
-  body.menu-open .menu-drawer{transform:translateX(0)}
-  .menu-drawer .menu-title{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;padding:0 22px 10px;margin:0}
-  .menu-drawer a{display:flex;align-items:baseline;gap:10px;padding:13px 22px;text-decoration:none;color:var(--ink);border-top:1px solid var(--line);transition:background .12s}
-  .menu-drawer a:hover{background:#F3EEE1}
-  .menu-drawer a:last-of-type{border-bottom:1px solid var(--line)}
-  .menu-drawer a.current{background:#F3EEE1;font-weight:700;cursor:default}
-  .menu-drawer a .jp-label{font-family:"Zen Antique",serif;font-size:19px}
-  .menu-drawer a .en-label{color:var(--ink-soft);font-size:13px}
-
   /* ---------- tab bar ---------- */
   .tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--ink);margin:26px 0 0;position:sticky;top:0;background:var(--paper);z-index:5;padding-top:6px}
   .tab{appearance:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-soft);
@@ -200,21 +176,9 @@
 
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+<script src="audio/age-days-months.js"></script>
 </head>
 <body>
-
-<button class="menu-btn" id="menu-btn" type="button" aria-label="Open lessons menu" aria-expanded="false" aria-controls="menu-drawer">
-  <span></span><span></span><span></span>
-</button>
-<div class="menu-overlay" id="menu-overlay"></div>
-<nav class="menu-drawer" id="menu-drawer" aria-label="Lessons">
-  <p class="menu-title">Lessons</p>
-  <a href="index.html"><span class="jp-label">こそあど</span><span class="en-label">this · that · which</span></a>
-  <a href="time.html"><span class="jp-label">じかん</span><span class="en-label">telling time</span></a>
-  <a href="age-days-months.html" class="current"><span class="jp-label">さい・ようび</span><span class="en-label">age, days &amp; months</span></a>
-  <a href="flashcards.html"><span class="jp-label">フラッシュ</span><span class="en-label">flashcards deck</span></a>
-  <a href="games.html"><span class="jp-label">ゲーム</span><span class="en-label">games</span></a>
-</nav>
 
 <div class="wrap">
 
@@ -509,21 +473,8 @@
 
 </div>
 
+<script src="nav.js" defer></script>
 <script>
-  /* ---------- hamburger menu ---------- */
-  (function(){
-    var btn = document.getElementById('menu-btn');
-    var overlay = document.getElementById('menu-overlay');
-    if(!btn) return;
-    function close(){ document.body.classList.remove('menu-open'); btn.setAttribute('aria-expanded','false'); }
-    function open(){ document.body.classList.add('menu-open'); btn.setAttribute('aria-expanded','true'); }
-    btn.addEventListener('click', function(){
-      document.body.classList.contains('menu-open') ? close() : open();
-    });
-    overlay.addEventListener('click', close);
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
-  })();
-
   /* ---------- tabs ---------- */
   (function(){
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
@@ -721,18 +672,25 @@
       }
     }
 
-    fetch('audio/age-days-months.json', { cache: 'no-store' })
-      .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
-      .then(function(m){
-        var hasAudio = !!(m && m.hasAudio);
-        renderConvo((m && m.convo) || [], hasAudio);
-        renderListen((m && m.listen) || [], hasAudio);
-        setRole('none');
-      })
-      .catch(function(){
-        if(convoStatus) convoStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
-        if(listenStatus) listenStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
-      });
+    function useManifest(m){
+      var hasAudio = !!(m && m.hasAudio);
+      renderConvo((m && m.convo) || [], hasAudio);
+      renderListen((m && m.listen) || [], hasAudio);
+      setRole('none');
+    }
+    function failed(){
+      if(convoStatus) convoStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
+      if(listenStatus) listenStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
+    }
+    // Prefer the global from audio/age-days-months.js (works over file://);
+    // fall back to fetching the JSON (http/https).
+    if(window.JL_AGE){ useManifest(window.JL_AGE); }
+    else {
+      fetch('audio/age-days-months.json', { cache: 'no-store' })
+        .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
+        .then(useManifest)
+        .catch(failed);
+    }
   })();
 </script>
 </body>

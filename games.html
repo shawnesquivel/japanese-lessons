@@ -67,9 +67,9 @@
   .result.ok{color:var(--ko)} .result.no{color:var(--do)}
   .result .ans{display:block;font-weight:500;color:var(--ink-soft);font-size:15px;margin-top:6px}
   .result .ans .kana{font-size:20px;color:var(--ink)}
-  .score{display:flex;gap:22px;justify-content:center;font-size:13px;color:var(--ink-soft);margin-top:18px;
-    border-top:1px dashed var(--line-strong);padding-top:14px}
-  .score b{display:block;color:var(--ink);font-size:22px;font-family:"Zen Antique",serif}
+  .scorebadge{position:absolute;top:14px;right:16px;text-align:right;line-height:1.05}
+  .scorebadge b{display:block;color:var(--ink);font-size:24px;font-family:"Zen Antique",serif}
+  .scorebadge span{font-size:13px;color:var(--ink-soft);font-weight:700}
 
   .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;
     font-size:14px;color:var(--ink-soft);margin:16px 0;text-align:left}
@@ -77,6 +77,7 @@
   .warnbox{display:none;background:var(--do-bg);border-left:3px solid var(--do);padding:12px 16px;border-radius:0 8px 8px 0;
     font-size:14px;color:#7a2a16;margin:16px 0;text-align:left}
 </style>
+<script src="audio/time-parts.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -85,18 +86,11 @@
     <div class="eyebrow">Japanese · telling time · practice</div>
     <h1>じかん ゲーム</h1>
     <div class="subtitle">two games — read the clock &amp; listen-and-write</div>
-    <div class="nav">
-      <a href="time.html">← じかん lesson</a>
-      <a href="index.html">こそあど worksheet</a>
-      <a href="age-days-months.html">さい・ようび</a>
-      <a href="flashcards.html">flashcards</a>
-    </div>
   </header>
 
   <div id="noVoice" class="warnbox">
-    No Japanese voice found on this device, so Game 2 may read in English. Add one in your OS settings
-    (macOS: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices → Japanese / Kyoko),
-    then reload. Game 1 works regardless.
+    Time audio isn't generated yet, so playback falls back to your device's voice (or is silent).
+    Run <b>npm run generate:audio</b> to create the native ElevenLabs clips, then reload.
   </div>
 
   <!-- ===================== GAME 1 ===================== -->
@@ -140,7 +134,7 @@
   <!-- ===================== GAME 2 ===================== -->
   <section id="game2">
     <div class="sec-head"><span class="sec-kanji">耳</span><h2>Game 2 · Listen &amp; write</h2></div>
-    <p class="lead">Press play, listen to the Japanese time, then type it in digits (e.g. <b>8:19 AM</b>) and hit Enter.</p>
+    <p class="lead">Press play, listen to the Japanese time, then type it in digits (e.g. <b>8:19</b>) and hit Enter. Flip <b>AM/PM</b> on to also practice ごぜん／ごご.</p>
 
     <div class="controls">
       <span class="seg-label">Minutes:</span>
@@ -150,12 +144,22 @@
       </div>
       <span class="seg-label" style="margin-left:8px">Speed:</span>
       <div class="seg" id="spd2">
-        <button data-s="0.9" class="on">Normal</button>
-        <button data-s="0.6">Slow</button>
+        <button data-s="1" class="on">Normal</button>
+        <button data-s="0.65">Slow</button>
+      </div>
+      <span class="seg-label" style="margin-left:8px">AM/PM:</span>
+      <div class="seg" id="ampm2">
+        <button data-a="off" class="on">Off</button>
+        <button data-a="on">On</button>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="position:relative">
+      <div class="scorebadge" aria-label="Score">
+        <b id="sFrac">0/0</b>
+        <span id="sPct">—</span>
+      </div>
+
       <div class="controls" style="margin-top:0">
         <button class="btn big" id="play2">▶ Play time</button>
         <button class="btn sec" id="replay2">↺ Replay</button>
@@ -163,7 +167,8 @@
 
       <div>
         <input class="timein" id="guess2" type="text" inputmode="text"
-          placeholder="8:19 AM" autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
+          placeholder="type the time…" aria-label="Type the time you heard, e.g. 8:19 AM"
+          autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
       </div>
 
       <div class="controls">
@@ -173,15 +178,8 @@
       </div>
 
       <div class="result" id="result2"></div>
-
-      <div class="score">
-        <div>correct<b id="sCorrect">0</b></div>
-        <div>tries<b id="sTotal">0</b></div>
-        <div>streak<b id="sStreak">0</b></div>
-        <div>best<b id="sBest">0</b></div>
-      </div>
     </div>
-    <div class="note win"><b>Free voice:</b> this uses your device's built-in Japanese text-to-speech — no API, no cost, unlimited times. Works best on macOS, iOS, and Chrome. Type the <b>digits</b> you hear; AM = ごぜん, PM = ごご.</div>
+    <div class="note win"><b>Native voice:</b> plays a real Japanese (ElevenLabs) voice, stitched from word clips so any time works. Use <b>Slow</b> if it's too fast. Type the <b>digits</b> you hear; AM = ごぜん, PM = ごご.</div>
   </section>
 
 </div>
@@ -234,29 +232,86 @@
     return {h:h,m:m,ampm:ampm};
   }
 
-  // ---------- speech (free, on-device) ----------
+  // ---------- audio: native ElevenLabs clips, stitched in sequence ----------
+  // The game speaks a time by playing word clips back to back
+  // (gozen/gogo + hour + minute(s) + desu). Falls back to device TTS if the
+  // clips haven't been generated.
+  var TIME_AUDIO_DIR='audio/time/';
+  var audioReady=false, clipCache={}, playToken=0;
+
+  function slugify(r){ return String(r).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+
+  // sequence of clip slugs for a given time
+  function timeSlugs(h,m,ampm){
+    var seq=[];
+    if(ampm) seq.push(ampm==='am'?'gozen':'gogo');
+    seq.push(slugify(HOURS[h].r));
+    if(m!==0){
+      if(m===30) seq.push('han');
+      else if(m<10) seq.push(slugify(M_ONES[m].r));
+      else if(m%10===0) seq.push(slugify(M_TENS_X[m/10].r));
+      else { seq.push(slugify(M_TENS_P[Math.floor(m/10)].r)); seq.push(slugify(M_ONES[m%10].r)); }
+    }
+    seq.push('desu');
+    return seq;
+  }
+
+  // device-TTS fallback
   var jaVoice=null;
   function pickVoice(){
     if(!('speechSynthesis' in window)) return;
     var vs=speechSynthesis.getVoices()||[];
     jaVoice = vs.filter(function(v){return /ja([-_]JP)?/i.test(v.lang);})[0]
            || vs.filter(function(v){return /japan/i.test(v.name);})[0] || null;
-    if(vs.length && !jaVoice) document.getElementById('noVoice').style.display='block';
-    else document.getElementById('noVoice').style.display='none';
   }
-  if('speechSynthesis' in window){
-    pickVoice();
-    speechSynthesis.onvoiceschanged=pickVoice;
-  } else {
-    document.getElementById('noVoice').style.display='block';
-  }
-  function speak(text, rate){
+  if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+  function speakDevice(text, rate){
     if(!('speechSynthesis' in window)) return;
     speechSynthesis.cancel();
     var u=new SpeechSynthesisUtterance(text);
     u.lang='ja-JP'; if(jaVoice) u.voice=jaVoice;
     u.rate=rate||0.9; u.pitch=1;
     speechSynthesis.speak(u);
+  }
+
+  // play a time at the given playbackRate (1 = normal, <1 = slow, pitch kept)
+  function speak(h,m,ampm,rate){
+    rate = rate || 1;
+    if(audioReady){
+      var slugs=timeSlugs(h,m,ampm), token=++playToken, i=0;
+      (function step(){
+        if(token!==playToken || i>=slugs.length) return;
+        var a=new Audio(TIME_AUDIO_DIR+slugs[i]+'.mp3');
+        try{ a.preservesPitch=true; a.mozPreservesPitch=true; a.webkitPreservesPitch=true; }catch(e){}
+        a.playbackRate=rate;
+        a.addEventListener('ended',function(){ i++; step(); });
+        a.addEventListener('error',function(){ i++; step(); });
+        a.play().catch(function(){});
+      })();
+    } else {
+      var rd=reading(h,m,ampm);
+      speakDevice(rd.kSpaced+' です', rate<0.85?0.6:0.9);
+    }
+  }
+
+  // load manifest, prewarm clips
+  function useTime(m){
+    if(m && m.hasAudio && m.parts){
+      audioReady=true;
+      document.getElementById('noVoice').style.display='none';
+      m.parts.forEach(function(p){ var a=new Audio(p.audio); a.preload='auto'; clipCache[p.id]=a; });
+    } else {
+      document.getElementById('noVoice').style.display = jaVoice ? 'none' : 'block';
+    }
+  }
+  // Prefer the global from audio/time-parts.js (works over file://);
+  // fall back to fetching the JSON (http/https).
+  if(window.JL_TIME){ useTime(window.JL_TIME); }
+  else {
+    fetch('audio/time-parts.json',{cache:'no-store'})
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(useTime)
+      .catch(function(){ document.getElementById('noVoice').style.display = jaVoice ? 'none' : 'block'; });
   }
 
   // ---------- diff toggles ----------
@@ -312,7 +367,7 @@
     document.getElementById('show1').addEventListener('click',reveal);
     document.getElementById('new1').addEventListener('click',deal);
     document.getElementById('say1').addEventListener('click',function(){
-      if(cur) speak(reading(cur.h,cur.m,null).kSpaced+' です',0.9);
+      if(cur) speak(cur.h,cur.m,null,1);
     });
     bindSeg('diff1',function(b){ hard=b.dataset.d==='hard'; deal(); });
     deal();
@@ -322,23 +377,25 @@
   // GAME 2 — listen & write
   // ======================================================
   (function(){
-    var hard=false, rate=0.9, cur=null, answered=false;
-    var correct=0,total=0,streak=0,best=0;
-    try{ best=parseInt(localStorage.getItem('jikan_best')||'0',10)||0; }catch(e){}
+    var hard=false, rate=1, useAmpm=false, cur=null, answered=false;
+    var correct=0,total=0;
     var elGuess=document.getElementById('guess2'), elRes=document.getElementById('result2');
-    var elC=document.getElementById('sCorrect'), elT=document.getElementById('sTotal'),
-        elS=document.getElementById('sStreak'), elB=document.getElementById('sBest');
-    elB.textContent=best;
+    var elFrac=document.getElementById('sFrac'), elPct=document.getElementById('sPct');
+    function updateScore(){
+      elFrac.textContent = correct + '/' + total;
+      elPct.textContent = total ? Math.round(correct/total*100) + '%' : '—';
+    }
+    updateScore();
     var bPlay=document.getElementById('play2'), bReplay=document.getElementById('replay2'),
         bCheck=document.getElementById('check2'), bGive=document.getElementById('reveal2btn'),
         bNext=document.getElementById('next2');
 
-    function speakCur(){ if(cur) speak(reading(cur.h,cur.m,cur.ampm).kSpaced+' です',rate); }
+    function speakCur(){ if(cur) speak(cur.h,cur.m,cur.ampm,rate); }
     function enable(on){
       elGuess.disabled=!on; bCheck.disabled=!on; bGive.disabled=!on; bReplay.disabled=!on;
     }
     function newRound(){
-      cur=randTime(hard); answered=false;
+      cur=randTime(hard); if(!useAmpm) cur.ampm=null; answered=false;
       elRes.textContent=''; elRes.className='result';
       elGuess.value=''; enable(true);
       bNext.style.display='none'; bCheck.style.display=''; bGive.style.display='';
@@ -368,16 +425,15 @@
     }
     function finish(ok){
       answered=true; total++;
-      if(ok){ correct++; streak++; if(streak>best){best=streak; try{localStorage.setItem('jikan_best',best);}catch(e){}} }
-      else { streak=0; }
-      elC.textContent=correct; elT.textContent=total; elS.textContent=streak; elB.textContent=best;
+      if(ok) correct++;
+      updateScore();
       enable(false); bCheck.style.display='none'; bGive.style.display='none';
       bNext.style.display=''; bNext.focus();
     }
     function check(){
       if(answered||!cur) return;
       var g=parseGuess(elGuess.value);
-      var ok = g.h===cur.h && g.m===cur.m && g.ap===cur.ampm;
+      var ok = g.h===cur.h && g.m===cur.m && (!useAmpm || g.ap===cur.ampm);
       showAnswer(ok); finish(ok);
     }
     bPlay.addEventListener('click',function(){
@@ -393,8 +449,10 @@
     bNext.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); newRound(); } });
     bindSeg('diff2',function(b){ hard=b.dataset.d==='hard'; });
     bindSeg('spd2',function(b){ rate=parseFloat(b.dataset.s); });
+    bindSeg('ampm2',function(b){ useAmpm=b.dataset.a==='on'; });
   })();
 })();
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>
