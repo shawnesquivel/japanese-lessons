@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T18:58:40.556Z",
+  "generatedAt": "2026-06-28T19:58:51.437Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -15,7 +15,8 @@
         "en": "That is a fish."
       },
       "id": "kore-wa-nan-desu-ka",
-      "audio": "audio/kore-wa-nan-desu-ka.mp3"
+      "audio": "audio/kore-wa-nan-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "それはなんですか。",
@@ -28,7 +29,8 @@
         "en": "This is a tomato."
       },
       "id": "sore-wa-nan-desu-ka",
-      "audio": "audio/sore-wa-nan-desu-ka.mp3"
+      "audio": "audio/sore-wa-nan-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "あれはなんですか。",
@@ -41,7 +43,8 @@
         "en": "That over there is a banana."
       },
       "id": "are-wa-nan-desu-ka",
-      "audio": "audio/are-wa-nan-desu-ka.mp3"
+      "audio": "audio/are-wa-nan-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "これはりんごです。",
@@ -55,7 +58,8 @@
         "en": "Oh, I see."
       },
       "id": "kore-wa-ringo-desu",
-      "audio": "audio/kore-wa-ringo-desu.mp3"
+      "audio": "audio/kore-wa-ringo-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "それはトマトです。",
@@ -69,7 +73,8 @@
         "en": "Thank you."
       },
       "id": "sore-wa-tomato-desu",
-      "audio": "audio/sore-wa-tomato-desu.mp3"
+      "audio": "audio/sore-wa-tomato-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "あれはぶどうです。",
@@ -83,7 +88,8 @@
         "en": "Oh, I see."
       },
       "id": "are-wa-budou-desu",
-      "audio": "audio/are-wa-budou-desu.mp3"
+      "audio": "audio/are-wa-budou-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "どこですか。",
@@ -96,7 +102,8 @@
         "en": "It's over there."
       },
       "id": "doko-desu-ka",
-      "audio": "audio/doko-desu-ka.mp3"
+      "audio": "audio/doko-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "ここです。",
@@ -110,7 +117,8 @@
         "en": "Thank you."
       },
       "id": "koko-desu",
-      "audio": "audio/koko-desu.mp3"
+      "audio": "audio/koko-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "そこです。",
@@ -124,7 +132,8 @@
         "en": "Got it."
       },
       "id": "soko-desu",
-      "audio": "audio/soko-desu.mp3"
+      "audio": "audio/soko-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "あそこです。",
@@ -138,7 +147,8 @@
         "en": "Thank you."
       },
       "id": "asoko-desu",
-      "audio": "audio/asoko-desu.mp3"
+      "audio": "audio/asoko-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "どれですか。",
@@ -151,7 +161,8 @@
         "en": "This one."
       },
       "id": "dore-desu-ka",
-      "audio": "audio/dore-desu-ka.mp3"
+      "audio": "audio/dore-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "どのさいふですか。",
@@ -164,7 +175,8 @@
         "en": "This wallet."
       },
       "id": "dono-saifu-desu-ka",
-      "audio": "audio/dono-saifu-desu-ka.mp3"
+      "audio": "audio/dono-saifu-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "どのりんごですか。",
@@ -177,7 +189,8 @@
         "en": "That apple over there."
       },
       "id": "dono-ringo-desu-ka",
-      "audio": "audio/dono-ringo-desu-ka.mp3"
+      "audio": "audio/dono-ringo-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "りんごをください。",
@@ -190,7 +203,8 @@
         "en": "Sure, here you go."
       },
       "id": "ringo-o-kudasai",
-      "audio": "audio/ringo-o-kudasai.mp3"
+      "audio": "audio/ringo-o-kudasai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "これをください。",
@@ -204,7 +218,8 @@
         "en": "Sure, here you go."
       },
       "id": "kore-o-kudasai",
-      "audio": "audio/kore-o-kudasai.mp3"
+      "audio": "audio/kore-o-kudasai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
       "kana": "おねがいします。",
@@ -217,7 +232,8 @@
         "en": "Certainly."
       },
       "id": "onegaishimasu",
-      "audio": "audio/onegaishimasu.mp3"
+      "audio": "audio/onegaishimasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     }
   ]
 }

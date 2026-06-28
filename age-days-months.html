@@ -138,48 +138,67 @@
   ol.q li.revealed .ans{display:block}
   ol.q li.revealed .tap-hint{display:none}
 
-  /* full conversation */
-  .convo{display:flex;flex-direction:column;gap:12px;margin:18px 0}
-  .turn{display:flex;gap:12px;align-items:flex-start;max-width:84%}
+  /* shared play button */
+  .play{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line-strong);
+    background:var(--ko-bg);color:#3C5E25;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s}
+  .play:hover{background:#E2EED4}
+  .play:active{transform:scale(.94)}
+  .play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
+  .play:disabled{opacity:.4;cursor:not-allowed}
+
+  /* role-play controls */
+  .convo-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+  .convo-controls .lbl{font-size:14px;color:var(--ink-soft);font-weight:700}
+  .role-btn{font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-soft);background:#fff;
+    border:1px solid var(--line-strong);border-radius:999px;padding:6px 14px;cursor:pointer}
+  .role-btn:hover{background:#F3EEE1}
+  .role-btn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  /* conversation */
+  .convo{display:flex;flex-direction:column;gap:14px;margin:8px 0}
+  .turn{display:flex;gap:12px;align-items:flex-start;max-width:88%}
   .turn.b{align-self:flex-end;flex-direction:row-reverse;text-align:right}
-  .turn .who{flex:0 0 40px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:#F3EEE1;border:1px solid var(--line-strong)}
-  .turn.a .who{background:var(--ko-bg);border-color:var(--ko)}
-  .turn.b .who{background:var(--a-bg);border-color:var(--a)}
-  .bubble{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 15px}
+  .turn .play{width:42px;height:42px;font-size:16px}
+  .turn.a .play{background:var(--do-bg);color:#9C3119;border-color:#E8C4B8}
+  .turn.a .play.playing{background:var(--do);color:#fff;border-color:var(--do)}
+  .turn.b .play{background:var(--a-bg);color:#2C4D66;border-color:#C5D6E2}
+  .turn.b .play.playing{background:var(--a);color:#fff;border-color:var(--a)}
+  .bubble{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 15px;cursor:pointer;min-width:0}
   .turn.a .bubble{border-top-left-radius:4px}
   .turn.b .bubble{border-top-right-radius:4px}
+  .turn.mine .bubble{background:#FCFAF4;border-style:dashed}
+  .bubble .name{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:4px}
   .bubble .kana{font-family:"Zen Antique",serif;font-size:clamp(18px,4vw,22px);line-height:1.4;display:block}
   .bubble .rj{color:var(--ink-soft);font-size:13px;display:block;margin-top:3px}
-  .bubble .en{color:var(--ink);font-size:14px;display:block;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line-strong)}
-  .convo.hide-en .bubble .en{display:none}
-  .convo-toggle{font-family:inherit;font-size:14px;font-weight:700;color:var(--a);background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:6px 14px;cursor:pointer}
-  .convo-toggle:hover{background:#F3EEE1}
+  .bubble .en{color:var(--ink);font-size:14px;display:none;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line-strong)}
+  .turn.revealed .bubble .en{display:block}
+  /* your own lines: hide the Japanese until you reveal (produce it yourself) */
+  .turn.mine .bubble .kana,.turn.mine .bubble .rj{display:none}
+  .turn.mine.revealed .bubble .kana,.turn.mine.revealed .bubble .rj{display:block}
+  .bubble .cue{display:none;color:var(--ink-soft);font-style:italic;font-size:14px}
+  .turn.mine:not(.revealed) .bubble .cue{display:block}
+  .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:6px}
+  .turn.revealed .tap-hint{display:none}
 
-  /* speech recognition */
-  .sr-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:14px 0}
-  .sr-target{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .sr-mic{flex:0 0 auto;width:56px;height:56px;border-radius:50%;border:1px solid var(--line-strong);
-    background:var(--ko-bg);color:#3C5E25;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s}
-  .sr-mic:hover{background:#E2EED4}
-  .sr-mic:active{transform:scale(.94)}
-  .sr-mic.listening{background:var(--do);color:#fff;border-color:var(--do);animation:pulse 1.1s infinite}
-  .sr-mic:disabled{opacity:.4;cursor:not-allowed}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(203,74,43,.4)}50%{box-shadow:0 0 0 8px rgba(203,74,43,0)}}
-  .sr-text{flex:1;min-width:200px}
-  .sr-text .kana{font-family:"Zen Antique",serif;font-size:clamp(20px,4.5vw,26px);line-height:1.3}
-  .sr-text .rj{color:var(--ink-soft);font-size:14px}
-  .sr-text .en{color:var(--ink-soft);font-size:13px}
-  .sr-result{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong);font-size:14px;min-height:20px;display:none}
-  .sr-card.has-result .sr-result{display:block}
-  .sr-result .heard{color:var(--ink);font-weight:700}
-  .sr-result.ok{color:#3C5E25}
-  .sr-result.no{color:#9C3119}
-  .sr-badge{display:inline-block;font-weight:700;border-radius:999px;padding:1px 10px;margin-right:8px}
-  .sr-badge.ok{background:var(--ko-bg);color:#3C5E25}
-  .sr-badge.no{background:var(--do-bg);color:#9C3119}
-  .sr-warn{background:var(--do-bg);border-left:3px solid var(--do);padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;color:#9C3119;margin:14px 0;display:none}
+  /* listening drill */
+  .listen-deck{display:grid;gap:14px;margin:18px 0}
+  .listen-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;transition:background .12s,box-shadow .12s}
+  .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .listen-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .listen-card .play{width:54px;height:54px;font-size:20px}
+  .listen-body{flex:1;min-width:0}
+  .listen-num{font-size:12px;letter-spacing:.04em;color:var(--ink-soft);font-weight:700}
+  .listen-prompt{color:var(--ink-soft);font-size:14px;margin:2px 0 0}
+  .listen-ans{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .listen-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);line-height:1.3;display:block}
+  .listen-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
+  .listen-ans .en{display:block;margin-top:2px;color:var(--ink-soft)}
+  .listen-card.revealed .listen-ans{display:block}
+  .listen-card.revealed .tap-hint{display:none}
+  .listen-note{font-size:13px;color:#B7AE97;margin-top:4px}
 
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sr-mic.listening{animation:none}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -213,7 +232,7 @@
     <button class="tab" role="tab" id="tab-ex-dates" aria-controls="panel-ex-dates" aria-selected="false">Exercise: Dates</button>
     <button class="tab" role="tab" id="tab-ex-week" aria-controls="panel-ex-week" aria-selected="false">Exercise: Days</button>
     <button class="tab" role="tab" id="tab-convo" aria-controls="panel-convo" aria-selected="false">Full Conversation</button>
-    <button class="tab" role="tab" id="tab-speech" aria-controls="panel-speech" aria-selected="false">Speech Recognition</button>
+    <button class="tab" role="tab" id="tab-listen" aria-controls="panel-listen" aria-selected="false">Listening</button>
   </div>
 
   <!-- ===================== PANEL: LESSON ===================== -->
@@ -460,31 +479,31 @@
   <div class="tabpanel" id="panel-convo" role="tabpanel" aria-labelledby="tab-convo">
     <section>
       <div class="sec-head"><span class="sec-kanji">話</span><h2>Full conversation</h2></div>
-      <p class="lead">Two classmates, あや (A) and けん (B), put it all together — day of the week, birthday and age. Read it aloud, then hide the English and try again.</p>
+      <p class="lead">Two classmates — <strong>あや</strong> and <strong>けん</strong> — put it all together: day of the week, birthday and age. <strong>Tap the circle</strong> to hear a line, <strong>tap the bubble</strong> to reveal the English.</p>
       <p class="lead" style="font-size:14px">New words: <span class="romaji">たんじょうび tanjoubi</span> = birthday · <span class="romaji">いつ itsu</span> = when.</p>
 
-      <button class="convo-toggle" id="convo-toggle" type="button">Hide English</button>
+      <div class="convo-controls">
+        <span class="lbl">Your role:</span>
+        <button class="role-btn" type="button" data-role="none" aria-pressed="true">Just listen</button>
+        <button class="role-btn" type="button" data-role="a" aria-pressed="false">👧 あや</button>
+        <button class="role-btn" type="button" data-role="b" aria-pressed="false">👦 けん</button>
+      </div>
+      <p class="lead" style="font-size:13px" id="convo-rolehint">Pick a role to hide that person's lines and practice saying them yourself.</p>
 
       <div class="convo" id="convo">
-        <div class="turn a"><div class="who" aria-hidden="true">👧</div><div class="bubble"><span class="kana">すみません、きょうは なんようび ですか。</span><span class="rj">sumimasen, kyou wa nan youbi desu ka.</span><span class="en">Excuse me, what day of the week is it today?</span></div></div>
-        <div class="turn b"><div class="who" aria-hidden="true">👦</div><div class="bubble"><span class="kana">きょうは きんようび です。</span><span class="rj">kyou wa kin youbi desu.</span><span class="en">Today is Friday.</span></div></div>
-        <div class="turn a"><div class="who" aria-hidden="true">👧</div><div class="bubble"><span class="kana">ありがとう。おたんじょうび は いつ ですか。</span><span class="rj">arigatou. o-tanjoubi wa itsu desu ka.</span><span class="en">Thanks. When is your birthday?</span></div></div>
-        <div class="turn b"><div class="who" aria-hidden="true">👦</div><div class="bubble"><span class="kana">しがつ ついたち です。</span><span class="rj">shi gatsu tsuitachi desu.</span><span class="en">April 1st.</span></div></div>
-        <div class="turn a"><div class="who" aria-hidden="true">👧</div><div class="bubble"><span class="kana">おいくつ ですか。</span><span class="rj">o-ikutsu desu ka.</span><span class="en">How old are you?</span></div></div>
-        <div class="turn b"><div class="who" aria-hidden="true">👦</div><div class="bubble"><span class="kana">はたち です。あやさんは なんさい ですか。</span><span class="rj">hatachi desu. aya-san wa nan sai desu ka.</span><span class="en">I'm 20. Aya, how old are you?</span></div></div>
-        <div class="turn a"><div class="who" aria-hidden="true">👧</div><div class="bubble"><span class="kana">わたしは じゅうきゅうさい です。</span><span class="rj">watashi wa juukyuu sai desu.</span><span class="en">I'm 19.</span></div></div>
+        <p class="lead" id="convo-status">Loading audio…</p>
       </div>
     </section>
   </div>
 
-  <!-- ===================== PANEL: SPEECH RECOGNITION ===================== -->
-  <div class="tabpanel" id="panel-speech" role="tabpanel" aria-labelledby="tab-speech">
+  <!-- ===================== PANEL: LISTENING ===================== -->
+  <div class="tabpanel" id="panel-listen" role="tabpanel" aria-labelledby="tab-listen">
     <section>
-      <div class="sec-head"><span class="sec-kanji">声</span><h2>Speech recognition</h2></div>
-      <p class="lead">Tap the mic, say the Japanese phrase out loud, and the browser checks what it heard. Matching is lenient (kanji or kana both count).</p>
-      <div class="sr-warn" id="sr-warn">Speech recognition isn't supported in this browser. Open this page in <strong>Google Chrome</strong> (desktop or Android) and allow microphone access.</div>
-
-      <div id="sr-list"></div>
+      <div class="sec-head"><span class="sec-kanji">聞</span><h2>Listening drill</h2></div>
+      <p class="lead">A native voice says a phrase. <strong>Tap ▶ to listen</strong>, work out what it meant, then <strong>tap the card</strong> to reveal the kana, romaji and English. Order shuffles every refresh.</p>
+      <div class="listen-deck" id="listen-deck">
+        <p class="lead" id="listen-status">Loading audio…</p>
+      </div>
     </section>
   </div>
 
@@ -554,106 +573,166 @@
     });
   })();
 
-  /* ---------- conversation EN toggle ---------- */
-  (function(){
-    var btn = document.getElementById('convo-toggle');
-    var convo = document.getElementById('convo');
-    if(!btn || !convo) return;
-    btn.addEventListener('click', function(){
-      var hidden = convo.classList.toggle('hide-en');
-      btn.textContent = hidden ? 'Show English' : 'Hide English';
-    });
+  /* ---------- shared helpers ---------- */
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function shuffle(list){
+    var a = list.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  // one audio element at a time across the whole page
+  var AudioPlayer = (function(){
+    var current = null;
+    function play(src, btn){
+      if(!src) return;
+      if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
+      var audio = new Audio(src);
+      current = { audio: audio, btn: btn };
+      btn.classList.add('playing');
+      audio.play().catch(function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('error', function(){
+        btn.classList.remove('playing'); btn.disabled = true; btn.textContent = '✕';
+      });
+    }
+    return { play: play };
   })();
 
-  /* ---------- speech recognition ---------- */
+  /* ---------- conversation + listening (ElevenLabs audio) ---------- */
   (function(){
-    var PHRASES = [
-      { kana:'なんさい ですか。', rj:'nan sai desu ka.', en:'How old are you?', accept:['なんさいですか','何歳ですか','何才ですか','なん歳ですか'] },
-      { kana:'はたち です。', rj:'hatachi desu.', en:"I'm 20 years old.", accept:['はたちです','二十歳です','20歳です','はたち','二十歳'] },
-      { kana:'きょうは なんようび ですか。', rj:'kyou wa nan youbi desu ka.', en:'What day is it today?', accept:['きょうはなんようびですか','今日は何曜日ですか','何曜日ですか','なんようびですか'] },
-      { kana:'げつようび です。', rj:'getsu youbi desu.', en:"It's Monday.", accept:['げつようびです','月曜日です','月曜日','げつようび'] },
-      { kana:'しがつ です。', rj:'shi gatsu desu.', en:"It's April.", accept:['しがつです','四月です','4月です','四月','しがつ'] },
-      { kana:'ついたち です。', rj:'tsuitachi desu.', en:"the 1st.", accept:['ついたちです','一日です','1日です','一日','ついたち'] }
-    ];
+    var convo = document.getElementById('convo');
+    var convoStatus = document.getElementById('convo-status');
+    var roleHint = document.getElementById('convo-rolehint');
+    var deck = document.getElementById('listen-deck');
+    var listenStatus = document.getElementById('listen-status');
+    var NAMES = { a: 'あや', b: 'けん' };
+    var FACE = { a: '👧', b: '👦' };
 
-    var list = document.getElementById('sr-list');
-    var warn = document.getElementById('sr-warn');
-    if(!list) return;
+    function renderConvo(lines, hasAudio){
+      if(!convo) return;
+      convo.innerHTML = lines.map(function(p){
+        var src = p.audio ? esc(p.audio) : '';
+        return '<div class="turn ' + p.speaker + '" data-role="' + p.speaker + '" tabindex="0" role="button" aria-expanded="false">' +
+          '<button class="play" type="button" aria-label="Play line" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
+          '<div class="bubble">' +
+            '<span class="name">' + esc(NAMES[p.speaker] || '') + '</span>' +
+            '<span class="cue">(your line — tap to reveal)</span>' +
+            '<span class="kana">' + esc(p.kana) + '</span>' +
+            '<span class="rj">' + esc(p.romaji) + '</span>' +
+            '<span class="en">' + esc(p.en) + '</span>' +
+            '<span class="tap-hint">tap to reveal</span>' +
+          '</div></div>';
+      }).join('');
 
-    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    var supported = !!SR;
-    if(!supported && warn) warn.style.display = 'block';
-
-    function norm(s){
-      return String(s || '')
-        .replace(/[\s。、,.\?？!！]/g, '')
-        .toLowerCase();
+      convo.querySelectorAll('.turn').forEach(function(turn){
+        var bubble = turn.querySelector('.bubble');
+        function toggle(){
+          turn.classList.toggle('revealed');
+          turn.setAttribute('aria-expanded', turn.classList.contains('revealed'));
+        }
+        bubble.addEventListener('click', toggle);
+        turn.addEventListener('keydown', function(e){
+          if(document.activeElement && document.activeElement.classList.contains('play')) return;
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+        });
+      });
+      convo.querySelectorAll('.play').forEach(function(btn){
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          AudioPlayer.play(btn.getAttribute('data-src'), btn);
+        });
+      });
     }
 
-    list.innerHTML = PHRASES.map(function(p, i){
-      return '<div class="sr-card" data-i="' + i + '">' +
-        '<div class="sr-target">' +
-          '<button class="sr-mic" type="button" aria-label="Speak this phrase"' + (supported ? '' : ' disabled') + '>🎤</button>' +
-          '<div class="sr-text">' +
-            '<div class="kana">' + p.kana + '</div>' +
-            '<div class="rj">' + p.rj + '</div>' +
-            '<div class="en">' + p.en + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="sr-result" aria-live="polite"></div>' +
-      '</div>';
-    }).join('');
-
-    if(!supported) return;
-
-    var active = null;
-
-    list.querySelectorAll('.sr-card').forEach(function(card){
-      var btn = card.querySelector('.sr-mic');
-      var result = card.querySelector('.sr-result');
-      var phrase = PHRASES[+card.getAttribute('data-i')];
-
-      btn.addEventListener('click', function(){
-        if(active){ active.abort(); active = null; }
-        var rec = new SR();
-        rec.lang = 'ja-JP';
-        rec.interimResults = false;
-        rec.maxAlternatives = 5;
-        active = rec;
-
-        btn.classList.add('listening');
-        result.classList.remove('ok','no');
-        card.classList.add('has-result');
-        result.innerHTML = 'Listening…';
-
-        rec.onresult = function(e){
-          var alts = [];
-          for(var i = 0; i < e.results[0].length; i++){ alts.push(e.results[0][i].transcript); }
-          var heard = alts[0] || '';
-          var ok = alts.some(function(t){
-            var n = norm(t);
-            return phrase.accept.some(function(a){
-              var an = norm(a);
-              return n === an || n.indexOf(an) !== -1 || an.indexOf(n) !== -1;
-            });
-          });
-          result.classList.add(ok ? 'ok' : 'no');
-          result.innerHTML =
-            '<span class="sr-badge ' + (ok ? 'ok">✓ Correct' : 'no">✕ Try again') + '</span>' +
-            'Heard: <span class="heard">' + (heard || '—') + '</span>';
-        };
-        rec.onerror = function(e){
-          result.classList.add('no');
-          result.innerHTML = e.error === 'not-allowed'
-            ? 'Microphone blocked — allow mic access and retry.'
-            : 'Didn\u2019t catch that — tap the mic and try again.';
-        };
-        rec.onend = function(){ btn.classList.remove('listening'); if(active === rec) active = null; };
-
-        try { rec.start(); }
-        catch(err){ btn.classList.remove('listening'); }
+    function setRole(role){
+      if(!convo) return;
+      convo.querySelectorAll('.turn').forEach(function(turn){
+        var mine = role !== 'none' && turn.getAttribute('data-role') === role;
+        turn.classList.toggle('mine', mine);
+        if(!mine) turn.classList.remove('revealed'); // keep partner lines tidy on swap
       });
+      document.querySelectorAll('.role-btn').forEach(function(b){
+        b.setAttribute('aria-pressed', b.getAttribute('data-role') === role);
+      });
+      if(roleHint){
+        roleHint.textContent = role === 'none'
+          ? 'Pick a role to hide that person\u2019s lines and practice saying them yourself.'
+          : 'You are ' + FACE[role] + ' ' + NAMES[role] + '. Their lines are hidden — say each one aloud, then tap to check.';
+      }
+    }
+
+    document.querySelectorAll('.role-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ setRole(btn.getAttribute('data-role')); });
     });
+
+    function renderListen(items, hasAudio){
+      if(!deck) return;
+      if(!items.length){ if(listenStatus) listenStatus.textContent = 'No phrases found.'; return; }
+      var ordered = shuffle(items);
+      deck.innerHTML = ordered.map(function(p, i){
+        var src = p.audio ? esc(p.audio) : '';
+        return '<div class="listen-card" tabindex="0" role="button" aria-expanded="false">' +
+          '<button class="play" type="button" aria-label="Play audio" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
+          '<div class="listen-body">' +
+            '<span class="listen-num">' + (i + 1) + ' / ' + ordered.length + '</span>' +
+            '<p class="listen-prompt">' + (hasAudio ? 'Listen, guess the meaning, then tap to reveal.' : 'Audio pending — tap to reveal.') + '</p>' +
+            '<div class="listen-ans">' +
+              '<span class="kana">' + esc(p.kana) + '</span>' +
+              '<span class="rj">' + esc(p.romaji) + '</span>' +
+              '<span class="en">' + esc(p.en) + '</span>' +
+            '</div>' +
+            '<span class="tap-hint">tap card to reveal</span>' +
+          '</div></div>';
+      }).join('');
+
+      deck.querySelectorAll('.listen-card').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', function(e){
+          if(e.target.closest('.play')) return;
+          toggle();
+        });
+        card.addEventListener('keydown', function(e){
+          if(document.activeElement && document.activeElement.classList.contains('play')) return;
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+        });
+      });
+      deck.querySelectorAll('.play').forEach(function(btn){
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          AudioPlayer.play(btn.getAttribute('data-src'), btn);
+        });
+      });
+
+      if(!hasAudio){
+        var note = document.createElement('p');
+        note.className = 'listen-note';
+        note.textContent = 'Audio not generated yet — run: npm run generate:audio';
+        deck.appendChild(note);
+      }
+    }
+
+    fetch('audio/age-days-months.json', { cache: 'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
+      .then(function(m){
+        var hasAudio = !!(m && m.hasAudio);
+        renderConvo((m && m.convo) || [], hasAudio);
+        renderListen((m && m.listen) || [], hasAudio);
+        setRole('none');
+      })
+      .catch(function(){
+        if(convoStatus) convoStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
+        if(listenStatus) listenStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
+      });
   })();
 </script>
 </body>

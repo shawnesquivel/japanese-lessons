@@ -20,7 +20,9 @@ const ROOT = join(__dirname, "..");
 const AUDIO_DIR = join(ROOT, "audio");
 const MANIFEST_PATH = join(AUDIO_DIR, "manifest.json");
 const WORDS_DIR = join(AUDIO_DIR, "words");
+const AGE_DIR = join(AUDIO_DIR, "age");
 const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
+const AGE_MANIFEST_PATH = join(AUDIO_DIR, "age-days-months.json");
 
 // ---- minimal .env loader (no dependency) ----
 (function loadEnv() {
@@ -37,6 +39,9 @@ const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
 
 const API_KEY = process.env.ELEVENLABS_API_KEY;
 const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || "C8e2F6Cm3l58PjXaVpUW"; // Asahi (native JP, male)
+// Second voice for two-person conversations (defaults to Konoha, native JP female).
+const VOICE_A = process.env.ELEVENLABS_VOICE_ID_A || "T7yYq3WpB94yAuOXraRi"; // Aya (female)
+const VOICE_B = process.env.ELEVENLABS_VOICE_ID_B || VOICE_ID;               // Ken (male)
 const MODEL = process.env.ELEVENLABS_MODEL || "eleven_multilingual_v2";
 const OUTPUT_FORMAT = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_44100_128";
 const FORCE = process.argv.includes("--force");
@@ -174,16 +179,51 @@ const WORDS = [
   { kana: "はちみつ", romaji: "hachimitsu", en: "honey", group: "drink" },
 ];
 
+// ---- Lesson 5: age, days of the week, dates & months ----
+// Listening drill: a native voice says it, the learner guesses, then taps to reveal.
+const L5_LISTEN = [
+  { kana: "なんさいですか。", romaji: "nan sai desu ka.", en: "How old are you?" },
+  { kana: "はたちです。", romaji: "hatachi desu.", en: "I'm 20 years old." },
+  { kana: "じゅっさいです。", romaji: "jussai desu.", en: "I'm 10 years old." },
+  { kana: "きょうはなんようびですか。", romaji: "kyou wa nan youbi desu ka.", en: "What day of the week is it today?" },
+  { kana: "げつようびです。", romaji: "getsu youbi desu.", en: "It's Monday." },
+  { kana: "きんようびです。", romaji: "kin youbi desu.", en: "It's Friday." },
+  { kana: "しがつです。", romaji: "shi gatsu desu.", en: "It's April." },
+  { kana: "くがつです。", romaji: "ku gatsu desu.", en: "It's September." },
+  { kana: "ついたちです。", romaji: "tsuitachi desu.", en: "It's the 1st." },
+  { kana: "はつかです。", romaji: "hatsuka desu.", en: "It's the 20th." },
+  { kana: "おたんじょうびはいつですか。", romaji: "o-tanjoubi wa itsu desu ka.", en: "When is your birthday?" },
+  { kana: "しがつついたちです。", romaji: "shi gatsu tsuitachi desu.", en: "April 1st." },
+];
+
+// Two-person conversation. speaker a = Aya (female), b = Ken (male).
+const L5_CONVO = [
+  { speaker: "a", kana: "すみません、きょうはなんようびですか。", romaji: "sumimasen, kyou wa nan youbi desu ka.", en: "Excuse me, what day of the week is it today?" },
+  { speaker: "b", kana: "きょうはきんようびです。", romaji: "kyou wa kin youbi desu.", en: "Today is Friday." },
+  { speaker: "a", kana: "ありがとう。おたんじょうびはいつですか。", romaji: "arigatou. o-tanjoubi wa itsu desu ka.", en: "Thanks. When is your birthday?" },
+  { speaker: "b", kana: "しがつついたちです。", romaji: "shi gatsu tsuitachi desu.", en: "April 1st." },
+  { speaker: "a", kana: "おいくつですか。", romaji: "o-ikutsu desu ka.", en: "How old are you?" },
+  { speaker: "b", kana: "はたちです。あやさんはなんさいですか。", romaji: "hatachi desu. aya-san wa nan sai desu ka.", en: "I'm 20. Aya, how old are you?" },
+  { speaker: "a", kana: "わたしはじゅうきゅうさいです。", romaji: "watashi wa juukyuu sai desu.", en: "I'm 19." },
+];
+
 function slug(romaji) {
   return romaji.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-function withMeta(items, audioPrefix) {
-  return items.map((p) => ({ ...p, id: slug(p.romaji), audio: `${audioPrefix}/${slug(p.romaji)}.mp3` }));
+function withMeta(items, audioPrefix, voice) {
+  return items.map((p) => ({ ...p, id: slug(p.romaji), audio: `${audioPrefix}/${slug(p.romaji)}.mp3`, voice: voice || VOICE_ID }));
 }
 
 const phrases = withMeta(PHRASES, "audio");
 const words = withMeta(WORDS, "audio/words");
+const l5Listen = withMeta(L5_LISTEN, "audio/age", VOICE_B);
+const l5Convo = L5_CONVO.map((p, i) => ({
+  ...p,
+  id: `c${i + 1}-${slug(p.romaji)}`,
+  audio: `audio/age/c${i + 1}-${slug(p.romaji)}.mp3`,
+  voice: p.speaker === "a" ? VOICE_A : VOICE_B,
+}));
 
 function writeManifest(path, key, items, hasAudio) {
   const manifest = {
@@ -193,6 +233,19 @@ function writeManifest(path, key, items, hasAudio) {
     hasAudio,
   };
   manifest[key] = items;
+  writeFileSync(path, JSON.stringify(manifest, null, 2) + "\n");
+}
+
+function writeAgeManifest(path, listen, convo, hasAudio) {
+  const manifest = {
+    generatedAt: hasAudio ? new Date().toISOString() : null,
+    voiceA: VOICE_A,
+    voiceB: VOICE_B,
+    model: MODEL,
+    hasAudio,
+    listen,
+    convo,
+  };
   writeFileSync(path, JSON.stringify(manifest, null, 2) + "\n");
 }
 
@@ -208,7 +261,7 @@ async function generateSet(client, label, items) {
       continue;
     }
     process.stdout.write(`  ${p.romaji} … `);
-    const audio = await client.textToSpeech.convert(VOICE_ID, {
+    const audio = await client.textToSpeech.convert(p.voice || VOICE_ID, {
       text: p.kana,
       modelId: MODEL,
       outputFormat: OUTPUT_FORMAT,
@@ -224,12 +277,14 @@ async function generateSet(client, label, items) {
 async function main() {
   mkdirSync(AUDIO_DIR, { recursive: true });
   mkdirSync(WORDS_DIR, { recursive: true });
+  mkdirSync(AGE_DIR, { recursive: true });
 
   if (!API_KEY) {
     writeManifest(MANIFEST_PATH, "phrases", phrases, false);
     writeManifest(FLASHCARDS_PATH, "words", words, false);
+    writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, false);
     console.log("No ELEVENLABS_API_KEY found.");
-    console.log(`Wrote ${phrases.length} phrases + ${words.length} words (hasAudio: false).`);
+    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo (hasAudio: false).`);
     console.log("The web UI will render the cards; add a key and re-run to enable playback.");
     return;
   }
@@ -237,13 +292,16 @@ async function main() {
   const { ElevenLabsClient } = await import("@elevenlabs/elevenlabs-js");
   const client = new ElevenLabsClient({ apiKey: API_KEY });
 
-  console.log(`Voice: ${VOICE_ID}  Model: ${MODEL}  Format: ${OUTPUT_FORMAT}`);
+  console.log(`Voice: ${VOICE_ID}  A: ${VOICE_A}  B: ${VOICE_B}  Model: ${MODEL}  Format: ${OUTPUT_FORMAT}`);
   await generateSet(client, "listening", phrases);
   await generateSet(client, "flashcards", words);
+  await generateSet(client, "age:listen", l5Listen);
+  await generateSet(client, "age:convo", l5Convo);
 
   writeManifest(MANIFEST_PATH, "phrases", phrases, true);
   writeManifest(FLASHCARDS_PATH, "words", words, true);
-  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json");
+  writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, true);
+  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json");
 }
 
 main().catch((err) => {
