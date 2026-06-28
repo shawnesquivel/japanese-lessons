@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さい・ようび Worksheet — Age, Days &amp; Months in Japanese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(40px,9vw,74px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+  .nav{margin-top:14px;font-size:14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .nav a{color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .nav a:hover{border-color:var(--a)}
+
+  /* table of contents */
+  .toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0 0}
+  .toc a{font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);
+    border-radius:999px;padding:5px 14px;text-decoration:none;transition:background .12s}
+  .toc a:hover{background:#F3EEE1}
+
+  section{margin-top:48px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:16px 0}
+  .jp{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-sai{background:var(--ko-bg);color:#3C5E25}
+  .c-gatsu{background:var(--so-bg);color:#946012}
+  .c-nichi{background:var(--a-bg);color:#2C4D66}
+  .c-youbi{background:var(--do-bg);color:#9C3119}
+
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td.num{font-weight:700;text-align:center;width:56px;background:#F7F3E8}
+  .tbl td .kana{font-size:1.22em}
+  .tbl td .rj{display:block;color:var(--ink-soft);font-size:13px}
+  .tbl td .gl{display:block;color:var(--ink-soft);font-size:13px}
+  .tbl tr.gotcha td{background:#FBF0DC}
+  .tbl .flag{display:inline-block;font-size:12px;font-weight:700;color:#9C3119;background:var(--do-bg);border-radius:999px;padding:1px 8px;margin-left:6px}
+
+  /* two-column compact lists for big reference tables */
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+  @media(max-width:620px){.cols2{grid-template-columns:1fr}}
+
+  /* interlinear gloss diagram */
+  .gloss{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;text-align:center;margin:6px 0}
+  .gloss .g{display:flex;flex-direction:column;align-items:center;padding:8px 12px;border:1px dashed var(--line-strong);border-radius:10px;background:#fff;min-width:60px}
+  .gloss .g b{font-family:"Zen Antique",serif;font-weight:400;font-size:24px;line-height:1.1}
+  .gloss .g i{font-style:normal;color:var(--ink-soft);font-size:12px;margin-top:6px}
+  .gloss .g.key{border-style:solid}
+  .gloss .g.key.k-q{border-color:var(--do);background:var(--do-bg)}
+  .gloss .g.key.k-word{border-color:var(--a);background:var(--a-bg)}
+
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  .note.win{border-left-color:var(--ko)}
+  .note.warn{border-left-color:var(--do)}
+
+  /* answer-pattern fill-in */
+  .pattern{background:#fff;border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;margin:14px 0;text-align:center}
+  .pattern .big{font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);line-height:1.4;margin:0 0 4px}
+  .pattern .blank{color:var(--do);border-bottom:2px solid var(--do);padding:0 14px}
+  .pattern .rj{color:var(--ink-soft);font-size:14px}
+
+  /* exercises (tap to reveal) */
+  .exgroup{margin:22px 0}
+  .ex-tag{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.04em;background:var(--ink);color:var(--paper);padding:3px 12px;border-radius:999px;margin-bottom:4px}
+  .ex-instr{color:var(--ink-soft);font-size:15px;margin:6px 0 14px}
+  ol.q{margin:0;padding-left:0;counter-reset:q;list-style:none}
+  ol.q li{
+    counter-increment:q;display:flex;gap:14px;align-items:flex-start;
+    padding:11px 0;border-bottom:1px dashed var(--line-strong);
+    cursor:pointer;border-radius:8px;transition:background .12s;
+  }
+  ol.q li:hover{background:#F7F3E8}
+  ol.q li:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  ol.q li::before{
+    content:counter(q);flex:0 0 30px;height:30px;border-radius:50%;
+    background:#F3EEE1;border:1px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;color:var(--ink-soft);
+  }
+  ol.q li .prompt{flex:1}
+  ol.q li .prompt .hint{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px}
+  ol.q li .ans{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-strong)}
+  ol.q li .ans .kana{font-size:1.2em;margin-right:8px}
+  ol.q li .ans .rj{font-weight:700;color:var(--ko)}
+  ol.q li .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:6px}
+  ol.q li.revealed .ans{display:block}
+  ol.q li.revealed .tap-hint{display:none}
+
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese · age, days &amp; months · day 5</div>
+    <h1>さい・ようび</h1>
+    <div class="subtitle">how old are you? — age, days of the week, dates &amp; months</div>
+    <div class="nav">
+      <a href="index.html">← こそあど worksheet</a>
+      <a href="time.html">じかん · telling time</a>
+      <a href="flashcards.html">FLASHCARDS deck</a>
+      <a href="games.html">games →</a>
+    </div>
+    <nav class="toc">
+      <a href="#age">① Age</a>
+      <a href="#ages">② さい counter</a>
+      <a href="#months">③ Months</a>
+      <a href="#dates">④ Dates</a>
+      <a href="#week">⑤ Days of the week</a>
+      <a href="#exercises">⑥ Exercises</a>
+    </nav>
+  </header>
+
+  <!-- ===================== AGE ===================== -->
+  <section id="age">
+    <div class="sec-head"><span class="sec-kanji">歳</span><h2>Asking &amp; telling your age</h2></div>
+    <p class="lead">There are two ways to ask. One is plain, one is extra polite. The answer for both is the same: a number + <span class="chip c-sai">さい sai</span>.</p>
+
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">なんさい ですか。</span><span class="rj">nan sai desu ka.</span></td><td class="en"><strong>How old are you?</strong> — plain (なん “what” + さい “years old”)</td></tr>
+        <tr><td><span class="kana">おいくつ ですか。</span><span class="rj">o-ikutsu desu ka.</span></td><td class="en"><strong>How old are you?</strong> — polite / softer</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">The counter for age is <span class="chip c-sai">さい</span> (歳). Attach it to a number, then end with <span class="romaji">です</span>.</div>
+
+    <h3>Answering</h3>
+    <div class="pattern">
+      <p class="big">わたしは <span class="blank">&nbsp;&nbsp;&nbsp;</span> さい です。</p>
+      <span class="rj">watashi wa <strong>___</strong> sai desu. — “I am ___ years old.”</span>
+    </div>
+    <p class="lead">You can drop <span class="romaji">わたしは</span> once it's obvious you're talking about yourself — <strong>___ さいです</strong> is enough.</p>
+  </section>
+
+  <!-- ===================== SAI COUNTER ===================== -->
+  <section id="ages">
+    <div class="sec-head"><span class="sec-kanji">数</span><h2>Numbers + さい</h2></div>
+    <p class="lead">Mostly it's just the plain number + <span class="chip c-sai">さい</span>. A few harden the sound — <strong>1, 8, 10</strong> turn into a small つ + さい, and <strong>20</strong> has its own special word.</p>
+
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="gotcha"><td class="num">1</td><td><span class="kana">いっさい</span><span class="rj">issai</span><span class="flag">gotcha</span></td><td class="en">っ before さい (not “ichisai”).</td></tr>
+        <tr><td class="num">2</td><td><span class="kana">にさい</span><span class="rj">ni sai</span></td><td class="en"></td></tr>
+        <tr><td class="num">3</td><td><span class="kana">さんさい</span><span class="rj">san sai</span></td><td class="en"></td></tr>
+        <tr><td class="num">4</td><td><span class="kana">よんさい</span><span class="rj">yon sai</span></td><td class="en"></td></tr>
+        <tr><td class="num">5</td><td><span class="kana">ごさい</span><span class="rj">go sai</span></td><td class="en"></td></tr>
+        <tr><td class="num">6</td><td><span class="kana">ろくさい</span><span class="rj">roku sai</span></td><td class="en"></td></tr>
+        <tr><td class="num">7</td><td><span class="kana">ななさい</span><span class="rj">nana sai</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">8</td><td><span class="kana">はっさい</span><span class="rj">hassai</span><span class="flag">gotcha</span></td><td class="en">っ before さい (not “hachisai”).</td></tr>
+        <tr><td class="num">9</td><td><span class="kana">きゅうさい</span><span class="rj">kyuu sai</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">10</td><td><span class="kana">じゅっさい・じっさい</span><span class="rj">jussai / jissai</span><span class="flag">gotcha</span></td><td class="en">Both readings are fine; じゅっさい is more common.</td></tr>
+        <tr><td class="num">11</td><td><span class="kana">じゅういっさい</span><span class="rj">juu issai</span></td><td class="en">10 + 1 → keeps the っ from いっさい.</td></tr>
+        <tr class="gotcha"><td class="num">20</td><td><span class="kana">はたち</span><span class="rj">hatachi</span><span class="flag">special</span></td><td class="en"><strong>はたち</strong> — totally irregular, not “nijuu sai”.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Bigger numbers — the tens</h3>
+    <p class="lead">For 30, 40 and up you just build the number normally, then add <span class="chip c-sai">さい</span> (e.g. <span class="romaji">sanjuu sai</span> = 30 years old).</p>
+    <table class="tbl">
+      <tbody>
+        <tr><td class="num">30</td><td><span class="kana">さんじゅう</span><span class="rj">sanjuu</span></td><td class="en">→ さんじゅっさい <span class="romaji">sanjussai</span> = 30 yrs</td></tr>
+        <tr><td class="num">40</td><td><span class="kana">よんじゅう</span><span class="rj">yonjuu</span></td><td class="en">→ よんじゅっさい <span class="romaji">yonjussai</span> = 40 yrs</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn"><strong>Lock in the irregulars:</strong> <span class="romaji">1 = issai</span>, <span class="romaji">8 = hassai</span>, <span class="romaji">10 = jussai</span>, and <span class="romaji">20 = hatachi</span>. Everything else is plain number + さい.</div>
+  </section>
+
+  <!-- ===================== MONTHS ===================== -->
+  <section id="months">
+    <div class="sec-head"><span class="sec-kanji">月</span><h2>Months — number + がつ</h2></div>
+    <p class="lead">Months are dead simple: the month number + <span class="chip c-gatsu">がつ gatsu</span> (月). “January” is literally “1-month”, “February” is “2-month”, and so on.</p>
+
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1月</td><td><span class="kana">いちがつ</span><span class="rj">ichi gatsu</span></td><td class="en">January</td></tr>
+        <tr><td class="num">2月</td><td><span class="kana">にがつ</span><span class="rj">ni gatsu</span></td><td class="en">February</td></tr>
+        <tr><td class="num">3月</td><td><span class="kana">さんがつ</span><span class="rj">san gatsu</span></td><td class="en">March</td></tr>
+        <tr class="gotcha"><td class="num">4月</td><td><span class="kana">しがつ</span><span class="rj">shi gatsu</span><span class="flag">gotcha</span></td><td class="en">April — <strong>し</strong>, not “yon”.</td></tr>
+        <tr><td class="num">5月</td><td><span class="kana">ごがつ</span><span class="rj">go gatsu</span></td><td class="en">May</td></tr>
+        <tr><td class="num">6月</td><td><span class="kana">ろくがつ</span><span class="rj">roku gatsu</span></td><td class="en">June</td></tr>
+        <tr class="gotcha"><td class="num">7月</td><td><span class="kana">しちがつ</span><span class="rj">shichi gatsu</span><span class="flag">gotcha</span></td><td class="en">July — <strong>しち</strong>, not “nana”.</td></tr>
+        <tr><td class="num">8月</td><td><span class="kana">はちがつ</span><span class="rj">hachi gatsu</span></td><td class="en">August</td></tr>
+        <tr class="gotcha"><td class="num">9月</td><td><span class="kana">くがつ</span><span class="rj">ku gatsu</span><span class="flag">gotcha</span></td><td class="en">September — <strong>く</strong>, not “kyuu”.</td></tr>
+        <tr><td class="num">10月</td><td><span class="kana">じゅうがつ</span><span class="rj">juu gatsu</span></td><td class="en">October</td></tr>
+        <tr><td class="num">11月</td><td><span class="kana">じゅういちがつ</span><span class="rj">juuichi gatsu</span></td><td class="en">November</td></tr>
+        <tr><td class="num">12月</td><td><span class="kana">じゅうにがつ</span><span class="rj">juuni gatsu</span></td><td class="en">December</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn"><strong>The three to watch:</strong> <span class="romaji">4月 = しがつ (shi)</span>, <span class="romaji">7月 = しちがつ (shichi)</span>, <span class="romaji">9月 = くがつ (ku)</span> — same odd readings as in the hours.</div>
+  </section>
+
+  <!-- ===================== DATES ===================== -->
+  <section id="dates">
+    <div class="sec-head"><span class="sec-kanji">日</span><h2>Days of the month — the date</h2></div>
+    <p class="lead">This is the trickiest set. Days <strong>1–10</strong> (plus 14, 20, 24) use old native readings you have to memorise. From <strong>11 on</strong> it's mostly regular: number + <span class="chip c-nichi">にち nichi</span> (日).</p>
+
+    <h3>Days 1–10 — memorise these</h3>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th></tr></thead>
+      <tbody>
+        <tr class="gotcha"><td class="num">1日</td><td><span class="kana">ついたち</span><span class="rj">tsuitachi</span></td></tr>
+        <tr class="gotcha"><td class="num">2日</td><td><span class="kana">ふつか</span><span class="rj">futsuka</span></td></tr>
+        <tr class="gotcha"><td class="num">3日</td><td><span class="kana">みっか</span><span class="rj">mikka</span></td></tr>
+        <tr class="gotcha"><td class="num">4日</td><td><span class="kana">よっか</span><span class="rj">yokka</span></td></tr>
+        <tr class="gotcha"><td class="num">5日</td><td><span class="kana">いつか</span><span class="rj">itsuka</span></td></tr>
+        <tr class="gotcha"><td class="num">6日</td><td><span class="kana">むいか</span><span class="rj">muika</span></td></tr>
+        <tr class="gotcha"><td class="num">7日</td><td><span class="kana">なのか</span><span class="rj">nanoka</span></td></tr>
+        <tr class="gotcha"><td class="num">8日</td><td><span class="kana">ようか</span><span class="rj">youka</span></td></tr>
+        <tr class="gotcha"><td class="num">9日</td><td><span class="kana">ここのか</span><span class="rj">kokonoka</span></td></tr>
+        <tr class="gotcha"><td class="num">10日</td><td><span class="kana">とおか</span><span class="rj">tooka</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Days 11–20 — mostly number + にち</h3>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th></tr></thead>
+      <tbody>
+        <tr><td class="num">11日</td><td><span class="kana">じゅういちにち</span><span class="rj">juuichi nichi</span></td></tr>
+        <tr><td class="num">12日</td><td><span class="kana">じゅうににち</span><span class="rj">juuni nichi</span></td></tr>
+        <tr><td class="num">13日</td><td><span class="kana">じゅうさんにち</span><span class="rj">juusan nichi</span></td></tr>
+        <tr class="gotcha"><td class="num">14日</td><td><span class="kana">じゅうよっか</span><span class="rj">juu yokka</span><span class="flag">gotcha</span></td></tr>
+        <tr><td class="num">15日</td><td><span class="kana">じゅうごにち</span><span class="rj">juugo nichi</span></td></tr>
+        <tr><td class="num">16日</td><td><span class="kana">じゅうろくにち</span><span class="rj">juuroku nichi</span></td></tr>
+        <tr><td class="num">17日</td><td><span class="kana">じゅうしちにち</span><span class="rj">juushichi nichi</span></td></tr>
+        <tr><td class="num">18日</td><td><span class="kana">じゅうはちにち</span><span class="rj">juuhachi nichi</span></td></tr>
+        <tr><td class="num">19日</td><td><span class="kana">じゅうくにち</span><span class="rj">juuku nichi</span></td></tr>
+        <tr class="gotcha"><td class="num">20日</td><td><span class="kana">はつか</span><span class="rj">hatsuka</span><span class="flag">special</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">After day 20 it stays regular (<span class="romaji">21 = nijuuichi nichi</span>…), except <strong>24日 = にじゅうよっか (nijuu yokka)</strong>, which borrows the よっか reading again.</div>
+  </section>
+
+  <!-- ===================== WEEK ===================== -->
+  <section id="week">
+    <div class="sec-head"><span class="sec-kanji">曜</span><h2>Days of the week</h2></div>
+    <p class="lead">Every day of the week ends in <span class="chip c-youbi">ようび youbi</span> (曜日). The first part is an element — moon, fire, water, wood, metal, earth, sun.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Japanese</th><th>English</th><th>From</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kana">げつようび</span><span class="rj">getsu youbi</span></td><td class="en">Monday</td><td class="en">月 moon</td></tr>
+        <tr><td><span class="kana">かようび</span><span class="rj">ka youbi</span></td><td class="en">Tuesday</td><td class="en">火 fire</td></tr>
+        <tr><td><span class="kana">すいようび</span><span class="rj">sui youbi</span></td><td class="en">Wednesday</td><td class="en">水 water</td></tr>
+        <tr><td><span class="kana">もくようび</span><span class="rj">moku youbi</span></td><td class="en">Thursday</td><td class="en">木 wood</td></tr>
+        <tr><td><span class="kana">きんようび</span><span class="rj">kin youbi</span></td><td class="en">Friday</td><td class="en">金 metal</td></tr>
+        <tr><td><span class="kana">どようび</span><span class="rj">do youbi</span></td><td class="en">Saturday</td><td class="en">土 earth</td></tr>
+        <tr><td><span class="kana">にちようび</span><span class="rj">nichi youbi</span></td><td class="en">Sunday</td><td class="en">日 sun</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Which day is it today?</h3>
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(20px,5vw,28px);margin:0 0 4px">きょうは なんようび ですか。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">kyou wa nan youbi desu ka.</span> — “What day of the week is it today?”</p>
+      <div class="gloss">
+        <span class="g"><b>きょう</b><i>today</i></span>
+        <span class="g"><b>は</b><i>topic</i></span>
+        <span class="g key k-q"><b>なん</b><i>what</i></span>
+        <span class="g key k-word"><b>ようび</b><i>day of week</i></span>
+        <span class="g"><b>です</b><i>is</i></span>
+        <span class="g"><b>か</b><i>?</i></span>
+      </div>
+      <div class="figcap" style="text-align:center;color:var(--ink-soft);font-size:14px;margin-top:6px">なん “what” swaps in for the day; か at the end is the spoken question mark.</div>
+    </div>
+
+    <h3>Answering</h3>
+    <div class="pattern">
+      <p class="big">きょうは <span class="blank">&nbsp;&nbsp;&nbsp;</span> ようび です。</p>
+      <span class="rj">kyou wa <strong>___</strong> youbi desu. — “Today is ___day.”</span>
+    </div>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">きょうは げつようび です。</span><span class="rj">kyou wa getsu youbi desu.</span></td><td class="en">Today is Monday.</td></tr>
+        <tr><td><span class="kana">きょうは どようび です。</span><span class="rj">kyou wa do youbi desu.</span></td><td class="en">Today is Saturday.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXERCISES ===================== -->
+  <section id="exercises">
+    <div class="sec-head"><span class="sec-kanji">試</span><h2>Exercises</h2></div>
+    <p class="lead">Say it in Japanese, then tap to check. Cards shuffle every refresh.</p>
+
+    <div class="exgroup">
+      <span class="ex-tag">A · age</span>
+      <p class="ex-instr">Watch 1, 8, 10 and 20.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">How old are you? (plain)<div class="ans"><span class="kana">なんさい ですか。</span><span class="rj">nan sai desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">How old are you? (polite)<div class="ans"><span class="kana">おいくつ ですか。</span><span class="rj">o-ikutsu desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">1 year old <span class="hint">watch the reading</span><div class="ans"><span class="kana">いっさい</span><span class="rj">issai (not ichisai)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">8 years old<div class="ans"><span class="kana">はっさい</span><span class="rj">hassai</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">10 years old<div class="ans"><span class="kana">じゅっさい</span><span class="rj">jussai (or jissai)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">20 years old <span class="hint">special word</span><div class="ans"><span class="kana">はたち</span><span class="rj">hatachi (not nijuu sai)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">I am 5 years old.<div class="ans"><span class="kana">わたしは ごさい です。</span><span class="rj">watashi wa go sai desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">B · months (がつ)</span>
+      <p class="ex-instr">Mind 4, 7, 9.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">January<div class="ans"><span class="kana">いちがつ</span><span class="rj">ichi gatsu</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">April <span class="hint">watch the reading</span><div class="ans"><span class="kana">しがつ</span><span class="rj">shi gatsu (not yon)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">July<div class="ans"><span class="kana">しちがつ</span><span class="rj">shichi gatsu</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">September <span class="hint">watch the reading</span><div class="ans"><span class="kana">くがつ</span><span class="rj">ku gatsu (not kyuu)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">December<div class="ans"><span class="kana">じゅうにがつ</span><span class="rj">juuni gatsu</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">C · dates (にち)</span>
+      <p class="ex-instr">The first ten are native readings.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 1st<div class="ans"><span class="kana">ついたち</span><span class="rj">tsuitachi</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 3rd<div class="ans"><span class="kana">みっか</span><span class="rj">mikka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 4th<div class="ans"><span class="kana">よっか</span><span class="rj">yokka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 8th<div class="ans"><span class="kana">ようか</span><span class="rj">youka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 10th<div class="ans"><span class="kana">とおか</span><span class="rj">tooka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 14th <span class="hint">borrows a native reading</span><div class="ans"><span class="kana">じゅうよっか</span><span class="rj">juu yokka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 20th <span class="hint">special word</span><div class="ans"><span class="kana">はつか</span><span class="rj">hatsuka</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">the 15th<div class="ans"><span class="kana">じゅうごにち</span><span class="rj">juugo nichi</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">D · days of the week</span>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Monday<div class="ans"><span class="kana">げつようび</span><span class="rj">getsu youbi</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Wednesday<div class="ans"><span class="kana">すいようび</span><span class="rj">sui youbi</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Saturday<div class="ans"><span class="kana">どようび</span><span class="rj">do youbi</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">What day of the week is it today?<div class="ans"><span class="kana">きょうは なんようび ですか。</span><span class="rj">kyou wa nan youbi desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Today is Friday.<div class="ans"><span class="kana">きょうは きんようび です。</span><span class="rj">kyou wa kin youbi desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="note win"><strong>If you slipped:</strong> age irregulars are <span class="romaji">issai / hassai / jussai / hatachi</span>; months 4·7·9 are <span class="romaji">shi / shichi / ku</span>; dates 1–10 are native words (<span class="romaji">tsuitachi … tooka</span>), and 20 is <span class="romaji">hatsuka</span>.</div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    document.querySelectorAll('ol.q').forEach(function(ol){
+      shuffle(Array.prototype.slice.call(ol.children)).forEach(function(li){ ol.appendChild(li); });
+    });
+    document.querySelectorAll('.flashcard').forEach(function(card){
+      function toggle(){
+        card.classList.toggle('revealed');
+        card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+      }
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
