@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>じかん Worksheet — Telling Time in Japanese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(46px,11vw,82px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+  .nav{margin-top:14px;font-size:14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .nav a{color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .nav a:hover{border-color:var(--a)}
+
+  section{margin-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:16px 0}
+  .jp{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-now{background:var(--ko-bg);color:#3C5E25}
+  .c-hour{background:var(--so-bg);color:#946012}
+  .c-min{background:var(--a-bg);color:#2C4D66}
+
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td.num{font-weight:700;text-align:center;width:64px;background:#F7F3E8}
+  .tbl td .kana{font-size:1.25em}
+  .tbl td .rj{display:block;color:var(--ink-soft);font-size:13px}
+  .tbl tr.gotcha td{background:#FBF0DC}
+  .tbl .flag{display:inline-block;font-size:12px;font-weight:700;color:#9C3119;background:var(--do-bg);border-radius:999px;padding:1px 8px;margin-left:6px}
+
+  /* ending pill: ぷん (pun) vs ふん (fun) */
+  .end{display:inline-block;font-weight:700;font-size:13px;border-radius:999px;padding:2px 11px}
+  .end-pun{background:var(--do-bg);color:#9C3119}
+  .end-fun{background:var(--a-bg);color:#2C4D66}
+  .tbl td.c-pun{background:#FBEDE8}
+  .tbl td.c-fun{background:#EAF1F6}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 0;font-size:14px;color:var(--ink-soft)}
+
+  /* interlinear gloss diagram */
+  .gloss{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;text-align:center;margin:6px 0}
+  .gloss .g{display:flex;flex-direction:column;align-items:center;padding:8px 12px;border:1px dashed var(--line-strong);border-radius:10px;background:#fff;min-width:64px}
+  .gloss .g b{font-family:"Zen Antique",serif;font-weight:400;font-size:26px;line-height:1.1}
+  .gloss .g i{font-style:normal;color:var(--ink-soft);font-size:12px;margin-top:6px}
+  .gloss .g.key{border-style:solid}
+  .gloss .g.key.k-now{border-color:var(--ko);background:var(--ko-bg)}
+  .gloss .g.key.k-hour{border-color:var(--so);background:var(--so-bg)}
+
+  /* order-of-time flow */
+  .flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .flow .step{flex:1 1 180px;background:#fff;border:1px solid var(--line-strong);border-radius:12px;padding:14px 16px}
+  .flow .step .n{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-soft)}
+  .flow .step .t{font-family:"Zen Antique",serif;font-size:24px;margin:4px 0 2px}
+  .flow .step .d{font-size:13px;color:var(--ink-soft)}
+  .flow .arrow{align-self:center;color:#C9BFA6;font-size:22px}
+  .flow .s1{background:var(--ko-bg);border-color:var(--ko)}
+  .flow .s2{background:var(--so-bg);border-color:var(--so)}
+  .flow .s3{background:var(--a-bg);border-color:var(--a)}
+
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  .note.win{border-left-color:var(--ko)}
+  .note.warn{border-left-color:var(--do)}
+
+  .rule-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0;text-align:left}
+  .rule-card h3{margin:0 0 10px;font-size:17px}
+  .rule-card p{margin:0 0 12px;font-size:15px;color:var(--ink-soft)}
+  .rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  @media(max-width:560px){.rule-grid{grid-template-columns:1fr}}
+  .rule-box{border-radius:10px;padding:12px 14px;font-size:14px}
+  .rule-box.pun{background:var(--do-bg);border:1px solid #E8C4B8}
+  .rule-box.fun{background:var(--a-bg);border:1px solid #C5D6E2}
+  .rule-box .lbl{font-weight:700;font-size:12px;letter-spacing:.04em;margin-bottom:8px}
+  .rule-box.pun .lbl{color:#9C3119}
+  .rule-box.fun .lbl{color:#2C4D66}
+  .rule-box ul{margin:0;padding-left:18px}
+  .rule-box li{margin:4px 0}
+  .rom{font-weight:700;color:var(--ink)}
+  .rom .plus{color:#B7AE97;font-weight:400}
+  .rom .flip{color:var(--do)}
+  .rule-one{background:var(--ko-bg);border:1px solid #C8D9B8;border-radius:10px;padding:12px 16px;font-size:15px;margin-top:12px}
+  .rule-one b{color:#3C5E25}
+
+  svg{display:block;max-width:260px;width:100%;height:auto;margin:0 auto}
+  .figcap{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:6px}
+
+  /* exercises (tap to reveal) */
+  .exgroup{margin:22px 0}
+  .ex-tag{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.04em;background:var(--ink);color:var(--paper);padding:3px 12px;border-radius:999px;margin-bottom:4px}
+  .ex-instr{color:var(--ink-soft);font-size:15px;margin:6px 0 14px}
+  ol.q{margin:0;padding-left:0;counter-reset:q;list-style:none}
+  ol.q li{
+    counter-increment:q;display:flex;gap:14px;align-items:flex-start;
+    padding:11px 0;border-bottom:1px dashed var(--line-strong);
+    cursor:pointer;border-radius:8px;transition:background .12s;
+  }
+  ol.q li:hover{background:#F7F3E8}
+  ol.q li:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  ol.q li::before{
+    content:counter(q);flex:0 0 30px;height:30px;border-radius:50%;
+    background:#F3EEE1;border:1px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;color:var(--ink-soft);
+  }
+  ol.q li .prompt{flex:1}
+  ol.q li .prompt .hint{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px}
+  ol.q li .ans{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-strong)}
+  ol.q li .ans .kana{font-size:1.2em;margin-right:8px}
+  ol.q li .ans .rj{font-weight:700;color:var(--ko)}
+  ol.q li .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:6px}
+  ol.q li.revealed .ans{display:block}
+  ol.q li.revealed .tap-hint{display:none}
+
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese · telling time · day 4</div>
+    <h1>じかん</h1>
+    <div class="subtitle">what time is it? — hours, minutes, A.M./P.M.</div>
+    <div class="nav">
+      <a href="index.html">← こそあど worksheet</a>
+      <a href="flashcards.html">FLASHCARDS deck</a>
+      <a href="games.html">じかん GAMES →</a>
+    </div>
+  </header>
+
+  <!-- ===================== START HERE ===================== -->
+  <section id="start">
+    <div class="sec-head"><span class="sec-kanji">今</span><h2>Start here: one question</h2></div>
+    <p class="lead">The whole lesson hangs off a single sentence you can use today — asking a stranger the time:</p>
+
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(22px,5vw,30px);margin:0 0 4px">すみません、いま なんじ ですか。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">sumimasen, ima nan ji desu ka.</span> — “Excuse me, what time is it now?”</p>
+      <div class="gloss">
+        <span class="g"><b>すみません</b><i>excuse me</i></span>
+        <span class="g key k-now"><b>いま</b><i>now</i></span>
+        <span class="g"><b>なん</b><i>what</i></span>
+        <span class="g key k-hour"><b>じ</b><i>hour / o'clock</i></span>
+        <span class="g"><b>ですか</b><i>is it?</i></span>
+      </div>
+      <div class="figcap">The two words to lock in first are highlighted.</div>
+    </div>
+
+    <p class="lead">Those two are the heart of everything below:</p>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="chip c-now">いま</span></td><td><span class="romaji">ima</span></td><td class="en"><strong>now</strong></td></tr>
+        <tr><td><span class="chip c-hour">じ</span></td><td><span class="romaji">ji</span></td><td class="en"><strong>hour / o'clock</strong> — attaches to a number</td></tr>
+        <tr><td><span class="chip c-hour">なんじ</span></td><td><span class="romaji">nan ji</span></td><td class="en"><strong>what hour = what time</strong> (なん “what” + じ “hour”)</td></tr>
+      </tbody>
+    </table>
+    <div class="note">To answer, you just drop the number in and end with <span class="romaji">です</span>: <strong>さんじ です</strong> = “(It's) 3 o'clock.”</div>
+  </section>
+
+  <!-- ===================== HOURS ===================== -->
+  <section id="hours">
+    <div class="sec-head"><span class="sec-kanji">時</span><h2>The hours — number + じ</h2></div>
+    <p class="lead">Take a number and stick <span class="chip c-hour">じ ji</span> on the end. Three of them bend the reading — those are the ones that trip everyone up.</p>
+
+    <div class="card">
+      <svg viewBox="0 0 220 220" role="img" aria-label="A clock face. The short hand points to the hours, the long hand points to the minutes.">
+        <circle cx="110" cy="110" r="86" fill="#fff" stroke="var(--line-strong)" stroke-width="2"/>
+        <circle cx="110" cy="110" r="86" fill="none" stroke="#F3EEE1" stroke-width="6" opacity="0"/>
+        <text x="110" y="42" text-anchor="middle" font-family="Zen Maru Gothic" font-size="15" fill="var(--ink-soft)">12</text>
+        <text x="184" y="116" text-anchor="middle" font-family="Zen Maru Gothic" font-size="15" fill="var(--ink-soft)">3</text>
+        <text x="110" y="192" text-anchor="middle" font-family="Zen Maru Gothic" font-size="15" fill="var(--ink-soft)">6</text>
+        <text x="38" y="116" text-anchor="middle" font-family="Zen Maru Gothic" font-size="15" fill="var(--ink-soft)">9</text>
+        <!-- hour hand (short) -> ~10 -->
+        <line x1="110" y1="110" x2="70" y2="86" stroke="var(--so)" stroke-width="6" stroke-linecap="round"/>
+        <!-- minute hand (long) -> 2 -->
+        <line x1="110" y1="110" x2="166" y2="78" stroke="var(--a)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="110" cy="110" r="5" fill="var(--ink)"/>
+      </svg>
+      <div class="figcap"><span class="chip c-hour">short hand = じ (hours)</span> &nbsp; <span class="chip c-min">long hand = ふん/ぷん (minutes)</span></div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><span class="kana">いちじ</span><span class="rj">ichi ji</span></td><td class="en"></td></tr>
+        <tr><td class="num">2</td><td><span class="kana">にじ</span><span class="rj">ni ji</span></td><td class="en"></td></tr>
+        <tr><td class="num">3</td><td><span class="kana">さんじ</span><span class="rj">san ji</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">4</td><td><span class="kana">よじ</span><span class="rj">yo ji</span><span class="flag">gotcha</span></td><td class="en"><strong>よじ</strong>, not “yonji”.</td></tr>
+        <tr><td class="num">5</td><td><span class="kana">ごじ</span><span class="rj">go ji</span></td><td class="en"></td></tr>
+        <tr><td class="num">6</td><td><span class="kana">ろくじ</span><span class="rj">roku ji</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">7</td><td><span class="kana">しちじ</span><span class="rj">shichi ji</span><span class="flag">gotcha</span></td><td class="en"><strong>しちじ</strong> (uses shichi, not nana).</td></tr>
+        <tr><td class="num">8</td><td><span class="kana">はちじ</span><span class="rj">hachi ji</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">9</td><td><span class="kana">くじ</span><span class="rj">ku ji</span><span class="flag">gotcha</span></td><td class="en"><strong>くじ</strong>, not “kyuuji”.</td></tr>
+        <tr><td class="num">10</td><td><span class="kana">じゅうじ</span><span class="rj">juu ji</span></td><td class="en"></td></tr>
+        <tr><td class="num">11</td><td><span class="kana">じゅういちじ</span><span class="rj">juuichi ji</span></td><td class="en"></td></tr>
+        <tr><td class="num">12</td><td><span class="kana">じゅうにじ</span><span class="rj">juuni ji</span></td><td class="en"></td></tr>
+      </tbody>
+    </table>
+    <div class="note warn"><strong>Memorize the three:</strong> <span class="romaji">4 = よじ (yoji)</span>, <span class="romaji">7 = しちじ (shichiji)</span>, <span class="romaji">9 = くじ (kuji)</span>. The rest are just the plain number + じ.</div>
+  </section>
+
+  <!-- ===================== AM PM HALF ===================== -->
+  <section id="ampm">
+    <div class="sec-head"><span class="sec-kanji">半</span><h2>A.M., P.M., and “half”</h2></div>
+    <p class="lead">Two words mark morning vs afternoon — and they go <strong>before</strong> the time. One more word saves you from counting to thirty.</p>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">ごぜん</span><span class="rj">gozen</span></td><td class="en"><strong>A.M.</strong> (before noon) — goes first: <span class="romaji">gozen shichi ji</span> = 7 A.M.</td></tr>
+        <tr><td><span class="kana">ごご</span><span class="rj">gogo</span></td><td class="en"><strong>P.M.</strong> (afternoon) — <span class="romaji">gogo yo ji</span> = 4 P.M.</td></tr>
+        <tr><td><span class="kana">はん</span><span class="rj">han</span></td><td class="en"><strong>half past</strong> — literally means “half”. <span class="romaji">ni ji han</span> = 2:30.</td></tr>
+      </tbody>
+    </table>
+    <div class="note">はん goes at the <em>end</em>, where the minutes would be: <strong>ごご よじ はん</strong> = 4:30 P.M.</div>
+  </section>
+
+  <!-- ===================== MINUTES ===================== -->
+  <section id="minutes">
+    <div class="sec-head"><span class="sec-kanji">分</span><h2>The minutes — ふん vs ぷん</h2></div>
+    <p class="lead">The counter is always <span class="end end-fun">ふん fun</span>. What changes is the sound <em>right before it</em> — that bump flips fun into <span class="end end-pun">ぷん pun</span>. Check the romaji ending; no need to memorise {1, 3, 4, 6, 8, 10}.</p>
+
+    <div class="rule-card">
+      <h3>Why fun becomes pun — one check on the romaji</h3>
+      <p>Ask: what sound comes right before <span class="rom">fun</span>? Two endings harden it to <span class="rom">pun</span>. A vowel keeps it soft.</p>
+
+      <div class="rule-grid">
+        <div class="rule-box pun">
+          <div class="lbl">→ ぷん pun · two triggers</div>
+          <ul>
+            <li><strong>ends in っ</strong> (stop):<br>
+              <span class="rom">ip<span class="plus">+</span>fun <span class="flip">→ ippun</span></span>,
+              <span class="rom">rop<span class="plus">+</span>fun <span class="flip">→ roppun</span></span>,
+              <span class="rom">hap<span class="plus">+</span>fun <span class="flip">→ happun</span></span>,
+              <span class="rom">jup<span class="plus">+</span>fun <span class="flip">→ juppun</span></span></li>
+            <li><strong>ends in -n</strong>:<br>
+              <span class="rom">san<span class="plus">+</span>fun <span class="flip">→ sanpun</span></span>,
+              <span class="rom">yon<span class="plus">+</span>fun <span class="flip">→ yonpun</span></span></li>
+          </ul>
+        </div>
+        <div class="rule-box fun">
+          <div class="lbl">→ ふん fun · vowel ending</div>
+          <ul>
+            <li><strong>ends in a vowel</strong> (open airflow):<br>
+              <span class="rom">ni<span class="plus">+</span>fun → nifun</span>,
+              <span class="rom">go<span class="plus">+</span>fun → gofun</span>,
+              <span class="rom">nana<span class="plus">+</span>fun → nanafun</span>,
+              <span class="rom">kyuu<span class="plus">+</span>fun → kyuufun</span></li>
+          </ul>
+          <p style="margin:8px 0 0;font-size:13px">Say <span class="rom">ip-fun</span> fast — your mouth wants <span class="rom">ippun</span>. Say <span class="rom">ni-fun</span> — it stays smooth.</p>
+        </div>
+      </div>
+
+      <div class="rule-one"><b>Whole rule:</b> romaji ends in <b>っ</b> or <b>-n</b> → <span class="end end-pun">ぷん</span>. Ends in a vowel → <span class="end end-fun">ふん</span>. Teens follow the last digit (13 = juu + <span class="rom">sanpun</span>, 15 = juu + <span class="rom">gofun</span>).</div>
+    </div>
+
+    <p class="lead">Reference table — colour-coded by ending:</p>
+
+    <div class="legend">
+      <span><span class="end end-pun">ぷん pun</span> = harder “p” sound</span>
+      <span><span class="end end-fun">ふん fun</span> = softer “f” sound</span>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>min</th><th>Japanese</th><th>ending</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="c-pun"><span class="kana">いっぷん</span><span class="rj">ippun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">2</td><td class="c-fun"><span class="kana">にふん</span><span class="rj">nifun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">3</td><td class="c-pun"><span class="kana">さんぷん</span><span class="rj">sanpun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">4</td><td class="c-pun"><span class="kana">よんぷん</span><span class="rj">yonpun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">5</td><td class="c-fun"><span class="kana">ごふん</span><span class="rj">gofun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">6</td><td class="c-pun"><span class="kana">ろっぷん</span><span class="rj">roppun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">7</td><td class="c-fun"><span class="kana">ななふん</span><span class="rj">nanafun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">8</td><td class="c-pun"><span class="kana">はっぷん</span><span class="rj">happun</span> <span class="flag">common</span><br><span class="kana">はちふん</span><span class="rj">hachifun</span></td><td><span class="end end-pun">ぷん</span> / <span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">9</td><td class="c-fun"><span class="kana">きゅうふん</span><span class="rj">kyuufun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">10</td><td class="c-pun"><span class="kana">じゅっぷん</span><span class="rj">juppun</span> <span class="flag">common</span><br><span class="kana">じっぷん</span><span class="rj">jippun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">11</td><td class="c-pun"><span class="kana">じゅういっぷん</span><span class="rj">juu ippun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">12</td><td class="c-fun"><span class="kana">じゅうにふん</span><span class="rj">juu nifun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">13</td><td class="c-pun"><span class="kana">じゅうさんぷん</span><span class="rj">juu sanpun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">14</td><td class="c-pun"><span class="kana">じゅうよんぷん</span><span class="rj">juu yonpun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">15</td><td class="c-fun"><span class="kana">じゅうごふん</span><span class="rj">juu gofun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">17</td><td class="c-fun"><span class="kana">じゅうななふん</span><span class="rj">juu nanafun</span></td><td><span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">18</td><td class="c-pun"><span class="kana">じゅうはっぷん</span><span class="rj">juu happun</span> <span class="flag">common</span><br><span class="kana">じゅうはちふん</span><span class="rj">juu hachifun</span></td><td><span class="end end-pun">ぷん</span> / <span class="end end-fun">ふん</span></td></tr>
+        <tr><td class="num">20</td><td class="c-pun"><span class="kana">にじゅっぷん</span><span class="rj">ni juppun</span> <span class="flag">common</span><br><span class="kana">にじっぷん</span><span class="rj">ni jippun</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+        <tr><td class="num">30</td><td class="c-pun"><span class="kana">さんじゅっぷん</span><span class="rj">san juppun</span><br><span class="kana">はん</span><span class="rj">han</span> <span class="flag">= half</span></td><td><span class="end end-pun">ぷん</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">For <strong>8</strong> and <strong>10</strong>, the っ versions (<span class="romaji">happun</span>, <span class="romaji">juppun</span>) are what you'll hear most — both fit the “ends in っ → pun” rule.</div>
+  </section>
+
+  <!-- ===================== ORDER ===================== -->
+  <section id="order">
+    <div class="sec-head"><span class="sec-kanji">順</span><h2>Putting it in order</h2></div>
+    <p class="lead">A full time stacks up in a fixed order. Say it left to right:</p>
+
+    <div class="flow">
+      <div class="step s1"><div class="n">1 · WHEN</div><div class="t">ごぜん / ごご</div><div class="d">A.M. / P.M.</div></div>
+      <div class="arrow">→</div>
+      <div class="step s2"><div class="n">2 · HOUR</div><div class="t">number + じ</div><div class="d">e.g. よじ = 4 o'clock</div></div>
+      <div class="arrow">→</div>
+      <div class="step s3"><div class="n">3 · MINUTES</div><div class="t">…ふん/ぷん · はん</div><div class="d">minutes, or はん for :30</div></div>
+    </div>
+
+    <p class="lead">Building one up, piece by piece:</p>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">よじ</span></td><td><span class="romaji">yo ji</span></td><td class="en">4:00</td></tr>
+        <tr><td><span class="kana">よじ はん</span></td><td><span class="romaji">yo ji han</span></td><td class="en">4:30 (“half past four”)</td></tr>
+        <tr><td><span class="kana">ごご よじ はん</span></td><td><span class="romaji">gogo yo ji han</span></td><td class="en">4:30 P.M.</td></tr>
+        <tr><td><span class="kana">ごご よじ じゅうごふん</span></td><td><span class="romaji">gogo yo ji juu gofun</span></td><td class="en">4:15 P.M.</td></tr>
+        <tr><td><span class="kana">ごご よじ じゅうごふん です。</span></td><td><span class="romaji">gogo yo ji juu gofun desu.</span></td><td class="en">“It's 4:15 P.M.”</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Answer pattern: <strong>[ごぜん/ごご] + [hour] じ + [minutes] + です。</strong> Drop any piece you don't need.</div>
+  </section>
+
+  <!-- ===================== EXERCISES ===================== -->
+  <section id="exercises">
+    <div class="sec-head"><span class="sec-kanji">試</span><h2>Exercises</h2></div>
+    <p class="lead">Say it in Japanese, then tap to check. Cards shuffle every refresh.</p>
+
+    <div class="exgroup">
+      <span class="ex-tag">A · hours</span>
+      <p class="ex-instr">Read the hour aloud, then reveal.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">1:00<div class="ans"><span class="kana">いちじ</span><span class="rj">ichi ji</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">4:00 <span class="hint">watch the reading</span><div class="ans"><span class="kana">よじ</span><span class="rj">yo ji (not yonji)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">7:00<div class="ans"><span class="kana">しちじ</span><span class="rj">shichi ji</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">9:00 <span class="hint">watch the reading</span><div class="ans"><span class="kana">くじ</span><span class="rj">ku ji (not kyuuji)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">12:00<div class="ans"><span class="kana">じゅうにじ</span><span class="rj">juuni ji</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">B · minutes (ふん / ぷん)</span>
+      <p class="ex-instr">Mind the p / f ending.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">1 minute<div class="ans"><span class="kana">いっぷん</span><span class="rj">ippun (ぷん)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">3 minutes<div class="ans"><span class="kana">さんぷん</span><span class="rj">sanpun (ぷん)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">5 minutes<div class="ans"><span class="kana">ごふん</span><span class="rj">gofun (ふん)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">8 minutes <span class="hint">most common form</span><div class="ans"><span class="kana">はっぷん</span><span class="rj">happun (ぷん)</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">10 minutes<div class="ans"><span class="kana">じゅっぷん</span><span class="rj">juppun (ぷん)</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">C · A.M. / P.M. / half</span>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">A.M.<div class="ans"><span class="kana">ごぜん</span><span class="rj">gozen</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">P.M.<div class="ans"><span class="kana">ごご</span><span class="rj">gogo</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">half past (the word)<div class="ans"><span class="kana">はん</span><span class="rj">han — literally “half”</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">1:30<div class="ans"><span class="kana">いちじ はん</span><span class="rj">ichi ji han</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="exgroup">
+      <span class="ex-tag">D · full sentences</span>
+      <p class="ex-instr">Build the whole thing, then reveal.</p>
+      <ol class="q">
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">What time is it now?<div class="ans"><span class="kana">いま なんじ ですか。</span><span class="rj">ima nan ji desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">Excuse me, what time is it now?<div class="ans"><span class="kana">すみません、いま なんじ ですか。</span><span class="rj">sumimasen, ima nan ji desu ka.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">It's 3:00.<div class="ans"><span class="kana">さんじ です。</span><span class="rj">san ji desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">It's 7:15.<div class="ans"><span class="kana">しちじ じゅうごふん です。</span><span class="rj">shichi ji juu gofun desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
+        <li class="flashcard" tabindex="0" role="button" aria-expanded="false"><div class="prompt">It's 4:30 P.M.<div class="ans"><span class="kana">ごご よじ はん です。</span><span class="rj">gogo yo ji han desu.</span></div><span class="tap-hint">tap for answer</span></div></li>
+      </ol>
+    </div>
+
+    <div class="note win"><strong>If you slipped:</strong> hours 4 / 7 / 9 are <span class="romaji">yoji / shichiji / kuji</span>. Minutes flip to <span class="end end-pun">ぷん</span> after 1, 3, 4, 6, 8, 10. And the order is always <strong>A.M./P.M. → hour → minutes</strong>.</div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    document.querySelectorAll('ol.q').forEach(function(ol){
+      shuffle(Array.prototype.slice.call(ol.children)).forEach(function(li){ ol.appendChild(li); });
+    });
+    document.querySelectorAll('.flashcard').forEach(function(card){
+      function toggle(){
+        card.classList.toggle('revealed');
+        card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+      }
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      });
+    });
+  })();
+</script>
+</body>
+</html>

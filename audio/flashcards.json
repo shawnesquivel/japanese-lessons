@@ -1,0 +1,304 @@
+{
+  "generatedAt": "2026-06-27T18:58:40.557Z",
+  "voiceId": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": true,
+  "words": [
+    {
+      "kana": "これ",
+      "romaji": "kore",
+      "en": "this one",
+      "group": "kosoado",
+      "id": "kore",
+      "audio": "audio/words/kore.mp3"
+    },
+    {
+      "kana": "それ",
+      "romaji": "sore",
+      "en": "that one (by you)",
+      "group": "kosoado",
+      "id": "sore",
+      "audio": "audio/words/sore.mp3"
+    },
+    {
+      "kana": "あれ",
+      "romaji": "are",
+      "en": "that one over there",
+      "group": "kosoado",
+      "id": "are",
+      "audio": "audio/words/are.mp3"
+    },
+    {
+      "kana": "この",
+      "romaji": "kono",
+      "en": "this ___",
+      "group": "kosoado",
+      "id": "kono",
+      "audio": "audio/words/kono.mp3"
+    },
+    {
+      "kana": "その",
+      "romaji": "sono",
+      "en": "that ___ (by you)",
+      "group": "kosoado",
+      "id": "sono",
+      "audio": "audio/words/sono.mp3"
+    },
+    {
+      "kana": "あの",
+      "romaji": "ano",
+      "en": "that ___ over there",
+      "group": "kosoado",
+      "id": "ano",
+      "audio": "audio/words/ano.mp3"
+    },
+    {
+      "kana": "ここ",
+      "romaji": "koko",
+      "en": "here",
+      "group": "kosoado",
+      "id": "koko",
+      "audio": "audio/words/koko.mp3"
+    },
+    {
+      "kana": "そこ",
+      "romaji": "soko",
+      "en": "there (by you)",
+      "group": "kosoado",
+      "id": "soko",
+      "audio": "audio/words/soko.mp3"
+    },
+    {
+      "kana": "あそこ",
+      "romaji": "asoko",
+      "en": "over there",
+      "group": "kosoado",
+      "id": "asoko",
+      "audio": "audio/words/asoko.mp3"
+    },
+    {
+      "kana": "どこ",
+      "romaji": "doko",
+      "en": "where",
+      "group": "kosoado",
+      "id": "doko",
+      "audio": "audio/words/doko.mp3"
+    },
+    {
+      "kana": "たべもの",
+      "romaji": "tabemono",
+      "en": "food",
+      "group": "food",
+      "id": "tabemono",
+      "audio": "audio/words/tabemono.mp3"
+    },
+    {
+      "kana": "パン",
+      "romaji": "pan",
+      "en": "bread",
+      "group": "food",
+      "id": "pan",
+      "audio": "audio/words/pan.mp3"
+    },
+    {
+      "kana": "こめ",
+      "romaji": "kome",
+      "en": "rice (uncooked)",
+      "group": "food",
+      "id": "kome",
+      "audio": "audio/words/kome.mp3"
+    },
+    {
+      "kana": "たまご",
+      "romaji": "tamago",
+      "en": "egg",
+      "group": "food",
+      "id": "tamago",
+      "audio": "audio/words/tamago.mp3"
+    },
+    {
+      "kana": "にく",
+      "romaji": "niku",
+      "en": "meat",
+      "group": "food",
+      "id": "niku",
+      "audio": "audio/words/niku.mp3"
+    },
+    {
+      "kana": "ぶたにく",
+      "romaji": "butaniku",
+      "en": "pork",
+      "group": "food",
+      "id": "butaniku",
+      "audio": "audio/words/butaniku.mp3"
+    },
+    {
+      "kana": "とりにく",
+      "romaji": "toriniku",
+      "en": "chicken",
+      "group": "food",
+      "id": "toriniku",
+      "audio": "audio/words/toriniku.mp3"
+    },
+    {
+      "kana": "ぎゅうにく",
+      "romaji": "gyuuniku",
+      "en": "beef",
+      "group": "food",
+      "id": "gyuuniku",
+      "audio": "audio/words/gyuuniku.mp3"
+    },
+    {
+      "kana": "さかな",
+      "romaji": "sakana",
+      "en": "fish",
+      "group": "food",
+      "id": "sakana",
+      "audio": "audio/words/sakana.mp3"
+    },
+    {
+      "kana": "やさい",
+      "romaji": "yasai",
+      "en": "vegetable",
+      "group": "food",
+      "id": "yasai",
+      "audio": "audio/words/yasai.mp3"
+    },
+    {
+      "kana": "レタス",
+      "romaji": "retasu",
+      "en": "lettuce",
+      "group": "vegetable",
+      "id": "retasu",
+      "audio": "audio/words/retasu.mp3"
+    },
+    {
+      "kana": "たまねぎ",
+      "romaji": "tamanegi",
+      "en": "onion",
+      "group": "vegetable",
+      "id": "tamanegi",
+      "audio": "audio/words/tamanegi.mp3"
+    },
+    {
+      "kana": "ガーリック",
+      "romaji": "gaarikku",
+      "en": "garlic",
+      "group": "vegetable",
+      "id": "gaarikku",
+      "audio": "audio/words/gaarikku.mp3"
+    },
+    {
+      "kana": "こしょう",
+      "romaji": "koshou",
+      "en": "pepper",
+      "group": "vegetable",
+      "id": "koshou",
+      "audio": "audio/words/koshou.mp3"
+    },
+    {
+      "kana": "にんじん",
+      "romaji": "ninjin",
+      "en": "carrot",
+      "group": "vegetable",
+      "id": "ninjin",
+      "audio": "audio/words/ninjin.mp3"
+    },
+    {
+      "kana": "トマト",
+      "romaji": "tomato",
+      "en": "tomato",
+      "group": "vegetable",
+      "id": "tomato",
+      "audio": "audio/words/tomato.mp3"
+    },
+    {
+      "kana": "くだもの",
+      "romaji": "kudamono",
+      "en": "fruit",
+      "group": "fruit",
+      "id": "kudamono",
+      "audio": "audio/words/kudamono.mp3"
+    },
+    {
+      "kana": "りんご",
+      "romaji": "ringo",
+      "en": "apple",
+      "group": "fruit",
+      "id": "ringo",
+      "audio": "audio/words/ringo.mp3"
+    },
+    {
+      "kana": "バナナ",
+      "romaji": "banana",
+      "en": "banana",
+      "group": "fruit",
+      "id": "banana",
+      "audio": "audio/words/banana.mp3"
+    },
+    {
+      "kana": "すいか",
+      "romaji": "suika",
+      "en": "watermelon",
+      "group": "fruit",
+      "id": "suika",
+      "audio": "audio/words/suika.mp3"
+    },
+    {
+      "kana": "いちご",
+      "romaji": "ichigo",
+      "en": "strawberry",
+      "group": "fruit",
+      "id": "ichigo",
+      "audio": "audio/words/ichigo.mp3"
+    },
+    {
+      "kana": "ぶどう",
+      "romaji": "budou",
+      "en": "grape",
+      "group": "fruit",
+      "id": "budou",
+      "audio": "audio/words/budou.mp3"
+    },
+    {
+      "kana": "のみもの",
+      "romaji": "nomimono",
+      "en": "drink",
+      "group": "drink",
+      "id": "nomimono",
+      "audio": "audio/words/nomimono.mp3"
+    },
+    {
+      "kana": "ぎゅうにゅう",
+      "romaji": "gyuunyuu",
+      "en": "milk",
+      "group": "drink",
+      "id": "gyuunyuu",
+      "audio": "audio/words/gyuunyuu.mp3"
+    },
+    {
+      "kana": "おちゃ",
+      "romaji": "ocha",
+      "en": "tea",
+      "group": "drink",
+      "id": "ocha",
+      "audio": "audio/words/ocha.mp3"
+    },
+    {
+      "kana": "さとう",
+      "romaji": "satou",
+      "en": "sugar",
+      "group": "drink",
+      "id": "satou",
+      "audio": "audio/words/satou.mp3"
+    },
+    {
+      "kana": "はちみつ",
+      "romaji": "hachimitsu",
+      "en": "honey",
+      "group": "drink",
+      "id": "hachimitsu",
+      "audio": "audio/words/hachimitsu.mp3"
+    }
+  ]
+}

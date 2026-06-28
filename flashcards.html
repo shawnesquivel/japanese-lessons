@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:22px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(40px,9vw,68px);margin:6px 0 4px;letter-spacing:.04em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+  .nav{margin-top:14px;font-size:14px}
+  .nav a{color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .nav a:hover{border-color:var(--a)}
+
+  .lead{color:var(--ink-soft)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 10px}
+  .btn{
+    font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
+    background:var(--ink);color:var(--paper);border:none;border-radius:999px;
+    padding:9px 18px;transition:opacity .15s;
+  }
+  .btn:hover{opacity:.85}
+  .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .gchip{
+    font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink-soft);
+    border:1px solid var(--line-strong);border-radius:999px;padding:5px 13px;transition:.12s;
+  }
+  .gchip:hover{background:#F7F3E8}
+  .gchip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .count{color:var(--ink-soft);font-size:14px;margin-left:auto}
+
+  .fc-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:16px 0}
+  .fc-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 18px;text-align:center;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    transition:background .12s,box-shadow .12s;
+  }
+  .fc-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .fc-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .fc-num{font-size:11px;letter-spacing:.06em;color:#B7AE97;font-weight:700;align-self:flex-start}
+  .fc-en{font-size:22px;font-weight:700;margin:0;line-height:1.25}
+  .fc-group{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .fc-play{
+    width:48px;height:48px;border-radius:50%;border:1px solid var(--line-strong);
+    background:var(--ko-bg);color:#3C5E25;font-size:18px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s;
+  }
+  .fc-play:hover{background:#E2EED4}
+  .fc-play:active{transform:scale(.94)}
+  .fc-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
+  .fc-play:disabled{opacity:.4;cursor:not-allowed}
+  .fc-hint{font-size:12px;color:#B7AE97}
+  .fc-ans{display:none;width:100%;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .fc-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(26px,6vw,36px);line-height:1.2;display:block}
+  .fc-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
+  .fc-card.revealed .fc-ans{display:block}
+  .fc-card.revealed .fc-hint{display:none}
+
+  .status{color:var(--ink-soft)}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese · review deck</div>
+    <h1>FLASHCARDS</h1>
+    <div class="subtitle">English → tap ▶ for a sound hint → tap the card for the answer</div>
+    <div class="nav"><a href="index.html">← こそあど worksheet</a> &nbsp; <a href="time.html">じかん · telling time →</a> &nbsp; <a href="games.html">じかん games →</a></div>
+  </header>
+
+  <p class="lead" style="margin-top:24px">A catch-all deck to drill vocab. Cards shuffle every refresh. Read the English, try to say it, tap ▶ if you need a sound hint, then tap the card to check the romaji and kana.</p>
+
+  <div class="toolbar">
+    <button class="btn" id="shuffle">Shuffle</button>
+    <button class="btn secondary" id="reset">Hide all</button>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="chips" id="groups"></div>
+
+  <div class="fc-deck" id="fc-deck">
+    <p class="status" id="status">Loading cards…</p>
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    var deck = document.getElementById('fc-deck');
+    var statusEl = document.getElementById('status');
+    var countEl = document.getElementById('count');
+    var groupsEl = document.getElementById('groups');
+    var allWords = [];
+    var hasAudio = false;
+    var activeGroup = 'all';
+    var current = null;
+
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    function esc(s){
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function cardHtml(w, i, total){
+      var src = w.audio ? esc(w.audio) : '';
+      return '<div class="fc-card" tabindex="0" role="button" aria-expanded="false">' +
+        '<span class="fc-num">' + (i + 1) + ' / ' + total + '</span>' +
+        (w.group ? '<span class="fc-group">' + esc(w.group) + '</span>' : '') +
+        '<p class="fc-en">' + esc(w.en) + '</p>' +
+        '<button class="fc-play" type="button" aria-label="Play sound hint" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
+        '<span class="fc-hint">' + (hasAudio ? 'tap ▶ for sound · tap card for answer' : 'tap card for answer') + '</span>' +
+        '<div class="fc-ans">' +
+          '<span class="kana">' + esc(w.kana) + '</span>' +
+          '<span class="rj">' + esc(w.romaji) + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function play(btn){
+      var src = btn.getAttribute('data-src');
+      if(!src) return;
+      if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
+      var audio = new Audio(src);
+      current = { audio: audio, btn: btn };
+      btn.classList.add('playing');
+      audio.play().catch(function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('error', function(){ btn.classList.remove('playing'); btn.disabled = true; btn.textContent = '✕'; });
+    }
+
+    function bind(){
+      deck.querySelectorAll('.fc-card').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', function(e){
+          if(e.target.closest('.fc-play')) return;
+          toggle();
+        });
+        card.addEventListener('keydown', function(e){
+          if(document.activeElement && document.activeElement.classList.contains('fc-play')) return;
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+        });
+      });
+      deck.querySelectorAll('.fc-play').forEach(function(btn){
+        btn.addEventListener('click', function(e){ e.stopPropagation(); play(btn); });
+      });
+    }
+
+    function visibleWords(){
+      return activeGroup === 'all' ? allWords : allWords.filter(function(w){ return w.group === activeGroup; });
+    }
+
+    function draw(){
+      var list = shuffle(visibleWords());
+      countEl.textContent = list.length + ' cards';
+      deck.innerHTML = list.map(function(w, i){ return cardHtml(w, i, list.length); }).join('');
+      bind();
+    }
+
+    function buildGroups(){
+      var groups = ['all'];
+      allWords.forEach(function(w){ if(w.group && groups.indexOf(w.group) === -1) groups.push(w.group); });
+      groupsEl.innerHTML = groups.map(function(g){
+        return '<button class="gchip' + (g === 'all' ? ' active' : '') + '" data-group="' + esc(g) + '">' + esc(g) + '</button>';
+      }).join('');
+      groupsEl.querySelectorAll('.gchip').forEach(function(chip){
+        chip.addEventListener('click', function(){
+          activeGroup = chip.getAttribute('data-group');
+          groupsEl.querySelectorAll('.gchip').forEach(function(c){ c.classList.remove('active'); });
+          chip.classList.add('active');
+          draw();
+        });
+      });
+    }
+
+    document.getElementById('shuffle').addEventListener('click', draw);
+    document.getElementById('reset').addEventListener('click', function(){
+      deck.querySelectorAll('.fc-card.revealed').forEach(function(c){
+        c.classList.remove('revealed'); c.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    fetch('audio/flashcards.json', { cache: 'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
+      .then(function(m){
+        allWords = (m && m.words) || [];
+        hasAudio = !!(m && m.hasAudio);
+        if(!allWords.length){ statusEl.textContent = 'No words found.'; return; }
+        buildGroups();
+        draw();
+      })
+      .catch(function(){ statusEl.textContent = 'Flashcard data not found. Run: npm run generate:audio'; });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "japanese-lessons",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static Japanese worksheets with ElevenLabs listening drills",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "generate:audio": "node scripts/generate-audio.mjs",
+    "generate:audio:force": "node scripts/generate-audio.mjs --force"
+  },
+  "devDependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.54.0"
+  }
+}

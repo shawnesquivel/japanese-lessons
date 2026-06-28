@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>じかん Games — Time Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(40px,10vw,72px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+  .nav{margin-top:14px;font-size:14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .nav a{color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .nav a:hover{border-color:var(--a)}
+
+  section{margin-top:40px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:18px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px}
+  h2{font-size:22px;font-weight:700;margin:0}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:16px 0;text-align:center}
+
+  .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;margin:18px 0}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:700;font-size:15px;
+    background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;cursor:pointer;transition:opacity .12s,transform .05s}
+  .btn:hover{opacity:.9}.btn:active{transform:translateY(1px)}
+  .btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
+  .btn.big{font-size:18px;padding:15px 30px}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+
+  .seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:999px;overflow:hidden}
+  .seg button{border:none;background:#fff;padding:8px 15px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;color:var(--ink-soft)}
+  .seg button.on{background:var(--so);color:#fff}
+  .seg-label{font-size:13px;color:var(--ink-soft);margin-right:2px}
+
+  /* clock */
+  #clock{display:block;width:100%;max-width:260px;height:auto;margin:0 auto;cursor:pointer}
+  .tap-cue{font-size:13px;color:#B7AE97;margin-top:8px}
+
+  .reveal{margin-top:18px}
+  .reveal.hidden{display:none}
+  .reveal .digi{font-family:"Zen Antique",serif;font-size:38px;line-height:1.1}
+  .reveal .kana{font-size:28px;display:block;margin-top:6px}
+  .reveal .rj{color:var(--ink-soft);font-weight:500}
+
+  /* listen game */
+  .timein{font-family:inherit;font-size:24px;font-weight:700;padding:12px 16px;border:2px solid var(--line-strong);
+    border-radius:12px;width:220px;max-width:80vw;text-align:center;background:#fff;color:var(--ink)}
+  .timein:focus{outline:none;border-color:var(--so)}
+  .result{font-size:19px;font-weight:700;margin-top:18px;min-height:26px}
+  .result.ok{color:var(--ko)} .result.no{color:var(--do)}
+  .result .ans{display:block;font-weight:500;color:var(--ink-soft);font-size:15px;margin-top:6px}
+  .result .ans .kana{font-size:20px;color:var(--ink)}
+  .score{display:flex;gap:22px;justify-content:center;font-size:13px;color:var(--ink-soft);margin-top:18px;
+    border-top:1px dashed var(--line-strong);padding-top:14px}
+  .score b{display:block;color:var(--ink);font-size:22px;font-family:"Zen Antique",serif}
+
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;
+    font-size:14px;color:var(--ink-soft);margin:16px 0;text-align:left}
+  .note.win{border-left-color:var(--ko)}
+  .warnbox{display:none;background:var(--do-bg);border-left:3px solid var(--do);padding:12px 16px;border-radius:0 8px 8px 0;
+    font-size:14px;color:#7a2a16;margin:16px 0;text-align:left}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese · telling time · practice</div>
+    <h1>じかん ゲーム</h1>
+    <div class="subtitle">two games — read the clock &amp; listen-and-write</div>
+    <div class="nav">
+      <a href="time.html">← じかん lesson</a>
+      <a href="index.html">こそあど worksheet</a>
+      <a href="flashcards.html">flashcards</a>
+    </div>
+  </header>
+
+  <div id="noVoice" class="warnbox">
+    No Japanese voice found on this device, so Game 2 may read in English. Add one in your OS settings
+    (macOS: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices → Japanese / Kyoko),
+    then reload. Game 1 works regardless.
+  </div>
+
+  <!-- ===================== GAME 1 ===================== -->
+  <section id="game1">
+    <div class="sec-head"><span class="sec-kanji">時</span><h2>Game 1 · Read the clock</h2></div>
+    <p class="lead">A random time appears on the clock. Say it in Japanese, then tap the clock (or “Reveal”) to check.</p>
+
+    <div class="controls">
+      <span class="seg-label">Minutes:</span>
+      <div class="seg" id="diff1">
+        <button data-d="easy" class="on">Easy · 5-min</button>
+        <button data-d="hard">Hard · any</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <svg id="clock" viewBox="0 0 220 220" role="img" aria-label="Clock showing a random time">
+        <circle cx="110" cy="110" r="94" fill="#fff" stroke="var(--line-strong)" stroke-width="2"/>
+        <g id="ticks"></g>
+        <line id="hHand" x1="110" y1="110" x2="110" y2="64" stroke="var(--so)" stroke-width="7" stroke-linecap="round"/>
+        <line id="mHand" x1="110" y1="110" x2="110" y2="40" stroke="var(--a)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="110" cy="110" r="5.5" fill="var(--ink)"/>
+      </svg>
+      <div class="tap-cue">tap the clock to reveal</div>
+
+      <div id="reveal1" class="reveal hidden">
+        <div class="digi" id="digi1"></div>
+        <span class="kana" id="kana1"></span>
+        <span class="rj" id="rj1"></span>
+      </div>
+
+      <div class="controls" style="margin-bottom:0">
+        <button class="btn" id="new1">New time</button>
+        <button class="btn sec" id="show1">Reveal</button>
+        <button class="btn sec" id="say1">🔊 Hear it</button>
+      </div>
+    </div>
+    <div class="note"><span class="kana" style="font-size:18px">じ</span> = short hand (hours) · <span class="kana" style="font-size:18px">ふん／ぷん</span> = long hand (minutes). Remember <b>4 = よじ</b>, <b>7 = しちじ</b>, <b>9 = くじ</b>, and :30 = <b>はん</b>.</div>
+  </section>
+
+  <!-- ===================== GAME 2 ===================== -->
+  <section id="game2">
+    <div class="sec-head"><span class="sec-kanji">耳</span><h2>Game 2 · Listen &amp; write</h2></div>
+    <p class="lead">Press play, listen to the Japanese time, then type it in digits (e.g. <b>8:19 AM</b>) and hit Enter.</p>
+
+    <div class="controls">
+      <span class="seg-label">Minutes:</span>
+      <div class="seg" id="diff2">
+        <button data-d="easy" class="on">Easy · 5-min</button>
+        <button data-d="hard">Hard · any</button>
+      </div>
+      <span class="seg-label" style="margin-left:8px">Speed:</span>
+      <div class="seg" id="spd2">
+        <button data-s="0.9" class="on">Normal</button>
+        <button data-s="0.6">Slow</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="controls" style="margin-top:0">
+        <button class="btn big" id="play2">▶ Play time</button>
+        <button class="btn sec" id="replay2">↺ Replay</button>
+      </div>
+
+      <div>
+        <input class="timein" id="guess2" type="text" inputmode="text"
+          placeholder="8:19 AM" autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="check2" disabled>Check (Enter)</button>
+        <button class="btn sec" id="reveal2btn" disabled>Give up</button>
+        <button class="btn sec" id="next2" style="display:none">Next →</button>
+      </div>
+
+      <div class="result" id="result2"></div>
+
+      <div class="score">
+        <div>correct<b id="sCorrect">0</b></div>
+        <div>tries<b id="sTotal">0</b></div>
+        <div>streak<b id="sStreak">0</b></div>
+        <div>best<b id="sBest">0</b></div>
+      </div>
+    </div>
+    <div class="note win"><b>Free voice:</b> this uses your device's built-in Japanese text-to-speech — no API, no cost, unlimited times. Works best on macOS, iOS, and Chrome. Type the <b>digits</b> you hear; AM = ごぜん, PM = ごご.</div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  // ---------- readings ----------
+  var HOURS = [null,
+    {k:'いちじ',r:'ichi ji'},{k:'にじ',r:'ni ji'},{k:'さんじ',r:'san ji'},
+    {k:'よじ',r:'yo ji'},{k:'ごじ',r:'go ji'},{k:'ろくじ',r:'roku ji'},
+    {k:'しちじ',r:'shichi ji'},{k:'はちじ',r:'hachi ji'},{k:'くじ',r:'ku ji'},
+    {k:'じゅうじ',r:'juu ji'},{k:'じゅういちじ',r:'juuichi ji'},{k:'じゅうにじ',r:'juuni ji'}];
+  var M_ONES = [null,
+    {k:'いっぷん',r:'ippun'},{k:'にふん',r:'nifun'},{k:'さんぷん',r:'sanpun'},
+    {k:'よんぷん',r:'yonpun'},{k:'ごふん',r:'gofun'},{k:'ろっぷん',r:'roppun'},
+    {k:'ななふん',r:'nanafun'},{k:'はっぷん',r:'happun'},{k:'きゅうふん',r:'kyuufun'}];
+  var M_TENS_X = [null,
+    {k:'じゅっぷん',r:'juppun'},{k:'にじゅっぷん',r:'nijuppun'},{k:'さんじゅっぷん',r:'sanjuppun'},
+    {k:'よんじゅっぷん',r:'yonjuppun'},{k:'ごじゅっぷん',r:'gojuppun'}];
+  var M_TENS_P = [null,
+    {k:'じゅう',r:'juu'},{k:'にじゅう',r:'nijuu'},{k:'さんじゅう',r:'sanjuu'},
+    {k:'よんじゅう',r:'yonjuu'},{k:'ごじゅう',r:'gojuu'}];
+
+  function minReading(m){
+    if(m===0) return null;
+    if(m===30) return {k:'はん',r:'han'};
+    if(m<10) return M_ONES[m];
+    if(m%10===0) return M_TENS_X[m/10];
+    var t=M_TENS_P[Math.floor(m/10)], o=M_ONES[m%10];
+    return {k:t.k+o.k, r:t.r+' '+o.r};
+  }
+  // ampm: 'am' | 'pm' | null
+  function reading(h,m,ampm){
+    var kp=[], rp=[];
+    if(ampm){ var ap = ampm==='am'?['ごぜん','gozen']:['ごご','gogo']; kp.push(ap[0]); rp.push(ap[1]); }
+    kp.push(HOURS[h].k); rp.push(HOURS[h].r);
+    var mn=minReading(m); if(mn){ kp.push(mn.k); rp.push(mn.r); }
+    return { k:kp.join(''), kSpaced:kp.join(' '), r:rp.join(' ') };
+  }
+  function fmt(h,m,ampm){
+    var s = h+':'+(m<10?'0'+m:m);
+    if(ampm) s += ' '+ampm.toUpperCase();
+    return s;
+  }
+  var EASY_MIN=[0,5,10,15,20,25,30,35,40,45,50,55];
+  function randTime(hard){
+    var h=1+Math.floor(Math.random()*12);
+    var m = hard ? Math.floor(Math.random()*60) : EASY_MIN[Math.floor(Math.random()*EASY_MIN.length)];
+    var ampm = Math.random()<0.5?'am':'pm';
+    return {h:h,m:m,ampm:ampm};
+  }
+
+  // ---------- speech (free, on-device) ----------
+  var jaVoice=null;
+  function pickVoice(){
+    if(!('speechSynthesis' in window)) return;
+    var vs=speechSynthesis.getVoices()||[];
+    jaVoice = vs.filter(function(v){return /ja([-_]JP)?/i.test(v.lang);})[0]
+           || vs.filter(function(v){return /japan/i.test(v.name);})[0] || null;
+    if(vs.length && !jaVoice) document.getElementById('noVoice').style.display='block';
+    else document.getElementById('noVoice').style.display='none';
+  }
+  if('speechSynthesis' in window){
+    pickVoice();
+    speechSynthesis.onvoiceschanged=pickVoice;
+  } else {
+    document.getElementById('noVoice').style.display='block';
+  }
+  function speak(text, rate){
+    if(!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang='ja-JP'; if(jaVoice) u.voice=jaVoice;
+    u.rate=rate||0.9; u.pitch=1;
+    speechSynthesis.speak(u);
+  }
+
+  // ---------- diff toggles ----------
+  function bindSeg(id, cb){
+    var wrap=document.getElementById(id);
+    wrap.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        wrap.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on'); cb(b);
+      });
+    });
+  }
+
+  // ======================================================
+  // GAME 1 — clock
+  // ======================================================
+  (function(){
+    var cx=110, cy=110, hard=false, cur=null, shown=false;
+    // draw numbers
+    var ticks=document.getElementById('ticks');
+    for(var n=1;n<=12;n++){
+      var deg=n*30, rad=deg*Math.PI/180, R=72;
+      var x=cx+R*Math.sin(rad), y=cy-R*Math.cos(rad)+6;
+      var t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',x.toFixed(1)); t.setAttribute('y',y.toFixed(1));
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-family','Zen Maru Gothic'); t.setAttribute('font-size','15');
+      t.setAttribute('fill','var(--ink-soft)'); t.textContent=n;
+      ticks.appendChild(t);
+    }
+    var hHand=document.getElementById('hHand'), mHand=document.getElementById('mHand');
+    function setHand(el,deg,len){
+      var rad=deg*Math.PI/180;
+      el.setAttribute('x2',(cx+len*Math.sin(rad)).toFixed(1));
+      el.setAttribute('y2',(cy-len*Math.cos(rad)).toFixed(1));
+    }
+    var rev=document.getElementById('reveal1');
+    function deal(){
+      cur=randTime(hard); shown=false;
+      setHand(hHand,(cur.h%12)*30+cur.m*0.5,50);
+      setHand(mHand,cur.m*6,72);
+      rev.classList.add('hidden');
+    }
+    function reveal(){
+      if(!cur||shown) return; shown=true;
+      var rd=reading(cur.h,cur.m,null); // clock can't show AM/PM
+      document.getElementById('digi1').textContent=fmt(cur.h,cur.m,null);
+      document.getElementById('kana1').textContent=rd.k;
+      document.getElementById('rj1').textContent=rd.r;
+      rev.classList.remove('hidden');
+    }
+    document.getElementById('clock').addEventListener('click',reveal);
+    document.getElementById('show1').addEventListener('click',reveal);
+    document.getElementById('new1').addEventListener('click',deal);
+    document.getElementById('say1').addEventListener('click',function(){
+      if(cur) speak(reading(cur.h,cur.m,null).kSpaced+' です',0.9);
+    });
+    bindSeg('diff1',function(b){ hard=b.dataset.d==='hard'; deal(); });
+    deal();
+  })();
+
+  // ======================================================
+  // GAME 2 — listen & write
+  // ======================================================
+  (function(){
+    var hard=false, rate=0.9, cur=null, answered=false;
+    var correct=0,total=0,streak=0,best=0;
+    try{ best=parseInt(localStorage.getItem('jikan_best')||'0',10)||0; }catch(e){}
+    var elGuess=document.getElementById('guess2'), elRes=document.getElementById('result2');
+    var elC=document.getElementById('sCorrect'), elT=document.getElementById('sTotal'),
+        elS=document.getElementById('sStreak'), elB=document.getElementById('sBest');
+    elB.textContent=best;
+    var bPlay=document.getElementById('play2'), bReplay=document.getElementById('replay2'),
+        bCheck=document.getElementById('check2'), bGive=document.getElementById('reveal2btn'),
+        bNext=document.getElementById('next2');
+
+    function speakCur(){ if(cur) speak(reading(cur.h,cur.m,cur.ampm).kSpaced+' です',rate); }
+    function enable(on){
+      elGuess.disabled=!on; bCheck.disabled=!on; bGive.disabled=!on; bReplay.disabled=!on;
+    }
+    function newRound(){
+      cur=randTime(hard); answered=false;
+      elRes.textContent=''; elRes.className='result';
+      elGuess.value=''; enable(true);
+      bNext.style.display='none'; bCheck.style.display=''; bGive.style.display='';
+      elGuess.focus();
+      speakCur();
+    }
+    function parseGuess(s){
+      s=(s||'').trim().toLowerCase();
+      var ap=null;
+      if(/p\.?\s*m\.?/.test(s)||/ごご|gogo/.test(s)) ap='pm';
+      else if(/a\.?\s*m\.?/.test(s)||/ごぜん|gozen/.test(s)) ap='am';
+      var h=null,m=null;
+      var mt=s.match(/(\d{1,2})\s*[:.\uFF1A]\s*(\d{1,2})/);
+      if(mt){ h=+mt[1]; m=+mt[2]; }
+      else { var only=s.match(/(\d{1,2})/); if(only){ h=+only[1]; m=0; } }
+      if(h!=null && h>12 && h<=23){ if(!ap) ap = h>=12?'pm':'am'; h-=12; if(h===0)h=12; }
+      if(h===0) h=12;
+      return {h:h,m:m,ap:ap};
+    }
+    function showAnswer(prefixOk){
+      var rd=reading(cur.h,cur.m,cur.ampm);
+      var cls = prefixOk?'result ok':'result no';
+      var head = prefixOk?'✅ Correct!':'❌ Not quite';
+      elRes.className=cls;
+      elRes.innerHTML = head + '<span class="ans"><b>'+fmt(cur.h,cur.m,cur.ampm)+'</b> — '
+        + '<span class="kana">'+rd.k+'です</span> ('+rd.r+' desu)</span>';
+    }
+    function finish(ok){
+      answered=true; total++;
+      if(ok){ correct++; streak++; if(streak>best){best=streak; try{localStorage.setItem('jikan_best',best);}catch(e){}} }
+      else { streak=0; }
+      elC.textContent=correct; elT.textContent=total; elS.textContent=streak; elB.textContent=best;
+      enable(false); bCheck.style.display='none'; bGive.style.display='none';
+      bNext.style.display=''; bNext.focus();
+    }
+    function check(){
+      if(answered||!cur) return;
+      var g=parseGuess(elGuess.value);
+      var ok = g.h===cur.h && g.m===cur.m && g.ap===cur.ampm;
+      showAnswer(ok); finish(ok);
+    }
+    bPlay.addEventListener('click',function(){
+      if(!cur||answered) newRound(); else speakCur();
+    });
+    bReplay.addEventListener('click',speakCur);
+    bCheck.addEventListener('click',check);
+    bGive.addEventListener('click',function(){ if(!answered&&cur){ showAnswer(false); finish(false); } });
+    bNext.addEventListener('click',newRound);
+    elGuess.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){ e.preventDefault(); if(answered) newRound(); else check(); }
+    });
+    bNext.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); newRound(); } });
+    bindSeg('diff2',function(b){ hard=b.dataset.d==='hard'; });
+    bindSeg('spd2',function(b){ rate=parseFloat(b.dataset.s); });
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Keep the Vercel deployment purely static — generation tooling stays local.
+node_modules
+scripts
+package.json
+package-lock.json
+.env
+.env.example
+README.md

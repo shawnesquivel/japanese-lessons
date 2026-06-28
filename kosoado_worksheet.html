@@ -155,6 +155,50 @@
   .practice-card.revealed .a-jp,.practice-card.revealed .a-en{display:block}
   .practice-card.revealed .tap-hint{display:none}
 
+  /* ---------- listening drill ---------- */
+  .listen-deck{display:grid;gap:14px;margin:18px 0}
+  .listen-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;
+    transition:background .12s,box-shadow .12s;
+  }
+  .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .listen-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .listen-play{
+    flex:0 0 auto;width:54px;height:54px;border-radius:50%;
+    border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;
+    font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:transform .1s,background .12s;
+  }
+  .listen-play:hover{background:#E2EED4}
+  .listen-play:active{transform:scale(.94)}
+  .listen-play:disabled{opacity:.4;cursor:not-allowed}
+  .listen-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
+  .listen-body{flex:1;min-width:0}
+  .listen-num{font-size:12px;letter-spacing:.04em;color:var(--ink-soft);font-weight:700}
+  .listen-prompt{color:var(--ink-soft);font-size:14px;margin:2px 0 0}
+  .listen-ans{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .listen-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);line-height:1.3;display:block}
+  .listen-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
+  .listen-ans .en{display:block;margin-top:2px;color:var(--ink-soft)}
+  .listen-card.revealed .listen-ans{display:block}
+  .listen-card.revealed .tap-hint{display:none}
+  .listen-card .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:8px}
+  .listen-note{font-size:13px;color:#B7AE97;margin-top:4px}
+  .listen-ctx{margin:10px 0 0;font-size:14px;color:var(--ink-soft)}
+  .zone-map{display:flex;align-items:center;gap:6px;margin:10px 0 0;flex-wrap:wrap}
+  .zone-dot{font-size:12px;padding:3px 10px;border-radius:999px;border:1px dashed var(--line-strong);color:var(--ink-soft);background:#fff}
+  .zone-dot.on{font-weight:700;border-style:solid}
+  .zone-dot.on.z-ko{background:var(--ko-bg);color:#3C5E25;border-color:var(--ko)}
+  .zone-dot.on.z-so{background:var(--so-bg);color:#946012;border-color:var(--so)}
+  .zone-dot.on.z-a{background:var(--a-bg);color:#2C4D66;border-color:var(--a)}
+  .zone-arrow{color:#C9BFA6;font-size:12px}
+  .listen-reply{margin-top:12px;padding:10px 13px;background:#F7F3E8;border-radius:8px}
+  .listen-reply .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+  .listen-reply .kana{font-family:"Zen Antique",serif;font-size:clamp(18px,4vw,24px);line-height:1.3;display:block}
+  .listen-reply .rj{font-weight:700;color:var(--so);display:block;margin-top:2px}
+  .listen-reply .en{display:block;color:var(--ink-soft);font-size:14px}
+
   .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
 
   svg{display:block;width:100%;height:auto}
@@ -170,6 +214,7 @@
     <div class="eyebrow">Japanese demonstratives · day 3</div>
     <h1>こそあど</h1>
     <div class="subtitle">this · that · that over there · which — with fruit &amp; vegetables</div>
+    <div style="margin-top:14px;font-size:14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap"><a href="flashcards.html" style="color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px">FLASHCARDS review deck →</a><a href="time.html" style="color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px">じかん · telling time →</a><a href="games.html" style="color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px">じかん GAMES →</a></div>
   </header>
 
   <!-- ===================== LESSON ===================== -->
@@ -424,6 +469,15 @@
     </div>
   </section>
 
+  <!-- ===================== LISTENING ===================== -->
+  <section id="listening">
+    <div class="sec-head"><span class="sec-kanji">聞</span><h2>Listening drill</h2></div>
+    <p class="lead">Train your ears. <strong>Tap ▶ to hear the Japanese</strong>, listen a few times, say your own answer out loud — then <strong>tap the card</strong> to check the meaning, romaji, and kana. Order shuffles every refresh.</p>
+    <div class="listen-deck" id="listen-deck">
+      <p class="lead" id="listen-status">Loading audio…</p>
+    </div>
+  </section>
+
   <!-- ===================== VOCAB ===================== -->
   <section id="vocab">
     <div class="sec-head"><span class="sec-kanji">語</span><h2>Vocab — fruit &amp; vegetables</h2></div>
@@ -622,6 +676,118 @@
     document.getElementById('quiz-list').innerHTML = buildQuiz().map(cardHtml).join('');
     shuffleChildren(document.getElementById('practice-deck'));
     bindFlashcards(document);
+  })();
+</script>
+
+<script>
+  (function(){
+    var deck = document.getElementById('listen-deck');
+    var status = document.getElementById('listen-status');
+    if(!deck) return;
+
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      }
+      return a;
+    }
+    function esc(s){
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function zoneMap(zone){
+      if(!zone) return '';
+      var nodes = [['ko','you'],['so','them'],['a','over there']];
+      return '<div class="zone-map" aria-hidden="true">' + nodes.map(function(n){
+        var on = n[0] === zone ? ' on z-' + n[0] : '';
+        return '<span class="zone-dot' + on + '">' + n[1] + '</span>';
+      }).join('<span class="zone-arrow">·</span>') + '</div>';
+    }
+
+    function replyHtml(reply){
+      if(!reply) return '';
+      return '<div class="listen-reply">' +
+        '<span class="lbl">You could reply</span>' +
+        '<span class="kana">' + esc(reply.kana) + '</span>' +
+        '<span class="rj">' + esc(reply.romaji) + '</span>' +
+        '<span class="en">' + esc(reply.en) + '</span>' +
+      '</div>';
+    }
+
+    function render(manifest){
+      var phrases = (manifest && manifest.phrases) || [];
+      if(!phrases.length){ status.textContent = 'No phrases found in manifest.'; return; }
+      var hasAudio = !!(manifest && manifest.hasAudio);
+      var ordered = shuffle(phrases);
+
+      deck.innerHTML = ordered.map(function(p, i){
+        var src = p.audio ? esc(p.audio) : '';
+        return '<div class="listen-card" tabindex="0" role="button" aria-expanded="false">' +
+          '<button class="listen-play" type="button" aria-label="Play audio" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
+          '<div class="listen-body">' +
+            '<span class="listen-num">' + (i + 1) + ' / ' + ordered.length + '</span>' +
+            '<p class="listen-prompt">' + (hasAudio ? 'Listen, answer aloud, then tap to reveal.' : 'Audio pending — tap to reveal.') + '</p>' +
+            '<div class="listen-ans">' +
+              '<span class="kana">' + esc(p.kana) + '</span>' +
+              '<span class="rj">' + esc(p.romaji) + '</span>' +
+              '<span class="en">' + esc(p.en) + '</span>' +
+              (p.context ? '<p class="listen-ctx">' + esc(p.context) + '</p>' : '') +
+              zoneMap(p.zone) +
+              replyHtml(p.reply) +
+            '</div>' +
+            '<span class="tap-hint">tap card to reveal</span>' +
+          '</div></div>';
+      }).join('');
+
+      deck.querySelectorAll('.listen-card').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', function(e){
+          if(e.target.closest('.listen-play')) return;
+          toggle();
+        });
+        card.addEventListener('keydown', function(e){
+          if(document.activeElement && document.activeElement.classList.contains('listen-play')) return;
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+        });
+      });
+
+      var current = null;
+      deck.querySelectorAll('.listen-play').forEach(function(btn){
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          var src = btn.getAttribute('data-src');
+          if(!src) return;
+          if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
+          var audio = new Audio(src);
+          current = { audio: audio, btn: btn };
+          btn.classList.add('playing');
+          audio.play().catch(function(){ btn.classList.remove('playing'); });
+          audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
+          audio.addEventListener('error', function(){
+            btn.classList.remove('playing'); btn.disabled = true; btn.textContent = '✕';
+          });
+        });
+      });
+
+      if(!hasAudio){
+        var note = document.createElement('p');
+        note.className = 'listen-note';
+        note.textContent = 'Audio not generated yet — run: npm run generate:audio (after adding your ElevenLabs API key).';
+        deck.appendChild(note);
+      }
+    }
+
+    fetch('audio/manifest.json', { cache: 'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
+      .then(render)
+      .catch(function(){ status.textContent = 'Audio manifest not found. Run: npm run generate:audio'; });
   })();
 </script>
 </body>

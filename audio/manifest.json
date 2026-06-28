@@ -1,0 +1,223 @@
+{
+  "generatedAt": "2026-06-27T18:58:40.556Z",
+  "voiceId": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": true,
+  "phrases": [
+    {
+      "kana": "これはなんですか。",
+      "romaji": "kore wa nan desu ka.",
+      "en": "What is this?",
+      "context": "They hold something up near themselves and ask you to name it. Refer to THEIR item with それ (sore).",
+      "reply": {
+        "kana": "それは さかなです。",
+        "romaji": "sore wa sakana desu.",
+        "en": "That is a fish."
+      },
+      "id": "kore-wa-nan-desu-ka",
+      "audio": "audio/kore-wa-nan-desu-ka.mp3"
+    },
+    {
+      "kana": "それはなんですか。",
+      "romaji": "sore wa nan desu ka.",
+      "en": "What is that (by you)?",
+      "context": "They ask about something near YOU. Answer about your own item with これ (kore).",
+      "reply": {
+        "kana": "これは トマトです。",
+        "romaji": "kore wa tomato desu.",
+        "en": "This is a tomato."
+      },
+      "id": "sore-wa-nan-desu-ka",
+      "audio": "audio/sore-wa-nan-desu-ka.mp3"
+    },
+    {
+      "kana": "あれはなんですか。",
+      "romaji": "are wa nan desu ka.",
+      "en": "What is that over there?",
+      "context": "They ask about something far from both of you. Answer with あれ (are).",
+      "reply": {
+        "kana": "あれは バナナです。",
+        "romaji": "are wa banana desu.",
+        "en": "That over there is a banana."
+      },
+      "id": "are-wa-nan-desu-ka",
+      "audio": "audio/are-wa-nan-desu-ka.mp3"
+    },
+    {
+      "kana": "これはりんごです。",
+      "romaji": "kore wa ringo desu.",
+      "en": "This is an apple.",
+      "zone": "ko",
+      "context": "They show you an apple in their hand. これ points at the thing nearest the speaker.",
+      "reply": {
+        "kana": "そうですか。",
+        "romaji": "sou desu ka.",
+        "en": "Oh, I see."
+      },
+      "id": "kore-wa-ringo-desu",
+      "audio": "audio/kore-wa-ringo-desu.mp3"
+    },
+    {
+      "kana": "それはトマトです。",
+      "romaji": "sore wa tomato desu.",
+      "en": "That is a tomato.",
+      "zone": "so",
+      "context": "Said about the item by you. それ points at the thing nearest the listener (you).",
+      "reply": {
+        "kana": "ありがとうございます。",
+        "romaji": "arigatou gozaimasu.",
+        "en": "Thank you."
+      },
+      "id": "sore-wa-tomato-desu",
+      "audio": "audio/sore-wa-tomato-desu.mp3"
+    },
+    {
+      "kana": "あれはぶどうです。",
+      "romaji": "are wa budou desu.",
+      "en": "That over there is a grape.",
+      "zone": "a",
+      "context": "Said about something across the room. あれ points at the thing far from both.",
+      "reply": {
+        "kana": "そうですか。",
+        "romaji": "sou desu ka.",
+        "en": "Oh, I see."
+      },
+      "id": "are-wa-budou-desu",
+      "audio": "audio/are-wa-budou-desu.mp3"
+    },
+    {
+      "kana": "どこですか。",
+      "romaji": "doko desu ka.",
+      "en": "Where is it?",
+      "context": "They're asking where something is. Point and answer with a place word.",
+      "reply": {
+        "kana": "あそこです。",
+        "romaji": "asoko desu.",
+        "en": "It's over there."
+      },
+      "id": "doko-desu-ka",
+      "audio": "audio/doko-desu-ka.mp3"
+    },
+    {
+      "kana": "ここです。",
+      "romaji": "koko desu.",
+      "en": "It's here.",
+      "zone": "ko",
+      "context": "here = right where the speaker is standing.",
+      "reply": {
+        "kana": "ありがとうございます。",
+        "romaji": "arigatou gozaimasu.",
+        "en": "Thank you."
+      },
+      "id": "koko-desu",
+      "audio": "audio/koko-desu.mp3"
+    },
+    {
+      "kana": "そこです。",
+      "romaji": "soko desu.",
+      "en": "It's there.",
+      "zone": "so",
+      "context": "there = right where you (the listener) are.",
+      "reply": {
+        "kana": "わかりました。",
+        "romaji": "wakarimashita.",
+        "en": "Got it."
+      },
+      "id": "soko-desu",
+      "audio": "audio/soko-desu.mp3"
+    },
+    {
+      "kana": "あそこです。",
+      "romaji": "asoko desu.",
+      "en": "It's over there.",
+      "zone": "a",
+      "context": "over there = away from both of you.",
+      "reply": {
+        "kana": "ありがとうございます。",
+        "romaji": "arigatou gozaimasu.",
+        "en": "Thank you."
+      },
+      "id": "asoko-desu",
+      "audio": "audio/asoko-desu.mp3"
+    },
+    {
+      "kana": "どれですか。",
+      "romaji": "dore desu ka.",
+      "en": "Which one is it?",
+      "context": "They ask which one, of several. Point to your pick with これ / それ / あれ.",
+      "reply": {
+        "kana": "これです。",
+        "romaji": "kore desu.",
+        "en": "This one."
+      },
+      "id": "dore-desu-ka",
+      "audio": "audio/dore-desu-ka.mp3"
+    },
+    {
+      "kana": "どのさいふですか。",
+      "romaji": "dono saifu desu ka.",
+      "en": "Which wallet is it?",
+      "context": "They ask which wallet. Answer with この / その / あの + the noun.",
+      "reply": {
+        "kana": "この さいふです。",
+        "romaji": "kono saifu desu.",
+        "en": "This wallet."
+      },
+      "id": "dono-saifu-desu-ka",
+      "audio": "audio/dono-saifu-desu-ka.mp3"
+    },
+    {
+      "kana": "どのりんごですか。",
+      "romaji": "dono ringo desu ka.",
+      "en": "Which apple is it?",
+      "context": "They ask which apple. Answer with この / その / あの + the noun.",
+      "reply": {
+        "kana": "あの りんごです。",
+        "romaji": "ano ringo desu.",
+        "en": "That apple over there."
+      },
+      "id": "dono-ringo-desu-ka",
+      "audio": "audio/dono-ringo-desu-ka.mp3"
+    },
+    {
+      "kana": "りんごをください。",
+      "romaji": "ringo o kudasai.",
+      "en": "An apple, please.",
+      "context": "A customer asks you (the shopkeeper) for an apple.",
+      "reply": {
+        "kana": "はい、どうぞ。",
+        "romaji": "hai, douzo.",
+        "en": "Sure, here you go."
+      },
+      "id": "ringo-o-kudasai",
+      "audio": "audio/ringo-o-kudasai.mp3"
+    },
+    {
+      "kana": "これをください。",
+      "romaji": "kore o kudasai.",
+      "en": "This one, please.",
+      "zone": "ko",
+      "context": "Customer points at the item near themselves: 'this one, please.'",
+      "reply": {
+        "kana": "はい、どうぞ。",
+        "romaji": "hai, douzo.",
+        "en": "Sure, here you go."
+      },
+      "id": "kore-o-kudasai",
+      "audio": "audio/kore-o-kudasai.mp3"
+    },
+    {
+      "kana": "おねがいします。",
+      "romaji": "onegaishimasu.",
+      "en": "Please. (polite)",
+      "context": "A polite 'please' that closes off a request.",
+      "reply": {
+        "kana": "かしこまりました。",
+        "romaji": "kashikomarimashita.",
+        "en": "Certainly."
+      },
+      "id": "onegaishimasu",
+      "audio": "audio/onegaishimasu.mp3"
+    }
+  ]
+}
