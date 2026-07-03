@@ -1,0 +1,39 @@
+{
+  "generatedAt": null,
+  "voiceId": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": false,
+  "cards": [
+    { "kana": "に", "romaji": "ni", "en": "location / time / target particle", "id": "ni", "audio": "audio/particles/ni.mp3" },
+    { "kana": "ここに猫がいます。", "romaji": "koko ni neko ga imasu.", "en": "There is a cat here.", "id": "koko-ni-neko-ga-imasu", "audio": "audio/particles/koko-ni-neko-ga-imasu.mp3" },
+    { "kana": "テーブルの下に亀がいます。", "romaji": "teeburu no shita ni kame ga imasu.", "en": "There is a turtle under the table.", "id": "teeburu-no-shita-ni-kame-ga-imasu", "audio": "audio/particles/teeburu-no-shita-ni-kame-ga-imasu.mp3" },
+    { "kana": "東京に住んでいます。", "romaji": "toukyou ni sundeimasu.", "en": "I live in Tokyo.", "id": "toukyou-ni-sundeimasu", "audio": "audio/particles/toukyou-ni-sundeimasu.mp3" },
+    { "kana": "九時に起きます。", "romaji": "ku ji ni okimasu.", "en": "I wake up at 9.", "id": "ku-ji-ni-okimasu", "audio": "audio/particles/ku-ji-ni-okimasu.mp3" },
+    { "kana": "金曜日に会います。", "romaji": "kinyoubi ni aimasu.", "en": "I will meet on Friday.", "id": "kinyoubi-ni-aimasu", "audio": "audio/particles/kinyoubi-ni-aimasu.mp3" },
+    { "kana": "学校に行きます。", "romaji": "gakkou ni ikimasu.", "en": "I go to school.", "id": "gakkou-ni-ikimasu", "audio": "audio/particles/gakkou-ni-ikimasu.mp3" },
+    { "kana": "映画を見に行きます。", "romaji": "eiga o mi ni ikimasu.", "en": "I go to watch a movie.", "id": "eiga-o-mi-ni-ikimasu", "audio": "audio/particles/eiga-o-mi-ni-ikimasu.mp3" },
+    { "kana": "の", "romaji": "no", "en": "possession / modifying particle", "id": "no", "audio": "audio/particles/no.mp3" },
+    { "kana": "私の", "romaji": "watashi no", "en": "my / mine", "id": "watashi-no", "audio": "audio/particles/watashi-no.mp3" },
+    { "kana": "私のかばん", "romaji": "watashi no kaban", "en": "my bag", "id": "watashi-no-kaban", "audio": "audio/particles/watashi-no-kaban.mp3" },
+    { "kana": "これは私のです。", "romaji": "kore wa watashi no desu.", "en": "This is mine.", "id": "kore-wa-watashi-no-desu", "audio": "audio/particles/kore-wa-watashi-no-desu.mp3" },
+    { "kana": "日本語の先生", "romaji": "nihongo no sensei", "en": "Japanese teacher", "id": "nihongo-no-sensei", "audio": "audio/particles/nihongo-no-sensei.mp3" },
+    { "kana": "友達の名前はさくらです。", "romaji": "tomodachi no namae wa sakura desu.", "en": "My friend's name is Sakura.", "id": "tomodachi-no-namae-wa-sakura-desu", "audio": "audio/particles/tomodachi-no-namae-wa-sakura-desu.mp3" },
+    { "kana": "日本の車が好きです。", "romaji": "nihon no kuruma ga suki desu.", "en": "I like Japanese cars.", "id": "nihon-no-kuruma-ga-suki-desu", "audio": "audio/particles/nihon-no-kuruma-ga-suki-desu.mp3" },
+    { "kana": "へ", "romaji": "e", "en": "direction particle", "id": "e", "audio": "audio/particles/e.mp3" },
+    { "kana": "京都へ行きます。", "romaji": "kyouto e ikimasu.", "en": "I am going to Kyoto.", "id": "kyouto-e-ikimasu", "audio": "audio/particles/kyouto-e-ikimasu.mp3" },
+    { "kana": "日本へようこそ。", "romaji": "nihon e youkoso.", "en": "Welcome to Japan.", "id": "nihon-e-youkoso", "audio": "audio/particles/nihon-e-youkoso.mp3" },
+    { "kana": "学校へ行きます。", "romaji": "gakkou e ikimasu.", "en": "I head to school.", "id": "gakkou-e-ikimasu", "audio": "audio/particles/gakkou-e-ikimasu.mp3" }
+  ],
+  "listen": [
+    { "kana": "ここに猫がいます。", "romaji": "koko ni neko ga imasu.", "en": "There is a cat here.", "id": "koko-ni-neko-ga-imasu", "audio": "audio/particles/koko-ni-neko-ga-imasu.mp3" },
+    { "kana": "テーブルの下に亀がいます。", "romaji": "teeburu no shita ni kame ga imasu.", "en": "There is a turtle under the table.", "id": "teeburu-no-shita-ni-kame-ga-imasu", "audio": "audio/particles/teeburu-no-shita-ni-kame-ga-imasu.mp3" },
+    { "kana": "東京に住んでいます。", "romaji": "toukyou ni sundeimasu.", "en": "I live in Tokyo.", "id": "toukyou-ni-sundeimasu", "audio": "audio/particles/toukyou-ni-sundeimasu.mp3" },
+    { "kana": "九時に起きます。", "romaji": "ku ji ni okimasu.", "en": "I wake up at 9.", "id": "ku-ji-ni-okimasu", "audio": "audio/particles/ku-ji-ni-okimasu.mp3" },
+    { "kana": "金曜日に会います。", "romaji": "kinyoubi ni aimasu.", "en": "I will meet on Friday.", "id": "kinyoubi-ni-aimasu", "audio": "audio/particles/kinyoubi-ni-aimasu.mp3" },
+    { "kana": "私のかばんです。", "romaji": "watashi no kaban desu.", "en": "It is my bag.", "id": "watashi-no-kaban-desu", "audio": "audio/particles/watashi-no-kaban-desu.mp3" },
+    { "kana": "これは私のです。", "romaji": "kore wa watashi no desu.", "en": "This is mine.", "id": "kore-wa-watashi-no-desu", "audio": "audio/particles/kore-wa-watashi-no-desu.mp3" },
+    { "kana": "日本語の先生です。", "romaji": "nihongo no sensei desu.", "en": "I am a Japanese teacher. / It is a Japanese teacher.", "id": "nihongo-no-sensei-desu", "audio": "audio/particles/nihongo-no-sensei-desu.mp3" },
+    { "kana": "京都へ行きます。", "romaji": "kyouto e ikimasu.", "en": "I am going to Kyoto.", "id": "kyouto-e-ikimasu", "audio": "audio/particles/kyouto-e-ikimasu.mp3" },
+    { "kana": "日本へようこそ。", "romaji": "nihon e youkoso.", "en": "Welcome to Japan.", "id": "nihon-e-youkoso", "audio": "audio/particles/nihon-e-youkoso.mp3" }
+  ]
+}

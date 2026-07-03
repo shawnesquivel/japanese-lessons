@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>に・の・へ Worksheet — Japanese Particles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(44px,10vw,78px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--ink);margin:26px 0 0;position:sticky;top:0;background:var(--paper);z-index:5;padding-top:6px}
+  .tab{appearance:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-soft);
+    background:#fff;border:1px solid var(--line-strong);border-bottom:none;
+    padding:9px 14px;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px;white-space:nowrap}
+  .tab:hover{background:#F3EEE1}
+  .tab:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .tab[aria-selected="true"]{color:var(--ink);border-color:var(--ink);border-bottom:2px solid var(--paper);background:var(--paper)}
+  .tabpanel{display:none}
+  .tabpanel.active{display:block}
+
+  section{margin-top:40px}
+  section:first-of-type{margin-top:28px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:16px 0}
+  .jp,.kana{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-ni{background:var(--ko-bg);color:#3C5E25}
+  .c-no{background:var(--so-bg);color:#946012}
+  .c-e{background:var(--a-bg);color:#2C4D66}
+  .c-warn{background:var(--do-bg);color:#9C3119}
+
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td .kana{font-size:1.22em;display:block}
+  .tbl td .rj{display:block;color:var(--ink-soft);font-size:13px}
+  .tbl td.num{font-weight:700;text-align:center;width:72px;background:#F7F3E8}
+  .tbl tr.key td{background:#FCFAF4}
+  .tbl .flag{display:inline-block;font-size:12px;font-weight:700;color:#9C3119;background:var(--do-bg);border-radius:999px;padding:1px 8px;margin-left:6px}
+
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  .note.win{border-left-color:var(--ko)}
+  .note.warn{border-left-color:var(--do)}
+
+  .gloss{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;text-align:center;margin:6px 0}
+  .gloss .g{display:flex;flex-direction:column;align-items:center;padding:8px 12px;border:1px dashed var(--line-strong);border-radius:10px;background:#fff;min-width:58px}
+  .gloss .g b{font-family:"Zen Antique",serif;font-weight:400;font-size:24px;line-height:1.1}
+  .gloss .g i{font-style:normal;color:var(--ink-soft);font-size:12px;margin-top:6px}
+  .gloss .g.key{border-style:solid}
+  .gloss .g.k-ni{border-color:var(--ko);background:var(--ko-bg)}
+  .gloss .g.k-no{border-color:var(--so);background:var(--so-bg)}
+  .gloss .g.k-e{border-color:var(--a);background:var(--a-bg)}
+  .figcap{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:6px}
+
+  .flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .flow .step{flex:1 1 180px;background:#fff;border:1px solid var(--line-strong);border-radius:12px;padding:14px 16px}
+  .flow .step .n{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-soft)}
+  .flow .step .t{font-family:"Zen Antique",serif;font-size:24px;margin:4px 0 2px}
+  .flow .step .d{font-size:13px;color:var(--ink-soft)}
+  .flow .arrow{align-self:center;color:#C9BFA6;font-size:22px}
+  .flow .s-ni{background:var(--ko-bg);border-color:var(--ko)}
+  .flow .s-no{background:var(--so-bg);border-color:var(--so)}
+  .flow .s-e{background:var(--a-bg);border-color:var(--a)}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 10px}
+  .btn{font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:9px 18px;transition:opacity .15s}
+  .btn:hover{opacity:.85}
+  .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .gchip{font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:999px;padding:5px 13px;transition:.12s}
+  .gchip:hover{background:#F7F3E8}
+  .gchip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .count{color:var(--ink-soft);font-size:14px;margin-left:auto}
+
+  .fc-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin:16px 0}
+  .fc-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;transition:background .12s,box-shadow .12s}
+  .fc-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .fc-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .fc-num{font-size:11px;letter-spacing:.06em;color:#B7AE97;font-weight:700;align-self:flex-start}
+  .fc-front{font-size:20px;font-weight:700;margin:0;line-height:1.3}
+  .fc-group{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .play{width:48px;height:48px;border-radius:50%;border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s}
+  .play:hover{background:#E2EED4}
+  .play:active{transform:scale(.94)}
+  .play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
+  .play:disabled{opacity:.4;cursor:not-allowed}
+  .fc-hint,.tap-hint{font-size:12px;color:#B7AE97}
+  .fc-ans{display:none;width:100%;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .fc-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(26px,6vw,36px);line-height:1.25;display:block}
+  .fc-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
+  .fc-ans .en{display:block;margin-top:4px;color:var(--ink-soft);font-size:14px}
+  .fc-card.revealed .fc-ans{display:block}
+  .fc-card.revealed .fc-hint{display:none}
+
+  .listen-deck{display:grid;gap:14px;margin:18px 0}
+  .listen-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;transition:background .12s,box-shadow .12s}
+  .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .listen-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .listen-card .play{flex:0 0 auto;width:54px;height:54px;font-size:20px}
+  .listen-body{flex:1;min-width:0}
+  .listen-num{font-size:12px;letter-spacing:.04em;color:var(--ink-soft);font-weight:700}
+  .listen-prompt{color:var(--ink-soft);font-size:14px;margin:2px 0 0}
+  .listen-ans{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .listen-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);line-height:1.3;display:block}
+  .listen-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
+  .listen-ans .en{display:block;margin-top:2px;color:var(--ink-soft)}
+  .listen-card.revealed .listen-ans{display:block}
+  .listen-card.revealed .tap-hint{display:none}
+  .listen-note{font-size:13px;color:#B7AE97;margin-top:4px}
+  .status{color:var(--ink-soft)}
+
+  @media(max-width:560px){
+    .flow .arrow{display:none}
+    .count{margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<script src="audio/particles.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese · particles · day 6</div>
+    <h1>に・の・へ</h1>
+    <div class="subtitle">location, time, possession, description, and direction</div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Lesson sections">
+    <button class="tab" role="tab" id="tab-lesson" aria-controls="panel-lesson" aria-selected="true">Lesson</button>
+    <button class="tab" role="tab" id="tab-flashcards" aria-controls="panel-flashcards" aria-selected="false">Flashcards</button>
+    <button class="tab" role="tab" id="tab-listen" aria-controls="panel-listen" aria-selected="false">Listening</button>
+  </div>
+
+  <div class="tabpanel active" id="panel-lesson" role="tabpanel" aria-labelledby="tab-lesson">
+    <section id="overview">
+      <div class="sec-head"><span class="sec-kanji">粒</span><h2>Start here: what the particles do</h2></div>
+      <p class="lead">Particles are small words that label the job of the word before them. This lesson covers three from the slides: <span class="chip c-ni">に</span>, <span class="chip c-no">の</span>, and <span class="chip c-e">へ</span>.</p>
+
+      <table class="tbl">
+        <thead><tr><th>Particle</th><th>Main jobs</th><th>Fast memory hook</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-ni">に ni</span></td><td>location, time, target/destination, purpose</td><td class="en">Pin something to a point: at / in / on / to.</td></tr>
+          <tr><td><span class="chip c-no">の no</span></td><td>possession and noun-modifying</td><td class="en">Connect noun to noun: my bag, Japanese teacher.</td></tr>
+          <tr><td><span class="chip c-e">へ e</span></td><td>direction toward a place</td><td class="en">Heading toward, with motion verbs.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="flow" aria-label="Particle summary">
+        <div class="step s-ni"><div class="n">に</div><div class="t">ここに</div><div class="d">at/in a place · at a time · to a target</div></div>
+        <div class="arrow">→</div>
+        <div class="step s-no"><div class="n">の</div><div class="t">私の</div><div class="d">belongs to / describes another noun</div></div>
+        <div class="arrow">→</div>
+        <div class="step s-e"><div class="n">へ</div><div class="t">京都へ</div><div class="d">toward a direction</div></div>
+      </div>
+    </section>
+
+    <section id="ni">
+      <div class="sec-head"><span class="sec-kanji">在</span><h2>に: location, time, target</h2></div>
+      <p class="lead"><span class="chip c-ni">に</span> marks a fixed point: <strong>where something exists</strong>, <strong>when something happens</strong>, or <strong>where someone goes/arrives</strong>.</p>
+
+      <h3>1) Location with statement verbs</h3>
+      <p class="lead">Use <span class="romaji">に</span> with existence and residence verbs: <span class="romaji">いる</span> (living things exist), <span class="romaji">ある</span> (things exist), and <span class="romaji">すむ</span> (live/reside).</p>
+      <div class="card">
+        <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(22px,5vw,30px);margin:0 0 4px">ここ<span style="color:var(--ko)">に</span> 猫がいます。</p>
+        <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">koko ni neko ga imasu.</span> — “There is a cat here.”</p>
+        <div class="gloss">
+          <span class="g"><b>ここ</b><i>here</i></span>
+          <span class="g key k-ni"><b>に</b><i>at/in</i></span>
+          <span class="g"><b>猫</b><i>cat</i></span>
+          <span class="g"><b>が</b><i>subject</i></span>
+          <span class="g"><b>います</b><i>exists</i></span>
+        </div>
+        <div class="figcap">For existence, the place usually comes first: <strong>place + に + thing/person + が + います/あります</strong>.</div>
+      </div>
+
+      <table class="tbl">
+        <tbody>
+          <tr><td><span class="kana">テーブルの下に亀がいます。</span><span class="rj">teeburu no shita ni kame ga imasu.</span></td><td class="en">There is a turtle under the table.</td></tr>
+          <tr><td><span class="kana">東京に住んでいます。</span><span class="rj">toukyou ni sundeimasu.</span></td><td class="en">I live in Tokyo.</td></tr>
+          <tr><td><span class="kana">机の上に本があります。</span><span class="rj">tsukue no ue ni hon ga arimasu.</span></td><td class="en">There is a book on the desk.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2) Time: at / on</h3>
+      <p class="lead">Use <span class="romaji">に</span> for a specific clock time or calendar day.</p>
+      <table class="tbl">
+        <tbody>
+          <tr><td><span class="kana">九時に起きます。</span><span class="rj">ku ji ni okimasu.</span></td><td class="en">I wake up at 9.</td></tr>
+          <tr><td><span class="kana">金曜日に会います。</span><span class="rj">kinyoubi ni aimasu.</span></td><td class="en">I will meet on Friday.</td></tr>
+          <tr><td><span class="kana">三月に行きます。</span><span class="rj">san gatsu ni ikimasu.</span></td><td class="en">I will go in March.</td></tr>
+        </tbody>
+      </table>
+      <div class="note warn"><strong>Watch it:</strong> relative time words like <span class="romaji">きょう</span> today, <span class="romaji">あした</span> tomorrow, and <span class="romaji">まいにち</span> every day usually do <em>not</em> take に.</div>
+
+      <h3>3) Destination or purpose</h3>
+      <p class="lead">With motion verbs, <span class="romaji">に</span> can mark the destination or target you reach. It can also mark purpose: “go to do ___.”</p>
+      <table class="tbl">
+        <tbody>
+          <tr><td><span class="kana">学校に行きます。</span><span class="rj">gakkou ni ikimasu.</span></td><td class="en">I go to school.</td></tr>
+          <tr><td><span class="kana">家に帰ります。</span><span class="rj">ie ni kaerimasu.</span></td><td class="en">I return home.</td></tr>
+          <tr><td><span class="kana">映画を見に行きます。</span><span class="rj">eiga o mi ni ikimasu.</span></td><td class="en">I go to watch a movie.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="no">
+      <div class="sec-head"><span class="sec-kanji">属</span><h2>の: possession and description</h2></div>
+      <p class="lead"><span class="chip c-no">の</span> is pronounced “no.” It connects one noun to another. The first noun modifies the second noun.</p>
+
+      <div class="card">
+        <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(22px,5vw,30px);margin:0 0 4px">私<span style="color:var(--so)">の</span> かばんです。</p>
+        <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">watashi no kaban desu.</span> — “It is my bag.”</p>
+        <div class="gloss">
+          <span class="g"><b>私</b><i>I / me</i></span>
+          <span class="g key k-no"><b>の</b><i>my</i></span>
+          <span class="g"><b>かばん</b><i>bag</i></span>
+          <span class="g"><b>です</b><i>is</i></span>
+        </div>
+        <div class="figcap"><strong>A の B</strong> = B connected to A. Often “A's B,” but not always possession.</div>
+      </div>
+
+      <table class="tbl">
+        <thead><tr><th>Pattern</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kana">私の</span><span class="rj">watashi no</span></td><td class="en">my / mine</td></tr>
+          <tr><td><span class="kana">私のかばん</span><span class="rj">watashi no kaban</span></td><td class="en">my bag</td></tr>
+          <tr><td><span class="kana">これは私のです。</span><span class="rj">kore wa watashi no desu.</span></td><td class="en">This is mine.</td></tr>
+          <tr><td><span class="kana">日本語の先生</span><span class="rj">nihongo no sensei</span></td><td class="en">Japanese-language teacher / Japanese teacher</td></tr>
+          <tr><td><span class="kana">友達の名前はさくらです。</span><span class="rj">tomodachi no namae wa sakura desu.</span></td><td class="en">My friend's name is Sakura.</td></tr>
+          <tr><td><span class="kana">日本の車が好きです。</span><span class="rj">nihon no kuruma ga suki desu.</span></td><td class="en">I like Japanese cars.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note win"><strong>Quick test:</strong> if English can say “A's B,” “B of A,” or “A-type B,” Japanese often uses <span class="romaji">A の B</span>.</div>
+    </section>
+
+    <section id="e">
+      <div class="sec-head"><span class="sec-kanji">向</span><h2>へ: direction toward</h2></div>
+      <p class="lead"><span class="chip c-e">へ</span> is written <strong>へ</strong> but pronounced <strong>e</strong> when it is a particle. It marks the direction you are heading.</p>
+
+      <table class="tbl">
+        <tbody>
+          <tr><td><span class="kana">京都へ行きます。</span><span class="rj">kyouto e ikimasu.</span></td><td class="en">I am going to Kyoto.</td></tr>
+          <tr><td><span class="kana">日本へようこそ！</span><span class="rj">nihon e youkoso!</span></td><td class="en">Welcome to Japan!</td></tr>
+          <tr><td><span class="kana">学校へ行きます。</span><span class="rj">gakkou e ikimasu.</span></td><td class="en">I head to school.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>に vs へ with motion</h3>
+      <table class="tbl">
+        <thead><tr><th>Particle</th><th>Feel</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-ni">に</span></td><td class="en">destination / arrival point</td><td><span class="kana">学校に行きます。</span><span class="rj">I go to school.</span></td></tr>
+          <tr><td><span class="chip c-e">へ</span></td><td class="en">direction / heading toward</td><td><span class="kana">学校へ行きます。</span><span class="rj">I head toward school.</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note">For beginner sentences with <span class="romaji">行きます</span>, <span class="romaji">来ます</span>, and <span class="romaji">帰ります</span>, both <span class="romaji">に</span> and <span class="romaji">へ</span> can often translate as “to.” The nuance is target vs direction.</div>
+    </section>
+
+    <section id="patterns">
+      <div class="sec-head"><span class="sec-kanji">型</span><h2>Patterns to keep</h2></div>
+      <table class="tbl">
+        <thead><tr><th>Use</th><th>Pattern</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>exists in a place</td><td>place + <span class="chip c-ni">に</span> + thing + が + います/あります</td><td><span class="kana">ここに猫がいます。</span></td></tr>
+          <tr><td>happens at a time</td><td>time + <span class="chip c-ni">に</span> + verb</td><td><span class="kana">九時に起きます。</span></td></tr>
+          <tr><td>A's B / A-type B</td><td>A + <span class="chip c-no">の</span> + B</td><td><span class="kana">私のかばん</span></td></tr>
+          <tr><td>head toward</td><td>place + <span class="chip c-e">へ</span> + motion verb</td><td><span class="kana">京都へ行きます。</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <div class="tabpanel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+    <section>
+      <div class="sec-head"><span class="sec-kanji">札</span><h2>Flashcards</h2></div>
+      <p class="lead">Read the English prompt, say the Japanese aloud, then tap the card to reveal. Cards shuffle every refresh.</p>
+
+      <div class="toolbar">
+        <button class="btn" id="shuffle">Shuffle</button>
+        <button class="btn secondary" id="reset">Hide all</button>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="chips" id="groups"></div>
+      <div class="fc-deck" id="fc-deck">
+        <p class="status" id="fc-status">Loading cards...</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="tabpanel" id="panel-listen" role="tabpanel" aria-labelledby="tab-listen">
+    <section>
+      <div class="sec-head"><span class="sec-kanji">聞</span><h2>Listening drill</h2></div>
+      <p class="lead"><strong>Tap ▶ to hear the Japanese</strong> if audio is available, guess the meaning, then <strong>tap the card</strong> to reveal kana, romaji, and English.</p>
+      <div class="listen-deck" id="listen-deck">
+        <p class="status" id="listen-status">Loading audio data...</p>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<script src="nav.js" defer></script>
+<script>
+  var PARTICLE_CARDS = [
+    { group:'に', prompt:'location particle: at / in / on', kana:'に', romaji:'ni', en:'marks a place where something exists or happens' },
+    { group:'に', prompt:'There is a cat here.', kana:'ここに猫がいます。', romaji:'koko ni neko ga imasu.', en:'ここ + に marks the location' },
+    { group:'に', prompt:'There is a turtle under the table.', kana:'テーブルの下に亀がいます。', romaji:'teeburu no shita ni kame ga imasu.', en:'下に = under / beneath' },
+    { group:'に', prompt:'I live in Tokyo.', kana:'東京に住んでいます。', romaji:'toukyou ni sundeimasu.', en:'に works with 住んでいます' },
+    { group:'に', prompt:'I wake up at 9.', kana:'九時に起きます。', romaji:'ku ji ni okimasu.', en:'specific time + に' },
+    { group:'に', prompt:'I will meet on Friday.', kana:'金曜日に会います。', romaji:'kinyoubi ni aimasu.', en:'specific weekday + に' },
+    { group:'に', prompt:'I go to school.', kana:'学校に行きます。', romaji:'gakkou ni ikimasu.', en:'destination / target' },
+    { group:'に', prompt:'I go to watch a movie.', kana:'映画を見に行きます。', romaji:'eiga o mi ni ikimasu.', en:'purpose: go to do something' },
+
+    { group:'の', prompt:'possession / modifying particle', kana:'の', romaji:'no', en:'connects noun to noun' },
+    { group:'の', prompt:'my', kana:'私の', romaji:'watashi no', en:'mine / my' },
+    { group:'の', prompt:'my bag', kana:'私のかばん', romaji:'watashi no kaban', en:'A の B = A\'s B' },
+    { group:'の', prompt:'This is mine.', kana:'これは私のです。', romaji:'kore wa watashi no desu.', en:'の can stand in for the owned noun' },
+    { group:'の', prompt:'Japanese teacher', kana:'日本語の先生', romaji:'nihongo no sensei', en:'Japanese-language teacher / Japanese teacher' },
+    { group:'の', prompt:'My friend\'s name is Sakura.', kana:'友達の名前はさくらです。', romaji:'tomodachi no namae wa sakura desu.', en:'友達の名前 = friend\'s name' },
+    { group:'の', prompt:'I like Japanese cars.', kana:'日本の車が好きです。', romaji:'nihon no kuruma ga suki desu.', en:'日本の車 = cars of/from Japan' },
+
+    { group:'へ', prompt:'direction particle, pronounced "e"', kana:'へ', romaji:'e', en:'marks heading toward a place' },
+    { group:'へ', prompt:'I am going to Kyoto.', kana:'京都へ行きます。', romaji:'kyouto e ikimasu.', en:'direction toward Kyoto' },
+    { group:'へ', prompt:'Welcome to Japan!', kana:'日本へようこそ！', romaji:'nihon e youkoso!', en:'へ marks the direction/arrival welcome' },
+    { group:'へ', prompt:'I head to school.', kana:'学校へ行きます。', romaji:'gakkou e ikimasu.', en:'direction toward school' },
+
+    { group:'mix', prompt:'Which particle? ___ marks specific time.', kana:'に', romaji:'ni', en:'九時に, 金曜日に' },
+    { group:'mix', prompt:'Which particle? ___ connects two nouns.', kana:'の', romaji:'no', en:'私のかばん, 日本語の先生' },
+    { group:'mix', prompt:'Which particle? ___ is written he but read e.', kana:'へ', romaji:'e', en:'京都へ行きます' },
+    { group:'mix', prompt:'Build: under the table', kana:'テーブルの下', romaji:'teeburu no shita', en:'の connects table + under' },
+    { group:'mix', prompt:'Build: under the table + location marker', kana:'テーブルの下に', romaji:'teeburu no shita ni', en:'add に to mark the existence place' }
+  ];
+
+  var PARTICLE_LISTEN = [
+    { kana:'ここに猫がいます。', romaji:'koko ni neko ga imasu.', en:'There is a cat here.' },
+    { kana:'テーブルの下に亀がいます。', romaji:'teeburu no shita ni kame ga imasu.', en:'There is a turtle under the table.' },
+    { kana:'東京に住んでいます。', romaji:'toukyou ni sundeimasu.', en:'I live in Tokyo.' },
+    { kana:'九時に起きます。', romaji:'ku ji ni okimasu.', en:'I wake up at 9.' },
+    { kana:'金曜日に会います。', romaji:'kinyoubi ni aimasu.', en:'I will meet on Friday.' },
+    { kana:'私のかばんです。', romaji:'watashi no kaban desu.', en:'It is my bag.' },
+    { kana:'これは私のです。', romaji:'kore wa watashi no desu.', en:'This is mine.' },
+    { kana:'日本語の先生です。', romaji:'nihongo no sensei desu.', en:'I am a Japanese teacher. / It is a Japanese teacher.' },
+    { kana:'京都へ行きます。', romaji:'kyouto e ikimasu.', en:'I am going to Kyoto.' },
+    { kana:'日本へようこそ。', romaji:'nihon e youkoso.', en:'Welcome to Japan.' }
+  ];
+
+  function shuffle(list){
+    var a = list.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  (function(){
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.tabpanel'));
+    function select(tab){
+      tabs.forEach(function(t){ t.setAttribute('aria-selected', t === tab); });
+      panels.forEach(function(p){ p.classList.toggle('active', p.id === tab.getAttribute('aria-controls')); });
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+    tabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){ select(tab); });
+      tab.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+          e.preventDefault();
+          var dir = e.key === 'ArrowRight' ? 1 : -1;
+          var next = tabs[(i + dir + tabs.length) % tabs.length];
+          next.focus(); select(next);
+        }
+      });
+    });
+  })();
+
+  var AudioPlayer = (function(){
+    var current = null;
+    function play(src, btn){
+      if(!src) return;
+      if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
+      var audio = new Audio(src);
+      current = { audio: audio, btn: btn };
+      btn.classList.add('playing');
+      audio.play().catch(function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
+      audio.addEventListener('error', function(){ btn.classList.remove('playing'); btn.disabled = true; btn.textContent = 'x'; });
+    }
+    return { play: play };
+  })();
+
+  (function(){
+    var deck = document.getElementById('fc-deck');
+    var countEl = document.getElementById('count');
+    var groupsEl = document.getElementById('groups');
+    var activeGroup = 'all';
+    var manifest = window.JL_PARTICLES || {};
+    var manifestCards = (manifest.cards || []).reduce(function(map, item){
+      map[item.romaji] = item;
+      return map;
+    }, {});
+    var hasAudio = !!manifest.hasAudio;
+
+    function visibleCards(){
+      return activeGroup === 'all' ? PARTICLE_CARDS : PARTICLE_CARDS.filter(function(c){ return c.group === activeGroup; });
+    }
+    function cardHtml(c, i, total){
+      var audioItem = manifestCards[c.romaji] || {};
+      var src = audioItem.audio ? esc(audioItem.audio) : '';
+      return '<div class="fc-card" tabindex="0" role="button" aria-expanded="false">' +
+        '<span class="fc-num">' + (i + 1) + ' / ' + total + '</span>' +
+        '<span class="fc-group">' + esc(c.group) + '</span>' +
+        '<p class="fc-front">' + esc(c.prompt) + '</p>' +
+        '<button class="play" type="button" aria-label="Play sound hint" data-src="' + src + '"' + (hasAudio && src ? '' : ' disabled') + '>▶</button>' +
+        '<span class="fc-hint">' + (hasAudio ? 'tap ▶ for sound · tap card for answer' : 'tap card for answer') + '</span>' +
+        '<div class="fc-ans"><span class="kana">' + esc(c.kana) + '</span><span class="rj">' + esc(c.romaji) + '</span><span class="en">' + esc(c.en) + '</span></div>' +
+      '</div>';
+    }
+    function bind(){
+      deck.querySelectorAll('.fc-card').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', function(e){
+          if(e.target.closest('.play')) return;
+          toggle();
+        });
+        card.addEventListener('keydown', function(e){
+          if(document.activeElement && document.activeElement.classList.contains('play')) return;
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+        });
+      });
+      deck.querySelectorAll('.play').forEach(function(btn){
+        btn.addEventListener('click', function(e){ e.stopPropagation(); AudioPlayer.play(btn.getAttribute('data-src'), btn); });
+      });
+    }
+    function draw(){
+      var list = shuffle(visibleCards());
+      countEl.textContent = list.length + ' cards';
+      deck.innerHTML = list.map(function(c, i){ return cardHtml(c, i, list.length); }).join('');
+      bind();
+    }
+    function buildGroups(){
+      var groups = ['all'];
+      PARTICLE_CARDS.forEach(function(c){ if(groups.indexOf(c.group) === -1) groups.push(c.group); });
+      groupsEl.innerHTML = groups.map(function(g){
+        return '<button class="gchip' + (g === 'all' ? ' active' : '') + '" data-group="' + esc(g) + '">' + esc(g) + '</button>';
+      }).join('');
+      groupsEl.querySelectorAll('.gchip').forEach(function(chip){
+        chip.addEventListener('click', function(){
+          activeGroup = chip.getAttribute('data-group');
+          groupsEl.querySelectorAll('.gchip').forEach(function(c){ c.classList.remove('active'); });
+          chip.classList.add('active');
+          draw();
+        });
+      });
+    }
+    document.getElementById('shuffle').addEventListener('click', draw);
+    document.getElementById('reset').addEventListener('click', function(){
+      deck.querySelectorAll('.fc-card.revealed').forEach(function(c){ c.classList.remove('revealed'); c.setAttribute('aria-expanded', 'false'); });
+    });
+    buildGroups();
+    draw();
+  })();
+
+  (function(){
+    var deck = document.getElementById('listen-deck');
+    var status = document.getElementById('listen-status');
+    var manifest = window.JL_PARTICLES || {};
+    var hasAudio = !!manifest.hasAudio;
+    var items = (manifest.listen && manifest.listen.length) ? manifest.listen : PARTICLE_LISTEN;
+    if(!items.length){ status.textContent = 'No listening items found.'; return; }
+
+    var ordered = shuffle(items);
+    deck.innerHTML = ordered.map(function(p, i){
+      var src = p.audio ? esc(p.audio) : '';
+      return '<div class="listen-card" tabindex="0" role="button" aria-expanded="false">' +
+        '<button class="play" type="button" aria-label="Play audio" data-src="' + src + '"' + (hasAudio && src ? '' : ' disabled') + '>▶</button>' +
+        '<div class="listen-body">' +
+          '<span class="listen-num">' + (i + 1) + ' / ' + ordered.length + '</span>' +
+          '<p class="listen-prompt">' + (hasAudio ? 'Listen, guess the meaning, then tap to reveal.' : 'Audio pending — tap to reveal.') + '</p>' +
+          '<div class="listen-ans"><span class="kana">' + esc(p.kana) + '</span><span class="rj">' + esc(p.romaji) + '</span><span class="en">' + esc(p.en) + '</span></div>' +
+          '<span class="tap-hint">tap card to reveal</span>' +
+        '</div></div>';
+    }).join('');
+
+    deck.querySelectorAll('.listen-card').forEach(function(card){
+      function toggle(){
+        card.classList.toggle('revealed');
+        card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+      }
+      card.addEventListener('click', function(e){
+        if(e.target.closest('.play')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', function(e){
+        if(document.activeElement && document.activeElement.classList.contains('play')) return;
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      });
+    });
+    deck.querySelectorAll('.play').forEach(function(btn){
+      btn.addEventListener('click', function(e){ e.stopPropagation(); AudioPlayer.play(btn.getAttribute('data-src'), btn); });
+    });
+    if(!hasAudio){
+      var note = document.createElement('p');
+      note.className = 'listen-note';
+      note.textContent = 'ElevenLabs audio was not generated in this environment. Add ELEVENLABS_API_KEY and run npm run generate:audio to enable playback.';
+      deck.appendChild(note);
+    }
+  })();
+</script>
+</body>
+</html>

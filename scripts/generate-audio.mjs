@@ -22,9 +22,11 @@ const MANIFEST_PATH = join(AUDIO_DIR, "manifest.json");
 const WORDS_DIR = join(AUDIO_DIR, "words");
 const AGE_DIR = join(AUDIO_DIR, "age");
 const TIME_DIR = join(AUDIO_DIR, "time");
+const PARTICLES_DIR = join(AUDIO_DIR, "particles");
 const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
 const AGE_MANIFEST_PATH = join(AUDIO_DIR, "age-days-months.json");
 const TIME_MANIFEST_PATH = join(AUDIO_DIR, "time-parts.json");
+const PARTICLES_MANIFEST_PATH = join(AUDIO_DIR, "particles.json");
 
 // ---- minimal .env loader (no dependency) ----
 (function loadEnv() {
@@ -209,6 +211,42 @@ const L5_CONVO = [
   { speaker: "a", kana: "わたしはじゅうきゅうさいです。", romaji: "watashi wa juukyuu sai desu.", en: "I'm 19." },
 ];
 
+// ---- Lesson 6: particles に・の・へ ----
+const PARTICLE_CARDS = [
+  { kana: "に", romaji: "ni", en: "location / time / target particle" },
+  { kana: "ここに猫がいます。", romaji: "koko ni neko ga imasu.", en: "There is a cat here." },
+  { kana: "テーブルの下に亀がいます。", romaji: "teeburu no shita ni kame ga imasu.", en: "There is a turtle under the table." },
+  { kana: "東京に住んでいます。", romaji: "toukyou ni sundeimasu.", en: "I live in Tokyo." },
+  { kana: "九時に起きます。", romaji: "ku ji ni okimasu.", en: "I wake up at 9." },
+  { kana: "金曜日に会います。", romaji: "kinyoubi ni aimasu.", en: "I will meet on Friday." },
+  { kana: "学校に行きます。", romaji: "gakkou ni ikimasu.", en: "I go to school." },
+  { kana: "映画を見に行きます。", romaji: "eiga o mi ni ikimasu.", en: "I go to watch a movie." },
+  { kana: "の", romaji: "no", en: "possession / modifying particle" },
+  { kana: "私の", romaji: "watashi no", en: "my / mine" },
+  { kana: "私のかばん", romaji: "watashi no kaban", en: "my bag" },
+  { kana: "これは私のです。", romaji: "kore wa watashi no desu.", en: "This is mine." },
+  { kana: "日本語の先生", romaji: "nihongo no sensei", en: "Japanese teacher" },
+  { kana: "友達の名前はさくらです。", romaji: "tomodachi no namae wa sakura desu.", en: "My friend's name is Sakura." },
+  { kana: "日本の車が好きです。", romaji: "nihon no kuruma ga suki desu.", en: "I like Japanese cars." },
+  { kana: "へ", romaji: "e", en: "direction particle" },
+  { kana: "京都へ行きます。", romaji: "kyouto e ikimasu.", en: "I am going to Kyoto." },
+  { kana: "日本へようこそ。", romaji: "nihon e youkoso.", en: "Welcome to Japan." },
+  { kana: "学校へ行きます。", romaji: "gakkou e ikimasu.", en: "I head to school." },
+];
+
+const PARTICLE_LISTEN = [
+  { kana: "ここに猫がいます。", romaji: "koko ni neko ga imasu.", en: "There is a cat here." },
+  { kana: "テーブルの下に亀がいます。", romaji: "teeburu no shita ni kame ga imasu.", en: "There is a turtle under the table." },
+  { kana: "東京に住んでいます。", romaji: "toukyou ni sundeimasu.", en: "I live in Tokyo." },
+  { kana: "九時に起きます。", romaji: "ku ji ni okimasu.", en: "I wake up at 9." },
+  { kana: "金曜日に会います。", romaji: "kinyoubi ni aimasu.", en: "I will meet on Friday." },
+  { kana: "私のかばんです。", romaji: "watashi no kaban desu.", en: "It is my bag." },
+  { kana: "これは私のです。", romaji: "kore wa watashi no desu.", en: "This is mine." },
+  { kana: "日本語の先生です。", romaji: "nihongo no sensei desu.", en: "I am a Japanese teacher. / It is a Japanese teacher." },
+  { kana: "京都へ行きます。", romaji: "kyouto e ikimasu.", en: "I am going to Kyoto." },
+  { kana: "日本へようこそ。", romaji: "nihon e youkoso.", en: "Welcome to Japan." },
+];
+
 // ---- Time-telling component clips for the games page ----
 // The game plays a random time as a sequence of these clips (gozen/gogo +
 // hour + minute + desu), so any time 1:00–12:59 is covered by ~35 files.
@@ -259,6 +297,8 @@ const l5Convo = L5_CONVO.map((p, i) => ({
   audio: `audio/age/c${i + 1}-${slug(p.romaji)}.mp3`,
   voice: p.speaker === "a" ? VOICE_A : VOICE_B,
 }));
+const particleCards = withMeta(PARTICLE_CARDS, "audio/particles", VOICE_B);
+const particleListen = withMeta(PARTICLE_LISTEN, "audio/particles", VOICE_B);
 
 // Write each manifest twice: a .json (for http/https fetch) and a .js companion
 // that assigns a global, so pages also work when opened directly via file://
@@ -303,6 +343,17 @@ function writeAgeManifest(path, listen, convo, hasAudio) {
   });
 }
 
+function writeParticlesManifest(path, cards, listen, hasAudio) {
+  writeManifestFile(path, "JL_PARTICLES", {
+    generatedAt: hasAudio ? new Date().toISOString() : null,
+    voiceId: VOICE_B,
+    model: MODEL,
+    hasAudio,
+    cards,
+    listen,
+  });
+}
+
 async function generateSet(client, label, items) {
   let made = 0;
   let skipped = 0;
@@ -333,14 +384,16 @@ async function main() {
   mkdirSync(WORDS_DIR, { recursive: true });
   mkdirSync(AGE_DIR, { recursive: true });
   mkdirSync(TIME_DIR, { recursive: true });
+  mkdirSync(PARTICLES_DIR, { recursive: true });
 
   if (!API_KEY) {
     writeManifest(MANIFEST_PATH, "phrases", phrases, false, "JL_LISTENING");
     writeManifest(FLASHCARDS_PATH, "words", words, false, "JL_FLASHCARDS");
     writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, false);
     writeTimeManifest(TIME_MANIFEST_PATH, timeParts, false);
+    writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleCards, particleListen, false);
     console.log("No ELEVENLABS_API_KEY found.");
-    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts (hasAudio: false).`);
+    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts + ${particleListen.length} particle clips (hasAudio: false).`);
     console.log("The web UI will render the cards; add a key and re-run to enable playback.");
     return;
   }
@@ -354,12 +407,15 @@ async function main() {
   await generateSet(client, "age:listen", l5Listen);
   await generateSet(client, "age:convo", l5Convo);
   await generateSet(client, "time:parts", timeParts);
+  await generateSet(client, "particles:cards", particleCards);
+  await generateSet(client, "particles:listen", particleListen);
 
   writeManifest(MANIFEST_PATH, "phrases", phrases, true, "JL_LISTENING");
   writeManifest(FLASHCARDS_PATH, "words", words, true, "JL_FLASHCARDS");
   writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, true);
   writeTimeManifest(TIME_MANIFEST_PATH, timeParts, true);
-  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json");
+  writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleCards, particleListen, true);
+  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json, audio/particles.json");
 }
 
 main().catch((err) => {

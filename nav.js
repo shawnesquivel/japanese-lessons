@@ -7,6 +7,7 @@
     { href: "index.html", jp: "こそあど", en: "this · that · which" },
     { href: "time.html", jp: "じかん", en: "telling time" },
     { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
+    { href: "particles.html", jp: "に・の・へ", en: "particles" },
     { href: "flashcards.html", jp: "フラッシュ", en: "flashcards deck" },
     { href: "games.html", jp: "ゲーム", en: "games" },
   ];
