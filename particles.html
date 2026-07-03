@@ -334,33 +334,33 @@
 <script src="nav.js" defer></script>
 <script>
   var PARTICLE_CARDS = [
-    { group:'に', prompt:'location particle: at / in / on', kana:'に', romaji:'ni', en:'marks a place where something exists or happens' },
-    { group:'に', prompt:'There is a cat here.', kana:'ここに猫がいます。', romaji:'koko ni neko ga imasu.', en:'ここ + に marks the location' },
-    { group:'に', prompt:'There is a turtle under the table.', kana:'テーブルの下に亀がいます。', romaji:'teeburu no shita ni kame ga imasu.', en:'下に = under / beneath' },
-    { group:'に', prompt:'I live in Tokyo.', kana:'東京に住んでいます。', romaji:'toukyou ni sundeimasu.', en:'に works with 住んでいます' },
-    { group:'に', prompt:'I wake up at 9.', kana:'九時に起きます。', romaji:'ku ji ni okimasu.', en:'specific time + に' },
-    { group:'に', prompt:'I will meet on Friday.', kana:'金曜日に会います。', romaji:'kinyoubi ni aimasu.', en:'specific weekday + に' },
-    { group:'に', prompt:'I go to school.', kana:'学校に行きます。', romaji:'gakkou ni ikimasu.', en:'destination / target' },
-    { group:'に', prompt:'I go to watch a movie.', kana:'映画を見に行きます。', romaji:'eiga o mi ni ikimasu.', en:'purpose: go to do something' },
+    { group:'particle meaning', prompt:'location particle: at / in / on', kana:'に', romaji:'ni', en:'marks a place where something exists or happens' },
+    { group:'translate', prompt:'There is a cat here.', kana:'ここに猫がいます。', romaji:'koko ni neko ga imasu.', en:'ここ + に marks the location' },
+    { group:'translate', prompt:'There is a turtle under the table.', kana:'テーブルの下に亀がいます。', romaji:'teeburu no shita ni kame ga imasu.', en:'下に = under / beneath' },
+    { group:'translate', prompt:'I live in Tokyo.', kana:'東京に住んでいます。', romaji:'toukyou ni sundeimasu.', en:'に works with 住んでいます' },
+    { group:'translate', prompt:'I wake up at 9.', kana:'九時に起きます。', romaji:'ku ji ni okimasu.', en:'specific time + に' },
+    { group:'translate', prompt:'I will meet on Friday.', kana:'金曜日に会います。', romaji:'kinyoubi ni aimasu.', en:'specific weekday + に' },
+    { group:'translate', prompt:'I go to school.', kana:'学校に行きます。', romaji:'gakkou ni ikimasu.', en:'destination / target' },
+    { group:'translate', prompt:'I go to watch a movie.', kana:'映画を見に行きます。', romaji:'eiga o mi ni ikimasu.', en:'purpose: go to do something' },
 
-    { group:'の', prompt:'possession / modifying particle', kana:'の', romaji:'no', en:'connects noun to noun' },
-    { group:'の', prompt:'my', kana:'私の', romaji:'watashi no', en:'mine / my' },
-    { group:'の', prompt:'my bag', kana:'私のかばん', romaji:'watashi no kaban', en:'A の B = A\'s B' },
-    { group:'の', prompt:'This is mine.', kana:'これは私のです。', romaji:'kore wa watashi no desu.', en:'の can stand in for the owned noun' },
-    { group:'の', prompt:'Japanese teacher', kana:'日本語の先生', romaji:'nihongo no sensei', en:'Japanese-language teacher / Japanese teacher' },
-    { group:'の', prompt:'My friend\'s name is Sakura.', kana:'友達の名前はさくらです。', romaji:'tomodachi no namae wa sakura desu.', en:'友達の名前 = friend\'s name' },
-    { group:'の', prompt:'I like Japanese cars.', kana:'日本の車が好きです。', romaji:'nihon no kuruma ga suki desu.', en:'日本の車 = cars of/from Japan' },
+    { group:'particle meaning', prompt:'possession / noun-linking particle', kana:'の', romaji:'no', en:'connects noun to noun' },
+    { group:'phrase', prompt:'my', kana:'私の', romaji:'watashi no', en:'mine / my' },
+    { group:'phrase', prompt:'my bag', kana:'私のかばん', romaji:'watashi no kaban', en:'A の B = A\'s B' },
+    { group:'translate', prompt:'This is mine.', kana:'これは私のです。', romaji:'kore wa watashi no desu.', en:'の can stand in for the owned noun' },
+    { group:'phrase', prompt:'Japanese teacher', kana:'日本語の先生', romaji:'nihongo no sensei', en:'Japanese-language teacher / Japanese teacher' },
+    { group:'translate', prompt:'My friend\'s name is Sakura.', kana:'友達の名前はさくらです。', romaji:'tomodachi no namae wa sakura desu.', en:'友達の名前 = friend\'s name' },
+    { group:'translate', prompt:'I like Japanese cars.', kana:'日本の車が好きです。', romaji:'nihon no kuruma ga suki desu.', en:'日本の車 = cars of/from Japan' },
 
-    { group:'へ', prompt:'direction particle, pronounced "e"', kana:'へ', romaji:'e', en:'marks heading toward a place' },
-    { group:'へ', prompt:'I am going to Kyoto.', kana:'京都へ行きます。', romaji:'kyouto e ikimasu.', en:'direction toward Kyoto' },
-    { group:'へ', prompt:'Welcome to Japan!', kana:'日本へようこそ！', romaji:'nihon e youkoso!', en:'へ marks the direction/arrival welcome' },
-    { group:'へ', prompt:'I head to school.', kana:'学校へ行きます。', romaji:'gakkou e ikimasu.', en:'direction toward school' },
+    { group:'particle meaning', prompt:'direction particle, pronounced "e"', kana:'へ', romaji:'e', en:'marks heading toward a place' },
+    { group:'translate', prompt:'I am going to Kyoto.', kana:'京都へ行きます。', romaji:'kyouto e ikimasu.', en:'direction toward Kyoto' },
+    { group:'translate', prompt:'Welcome to Japan!', kana:'日本へようこそ！', romaji:'nihon e youkoso!', en:'へ marks the direction/arrival welcome' },
+    { group:'translate', prompt:'I head to school.', kana:'学校へ行きます。', romaji:'gakkou e ikimasu.', en:'direction toward school' },
 
-    { group:'mix', prompt:'Which particle? ___ marks specific time.', kana:'に', romaji:'ni', en:'九時に, 金曜日に' },
-    { group:'mix', prompt:'Which particle? ___ connects two nouns.', kana:'の', romaji:'no', en:'私のかばん, 日本語の先生' },
-    { group:'mix', prompt:'Which particle? ___ is written he but read e.', kana:'へ', romaji:'e', en:'京都へ行きます' },
-    { group:'mix', prompt:'Build: under the table', kana:'テーブルの下', romaji:'teeburu no shita', en:'の connects table + under' },
-    { group:'mix', prompt:'Build: under the table + location marker', kana:'テーブルの下に', romaji:'teeburu no shita ni', en:'add に to mark the existence place' }
+    { group:'choose particle', prompt:'Which particle? ___ marks specific time.', kana:'に', romaji:'ni', en:'九時に, 金曜日に' },
+    { group:'choose particle', prompt:'Which particle? ___ connects two nouns.', kana:'の', romaji:'no', en:'私のかばん, 日本語の先生' },
+    { group:'choose particle', prompt:'Which particle? ___ is written he but read e.', kana:'へ', romaji:'e', en:'京都へ行きます' },
+    { group:'build phrase', prompt:'Build: under the table', kana:'テーブルの下', romaji:'teeburu no shita', en:'の connects table + under' },
+    { group:'build phrase', prompt:'Build: under the table + location marker', kana:'テーブルの下に', romaji:'teeburu no shita ni', en:'add に to mark the existence place' }
   ];
 
   var PARTICLE_LISTEN = [
