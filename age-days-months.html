@@ -682,14 +682,19 @@
       if(convoStatus) convoStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
       if(listenStatus) listenStatus.textContent = 'Audio manifest not found. Run: npm run generate:audio';
     }
-    // Prefer the global from audio/age-days-months.js (works over file://);
-    // fall back to fetching the JSON (http/https).
-    if(window.JL_AGE){ useManifest(window.JL_AGE); }
-    else {
+    // On hosted pages, fetch the JSON manifest fresh. The JS global is kept as
+    // the file:// fallback because local fetch() is blocked by browsers.
+    if(location.protocol === 'file:'){
+      if(window.JL_AGE) useManifest(window.JL_AGE);
+      else failed();
+    } else {
       fetch('audio/age-days-months.json', { cache: 'no-store' })
         .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
         .then(useManifest)
-        .catch(failed);
+        .catch(function(){
+          if(window.JL_AGE) useManifest(window.JL_AGE);
+          else failed();
+        });
     }
   })();
 </script>

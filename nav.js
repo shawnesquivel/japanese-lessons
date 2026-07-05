@@ -5,6 +5,7 @@
 (function () {
   var LINKS = [
     { href: "index.html", jp: "こそあど", en: "this · that · which" },
+    { href: "particles.html", jp: "じょし", en: "particles · も/と/が" },
     { href: "time.html", jp: "じかん", en: "telling time" },
     { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
     { href: "flashcards.html", jp: "フラッシュ", en: "flashcards deck" },

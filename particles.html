@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Particles Worksheet — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
+    --line:#E6DFCF; --line-strong:#D6CDB6;
+    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
+    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(46px,11vw,82px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+
+  section{margin-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:16px 0}
+  .jp{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+  .hl{color:var(--do);font-weight:700}
+  ruby rt{font-family:"Zen Maru Gothic",system-ui,sans-serif;font-size:.42em;color:var(--ink-soft)}
+
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-topic{background:var(--ko-bg);color:#3C5E25}
+  .c-object{background:var(--so-bg);color:#946012}
+  .c-also{background:var(--do-bg);color:#9C3119}
+  .c-connect{background:var(--a-bg);color:#2C4D66}
+  .c-subject{background:#F7F3E8;color:var(--ink);border:1px solid var(--line-strong)}
+
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td .kana{font-family:"Zen Antique",serif;font-size:1.2em;line-height:1.4;display:block}
+  .tbl td .rj{display:block;color:var(--ink-soft);font-size:13px}
+  .tbl td .gl{display:block;color:var(--ink-soft);font-size:13px}
+
+  .gloss{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;text-align:center;margin:6px 0}
+  .gloss .g{display:flex;flex-direction:column;align-items:center;padding:8px 12px;border:1px dashed var(--line-strong);border-radius:10px;background:#fff;min-width:58px}
+  .gloss .g b{font-family:"Zen Antique",serif;font-weight:400;font-size:26px;line-height:1.1}
+  .gloss .g i{font-style:normal;color:var(--ink-soft);font-size:12px;margin-top:6px}
+  .gloss .g.key{border-style:solid;border-color:var(--do);background:var(--do-bg)}
+  .figcap{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:6px}
+
+  .pattern{background:#fff;border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;margin:14px 0;text-align:center}
+  .pattern .big{font-family:"Zen Antique",serif;font-size:clamp(24px,6vw,34px);line-height:1.45;margin:0 0 4px}
+  .pattern .rj{color:var(--ink-soft);font-size:14px}
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  .note.win{border-left-color:var(--ko)}
+
+  .practice-deck{display:grid;gap:14px;margin:18px 0}
+  .practice-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;text-align:left;cursor:pointer;transition:background .12s,box-shadow .12s;
+  }
+  .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
+  .practice-card .q-en{font-weight:700;margin:0}
+  .practice-card .a-jp{
+    display:none;font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);
+    line-height:1.45;margin:12px 0 0;padding-top:12px;border-top:1px dashed var(--line-strong);
+  }
+  .practice-card .a-en{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
+  .practice-card .tap-hint{font-size:12px;color:#B7AE97;margin-top:10px}
+  .practice-card.revealed .a-jp,.practice-card.revealed .a-en{display:block}
+  .practice-card.revealed .tap-hint{display:none}
+
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Japanese particles · day 6</div>
+    <h1>じょし</h1>
+    <div class="subtitle">small words that mark how each word works in the sentence</div>
+  </header>
+
+  <!-- ===================== QUICK MAP ===================== -->
+  <section id="map">
+    <div class="sec-head"><span class="sec-kanji">助</span><h2>Quick particle map</h2></div>
+    <p class="lead">Particles come after a word and show what job that word is doing. This page keeps the older particles visible, then adds new sections for <span class="chip c-also">も mo</span>, <span class="chip c-connect">と to</span>, and <span class="chip c-subject">が ga</span>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Particle</th><th>Use</th><th>Simple pattern</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip c-topic">は</span><span class="rj">wa</span></td><td class="en">topic: “as for...”</td><td><span class="kana">A は B です。</span><span class="gl">A wa B desu.</span></td></tr>
+        <tr><td><span class="chip c-object">を</span><span class="rj">o</span></td><td class="en">object of an action</td><td><span class="kana">A を ください。</span><span class="gl">A o kudasai.</span></td></tr>
+        <tr><td><span class="chip c-also">も</span><span class="rj">mo</span></td><td class="en">also / too</td><td><span class="kana">A も B です。</span><span class="gl">A mo B desu.</span></td></tr>
+        <tr><td><span class="chip c-connect">と</span><span class="rj">to</span></td><td class="en">and / with</td><td><span class="kana">A と B</span><span class="gl">A to B</span></td></tr>
+        <tr><td><span class="chip c-subject">が</span><span class="rj">ga</span></td><td class="en">subject; existence</td><td><span class="kana">A が います。</span><span class="gl">A ga imasu.</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== MO LESSON ===================== -->
+  <section id="mo">
+    <div class="sec-head"><span class="sec-kanji">も</span><h2>New section: も means “also” or “too”</h2></div>
+    <p class="lead"><span class="chip c-also">も</span> is pronounced <span class="romaji">mo</span>. Put it right after the noun or phrase you want to mark as “also.”</p>
+
+    <div class="pattern">
+      <p class="big">Noun + <span class="hl">も</span></p>
+      <span class="rj">noun + mo — “also / too”</span>
+    </div>
+
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">watashi mo amerika-jin desu.</span> — “I am American too.”</p>
+      <div class="gloss">
+        <span class="g"><b><ruby>私<rt>わたし</rt></ruby></b><i>I</i></span>
+        <span class="g key"><b>も</b><i>also / too</i></span>
+        <span class="g"><b>アメリカ<ruby>人<rt>じん</rt></ruby></b><i>American</i></span>
+        <span class="g"><b>です</b><i>am / is</i></span>
+      </div>
+      <div class="figcap">The hiragana above the kanji shows how to read it: 私 = わたし, 人 = じん.</div>
+    </div>
+
+    <h3>How it changes a sentence</h3>
+    <table class="tbl">
+      <thead><tr><th>Without も</th><th>With も</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="kana"><ruby>私<rt>わたし</rt></ruby>は アメリカ<ruby>人<rt>じん</rt></ruby>です。</span><span class="rj">watashi wa amerika-jin desu.</span><span class="gl">I am American.</span></td>
+          <td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</span><span class="rj">watashi mo amerika-jin desu.</span><span class="gl">I am American too.</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note win"><strong>Shortcut:</strong> when you mean “I too...” or “me too,” <span class="romaji">わたしも</span> is usually the piece you need.</div>
+
+    <h3>More examples</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span><ruby>行<rt>い</rt></ruby>きたいです！</span><span class="rj">watashi mo ikitai desu!</span></td><td class="en">I want to go too!</td></tr>
+        <tr><td><span class="kana">テレビ<span class="hl">も</span><ruby>買<rt>か</rt></ruby>いました。</span><span class="rj">terebi mo kaimashita.</span></td><td class="en">I bought a TV too. / I also bought a TV.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== TO LESSON ===================== -->
+  <section id="to">
+    <div class="sec-head"><span class="sec-kanji">と</span><h2>New section: と connects nouns</h2></div>
+    <p class="lead"><span class="chip c-connect">と</span> is pronounced <span class="romaji">to</span>. It means “and” between nouns, and can also mean “with” when you do something together with someone.</p>
+
+    <div class="pattern">
+      <p class="big">Noun + <span class="hl">と</span> + noun</p>
+      <span class="rj">noun + to + noun — “noun and noun”</span>
+    </div>
+
+    <div class="note"><strong>Rule:</strong> put <span class="romaji">と</span> after each noun except the last one.</div>
+
+    <h3>“And” examples</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">アイスクリーム<span class="hl">と</span>かき<ruby>氷<rt>ごおり</rt></ruby>が<ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">aisu kuriimu to kakigoori ga suki desu.</span></td><td class="en">I like ice cream and shaved ice.</td></tr>
+        <tr><td><span class="kana">コーヒー<span class="hl">と</span>チーズケーキ<span class="hl">と</span>お<ruby>茶<rt>ちゃ</rt></ruby>をください。</span><span class="rj">koohii to chiizu keeki to ocha o kudasai.</span></td><td class="en">Coffee, cheesecake, and tea, please.</td></tr>
+        <tr><td><span class="kana">ワンピース<span class="hl">と</span>Tシャツを<ruby>買<rt>か</rt></ruby>いました。</span><span class="rj">wan piisu to tii shatsu o kaimashita.</span></td><td class="en">I bought One Piece and a T-shirt.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Together / with someone</h3>
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">と</span><ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">tomodachi to eiga o mimashita.</span> — “I watched a movie with my friend.”</p>
+      <div class="gloss">
+        <span class="g"><b><ruby>友達<rt>ともだち</rt></ruby></b><i>friend</i></span>
+        <span class="g key"><b>と</b><i>with</i></span>
+        <span class="g"><b><ruby>映画<rt>えいが</rt></ruby></b><i>movie</i></span>
+        <span class="g"><b>を</b><i>object</i></span>
+        <span class="g"><b><ruby>見<rt>み</rt></ruby>ました</b><i>watched</i></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GA LESSON ===================== -->
+  <section id="ga">
+    <div class="sec-head"><span class="sec-kanji">が</span><h2>New section: が marks the subject</h2></div>
+    <p class="lead"><span class="chip c-subject">が</span> is pronounced <span class="romaji">ga</span>. In this lesson, use it to point to what exists: the thing or person that “is there.”</p>
+
+    <div class="pattern">
+      <p class="big">Noun + <span class="hl">が</span> + あります / います</p>
+      <span class="rj">noun + ga + arimasu / imasu — “there is / there are...”</span>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Ending</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kana">あります</span><span class="rj">arimasu</span></td><td class="en">things, objects, places</td></tr>
+        <tr><td><span class="kana">います</span><span class="rj">imasu</span></td><td class="en">people and animals</td></tr>
+      </tbody>
+    </table>
+
+    <h3>People and animals: が います</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana"><ruby>妹<rt>いもうと</rt></ruby><span class="hl">が</span>います。</span><span class="rj">imouto ga imasu.</span></td><td class="en">I have a younger sister. / There is a younger sister.</td></tr>
+        <tr><td><span class="kana"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">が</span>います。</span><span class="rj">tomodachi ga imasu.</span></td><td class="en">I have a friend. / There is a friend.</td></tr>
+        <tr><td><span class="kana"><ruby>犬<rt>いぬ</rt></ruby><span class="hl">が</span>います。</span><span class="rj">inu ga imasu.</span></td><td class="en">I have a dog. / There is a dog.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note win"><strong>Existence shortcut:</strong> if the noun is alive, use <span class="romaji">が います</span>. If it is not alive, use <span class="romaji">が あります</span>.</div>
+  </section>
+
+  <!-- ===================== PRACTICE ===================== -->
+  <section id="practice">
+    <div class="sec-head"><span class="sec-kanji">練</span><h2>Practice: も・と・が</h2></div>
+    <p class="lead">Say the Japanese out loud, then tap to reveal. Watch where each particle lands: after the word it marks.</p>
+
+    <div class="practice-deck" id="practice-deck">
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Also / too</div>
+        <p class="q-en">I am American too.</p>
+        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</p>
+        <p class="a-en">watashi mo amerika-jin desu.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Me too</div>
+        <p class="q-en">Me too. / I also...</p>
+        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>。</p>
+        <p class="a-en">watashi mo.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Want to go too</div>
+        <p class="q-en">I want to go too!</p>
+        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span><ruby>行<rt>い</rt></ruby>きたいです！</p>
+        <p class="a-en">watashi mo ikitai desu!</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Also bought</div>
+        <p class="q-en">I bought a TV too.</p>
+        <p class="a-jp">テレビ<span class="hl">も</span><ruby>買<rt>か</rt></ruby>いました。</p>
+        <p class="a-en">terebi mo kaimashita.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">And</div>
+        <p class="q-en">Coffee, cheesecake, and tea, please.</p>
+        <p class="a-jp">コーヒー<span class="hl">と</span>チーズケーキ<span class="hl">と</span>お<ruby>茶<rt>ちゃ</rt></ruby>をください。</p>
+        <p class="a-en">koohii to chiizu keeki to ocha o kudasai.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">With someone</div>
+        <p class="q-en">I watched a movie with my friend.</p>
+        <p class="a-jp"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">と</span><ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。</p>
+        <p class="a-en">tomodachi to eiga o mimashita.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Existence</div>
+        <p class="q-en">I have a younger sister.</p>
+        <p class="a-jp"><ruby>妹<rt>いもうと</rt></ruby><span class="hl">が</span>います。</p>
+        <p class="a-en">imouto ga imasu.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Existence</div>
+        <p class="q-en">I have a dog.</p>
+        <p class="a-jp"><ruby>犬<rt>いぬ</rt></ruby><span class="hl">が</span>います。</p>
+        <p class="a-en">inu ga imasu.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    function shuffle(list){
+      var a = list.slice();
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function shuffleChildren(parent){
+      var nodes = Array.prototype.slice.call(parent.children);
+      shuffle(nodes).forEach(function(node){ parent.appendChild(node); });
+    }
+
+    function bindFlashcards(root){
+      root.querySelectorAll('.flashcard').forEach(function(card){
+        function toggle(){
+          card.classList.toggle('revealed');
+          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
+        }
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
+    }
+
+    shuffleChildren(document.getElementById('practice-deck'));
+    bindFlashcards(document);
+  })();
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 window.JL_LISTENING = {
-  "generatedAt": "2026-06-28T20:15:00.477Z",
+  "generatedAt": "2026-07-04T23:55:49.603Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,

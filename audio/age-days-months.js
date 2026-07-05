@@ -1,5 +1,5 @@
 window.JL_AGE = {
-  "generatedAt": "2026-06-28T20:15:00.478Z",
+  "generatedAt": "2026-07-04T23:55:49.605Z",
   "voiceA": "T7yYq3WpB94yAuOXraRi",
   "voiceB": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
