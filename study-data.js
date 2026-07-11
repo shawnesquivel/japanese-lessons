@@ -1,0 +1,39 @@
+window.JL_STUDY_SENTENCES = [
+  {id:"build:kosoado:what-this",subject:"kosoado",en:"What is this?",tokens:["これは","なん","です","か。"]},
+  {id:"build:kosoado:this-apple",subject:"kosoado",en:"This is an apple.",tokens:["これは","りんご","です。"]},
+  {id:"build:kosoado:which-wallet",subject:"kosoado",en:"Which wallet is it?",tokens:["どの","さいふ","です","か。"]},
+  {id:"build:kosoado:where",subject:"kosoado",en:"Where is it?",tokens:["どこ","です","か。"]},
+  {id:"build:kosoado:want-apple",subject:"kosoado",en:"I want an apple.",tokens:["りんご","が","ほしい","です。"]},
+
+  {id:"build:particles:engineer",subject:"particles",en:"I'm a software engineer.",tokens:["わたし","は","ソフトウェアエンジニア","です。"]},
+  {id:"build:particles:like-basketball",subject:"particles",en:"I like basketball.",tokens:["バスケットボール","が","すき","です。"]},
+  {id:"build:particles:study",subject:"particles",en:"I'm studying Japanese.",tokens:["にほんご","を","べんきょうして","います。"]},
+  {id:"build:particles:also-training",subject:"particles",en:"I like weight training too.",tokens:["ウェイトトレーニング","も","すき","です。"]},
+  {id:"build:particles:startup",subject:"particles",en:"I work at a startup.",tokens:["スタートアップ","で","はたらいて","います。"]},
+  {id:"build:particles:thailand-indonesia",subject:"particles",en:"I lived in Thailand and Indonesia.",tokens:["タイ","と","インドネシア","に","すんでいました。"]},
+  {id:"build:particles:japan-fiancee",subject:"particles",en:"I'm going to Japan with my fiancée.",tokens:["こんやくしゃ","と","にほん","に","いきます。"]},
+  {id:"build:particles:coffee-tea",subject:"particles",en:"I drink coffee and tea.",tokens:["コーヒー","と","おちゃ","を","のみます。"]},
+
+  {id:"build:locations:park",subject:"locations",en:"I'm going to the park.",tokens:["こうえん","に","いきます。"]},
+  {id:"build:locations:at-work",subject:"locations",en:"I'm at work.",tokens:["かいしゃ","に","います。"]},
+  {id:"build:locations:gym-action",subject:"locations",en:"I lift at the gym.",tokens:["ジム","で","きんトレ","を","します。"]},
+  {id:"build:locations:where-going",subject:"locations",en:"Where are you going?",tokens:["どこ","に","いきます","か。"]},
+  {id:"build:locations:invite",subject:"locations",en:"Do you want to go to the gym?",tokens:["ジム","に","いきません","か。"]},
+  {id:"build:locations:lets-go",subject:"locations",en:"Let's go together.",tokens:["いっしょに","いきましょう。"]},
+  {id:"build:locations:went-movie",subject:"locations",en:"I went to the movie theater.",tokens:["えいがかん","に","いきました。"]},
+  {id:"build:locations:go-home",subject:"locations",en:"I'm going home.",tokens:["いえ","に","かえります。"]},
+  {id:"build:locations:casual-where",subject:"locations",en:"Where did you go?",tokens:["どこ","いった","の？"]},
+  {id:"build:locations:restaurant",subject:"locations",en:"I eat at a restaurant.",tokens:["レストラン","で","たべます。"]},
+
+  {id:"build:time:question",subject:"time",en:"What time is it now?",tokens:["いま","なんじ","です","か。"]},
+  {id:"build:time:three",subject:"time",en:"It's three o'clock.",tokens:["さんじ","です。"]},
+  {id:"build:time:four-thirty",subject:"time",en:"It's 4:30 P.M.",tokens:["ごご","よじ","はん","です。"]},
+  {id:"build:time:seven-fifteen",subject:"time",en:"It's 7:15.",tokens:["しちじ","じゅうごふん","です。"]},
+  {id:"build:time:am-nine",subject:"time",en:"It's 9:00 A.M.",tokens:["ごぜん","くじ","です。"]},
+
+  {id:"build:age:how-old",subject:"age",en:"How old are you?",tokens:["なんさい","です","か。"]},
+  {id:"build:age:twenty",subject:"age",en:"I'm 20 years old.",tokens:["はたち","です。"]},
+  {id:"build:age:day",subject:"age",en:"What day is it today?",tokens:["きょう","は","なんようび","です","か。"]},
+  {id:"build:age:friday",subject:"age",en:"Today is Friday.",tokens:["きょう","は","きんようび","です。"]},
+  {id:"build:age:birthday",subject:"age",en:"When is your birthday?",tokens:["おたんじょうび","は","いつ","です","か。"]}
+];

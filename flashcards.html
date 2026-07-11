@@ -3,236 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flashcards — Japanese Lessons</title>
+<title>Adaptive Flashcards — Japanese Lessons</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FBF8F1; --card:#FFFFFF; --ink:#2A2E24; --ink-soft:#5C6150;
-    --line:#E6DFCF; --line-strong:#D6CDB6;
-    --ko:#5C8A3A; --so:#E0962C; --a:#3F6E91; --do:#CB4A2B;
-    --ko-bg:#EDF3E4; --so-bg:#FBF0DC; --a-bg:#E5EDF3; --do-bg:#FAE7E1;
-    --radius:14px;
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;--muted:#B7AE97;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;--a:#3F6E91;--do:#CB4A2B;
+    --ko-bg:#EDF3E4;--so-bg:#FBF0DC;--a-bg:#E5EDF3;--do-bg:#FAE7E1;--radius:14px;
+    --shadow:0 1px 2px rgba(42,46,36,.05),0 7px 24px rgba(42,46,36,.06);
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
-    line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:920px;margin:0 auto;padding:32px 22px 80px}
-
-  header{text-align:center;padding:22px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  body{margin:0;background:radial-gradient(1000px 420px at 85% -10%,rgba(92,138,58,.06),transparent 60%),var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 22px 80px}
+  header{text-align:center;padding:24px 0 20px;border-bottom:2px solid var(--ink)}
   .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
-  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(40px,9vw,68px);margin:6px 0 4px;letter-spacing:.04em;line-height:1}
-  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
-  .nav{margin-top:14px;font-size:14px}
-  .nav a{color:var(--a);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
-  .nav a:hover{border-color:var(--a)}
-
-  .lead{color:var(--ink-soft)}
-  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 10px}
-  .btn{
-    font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
-    background:var(--ink);color:var(--paper);border:none;border-radius:999px;
-    min-height:40px;padding:9px 18px;transition-property:opacity,transform;transition-duration:.15s;
+  h1{font:400 clamp(42px,9vw,70px)/1 "Zen Antique",serif;margin:7px 0}
+  .subtitle,.lead{color:var(--ink-soft);text-wrap:pretty}
+  h2{font-size:19px;margin:0;text-wrap:balance}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:24px 0}
+  .stat,.panel{background:var(--card);border-radius:16px;box-shadow:var(--shadow)}
+  .stat{padding:16px 18px}.stat strong{font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums;display:block}.stat span{font-size:12px;color:var(--ink-soft)}
+  .level-track,.progress-track{height:7px;background:#EEE9DE;border-radius:999px;overflow:hidden}
+  .level-fill,.progress-fill{height:100%;background:var(--ko);border-radius:inherit;transition:width .25s}
+  .level-track{margin-top:8px}
+  .panel{padding:22px;margin:18px 0}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .panel-sub{font-size:13px;color:var(--ink-soft);margin:3px 0 14px}
+  .controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .btn,.chip,.rate{
+    min-height:40px;border:0;border-radius:10px;padding:9px 15px;background:#fff;color:var(--ink);
+    font:700 14px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;
+    box-shadow:inset 0 0 0 1px rgba(42,46,36,.15),0 1px 2px rgba(42,46,36,.04);
+    transition-property:transform,background,color,box-shadow,opacity;transition-duration:.14s;
   }
-  .btn:hover{opacity:.85}
-  .btn:active{transform:scale(.96)}
-  .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .gchip{
-    font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink-soft);
-    border:1px solid var(--line-strong);border-radius:999px;min-height:40px;padding:5px 13px;
-    text-transform:capitalize;transition-property:background,color,border-color,transform;transition-duration:.12s;
-  }
-  .gchip:hover{background:#F7F3E8}
-  .gchip:active{transform:scale(.96)}
-  .gchip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .count{color:var(--ink-soft);font-size:14px;margin-left:auto}
-
-  .fc-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:16px 0}
-  .fc-card{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px 18px;text-align:center;cursor:pointer;
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-    transition:background .12s,box-shadow .12s;
-  }
-  .fc-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
-  .fc-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  .fc-num{font-size:11px;letter-spacing:.06em;color:#B7AE97;font-weight:700;align-self:flex-start}
-  .fc-en{font-size:22px;font-weight:700;margin:0;line-height:1.25}
-  .fc-group{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-  .fc-play{
-    width:48px;height:48px;border-radius:50%;border:1px solid var(--line-strong);
-    background:var(--ko-bg);color:#3C5E25;font-size:18px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s;
-  }
-  .fc-play:hover{background:#E2EED4}
-  .fc-play:active{transform:scale(.96)}
-  .fc-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
-  .fc-play:disabled{opacity:.4;cursor:not-allowed}
-  .fc-hint{font-size:12px;color:#B7AE97}
-  .fc-ans{display:none;width:100%;padding-top:12px;border-top:1px dashed var(--line-strong)}
-  .fc-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(26px,6vw,36px);line-height:1.2;display:block}
-  .fc-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
-  .fc-card.revealed .fc-ans{display:block}
-  .fc-card.revealed .fc-hint{display:none}
-
-  .status{color:var(--ink-soft)}
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .btn:hover,.chip:hover,.rate:hover{box-shadow:inset 0 0 0 1px rgba(42,46,36,.26),0 2px 7px rgba(42,46,36,.08)}
+  .btn:active,.chip:active,.rate:active{transform:scale(.96)}
+  .btn.primary{background:var(--ink);color:var(--paper);box-shadow:none}.btn.danger{color:var(--do)}
+  .chip{border-radius:999px;font-size:13px;text-transform:capitalize}.chip.active{background:var(--ink);color:var(--paper);box-shadow:none}
+  .seg{display:flex;gap:4px;flex-wrap:wrap}.seg .btn.active{background:var(--ko-bg);box-shadow:inset 0 0 0 2px var(--ko);color:#3C5E25}
+  .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.setup-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:7px}
+  .groups{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+  .review{max-width:700px;margin:24px auto}.review[hidden],.dashboard[hidden],.results[hidden]{display:none}
+  .review-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
+  .progress-track{margin-bottom:16px}.progress-fill{width:0}
+  .study-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);min-height:370px;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .front-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .front-prompt{font-size:clamp(30px,7vw,52px);font-weight:700;line-height:1.2;margin:17px 0;text-wrap:balance}
+  .audio-only{font-size:20px;color:var(--ink-soft);font-weight:700}
+  .play{width:64px;height:64px;border-radius:50%;border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;font-size:24px;cursor:pointer;transition-property:transform,background,color;transition-duration:.14s}
+  .play:active{transform:scale(.96)}.play.playing{background:var(--ko);color:#fff}.play:disabled{opacity:.4}
+  .answer{display:none;width:100%;margin-top:20px;padding-top:20px;border-top:1px dashed var(--line-strong)}
+  .answer.show{display:block}.answer .kana{font:400 clamp(42px,9vw,68px)/1.2 "Zen Antique",serif}.answer .romaji{color:var(--ko);font-weight:700;margin-top:4px}.answer .english{font-size:18px;margin-top:8px}
+  .show-answer{margin-top:18px}.rating{display:none;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}.rating.show{display:grid}
+  .rate{padding:10px 8px}.rate small{display:block;font-size:10px;font-weight:500;color:inherit;opacity:.75}.again{background:var(--do-bg);color:#9C3119}.hard{background:var(--so-bg);color:#946012}.good{background:var(--a-bg);color:#2C4D66}.easy{background:var(--ko-bg);color:#3C5E25}
+  .mastery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:7px}
+  .mastery-tile{min-height:58px;border:0;border-radius:10px;background:#EEE9DE;color:var(--ink);cursor:pointer;padding:5px;font-family:"Zen Antique",serif;font-size:20px;position:relative;transition-property:transform,box-shadow;transition-duration:.12s}
+  .mastery-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.mastery-tile:active{transform:scale(.96)}
+  .mastery-tile::after{content:attr(data-next);position:absolute;right:4px;bottom:2px;font:700 8px "Zen Maru Gothic",sans-serif;opacity:.7}
+  .session-row{display:flex;gap:12px;align-items:center;padding:9px 0;font-size:13px}.session-row+.session-row{border-top:1px solid var(--line)}.session-row .score{margin-left:auto;font-weight:700}
+  .results{text-align:center;max-width:620px;margin:30px auto}.result-score{font-size:48px;font-weight:700}.result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  @media(max-width:680px){.setup-grid{grid-template-columns:1fr}.rating{grid-template-columns:1fr 1fr}.study-card{padding:22px;min-height:330px}.wrap{padding-inline:16px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="audio/flashcards.js"></script>
+<script src="learning.js"></script>
 </head>
 <body>
-<div class="wrap">
-
+<main class="wrap">
   <header>
-    <div class="eyebrow">Japanese · review deck</div>
-    <h1>FLASHCARDS</h1>
-    <div class="subtitle">English → tap ▶ for a sound hint → tap the card for the answer</div>
+    <div class="eyebrow">Adaptive review · local-first</div>
+    <h1>フラッシュカード</h1>
+    <div class="subtitle">Missed words return sooner. Strong words wait longer.</div>
   </header>
 
-  <p class="lead" style="margin-top:24px">A catch-all deck to drill vocab. Cards shuffle every refresh. Read the English, try to say it, tap ▶ if you need a sound hint, then tap the card to check the romaji and kana.</p>
+  <div class="stats" id="stats"></div>
 
-  <div class="toolbar">
-    <button class="btn" id="shuffle">Shuffle</button>
-    <button class="btn secondary" id="reset">Hide all</button>
-    <span class="count" id="count"></span>
-  </div>
-  <div class="chips" id="groups"></div>
+  <section class="dashboard" id="dashboard">
+    <div class="panel">
+      <div class="panel-head"><div><h2>Start a review</h2><p class="panel-sub">Due and weak cards are automatically prioritized.</p></div><button class="btn primary" id="start">Start review</button></div>
+      <div class="setup-grid">
+        <div><span class="setup-label">Session size</span><div class="seg" id="size-seg"><button class="btn active" data-size="10">10</button><button class="btn" data-size="20">20</button><button class="btn" data-size="all">All due</button></div></div>
+        <div><span class="setup-label">Prompt direction</span><div class="seg" id="mode-seg"><button class="btn active" data-mode="mixed">Mixed</button><button class="btn" data-mode="en-ja">English → Japanese</button><button class="btn" data-mode="audio-en">Audio → English</button></div></div>
+      </div>
+      <div class="groups" id="groups"></div>
+      <label style="display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-soft)"><input type="checkbox" id="due-only" checked> Due and new cards only</label>
+    </div>
 
-  <div class="fc-deck" id="fc-deck">
-    <p class="status" id="status">Loading cards…</p>
-  </div>
+    <div class="panel">
+      <div class="panel-head"><div><h2>Mastery map</h2><p class="panel-sub">Red means weak. Green means stable. Click any tile to review it.</p></div><span id="map-count" class="panel-sub"></span></div>
+      <div class="mastery-grid" id="mastery-grid"></div>
+    </div>
 
-</div>
+    <div class="panel">
+      <div class="panel-head"><h2>Recent sessions</h2><div class="controls"><button class="btn" id="export">Export progress</button><button class="btn danger" id="reset-progress">Reset</button></div></div>
+      <div id="sessions"></div>
+    </div>
+  </section>
+
+  <section class="review" id="review" hidden>
+    <div class="review-meta"><span id="review-progress">1 / 10</span><span id="review-due"></span></div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <article class="study-card">
+      <span class="front-label" id="front-label"></span>
+      <div class="front-prompt" id="front-prompt"></div>
+      <button class="play" id="play" type="button" aria-label="Play Japanese audio">▶</button>
+      <div class="answer" id="answer"><div class="kana" id="answer-kana"></div><div class="romaji" id="answer-romaji"></div><div class="english" id="answer-english"></div></div>
+      <button class="btn primary show-answer" id="show-answer">Show answer</button>
+    </article>
+    <div class="rating" id="rating">
+      <button class="rate again" data-rating="again">Again<small>about 1 minute</small></button>
+      <button class="rate hard" data-rating="hard">Hard<small>short interval</small></button>
+      <button class="rate good" data-rating="good">Good<small>normal interval</small></button>
+      <button class="rate easy" data-rating="easy">Easy<small>long interval</small></button>
+    </div>
+    <p style="text-align:center"><button class="btn" id="end-review">End review</button></p>
+  </section>
+
+  <section class="results panel" id="results" hidden>
+    <h2>Review complete</h2>
+    <div class="result-score" id="result-score"></div>
+    <p class="lead" id="result-copy"></p>
+    <div class="result-actions"><button class="btn primary" id="review-again">Review more</button><button class="btn" id="back-dashboard">Dashboard</button></div>
+  </section>
+</main>
 
 <script>
-  (function(){
-    var deck = document.getElementById('fc-deck');
-    var statusEl = document.getElementById('status');
-    var countEl = document.getElementById('count');
-    var groupsEl = document.getElementById('groups');
-    var allWords = [];
-    var hasAudio = false;
-    var activeGroup = 'all';
-    var current = null;
-
-    function shuffle(list){
-      var a = list.slice();
-      for(var i = a.length - 1; i > 0; i--){
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = a[i]; a[i] = a[j]; a[j] = t;
-      }
-      return a;
-    }
-    function esc(s){
-      return String(s == null ? '' : s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    function cardHtml(w, i, total){
-      var src = w.audio ? esc(w.audio) : '';
-      return '<div class="fc-card" tabindex="0" role="button" aria-expanded="false">' +
-        '<span class="fc-num">' + (i + 1) + ' / ' + total + '</span>' +
-        (w.group ? '<span class="fc-group">' + esc(w.group) + '</span>' : '') +
-        '<p class="fc-en">' + esc(w.en) + '</p>' +
-        '<button class="fc-play" type="button" aria-label="Play sound hint" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
-        '<span class="fc-hint">' + (hasAudio ? 'tap ▶ for sound · tap card for answer' : 'tap card for answer') + '</span>' +
-        '<div class="fc-ans">' +
-          '<span class="kana">' + esc(w.kana) + '</span>' +
-          '<span class="rj">' + esc(w.romaji) + '</span>' +
-        '</div>' +
-      '</div>';
-    }
-
-    function play(btn){
-      var src = btn.getAttribute('data-src');
-      if(!src) return;
-      if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
-      var audio = new Audio(src);
-      current = { audio: audio, btn: btn };
-      btn.classList.add('playing');
-      audio.play().catch(function(){ btn.classList.remove('playing'); });
-      audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
-      audio.addEventListener('error', function(){ btn.classList.remove('playing'); btn.disabled = true; btn.textContent = '✕'; });
-    }
-
-    function bind(){
-      deck.querySelectorAll('.fc-card').forEach(function(card){
-        function toggle(){
-          card.classList.toggle('revealed');
-          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
-        }
-        card.addEventListener('click', function(e){
-          if(e.target.closest('.fc-play')) return;
-          toggle();
-        });
-        card.addEventListener('keydown', function(e){
-          if(document.activeElement && document.activeElement.classList.contains('fc-play')) return;
-          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
-        });
-      });
-      deck.querySelectorAll('.fc-play').forEach(function(btn){
-        btn.addEventListener('click', function(e){ e.stopPropagation(); play(btn); });
-      });
-    }
-
-    function visibleWords(){
-      return activeGroup === 'all' ? allWords : allWords.filter(function(w){ return w.group === activeGroup; });
-    }
-
-    function draw(){
-      var list = shuffle(visibleWords());
-      countEl.textContent = list.length + ' cards';
-      deck.innerHTML = list.map(function(w, i){ return cardHtml(w, i, list.length); }).join('');
-      bind();
-    }
-
-    function buildGroups(){
-      var groups = ['all'];
-      allWords.forEach(function(w){ if(w.group && groups.indexOf(w.group) === -1) groups.push(w.group); });
-      groupsEl.innerHTML = groups.map(function(g){
-        return '<button class="gchip' + (g === 'all' ? ' active' : '') + '" data-group="' + esc(g) + '">' + esc(g) + '</button>';
-      }).join('');
-      groupsEl.querySelectorAll('.gchip').forEach(function(chip){
-        chip.addEventListener('click', function(){
-          activeGroup = chip.getAttribute('data-group');
-          groupsEl.querySelectorAll('.gchip').forEach(function(c){ c.classList.remove('active'); });
-          chip.classList.add('active');
-          draw();
-        });
-      });
-    }
-
-    document.getElementById('shuffle').addEventListener('click', draw);
-    document.getElementById('reset').addEventListener('click', function(){
-      deck.querySelectorAll('.fc-card.revealed').forEach(function(c){
-        c.classList.remove('revealed'); c.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    function useFlashcards(m){
-      allWords = (m && m.words) || [];
-      hasAudio = !!(m && m.hasAudio);
-      if(!allWords.length){ statusEl.textContent = 'No words found.'; return; }
-      buildGroups();
-      draw();
-    }
-    // Prefer the global from audio/flashcards.js (works over file://);
-    // fall back to fetching the JSON (http/https).
-    if(window.JL_FLASHCARDS){ useFlashcards(window.JL_FLASHCARDS); }
-    else {
-      fetch('audio/flashcards.json', { cache: 'no-store' })
-        .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
-        .then(useFlashcards)
-        .catch(function(){ statusEl.textContent = 'Flashcard data not found. Run: npm run generate:audio'; });
-    }
-  })();
+(function(){
+  var allWords=[],hasAudio=false,activeGroup='all',sessionSize=10,mode='mixed',queue=[],index=0,completed=0,ratings={again:0,hard:0,good:0,easy:0},currentAudio=null,currentDirection='en-ja';
+  var dashboard=document.getElementById('dashboard'),review=document.getElementById('review'),results=document.getElementById('results');
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function adapter(word){return Object.assign({},word,{id:'vocab:'+word.id,subject:'vocab',type:'flashcard'})}
+  function visible(){return activeGroup==='all'?allWords:allWords.filter(function(w){return w.group===activeGroup})}
+  function summary(){return JL_PROGRESS.summary(visible().map(function(w){return w.id}))}
+  function statColor(id){
+    var s=JL_PROGRESS.strength(id);
+    if(!JL_PROGRESS.card(id).reviews)return '#EEE9DE';
+    var hue=s<50?8+(38*s/50):46+(94*(s-50)/50);
+    return 'hsl('+Math.round(hue)+',56%,'+(68-Math.min(18,s*.18))+'%)';
+  }
+  function renderStats(){
+    var s=summary();
+    document.getElementById('stats').innerHTML=
+      '<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div>'+
+      '<div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>words studied</span></div>'+
+      '<div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div>'+
+      '<div class="stat"><strong>'+s.accuracy+'%</strong><span>review accuracy</span></div>'+
+      '<div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div>'+
+      '<div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' XP</span><div class="level-track"><div class="level-fill" style="width:'+s.levelProgress+'%"></div></div></div>';
+  }
+  function renderGroups(){
+    var groups=['all'];allWords.forEach(function(w){if(groups.indexOf(w.group)===-1)groups.push(w.group)});
+    document.getElementById('groups').innerHTML=groups.map(function(g){return '<button class="chip'+(g===activeGroup?' active':'')+'" data-group="'+esc(g)+'">'+esc(g)+'</button>'}).join('');
+    document.querySelectorAll('[data-group]').forEach(function(btn){btn.onclick=function(){activeGroup=btn.dataset.group;renderAll()}});
+  }
+  function renderMap(){
+    var words=visible();document.getElementById('map-count').textContent=words.length+' cards';
+    document.getElementById('mastery-grid').innerHTML=words.map(function(w){return '<button class="mastery-tile" data-card="'+esc(w.id)+'" data-next="'+JL_PROGRESS.nextLabel(w.id)+'" title="'+esc(w.en)+' · '+JL_PROGRESS.strength(w.id)+'%" style="background:'+statColor(w.id)+'">'+esc(w.kana)+'</button>'}).join('');
+    document.querySelectorAll('[data-card]').forEach(function(btn){btn.onclick=function(){start([allWords.find(function(w){return w.id===btn.dataset.card})])}});
+  }
+  function renderSessions(){
+    var list=JL_PROGRESS.sessions().filter(function(s){return s.kind==='vocab'}).slice(-8).reverse();
+    document.getElementById('sessions').innerHTML=list.length?list.map(function(s){return '<div class="session-row"><span>'+new Date(s.ts).toLocaleDateString()+'</span><span>'+s.total+' cards</span><span class="score">'+s.good+' good · '+s.again+' again</span></div>'}).join(''):'<p class="lead">No reviews yet. Your first session starts the mastery map.</p>';
+  }
+  function renderAll(){renderStats();renderGroups();renderMap();renderSessions()}
+  function chooseQueue(){
+    var pool=visible();if(document.getElementById('due-only').checked)pool=JL_PROGRESS.due(pool);else pool=JL_PROGRESS.order(pool);
+    var count=sessionSize==='all'?pool.length:Math.min(+sessionSize,pool.length);
+    return pool.slice(0,count);
+  }
+  function start(custom){
+    queue=custom||chooseQueue();if(!queue.length){alert('Nothing is due in this group yet. Turn off “Due and new cards only” to study ahead.');return}
+    index=0;completed=0;ratings={again:0,hard:0,good:0,easy:0};dashboard.hidden=true;results.hidden=true;review.hidden=false;showCard();
+  }
+  function showCard(){
+    var w=queue[index];if(!w){finish();return}
+    currentDirection=mode==='mixed'?(Math.random()<.72?'en-ja':'audio-en'):mode;
+    document.getElementById('review-progress').textContent=(completed+1)+' / '+queue.length;
+    document.getElementById('progress-fill').style.width=(completed/Math.max(1,queue.length)*100)+'%';
+    document.getElementById('review-due').textContent='next: '+JL_PROGRESS.nextLabel(w.id);
+    document.getElementById('front-label').textContent=currentDirection==='audio-en'?'Audio → English':'English → Japanese';
+    document.getElementById('front-prompt').innerHTML=currentDirection==='audio-en'?'<span class="audio-only">Listen and recall the English meaning</span>':esc(w.en);
+    document.getElementById('answer-kana').textContent=w.kana;document.getElementById('answer-romaji').textContent=w.romaji;document.getElementById('answer-english').textContent=w.en;
+    document.getElementById('answer').classList.remove('show');document.getElementById('rating').classList.remove('show');document.getElementById('show-answer').hidden=false;
+    var play=document.getElementById('play');play.dataset.src=w.audio||'';play.disabled=!hasAudio;play.style.display=currentDirection==='audio-en'?'block':'block';
+    if(currentDirection==='audio-en')setTimeout(function(){play.click()},100);
+  }
+  function reveal(){document.getElementById('answer').classList.add('show');document.getElementById('rating').classList.add('show');document.getElementById('show-answer').hidden=true}
+  function rate(rating){
+    var w=queue[index];JL_PROGRESS.record(w.id,rating,{subject:'vocab',type:'flashcard'});ratings[rating]++;completed++;
+    if(rating==='again'&&queue.length<60)queue.splice(Math.min(index+3,queue.length),0,w);
+    index++;showCard();
+  }
+  function finish(){
+    if(!completed){review.hidden=true;dashboard.hidden=false;renderAll();return}
+    review.hidden=true;results.hidden=false;
+    JL_PROGRESS.addSession({kind:'vocab',total:completed,good:ratings.good+ratings.easy,again:ratings.again,ratings:ratings});
+    document.getElementById('result-score').textContent=(ratings.good+ratings.easy)+' solid · '+ratings.again+' again';
+    document.getElementById('result-copy').textContent=ratings.again?'Missed cards have been moved forward and will return sooner.':'Clean review. These cards are now spaced farther out.';
+    renderAll();
+  }
+  document.getElementById('start').onclick=function(){start()};
+  document.getElementById('show-answer').onclick=reveal;
+  document.querySelectorAll('[data-rating]').forEach(function(btn){btn.onclick=function(){rate(btn.dataset.rating)}});
+  document.getElementById('end-review').onclick=finish;document.getElementById('back-dashboard').onclick=function(){results.hidden=true;dashboard.hidden=false;renderAll()};
+  document.getElementById('review-again').onclick=function(){results.hidden=true;dashboard.hidden=false;start()};
+  document.getElementById('size-seg').onclick=function(e){var b=e.target.closest('[data-size]');if(!b)return;sessionSize=b.dataset.size;document.querySelectorAll('[data-size]').forEach(function(x){x.classList.toggle('active',x===b)})};
+  document.getElementById('mode-seg').onclick=function(e){var b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(function(x){x.classList.toggle('active',x===b)})};
+  document.getElementById('play').onclick=function(){
+    var btn=this,src=btn.dataset.src;if(!src)return;if(currentAudio)currentAudio.pause();currentAudio=new Audio(src);btn.classList.add('playing');currentAudio.play().catch(function(){btn.classList.remove('playing')});currentAudio.onended=function(){btn.classList.remove('playing')};
+  };
+  document.getElementById('export').onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='japanese-lessons-progress.json';a.click();URL.revokeObjectURL(a.href)};
+  document.getElementById('reset-progress').onclick=function(){if(confirm('Reset all learning progress for every subject?')){JL_PROGRESS.reset();renderAll()}};
+  function use(manifest){allWords=((manifest&&manifest.words)||[]).map(adapter);hasAudio=!!(manifest&&manifest.hasAudio);renderAll()}
+  if(window.JL_FLASHCARDS)use(window.JL_FLASHCARDS);else fetch('audio/flashcards.json').then(function(r){return r.json()}).then(use);
+})();
 </script>
 <script src="nav.js" defer></script>
 </body>

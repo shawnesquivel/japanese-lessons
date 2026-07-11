@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Arcade — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--soft:#5C6150;--muted:#B7AE97;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;--a:#3F6E91;--do:#CB4A2B;
+    --ko-bg:#EDF3E4;--so-bg:#FBF0DC;--a-bg:#E5EDF3;--do-bg:#FAE7E1;--shadow:0 1px 2px rgba(42,46,36,.05),0 8px 26px rgba(42,46,36,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1000px 440px at 85% -10%,rgba(63,110,145,.08),transparent 62%),var(--paper);color:var(--ink);font:400 16px/1.65 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:auto;padding:32px 22px 80px}
+  header{text-align:center;padding:25px 0 20px;border-bottom:2px solid var(--ink)}.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);font-weight:700}
+  h1{font:400 clamp(44px,9vw,72px)/1 "Zen Antique",serif;margin:8px 0}.subtitle,.sub{color:var(--soft);text-wrap:pretty}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:24px 0}.stat,.panel{background:#fff;border-radius:16px;box-shadow:var(--shadow)}.stat{padding:16px 18px}.stat strong{display:block;font-size:28px;font-variant-numeric:tabular-nums}.stat span{font-size:12px;color:var(--soft)}
+  .level-track,.track{height:7px;background:#EEE9DE;border-radius:999px;overflow:hidden}.level-fill,.fill{height:100%;background:var(--a);border-radius:inherit;transition:width .25s}.level-track{margin-top:8px}
+  .panel{padding:22px;margin:18px 0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.panel h2{font-size:19px;margin:0}.sub{font-size:13px;margin:3px 0 14px}
+  .subject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.subject{border:0;border-radius:14px;background:#F7F3E8;padding:16px;text-align:left;cursor:pointer;color:var(--ink);transition-property:transform,box-shadow,background;transition-duration:.14s}.subject:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.subject:active{transform:scale(.96)}.subject.active{background:var(--a-bg);box-shadow:inset 0 0 0 2px var(--a)}.subject strong{display:block;font-size:17px;text-transform:capitalize}.subject span{font-size:12px;color:var(--soft)}.mini-track{height:5px;background:rgba(42,46,36,.1);border-radius:99px;margin-top:9px;overflow:hidden}.mini-fill{height:100%;background:var(--a)}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btn,.chip,.token,.choice{min-height:40px;border:0;border-radius:10px;padding:9px 15px;background:#fff;color:var(--ink);font:700 14px "Zen Maru Gothic",sans-serif;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(42,46,36,.15);transition-property:transform,background,color,box-shadow;transition-duration:.14s}.btn:active,.chip:active,.token:active,.choice:active{transform:scale(.96)}.btn.primary{background:var(--ink);color:var(--paper);box-shadow:none}.chip{border-radius:999px}.chip.active{background:var(--a);color:#fff;box-shadow:none}
+  .challenge{display:none;max-width:760px;margin:25px auto}.challenge.active{display:block}.challenge-meta{display:flex;justify-content:space-between;color:var(--soft);font-size:13px;font-weight:700;margin-bottom:8px}.track{margin-bottom:16px}
+  .game-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:28px;min-height:410px;text-align:center}.game-type{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700}.prompt{font-size:clamp(24px,6vw,38px);font-weight:700;line-height:1.3;margin:22px 0;text-wrap:balance}.prompt.jp{font:400 clamp(30px,8vw,48px)/1.35 "Zen Antique",serif}
+  .answer-zone{min-height:70px;border:1px dashed var(--line-strong);border-radius:12px;padding:12px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;justify-content:center;margin:12px 0}.bank{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:15px 0}.token{background:var(--a-bg);box-shadow:none;font:400 18px "Zen Antique",serif}.token.used{opacity:.3;pointer-events:none}.answer-token{background:var(--ko-bg)}
+  .typed{width:min(420px,100%);min-height:48px;border:0;border-radius:11px;padding:11px 14px;background:#FBFAF6;box-shadow:inset 0 0 0 1px rgba(42,46,36,.16);font:inherit;font-size:17px}.play{width:70px;height:70px;border-radius:50%;border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;font-size:25px;cursor:pointer;transition:transform .14s,background .14s}.play:active{transform:scale(.96)}.play.playing{background:var(--ko);color:#fff}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.choice{text-align:left;background:#FBFAF6;min-height:54px}.choice.right{background:var(--ko-bg);box-shadow:inset 0 0 0 2px var(--ko)}.choice.wrong{background:var(--do-bg);box-shadow:inset 0 0 0 2px var(--do)}
+  .feedback{display:none;margin-top:18px;border-radius:12px;padding:15px}.feedback.show{display:block}.feedback.good{background:var(--ko-bg)}.feedback.bad{background:var(--do-bg)}.correct-answer{font:400 24px "Zen Antique",serif;margin:5px 0}.game-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+  .results{display:none;text-align:center;max-width:650px;margin:25px auto}.results.show{display:block}.score{font-size:48px;font-weight:700}.missed{display:grid;gap:7px;margin:18px 0;text-align:left}.missed-row{padding:9px;border-bottom:1px solid var(--line)}
+  @media(max-width:640px){.choices{grid-template-columns:1fr}.game-card{padding:20px}.wrap{padding-inline:16px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script src="audio/flashcards.js"></script>
+<script src="audio/particles.js"></script>
+<script src="audio/manifest.js"></script>
+<script src="audio/age-days-months.js"></script>
+<script src="learning.js"></script>
+<script src="study-data.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <header><div class="eyebrow">Adaptive mixed practice</div><h1>まなぶ</h1><div class="subtitle">Build sentences, recall vocabulary, and understand audio. Weak skills return sooner.</div></header>
+  <div class="stats" id="stats"></div>
+  <section id="dashboard">
+    <div class="panel"><div class="panel-head"><div><h2>Choose a subject</h2><p class="sub">Pick one area or leave All selected for a mixed session.</p></div><button class="btn primary" id="start">Start 12 challenges</button></div><div class="subject-grid" id="subjects"></div></div>
+    <div class="panel"><h2>Challenge types</h2><p class="sub">Sentence building is the hardest mode. Audio starts with no written Japanese.</p><div class="controls" id="types"><button class="chip active" data-type="all">All types</button><button class="chip" data-type="build">Build sentences</button><button class="chip" data-type="vocab">Type vocabulary</button><button class="chip" data-type="listen">Listening</button></div></div>
+    <div class="panel"><div class="panel-head"><div><h2>How adaptive review works</h2><p class="sub">New and due challenges come first. Misses return quickly. Stable items wait days or weeks.</p></div><button class="btn" id="export">Export progress</button></div></div>
+  </section>
+  <section class="challenge" id="challenge">
+    <div class="challenge-meta"><span id="progress"></span><span id="session-score"></span></div><div class="track"><div class="fill" id="fill"></div></div>
+    <article class="game-card"><div class="game-type" id="game-type"></div><div class="prompt" id="prompt"></div><div id="interaction"></div><div class="feedback" id="feedback"><strong id="verdict"></strong><div class="correct-answer" id="correct-answer"></div><p class="sub" id="feedback-note"></p><button class="btn primary" id="continue">Continue →</button></div></article>
+    <p style="text-align:center"><button class="btn" id="quit">End session</button></p>
+  </section>
+  <section class="results panel" id="results"><h2>Session complete</h2><div class="score" id="result-score"></div><p class="sub" id="result-copy"></p><div class="missed" id="missed"></div><div class="game-actions"><button class="btn primary" id="retry">Retry missed</button><button class="btn" id="new-session">New session</button></div></section>
+</main>
+<script>
+(function(){
+  var subject='all',type='all',items=[],queue=[],index=0,correct=0,results=[],currentAudio=null;
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function shuffle(list){var a=list.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function normalize(s){return String(s||'').toLowerCase().replace(/[^a-z0-9ぁ-んァ-ンー]+/g,'').trim()}
+  function buildItems(){
+    items=(window.JL_STUDY_SENTENCES||[]).map(function(x){return Object.assign({},x,{type:'build'})});
+    ((window.JL_FLASHCARDS&&JL_FLASHCARDS.words)||[]).forEach(function(w){items.push({id:'vocab:'+w.id,subject:w.group,type:'vocab',en:w.en,kana:w.kana,romaji:w.romaji,audio:w.audio})});
+    ((window.JL_PARTICLES&&JL_PARTICLES.questions)||[]).forEach(function(q){items.push({id:'listen:particles:'+q.id,subject:'particles',type:'listen',prompt:'What did they ask?',answer:q.en,kana:q.kana,romaji:q.romaji,audio:q.audio})});
+    ((window.JL_LISTENING&&JL_LISTENING.phrases)||[]).forEach(function(q){items.push({id:'listen:kosoado:'+q.id,subject:'kosoado',type:'listen',prompt:'What did they say?',answer:q.en,kana:q.kana,romaji:q.romaji,audio:q.audio})});
+    ((window.JL_AGE&&JL_AGE.listen)||[]).forEach(function(q){items.push({id:'listen:age:'+q.id,subject:'age',type:'listen',prompt:'What did they say?',answer:q.en,kana:q.kana,romaji:q.romaji,audio:q.audio})});
+  }
+  function pool(){return items.filter(function(item){return (subject==='all'||item.subject===subject)&&(type==='all'||item.type===type)})}
+  function renderStats(){
+    var s=JL_PROGRESS.summary(items.map(function(i){return i.id}));
+    document.getElementById('stats').innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>challenges studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' XP</span><div class="level-track"><div class="level-fill" style="width:'+s.levelProgress+'%"></div></div></div>';
+  }
+  function renderSubjects(){
+    var subjects=['all','kosoado','particles','locations','time','age','food','vegetable','fruit','drink'];
+    document.getElementById('subjects').innerHTML=subjects.map(function(name){var p=items.filter(function(i){return name==='all'||i.subject===name}),s=JL_PROGRESS.summary(p.map(function(i){return i.id})),pct=s.total?Math.round(s.mastered/s.total*100):0;return '<button class="subject'+(name===subject?' active':'')+'" data-subject="'+name+'"><strong>'+name+'</strong><span>'+s.due+' due · '+s.mastered+' mastered / '+p.length+'</span><div class="mini-track"><div class="mini-fill" style="width:'+pct+'%"></div></div></button>'}).join('');
+    document.querySelectorAll('[data-subject]').forEach(function(btn){btn.onclick=function(){subject=btn.dataset.subject;renderSubjects()}});
+  }
+  function start(custom){
+    var p=custom||JL_PROGRESS.order(pool()).slice(0,12);if(!p.length){alert('No challenges match these filters.');return}queue=p;index=0;correct=0;results=[];document.getElementById('dashboard').hidden=true;document.getElementById('results').classList.remove('show');document.getElementById('challenge').classList.add('active');show();
+  }
+  function show(){
+    var item=queue[index];if(!item){finish();return}document.getElementById('progress').textContent=(index+1)+' / '+queue.length;document.getElementById('session-score').textContent=correct+' correct';document.getElementById('fill').style.width=(index/queue.length*100)+'%';document.getElementById('feedback').className='feedback';document.getElementById('game-type').textContent=item.subject+' · '+item.type;
+    if(item.type==='build')renderBuild(item);else if(item.type==='vocab')renderVocab(item);else renderListen(item);
+  }
+  function renderBuild(item){
+    document.getElementById('prompt').className='prompt';document.getElementById('prompt').textContent=item.en;var mixed=shuffle(item.tokens.map(function(token,i){return {token:token,i:i}})),selected=[];
+    document.getElementById('interaction').innerHTML='<div class="answer-zone" id="answer-zone"><span class="sub">Build the Japanese sentence</span></div><div class="bank" id="bank">'+mixed.map(function(x){return '<button class="token" data-index="'+x.i+'">'+esc(x.token)+'</button>'}).join('')+'</div><div class="game-actions"><button class="btn" id="undo-token">Undo</button><button class="btn primary" id="check-build">Check sentence</button></div>';
+    function draw(){document.getElementById('answer-zone').innerHTML=selected.length?selected.map(function(i){return '<span class="token answer-token">'+esc(item.tokens[i])+'</span>'}).join(''):'<span class="sub">Build the Japanese sentence</span>';document.querySelectorAll('#bank .token').forEach(function(b){b.classList.toggle('used',selected.indexOf(+b.dataset.index)!==-1)})}
+    document.querySelectorAll('#bank .token').forEach(function(b){b.onclick=function(){selected.push(+b.dataset.index);draw()}});
+    document.getElementById('undo-token').onclick=function(){selected.pop();draw()};document.getElementById('check-build').onclick=function(){var ok=selected.length===item.tokens.length&&selected.every(function(v,i){return v===i});grade(item,ok,item.tokens.join(''))};
+  }
+  function renderVocab(item){
+    document.getElementById('prompt').className='prompt';document.getElementById('prompt').textContent=item.en;document.getElementById('interaction').innerHTML='<input class="typed" id="typed" placeholder="Type the romaji" autocomplete="off"><div class="game-actions"><button class="btn" id="play-vocab">▶ Audio</button><button class="btn primary" id="check-vocab">Check</button></div>';
+    document.getElementById('play-vocab').onclick=function(){play(item.audio,this)};document.getElementById('check-vocab').onclick=function(){grade(item,normalize(document.getElementById('typed').value)===normalize(item.romaji),item.kana+' · '+item.romaji)};document.getElementById('typed').onkeydown=function(e){if(e.key==='Enter')document.getElementById('check-vocab').click()};setTimeout(function(){document.getElementById('typed').focus()},50);
+  }
+  function renderListen(item){
+    document.getElementById('prompt').className='prompt';document.getElementById('prompt').innerHTML='<span class="sub">Audio only</span><br>'+esc(item.prompt);var peers=shuffle(items.filter(function(x){return x.type==='listen'&&x.id!==item.id})).slice(0,3),choices=shuffle([item].concat(peers));
+    document.getElementById('interaction').innerHTML='<button class="play" id="play-listen">▶</button><div class="choices">'+choices.map(function(x){return '<button class="choice" data-id="'+esc(x.id)+'">'+esc(x.answer)+'</button>'}).join('')+'</div>';
+    document.getElementById('play-listen').onclick=function(){play(item.audio,this)};document.querySelectorAll('.choice').forEach(function(b){b.onclick=function(){b.classList.add(b.dataset.id===item.id?'right':'wrong');grade(item,b.dataset.id===item.id,item.kana+' · '+item.answer)}});setTimeout(function(){document.getElementById('play-listen').click()},100);
+  }
+  function play(src,button){if(!src)return;if(currentAudio)currentAudio.pause();currentAudio=new Audio(src);button.classList.add('playing');currentAudio.play().catch(function(){button.classList.remove('playing')});currentAudio.onended=function(){button.classList.remove('playing')}}
+  function grade(item,ok,answer){
+    if(document.getElementById('feedback').classList.contains('show'))return;JL_PROGRESS.record(item.id,ok?'good':'again',{subject:item.subject,type:item.type});if(ok)correct++;results.push({item:item,correct:ok});var f=document.getElementById('feedback');f.className='feedback show '+(ok?'good':'bad');document.getElementById('verdict').textContent=ok?'Correct!':'Not quite';document.getElementById('correct-answer').textContent=answer;document.getElementById('feedback-note').textContent=ok?'This challenge will be spaced farther out.':'This challenge will return sooner.';document.querySelectorAll('#interaction button,#interaction input').forEach(function(el){el.disabled=true});
+  }
+  document.getElementById('continue').onclick=function(){index++;show()};document.getElementById('start').onclick=function(){start()};document.getElementById('quit').onclick=finish;
+  function finish(){if(!results.length){document.getElementById('challenge').classList.remove('active');document.getElementById('dashboard').hidden=false;return}JL_PROGRESS.addSession({kind:'mixed',total:results.length,correct:correct});document.getElementById('challenge').classList.remove('active');document.getElementById('results').classList.add('show');document.getElementById('result-score').textContent=correct+' / '+results.length;var missed=results.filter(function(r){return !r.correct});document.getElementById('result-copy').textContent=missed.length?'Missed skills were scheduled sooner. Retry them now for a quick recovery loop.':'Perfect session. Strong skills are now spaced farther out.';document.getElementById('missed').innerHTML=missed.map(function(r){return '<div class="missed-row"><strong>'+r.item.subject+' · '+r.item.type+'</strong><br>'+esc(r.item.en||r.item.answer||r.item.prompt)+'</div>'}).join('');document.getElementById('retry').hidden=!missed.length;document.getElementById('retry').onclick=function(){start(missed.map(function(r){return r.item}))};renderStats();renderSubjects()}
+  document.getElementById('new-session').onclick=function(){document.getElementById('results').classList.remove('show');document.getElementById('dashboard').hidden=false};
+  document.getElementById('types').onclick=function(e){var b=e.target.closest('[data-type]');if(!b)return;type=b.dataset.type;document.querySelectorAll('[data-type]').forEach(function(x){x.classList.toggle('active',x===b)})};
+  document.getElementById('export').onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='japanese-lessons-progress.json';a.click();URL.revokeObjectURL(a.href)};
+  buildItems();renderStats();renderSubjects();
+})();
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

@@ -4,12 +4,14 @@
 // and marks the current page automatically.
 (function () {
   var LINKS = [
+    { href: "study.html", jp: "まなぶ", en: "adaptive study arcade" },
     { href: "index.html", jp: "こそあど", en: "this · that · which" },
     { href: "particles.html", jp: "じょし", en: "particles · は/が/を/も/で/と" },
     { href: "locations.html", jp: "ばしょ", en: "locations · go, be & do" },
     { href: "time.html", jp: "じかん", en: "telling time" },
     { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
-    { href: "flashcards.html", jp: "フラッシュ", en: "flashcards deck" },
+    { href: "flashcards.html", jp: "フラッシュ", en: "adaptive vocab review" },
+    { href: "kanji.html", jp: "かんじ", en: "Kanji Fable · separate track" },
     { href: "about.html", jp: "じこしょうかい", en: "about me · example bank" },
     { href: "games.html", jp: "ゲーム", en: "games" },
   ];
@@ -39,7 +41,9 @@
     ".menu-drawer a:last-of-type{border-bottom:1px solid var(--line,#E6DFCF)}" +
     ".menu-drawer a.current{background:#F3EEE1;font-weight:700;cursor:default}" +
     ".menu-drawer a .jp-label{font-family:'Zen Antique',serif;font-size:19px}" +
-    ".menu-drawer a .en-label{color:var(--ink-soft,#5C6150);font-size:13px}";
+    ".menu-drawer a .en-label{color:var(--ink-soft,#5C6150);font-size:13px}" +
+    ".menu-progress{margin:18px 18px 0;padding:13px 14px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px rgba(42,46,36,.1)}" +
+    ".menu-progress b{display:block;font-size:14px}.menu-progress span{display:block;color:var(--ink-soft,#5C6150);font-size:12px;margin-top:2px}";
 
   var style = document.createElement("style");
   style.textContent = css;
@@ -58,6 +62,11 @@
   var drawer = document.createElement("nav");
   drawer.className = "menu-drawer";
   drawer.setAttribute("aria-label", "Lessons");
+  var progress = { xp: 0, streak: { count: 0 } };
+  try {
+    progress = JSON.parse(localStorage.getItem("japaneseLessons.progress.v1")) || progress;
+  } catch (_) {}
+  var level = Math.floor((progress.xp || 0) / 100) + 1;
   drawer.innerHTML =
     '<p class="menu-title">Lessons</p>' +
     LINKS.map(function (l) {
@@ -67,7 +76,9 @@
         '<span class="jp-label">' + l.jp + "</span>" +
         '<span class="en-label">' + l.en + "</span></a>"
       );
-    }).join("");
+    }).join("") +
+    '<div class="menu-progress"><b>Study level ' + level + '</b><span>' +
+    (progress.xp || 0) + ' XP · ' + ((progress.streak && progress.streak.count) || 0) + ' day streak</span></div>';
 
   function mount() {
     document.body.appendChild(btn);
