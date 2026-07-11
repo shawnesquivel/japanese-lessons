@@ -8,6 +8,7 @@ Read this file before changing the codebase.
 - Keep learner-facing Japanese in hiragana. Use katakana for normal loanwords. Kanji is allowed only inside the dedicated Kanji Fable page and its data.
 - Pair Japanese with romaji and plain English when an answer is revealed.
 - Teach polite です／ます forms first, then show casual and past forms explicitly.
+- For verb and conjugation answers, reveal formal, casual, and common spoken contractions when they differ. Label each form and include romaji plus one English meaning (for example: すんでいました / すんでいた / すんでた).
 - Use conversational, everyday examples. Prefer facts from `about-me.js` when personalization helps.
 - Include varied drills: both translation directions, fill-the-blank, sentence building, corrections, free replies, and audio-only comprehension.
 - Keep interactive targets at least 40×40px, use `transform: scale(.96)` for press feedback, and avoid `transition: all`.

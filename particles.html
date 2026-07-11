@@ -107,6 +107,11 @@
     line-height:1.45;margin:12px 0 0;padding-top:12px;border-top:1px dashed var(--line-strong);
   }
   .practice-card .answer-main[lang="ja"]{font-family:"Zen Antique",serif}
+  .practice-card .answer-variant{display:block;padding:9px 12px;border-radius:9px;background:#F7F3E8}
+  .practice-card .answer-variant+.answer-variant{margin-top:7px}
+  .practice-card .answer-variant.casual{background:var(--a-bg)}
+  .practice-card .answer-variant.spoken{background:var(--ko-bg)}
+  .practice-card .answer-variant b{display:block;font:700 10px "Zen Maru Gothic",system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px}
   .practice-card .answer-note{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
   .practice-card .tap-hint{margin-top:10px}
   .practice-card.revealed .answer-main,.practice-card.revealed .answer-note{display:block}
@@ -146,9 +151,10 @@
   .verb-scenario{font-weight:700;margin:5px 0 8px}
   .verb-blank{font:400 23px/1.45 "Zen Antique",serif}
   .verb-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
-  .verb-answer .register-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .verb-answer .register-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
   .verb-answer .form-row{background:#F7F3E8;border-radius:10px;padding:12px 14px}
   .verb-answer .form-row.casual{background:var(--a-bg)}
+  .verb-answer .form-row.spoken{background:var(--ko-bg)}
   .verb-answer .form-tag{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
   .verb-answer .kana{font-size:21px}
   .verb-answer .detail{display:grid;grid-template-columns:90px 1fr;gap:5px 10px;margin-top:10px;font-size:14px}
@@ -526,24 +532,24 @@
       { group:'other', en:'liked / favorite', jp:'すき', rj:'suki' }
     ];
     var VERBS = [
-      { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', formal:'スタートアップではたらいています。', formalRj:'Sutaato appu de hataraite imasu.', casual:'スタートアップではたらいている。', casualRj:'Sutaato appu de hataraite iru.', en:'I work at a startup.', why:'はたらく means “to work.” The ている form describes your current job.' },
-      { label:'Live · formal', scenario:'Someone asks where you live now.', blank:'サンフランシスコに ___。', formal:'サンフランシスコにすんでいます。', formalRj:'San Furanshisuko ni sunde imasu.', casual:'サンフランシスコにすんでいる。', casualRj:'San Furanshisuko ni sunde iru.', en:'I live in San Francisco.', why:'すむ means “to live.” Use に for the place where you live.' },
+      { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', formal:'スタートアップではたらいています。', formalRj:'Sutaato appu de hataraite imasu.', casual:'スタートアップではたらいている。', casualRj:'Sutaato appu de hataraite iru.', spoken:'スタートアップではたらいてる。', spokenRj:'Sutaato appu de hataraiteru.', en:'I work at a startup.', why:'はたらく means “to work.” In conversation, ている often contracts to てる.' },
+      { label:'Live · formal', scenario:'Someone asks where you live now.', blank:'サンフランシスコに ___。', formal:'サンフランシスコにすんでいます。', formalRj:'San Furanshisuko ni sunde imasu.', casual:'サンフランシスコにすんでいる。', casualRj:'San Furanshisuko ni sunde iru.', spoken:'サンフランシスコにすんでる。', spokenRj:'San Furanshisuko ni sunderu.', en:'I live in San Francisco.', why:'すむ means “to live.” In conversation, すんでいる often contracts to すんでる.' },
       { label:'Exercise · formal', scenario:'Describe your usual gym activity.', blank:'ジムでウェイトトレーニングを ___。', formal:'ジムでウェイトトレーニングをします。', formalRj:'Jimu de ueito toreeningu o shimasu.', casual:'ジムでウェイトトレーニングをする。', casualRj:'Jimu de ueito toreeningu o suru.', en:'I do weight training at the gym.', why:'します is formal; する is casual. で marks where the action happens.' },
       { label:'Travel · formal', scenario:'Say that you are going to Japan.', blank:'にほんに ___。', formal:'にほんにいきます。', formalRj:'Nihon ni ikimasu.', casual:'にほんにいく。', casualRj:'Nihon ni iku.', en:"I'm going to Japan.", why:'いきます is formal; いく is casual. に marks the destination.' },
-      { label:'Study · formal', scenario:'Say what you are studying.', blank:'にほんごを ___。', formal:'にほんごをべんきょうしています。', formalRj:'Nihongo o benkyou shite imasu.', casual:'にほんごをべんきょうしている。', casualRj:'Nihongo o benkyou shite iru.', en:"I'm studying Japanese.", why:'The ている form describes an ongoing activity. を marks what you study.' },
+      { label:'Study · formal', scenario:'Say what you are studying.', blank:'にほんごを ___。', formal:'にほんごをべんきょうしています。', formalRj:'Nihongo o benkyou shite imasu.', casual:'にほんごをべんきょうしている。', casualRj:'Nihongo o benkyou shite iru.', spoken:'にほんごをべんきょうしてる。', spokenRj:'Nihongo o benkyou shiteru.', en:"I'm studying Japanese.", why:'The ている form describes an ongoing activity. In conversation it often contracts to てる.' },
       { label:'Drink · formal', scenario:'Tell someone what you drink in the morning.', blank:'コーヒーを ___。', formal:'コーヒーをのみます。', formalRj:'Koohii o nomimasu.', casual:'コーヒーをのむ。', casualRj:'Koohii o nomu.', en:'I drink coffee.', why:'のみます is formal; のむ is casual. を marks the drink.' },
       { label:'Watch · formal', scenario:'Say that you watch a movie.', blank:'えいがを ___。', formal:'えいがをみます。', formalRj:'Eiga o mimasu.', casual:'えいがをみる。', casualRj:'Eiga o miru.', en:'I watch a movie.', why:'みます is formal; みる is casual.' },
       { label:'Speak · formal', scenario:"Say you speak Japanese with your fiancée's family.", blank:'こんやくしゃのかぞくとにほんごで ___。', formal:'こんやくしゃのかぞくとにほんごではなします。', formalRj:"Kon'yakusha no kazoku to nihongo de hanashimasu.", casual:'こんやくしゃのかぞくとにほんごではなす。', casualRj:"Kon'yakusha no kazoku to nihongo de hanasu.", en:"I speak Japanese with my fiancée's family.", why:'はなします is formal; はなす is casual. と marks who you speak with; で marks the language.' },
       { label:'Existence · formal', scenario:'You see people in the park.', blank:'こうえんにひとが ___。', formal:'こうえんにひとがいます。', formalRj:'Kouen ni hito ga imasu.', casual:'こうえんにひとがいる。', casualRj:'Kouen ni hito ga iru.', en:'There are people in the park.', why:'Use いる / います for people and animals. に marks where they are.' },
       { label:'Existence · formal', scenario:'Tell someone there is a gym nearby.', blank:'ちかくにジムが ___。', formal:'ちかくにジムがあります。', formalRj:'Chikaku ni jimu ga arimasu.', casual:'ちかくにジムがある。', casualRj:'Chikaku ni jimu ga aru.', en:'There is a gym nearby.', why:'Use ある / あります for things and places that are not alive.' },
-      { label:'Past experience · formal', scenario:'Say you used to live in Thailand and Indonesia.', blank:'タイとインドネシアに ___。', formal:'タイとインドネシアにすんでいました。', formalRj:'Tai to Indoneshia ni sunde imashita.', casual:'タイとインドネシアにすんでいた。', casualRj:'Tai to Indoneshia ni sunde ita.', en:'I lived in Thailand and Indonesia.', why:'すんでいました is polite; すんでいた is casual. Both describe a past ongoing state.' },
+      { label:'Past experience · formal', scenario:'Say you used to live in Thailand and Indonesia.', blank:'タイとインドネシアに ___。', formal:'タイとインドネシアにすんでいました。', formalRj:'Tai to Indoneshia ni sunde imashita.', casual:'タイとインドネシアにすんでいた。', casualRj:'Tai to Indoneshia ni sunde ita.', spoken:'タイとインドネシアにすんでた。', spokenRj:'Tai to Indoneshia ni sundeta.', en:'I lived in Thailand and Indonesia.', why:'すんでた is the common spoken contraction of すんでいた.' },
       { label:'Invitation · casual', scenario:'Ask a friend if they want to go to the gym.', blank:'ジムに ___？', formal:'ジムにいきませんか。', formalRj:'Jimu ni ikimasen ka.', casual:'ジムにいかない？', casualRj:'Jimu ni ikanai?', en:'Do you want to go to the gym?', why:'Both use a negative question as an invitation; いきませんか is polite and いかない？ is casual.' },
       { label:"Let's go · casual", scenario:'Suggest going to Japan together.', blank:'いっしょににほんに ___。', formal:'いっしょににほんにいきましょう。', formalRj:'Isshoni nihon ni ikimashou.', casual:'いっしょににほんにいこう。', casualRj:'Isshoni nihon ni ikou.', en:"Let's go to Japan together.", why:'いきましょう is polite; いこう is casual.' },
       { label:'Invitation · formal', scenario:'Invite a coworker to a restaurant.', blank:'レストランに ___。', formal:'レストランにいきませんか。', formalRj:'Resutoran ni ikimasen ka.', casual:'レストランにいかない？', casualRj:'Resutoran ni ikanai?', en:'Would you like to go to a restaurant?', why:'The polite form fits coworkers; use the casual form with a friend.' },
       { label:'Going home · formal', scenario:'Tell a coworker you are going home.', blank:'いえに ___。', formal:'いえにかえります。', formalRj:'Ie ni kaerimasu.', casual:'いえにかえる。', casualRj:'Ie ni kaeru.', en:"I'm going home.", why:'Use かえる for returning to your own home, rather than いく.' },
       { label:'Past · formal', scenario:'Say you watched a movie yesterday.', blank:'きのう、えいがを ___。', formal:'きのう、えいがをみました。', formalRj:'Kinou, eiga o mimashita.', casual:'きのう、えいがをみた。', casualRj:'Kinou, eiga o mita.', en:'I watched a movie yesterday.', why:'みました is polite past; みた is casual past.' },
       { label:'Past · casual', scenario:'Tell a friend you drank coffee.', blank:'コーヒーを ___。', formal:'コーヒーをのみました。', formalRj:'Koohii o nomimashita.', casual:'コーヒーをのんだ。', casualRj:'Koohii o nonda.', en:'I drank coffee.', why:'のみました is polite past; のんだ is casual past.' },
-      { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', formal:'いま、にほんごをべんきょうしています。', formalRj:'Ima, nihongo o benkyou shite imasu.', casual:'いま、にほんごをべんきょうしている。', casualRj:'Ima, nihongo o benkyou shite iru.', en:"I'm studying Japanese now.", why:'べんきょうしています is polite; べんきょうしている is casual.' }
+      { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', formal:'いま、にほんごをべんきょうしています。', formalRj:'Ima, nihongo o benkyou shite imasu.', casual:'いま、にほんごをべんきょうしている。', casualRj:'Ima, nihongo o benkyou shite iru.', spoken:'いま、にほんごをべんきょうしてる。', spokenRj:'Ima, nihongo o benkyou shiteru.', en:"I'm studying Japanese now.", why:'The casual ている form commonly contracts to てる in speech.' }
     ];
     var vocabMode = 'all';
 
@@ -589,6 +595,7 @@
         '<div class="verb-answer"><div class="register-pair">'+
         '<div class="form-row"><span class="form-tag">Formal</span><span class="kana" lang="ja">'+item.formal+'</span><span class="rj">'+item.formalRj+'</span></div>'+
         '<div class="form-row casual"><span class="form-tag">Casual</span><span class="kana" lang="ja">'+item.casual+'</span><span class="rj">'+item.casualRj+'</span></div>'+
+        (item.spoken?'<div class="form-row spoken"><span class="form-tag">Common spoken</span><span class="kana" lang="ja">'+item.spoken+'</span><span class="rj">'+item.spokenRj+'</span></div>':'')+
         '</div><div class="detail"><b>English</b><span class="translation">'+item.en+'</span>'+
         '<b>Why</b><span class="why">'+item.why+'</span></div></div></article>';
     }).join('');
@@ -675,7 +682,7 @@
       { mode:'en-ja', label:'Translate into Japanese', q:'I study Japanese at home.', a:'いえでにほんごをべんきょうします。', note:'ie de nihongo o benkyou shimasu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate both sentences', q:'I like basketball. I like weight training too.', a:'バスケットボールがすきです。ウェイトトレーニングもすきです。', note:'basuketto booru ga suki desu. ueito toreeningu mo suki desu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I work at a startup.', a:'スタートアップではたらいています。', note:'sutaato appu de hataraite imasu.', qLang:'en', aLang:'ja' },
-      { mode:'en-ja', label:'Translate into Japanese', q:'I lived in Thailand and Indonesia.', a:'タイとインドネシアにすんでいました。', note:'tai to indoneshia ni sunde imashita.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I lived in Thailand and Indonesia.', a:'<span class="answer-variant"><b>Formal</b>タイとインドネシアにすんでいました。</span><span class="answer-variant casual"><b>Casual</b>タイとインドネシアにすんでいた。</span><span class="answer-variant spoken"><b>Common spoken</b>タイとインドネシアにすんでた。</span>', note:'tai to indoneshia ni sunde imashita. / tai to indoneshia ni sunde ita. / tai to indoneshia ni sundeta. — I lived in Thailand and Indonesia.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:"I'm going to Japan with my fiancée in September.", a:'くがつにこんやくしゃとにほんにいきます。', note:"kugatsu ni kon'yakusha to nihon ni ikimasu.", qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I drink coffee and tea.', a:'コーヒーとおちゃをのみます。', note:'koohii to ocha o nomimasu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'There is a gym nearby.', a:'ちかくにジムがあります。', note:'chikaku ni jimu ga arimasu.', qLang:'en', aLang:'ja' },

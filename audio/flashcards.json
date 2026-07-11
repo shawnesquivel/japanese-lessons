@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T23:20:43.458Z",
+  "generatedAt": "2026-07-11T23:32:12.440Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -581,6 +581,15 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "べんきょうしてる",
+      "romaji": "benkyou-shiteru",
+      "en": "studying · spoken casual",
+      "group": "verbs",
+      "id": "benkyou-shiteru",
+      "audio": "audio/words/benkyou-shiteru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "べんきょうしています",
       "romaji": "benkyou-shite-imasu",
       "en": "studying · formal",
@@ -605,6 +614,15 @@
       "group": "verbs",
       "id": "hataraite-iru",
       "audio": "audio/words/hataraite-iru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "はたらいてる",
+      "romaji": "hataraiteru",
+      "en": "working · spoken casual",
+      "group": "verbs",
+      "id": "hataraiteru",
+      "audio": "audio/words/hataraiteru.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
@@ -725,6 +743,15 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "すんでる",
+      "romaji": "sunderu",
+      "en": "living · spoken casual",
+      "group": "verbs",
+      "id": "sunderu",
+      "audio": "audio/words/sunderu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "すんでいます",
       "romaji": "sunde-imasu",
       "en": "living · formal",
@@ -740,6 +767,15 @@
       "group": "verbs",
       "id": "sunde-ita",
       "audio": "audio/words/sunde-ita.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すんでた",
+      "romaji": "sundeta",
+      "en": "lived · spoken casual",
+      "group": "verbs",
+      "id": "sundeta",
+      "audio": "audio/words/sundeta.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
