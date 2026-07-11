@@ -271,18 +271,18 @@ const WORDS = [
 // Audio-only comprehension for the particles lesson.
 // Learners hear the question first, answer its meaning in English, then reveal.
 const PARTICLE_QUESTIONS = [
-  { kana: "なにがすきですか。", romaji: "nani ga suki desu ka.", en: "What do you like?", answer: "I like basketball and weight training." },
-  { kana: "どこにすんでいますか。", romaji: "doko ni sunde imasu ka.", en: "Where do you live?", answer: "I live in San Francisco." },
-  { kana: "どこではたらいていますか。", romaji: "doko de hataraite imasu ka.", en: "Where do you work?", answer: "I work at a startup." },
-  { kana: "しごとはなんですか。", romaji: "shigoto wa nan desu ka.", en: "What do you do for work?", answer: "I'm a software engineer." },
-  { kana: "なにをべんきょうしていますか。", romaji: "nani o benkyou shite imasu ka.", en: "What are you studying?", answer: "I'm studying Japanese." },
-  { kana: "どこできんトレをしますか。", romaji: "doko de kintore o shimasu ka.", en: "Where do you lift?", answer: "I lift at the gym." },
-  { kana: "だれとにほんにいきますか。", romaji: "dare to nihon ni ikimasu ka.", en: "Who are you going to Japan with?", answer: "I'm going with my fiancée." },
-  { kana: "いつにほんにいきますか。", romaji: "itsu nihon ni ikimasu ka.", en: "When are you going to Japan?", answer: "I'm going in September." },
-  { kana: "どこにすんでいましたか。", romaji: "doko ni sunde imashita ka.", en: "Where did you live?", answer: "I lived in Thailand and Indonesia." },
-  { kana: "なにをのみますか。", romaji: "nani o nomimasu ka.", en: "What do you drink?", answer: "I drink coffee and tea." },
-  { kana: "ちかくになにがありますか。", romaji: "chikaku ni nani ga arimasu ka.", en: "What is nearby?", answer: "There is a gym nearby." },
-  { kana: "にほんごでだれとはなしたいですか。", romaji: "nihongo de dare to hanashitai desu ka.", en: "Who do you want to speak with in Japanese?", answer: "I want to speak with my fiancée's family." },
+  { kana: "なにがすきですか。", romaji: "nani ga suki desu ka.", en: "What do you like?", answer: "I like basketball and weight training.", answerKana: "バスケットボールときんトレがすきです。", answerRomaji: "basuketto booru to kintore ga suki desu." },
+  { kana: "どこにすんでいますか。", romaji: "doko ni sunde imasu ka.", en: "Where do you live?", answer: "I live in San Francisco.", answerKana: "サンフランシスコにすんでいます。", answerRomaji: "san furanshisuko ni sunde imasu." },
+  { kana: "どこではたらいていますか。", romaji: "doko de hataraite imasu ka.", en: "Where do you work?", answer: "I work at a startup.", answerKana: "スタートアップではたらいています。", answerRomaji: "sutaato appu de hataraite imasu." },
+  { kana: "しごとはなんですか。", romaji: "shigoto wa nan desu ka.", en: "What do you do for work?", answer: "I'm a software engineer.", answerKana: "ソフトウェアエンジニアです。", answerRomaji: "sofutowea enjinia desu." },
+  { kana: "なにをべんきょうしていますか。", romaji: "nani o benkyou shite imasu ka.", en: "What are you studying?", answer: "I'm studying Japanese.", answerKana: "にほんごをべんきょうしています。", answerRomaji: "nihongo o benkyou shite imasu." },
+  { kana: "どこできんトレをしますか。", romaji: "doko de kintore o shimasu ka.", en: "Where do you lift?", answer: "I lift at the gym.", answerKana: "ジムできんトレをします。", answerRomaji: "jimu de kintore o shimasu." },
+  { kana: "だれとにほんにいきますか。", romaji: "dare to nihon ni ikimasu ka.", en: "Who are you going to Japan with?", answer: "I'm going with my fiancée.", answerKana: "こんやくしゃといきます。", answerRomaji: "kon-yakusha to ikimasu." },
+  { kana: "いつにほんにいきますか。", romaji: "itsu nihon ni ikimasu ka.", en: "When are you going to Japan?", answer: "I'm going in September.", answerKana: "くがつにいきます。", answerRomaji: "kugatsu ni ikimasu." },
+  { kana: "どこにすんでいましたか。", romaji: "doko ni sunde imashita ka.", en: "Where did you live?", answer: "I lived in Thailand and Indonesia.", answerKana: "タイとインドネシアにすんでいました。", answerRomaji: "tai to indoneshia ni sunde imashita." },
+  { kana: "なにをのみますか。", romaji: "nani o nomimasu ka.", en: "What do you drink?", answer: "I drink coffee and tea.", answerKana: "コーヒーとおちゃをのみます。", answerRomaji: "koohii to ocha o nomimasu." },
+  { kana: "ちかくになにがありますか。", romaji: "chikaku ni nani ga arimasu ka.", en: "What is nearby?", answer: "There is a gym nearby.", answerKana: "ちかくにジムがあります。", answerRomaji: "chikaku ni jimu ga arimasu." },
+  { kana: "にほんごでだれとはなしたいですか。", romaji: "nihongo de dare to hanashitai desu ka.", en: "Who do you want to speak with in Japanese?", answer: "I want to speak with my fiancée's family.", answerKana: "こんやくしゃのかぞくとはなしたいです。", answerRomaji: "kon-yakusha no kazoku to hanashitai desu." },
 ];
 
 // Isolated-word listening. The page exposes only the sound until reveal.

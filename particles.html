@@ -91,10 +91,11 @@
   .drill-filter:active{transform:scale(.96)}
   .drill-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
   .practice-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
-  .practice-deck{display:grid;gap:14px;margin:14px 0}
+  .practice-deck{display:grid;gap:14px;max-width:760px;margin:14px auto}
   .practice-card{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:22px;text-align:left;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
+    min-height:260px;padding:28px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:center;
+    transition-property:background,box-shadow,transform;transition-duration:.12s;
   }
   .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
   .practice-card:active{transform:scale(.96)}
@@ -116,6 +117,25 @@
   .practice-card .tap-hint{margin-top:10px}
   .practice-card.revealed .answer-main,.practice-card.revealed .answer-note{display:block}
   .practice-card.revealed .tap-hint{display:none}
+  .session-meta{display:flex;justify-content:space-between;gap:12px;color:var(--ink-soft);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .session-track{height:7px;border-radius:999px;background:#EEE9DE;overflow:hidden}
+  .session-fill{height:100%;background:var(--ko);border-radius:inherit;transition-property:width;transition-duration:.2s}
+  .self-grade{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+  .self-grade.show{display:grid}
+  .grade-btn{min-height:48px;border:0;border-radius:11px;font:700 15px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;transition-property:transform,box-shadow;transition-duration:.12s}
+  .grade-btn:active{transform:scale(.96)}
+  .grade-btn.correct{background:var(--ko-bg);color:#3C5E25;box-shadow:inset 0 0 0 1px #C8D9B8}
+  .grade-btn.missed{background:var(--do-bg);color:#9C3119;box-shadow:inset 0 0 0 1px #E8C4B8}
+  .skip-btn{justify-self:center;min-height:40px;border:0;background:transparent;color:var(--ink-soft);font:600 12px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;padding:8px 14px}
+  .skip-btn:active{transform:scale(.96)}
+  .session-results{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-align:center}
+  .session-results .score{font-size:36px;font-weight:700;margin:8px 0}
+  .missed-list{display:grid;gap:7px;text-align:left;margin:16px 0}
+  .missed-item{padding:9px 12px;border-radius:9px;background:var(--do-bg);font-size:14px}
+  .result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+  .session-btn{min-height:42px;border:0;border-radius:10px;padding:9px 15px;background:var(--ink);color:var(--paper);font:700 13px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer}
+  .session-btn.secondary{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-strong)}
+  .session-btn:active{transform:scale(.96)}
 
   .vocab-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 12px}
   .vocab-filter{
@@ -164,9 +184,9 @@
   .verb-answer .why{color:var(--ink-soft)}
   .verb-card.revealed .verb-answer{display:block}.verb-card.revealed .tap-hint{display:none}
 
-  .listen-deck{display:grid;gap:14px}
+  .listen-deck{display:grid;gap:14px;max-width:760px;margin:0 auto}
   .listen-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+    min-height:250px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;
     display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
   }
   .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
@@ -183,15 +203,19 @@
   .listen-prompt{font-weight:700;margin:4px 0 0}.listen-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
   .listen-answer .kana{font-size:23px}.listen-answer .english{display:block;font-weight:700;margin-top:6px}
   .listen-answer .sample{display:block;color:var(--ink-soft);font-size:14px;margin-top:4px}
+  .listen-answer .sample-jp{display:block;margin-top:12px;padding:11px 13px;border-radius:9px;background:var(--ko-bg)}
+  .listen-answer .sample-jp .label{display:block;font:700 10px "Zen Maru Gothic",system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .listen-answer .sample-jp .kana{font-size:20px}
   .listen-card.revealed .listen-answer{display:block}.listen-card.revealed .tap-hint{display:none}
-  .word-listen-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-  .word-listen-deck .listen-card{min-height:155px;flex-direction:column;align-items:center;text-align:center}
+  .word-listen-deck{display:grid;gap:14px;max-width:620px;margin:0 auto}
+  .word-listen-deck .listen-card{min-height:240px;flex-direction:column;align-items:center;text-align:center;justify-content:center}
   .listen-status{color:var(--ink-soft)}
 
   @media(max-width:620px){.verb-answer .register-pair{grid-template-columns:1fr}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 <script src="audio/particles.js"></script>
+<script src="learning.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -626,40 +650,85 @@
       audio.addEventListener('ended',function(){button.classList.remove('playing');});
       audio.addEventListener('error',function(){button.classList.remove('playing');button.disabled=true;button.textContent='✕';});
     }
-    function bind(root){
-      root.querySelectorAll('.listen-card').forEach(function(card){
-        function toggle(){card.classList.toggle('revealed');card.setAttribute('aria-expanded',card.classList.contains('revealed'));}
-        card.addEventListener('click',function(event){if(event.target.closest('.listen-play'))return;toggle();});
-        card.addEventListener('keydown',function(event){
-          if(document.activeElement&&document.activeElement.classList.contains('listen-play'))return;
-          if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}
-        });
-      });
-      root.querySelectorAll('.listen-play').forEach(function(button){
-        button.addEventListener('click',function(event){event.stopPropagation();play(button);});
-      });
-    }
     function render(manifest){
       var hasAudio=!!(manifest&&manifest.hasAudio);
-      var questions=shuffle((manifest&&manifest.questions)||[]);
-      var words=shuffle((manifest&&manifest.words)||[]);
-      questionDeck.innerHTML=questions.map(function(item,index){
-        return '<article class="listen-card" tabindex="0" role="button" aria-expanded="false">'+
-          '<button class="listen-play" type="button" aria-label="Play question '+(index+1)+'" data-src="'+esc(item.audio)+'"'+(hasAudio?'':' disabled')+'>▶</button>'+
-          '<div class="listen-body"><span class="listen-label">Question '+(index+1)+' / '+questions.length+'</span>'+
-          '<p class="listen-prompt">What did they ask? Answer in English.</p><span class="tap-hint">audio only · tap card to reveal</span>'+
-          '<div class="listen-answer"><span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span>'+
-          '<span class="english">'+esc(item.en)+'</span><span class="sample">Sample answer: '+esc(item.answer)+'</span></div></div></article>';
-      }).join('');
-      wordDeck.innerHTML=words.map(function(item,index){
-        return '<article class="listen-card" tabindex="0" role="button" aria-expanded="false">'+
-          '<button class="listen-play" type="button" aria-label="Play word '+(index+1)+'" data-src="'+esc(item.audio)+'"'+(hasAudio?'':' disabled')+'>▶</button>'+
-          '<div class="listen-body"><span class="listen-label">Word '+(index+1)+' / '+words.length+'</span>'+
-          '<p class="listen-prompt">What single word did you hear?</p><span class="tap-hint">audio only · tap card to reveal</span>'+
-          '<div class="listen-answer"><span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span>'+
-          '<span class="english">'+esc(item.en)+'</span></div></div></article>';
-      }).join('');
-      bind(questionDeck);bind(wordDeck);
+      mountSession(questionDeck,(manifest&&manifest.questions)||[],'question',hasAudio);
+      mountSession(wordDeck,(manifest&&manifest.words)||[],'word',hasAudio);
+    }
+    function mountSession(root,source,kind,hasAudio){
+      var items=shuffle(source);
+      var index=0;
+      var missed=[];
+      var correct=0;
+      var skipped=0;
+      function restart(nextItems){
+        items=shuffle(nextItems||source);
+        index=0;missed=[];correct=0;skipped=0;
+        draw();
+      }
+      function draw(){
+        if(index>=items.length){results();return;}
+        var item=items[index];
+        var label=kind==='question'?'Question':'Word';
+        var answer=kind==='question'
+          ? '<span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span>'+
+            '<span class="english">'+esc(item.en)+'</span>'+
+            '<span class="sample-jp"><span class="label">Sample Japanese answer</span><span class="kana" lang="ja">'+esc(item.answerKana||'')+'</span><span class="rj">'+esc(item.answerRomaji||'')+'</span><span class="sample">'+esc(item.answer||'')+'</span></span>'
+          : '<span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span><span class="english">'+esc(item.en)+'</span>';
+        root.innerHTML=
+          '<div class="session-meta"><span>'+(index+1)+' / '+items.length+'</span><span>✅ '+correct+' · ❌ '+missed.length+'</span></div>'+
+          '<div class="session-track"><div class="session-fill" style="width:'+(index/items.length*100)+'%"></div></div>'+
+          '<article class="listen-card" tabindex="0" role="button" aria-expanded="false">'+
+            '<button class="listen-play" type="button" aria-label="Play '+label.toLowerCase()+'" data-src="'+esc(item.audio)+'"'+(hasAudio?'':' disabled')+'>▶</button>'+
+            '<div class="listen-body"><span class="listen-label">'+label+'</span><p class="listen-prompt">'+
+            (kind==='question'?'What did they ask? Answer in English.':'What single word did you hear?')+
+            '</p><span class="tap-hint">audio only · tap card to reveal</span><div class="listen-answer">'+answer+'</div></div></article>'+
+          '<div class="self-grade"><button class="grade-btn correct" data-outcome="correct">✅ Got it</button><button class="grade-btn missed" data-outcome="missed">❌ Missed</button></div>'+
+          '<button class="skip-btn" data-outcome="skip">Skip</button>';
+        var card=root.querySelector('.listen-card');
+        var playButton=root.querySelector('.listen-play');
+        playButton.addEventListener('click',function(event){event.stopPropagation();play(playButton);});
+        function reveal(){
+          if(card.classList.contains('revealed'))return;
+          card.classList.add('revealed');card.setAttribute('aria-expanded','true');
+          root.querySelector('.self-grade').classList.add('show');
+        }
+        card.addEventListener('click',function(event){if(!event.target.closest('.listen-play'))reveal();});
+        card.addEventListener('keydown',function(event){
+          if(document.activeElement&&document.activeElement.classList.contains('listen-play'))return;
+          if(event.key==='Enter'||event.key===' '){event.preventDefault();reveal();}
+        });
+        root.querySelectorAll('[data-outcome]').forEach(function(button){
+          button.addEventListener('click',function(){grade(item,button.getAttribute('data-outcome'));});
+        });
+      }
+      function grade(item,outcome){
+        var progressId=(kind==='question'?'listen:particles:':'listen-word:')+item.id;
+        if(outcome==='correct'){
+          correct++;
+          if(window.JL_PROGRESS)JL_PROGRESS.record(progressId,'good',{subject:'particles',type:'listen-'+kind});
+        }else if(outcome==='missed'){
+          missed.push(item);
+          if(window.JL_PROGRESS)JL_PROGRESS.record(progressId,'again',{subject:'particles',type:'listen-'+kind});
+        }else{
+          skipped++;
+        }
+        index++;draw();
+      }
+      function results(){
+        var attempted=correct+missed.length;
+        root.innerHTML='<div class="session-results"><h3>'+kind.charAt(0).toUpperCase()+kind.slice(1)+' round complete</h3>'+
+          '<div class="score">'+correct+' / '+attempted+'</div><p class="lead">'+
+          (missed.length?'Listen again to the items you missed.':'Clean round. Nice work.')+'</p>'+
+          (missed.length?'<div class="missed-list">'+missed.map(function(item){return '<div class="missed-item">'+esc(item.en)+'</div>';}).join('')+'</div>':'')+
+          '<div class="result-actions">'+(missed.length?'<button class="session-btn" id="review-'+kind+'-missed">Review missed</button>':'')+
+          '<button class="session-btn secondary" id="restart-'+kind+'">Start new round</button></div>'+
+          (skipped?'<p class="tap-hint">'+skipped+' skipped</p>':'')+'</div>';
+        var reviewButton=document.getElementById('review-'+kind+'-missed');
+        if(reviewButton)reviewButton.addEventListener('click',function(){restart(missed.slice());});
+        document.getElementById('restart-'+kind).addEventListener('click',function(){restart();});
+      }
+      draw();
     }
     function failed(){
       questionDeck.innerHTML='<p class="listen-status">Particle audio is unavailable. Run: npm run generate:audio</p>';
@@ -719,9 +788,15 @@
       { mode:'conversation', label:'Fix the sentence', q:'コーヒーをおちゃをのみます。', a:'コーヒーとおちゃをのみます。', note:'Connect the nouns with と, then mark the full list with を.', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Fix the sentence', q:'こんやくしゃでにほんにいきます。', a:'こんやくしゃとにほんにいきます。', note:'Use と for the person you go with.', qLang:'ja', aLang:'ja' }
     ];
+    DRILLS.forEach(function(item,index){item.id='particles:drill:'+item.mode+':'+index;});
     var activeMode = 'all';
     var deck = document.getElementById('practice-deck');
     var count = document.getElementById('practice-count');
+    var sessionItems = [];
+    var sessionIndex = 0;
+    var sessionMissed = [];
+    var sessionCorrect = 0;
+    var sessionSkipped = 0;
 
     function shuffle(list){
       var a = list.slice();
@@ -736,37 +811,67 @@
       return activeMode === 'all' ? DRILLS : DRILLS.filter(function(item){ return item.mode === activeMode; });
     }
 
-    function bindFlashcards(root){
-      root.querySelectorAll('.flashcard').forEach(function(card){
-        function toggle(){
-          card.classList.toggle('revealed');
-          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
-        }
-        card.addEventListener('click', toggle);
-        card.addEventListener('keydown', function(e){
-          if(e.key === 'Enter' || e.key === ' '){
-            e.preventDefault();
-            toggle();
-          }
-        });
-      });
+    function resetSession(items){
+      sessionItems=shuffle(items||visibleDrills());
+      sessionIndex=0;
+      sessionMissed=[];
+      sessionCorrect=0;
+      sessionSkipped=0;
+      render();
     }
 
     function render(){
-      var drills = shuffle(visibleDrills());
-      count.textContent = drills.length + ' prompts';
-      deck.innerHTML = drills.map(function(item, index){
-        var qLang = item.qLang === 'ja' ? ' lang="ja"' : '';
-        var aLang = item.aLang === 'ja' ? ' lang="ja"' : '';
-        return '<div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">' +
-          '<div class="deck-label">' + item.label + ' · ' + (index + 1) + '/' + drills.length + '</div>' +
-          '<p class="q-prompt"' + qLang + '>' + item.q + '</p>' +
-          '<p class="answer-main"' + aLang + '>' + item.a + '</p>' +
-          '<p class="answer-note">' + item.note + '</p>' +
-          '<p class="tap-hint">answer first · tap to check</p>' +
-        '</div>';
-      }).join('');
-      bindFlashcards(deck);
+      count.textContent=sessionItems.length+' prompts';
+      if(sessionIndex>=sessionItems.length){renderResults();return;}
+      var item=sessionItems[sessionIndex];
+      var qLang=item.qLang==='ja'?' lang="ja"':'';
+      var aLang=item.aLang==='ja'?' lang="ja"':'';
+      deck.innerHTML=
+        '<div class="session-meta"><span>'+(sessionIndex+1)+' / '+sessionItems.length+'</span><span>✅ '+sessionCorrect+' · ❌ '+sessionMissed.length+'</span></div>'+
+        '<div class="session-track"><div class="session-fill" style="width:'+(sessionIndex/sessionItems.length*100)+'%"></div></div>'+
+        '<article class="practice-card" tabindex="0" role="button" aria-expanded="false">'+
+          '<div class="deck-label">'+item.label+'</div><p class="q-prompt"'+qLang+'>'+item.q+'</p>'+
+          '<p class="answer-main"'+aLang+'>'+item.a+'</p><p class="answer-note">'+item.note+'</p>'+
+          '<p class="tap-hint">answer first · tap to check</p></article>'+
+        '<div class="self-grade"><button class="grade-btn correct" data-outcome="correct">✅ Got it</button><button class="grade-btn missed" data-outcome="missed">❌ Missed</button></div>'+
+        '<button class="skip-btn" data-outcome="skip">Skip</button>';
+      var card=deck.querySelector('.practice-card');
+      function reveal(){
+        if(card.classList.contains('revealed'))return;
+        card.classList.add('revealed');card.setAttribute('aria-expanded','true');
+        deck.querySelector('.self-grade').classList.add('show');
+      }
+      card.addEventListener('click',reveal);
+      card.addEventListener('keydown',function(event){if(event.key==='Enter'||event.key===' '){event.preventDefault();reveal();}});
+      deck.querySelectorAll('[data-outcome]').forEach(function(button){
+        button.addEventListener('click',function(){grade(item,button.getAttribute('data-outcome'));});
+      });
+    }
+    function grade(item,outcome){
+      if(outcome==='correct'){
+        sessionCorrect++;
+        if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'good',{subject:'particles',type:'drill'});
+      }else if(outcome==='missed'){
+        sessionMissed.push(item);
+        if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'again',{subject:'particles',type:'drill'});
+      }else{
+        sessionSkipped++;
+      }
+      sessionIndex++;
+      render();
+    }
+    function renderResults(){
+      var attempted=sessionCorrect+sessionMissed.length;
+      deck.innerHTML='<div class="session-results"><h3>Round complete</h3>'+
+        '<div class="score">'+sessionCorrect+' / '+attempted+'</div>'+
+        '<p class="lead">'+(sessionMissed.length?'Review the cards you missed while they are fresh.':'Clean round. Nice work.')+'</p>'+
+        (sessionMissed.length?'<div class="missed-list">'+sessionMissed.map(function(item){return '<div class="missed-item">'+item.q+'</div>';}).join('')+'</div>':'')+
+        '<div class="result-actions">'+(sessionMissed.length?'<button class="session-btn" id="review-missed">Review missed</button>':'')+
+        '<button class="session-btn secondary" id="restart-round">Start new round</button></div>'+
+        (sessionSkipped?'<p class="tap-hint">'+sessionSkipped+' skipped</p>':'')+'</div>';
+      var missedButton=document.getElementById('review-missed');
+      if(missedButton)missedButton.addEventListener('click',function(){resetSession(sessionMissed.slice());});
+      document.getElementById('restart-round').addEventListener('click',function(){resetSession();});
     }
 
     document.querySelectorAll('.drill-filter').forEach(function(button){
@@ -774,11 +879,11 @@
         activeMode = button.getAttribute('data-mode');
         document.querySelectorAll('.drill-filter').forEach(function(item){ item.classList.remove('active'); });
         button.classList.add('active');
-        render();
+        resetSession();
       });
     });
 
-    render();
+    resetSession();
   })();
 </script>
 <script src="nav.js" defer></script>

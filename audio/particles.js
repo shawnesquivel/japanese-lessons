@@ -1,5 +1,5 @@
 window.JL_PARTICLES = {
-  "generatedAt": "2026-07-11T23:42:44.271Z",
+  "generatedAt": "2026-07-11T23:50:26.721Z",
   "voice": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -9,6 +9,8 @@ window.JL_PARTICLES = {
       "romaji": "nani ga suki desu ka.",
       "en": "What do you like?",
       "answer": "I like basketball and weight training.",
+      "answerKana": "バスケットボールときんトレがすきです。",
+      "answerRomaji": "basuketto booru to kintore ga suki desu.",
       "id": "nani-ga-suki-desu-ka",
       "audio": "audio/particles/nani-ga-suki-desu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -18,6 +20,8 @@ window.JL_PARTICLES = {
       "romaji": "doko ni sunde imasu ka.",
       "en": "Where do you live?",
       "answer": "I live in San Francisco.",
+      "answerKana": "サンフランシスコにすんでいます。",
+      "answerRomaji": "san furanshisuko ni sunde imasu.",
       "id": "doko-ni-sunde-imasu-ka",
       "audio": "audio/particles/doko-ni-sunde-imasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -27,6 +31,8 @@ window.JL_PARTICLES = {
       "romaji": "doko de hataraite imasu ka.",
       "en": "Where do you work?",
       "answer": "I work at a startup.",
+      "answerKana": "スタートアップではたらいています。",
+      "answerRomaji": "sutaato appu de hataraite imasu.",
       "id": "doko-de-hataraite-imasu-ka",
       "audio": "audio/particles/doko-de-hataraite-imasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -36,6 +42,8 @@ window.JL_PARTICLES = {
       "romaji": "shigoto wa nan desu ka.",
       "en": "What do you do for work?",
       "answer": "I'm a software engineer.",
+      "answerKana": "ソフトウェアエンジニアです。",
+      "answerRomaji": "sofutowea enjinia desu.",
       "id": "shigoto-wa-nan-desu-ka",
       "audio": "audio/particles/shigoto-wa-nan-desu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -45,6 +53,8 @@ window.JL_PARTICLES = {
       "romaji": "nani o benkyou shite imasu ka.",
       "en": "What are you studying?",
       "answer": "I'm studying Japanese.",
+      "answerKana": "にほんごをべんきょうしています。",
+      "answerRomaji": "nihongo o benkyou shite imasu.",
       "id": "nani-o-benkyou-shite-imasu-ka",
       "audio": "audio/particles/nani-o-benkyou-shite-imasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -54,6 +64,8 @@ window.JL_PARTICLES = {
       "romaji": "doko de kintore o shimasu ka.",
       "en": "Where do you lift?",
       "answer": "I lift at the gym.",
+      "answerKana": "ジムできんトレをします。",
+      "answerRomaji": "jimu de kintore o shimasu.",
       "id": "doko-de-kintore-o-shimasu-ka",
       "audio": "audio/particles/doko-de-kintore-o-shimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -63,6 +75,8 @@ window.JL_PARTICLES = {
       "romaji": "dare to nihon ni ikimasu ka.",
       "en": "Who are you going to Japan with?",
       "answer": "I'm going with my fiancée.",
+      "answerKana": "こんやくしゃといきます。",
+      "answerRomaji": "kon-yakusha to ikimasu.",
       "id": "dare-to-nihon-ni-ikimasu-ka",
       "audio": "audio/particles/dare-to-nihon-ni-ikimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -72,6 +86,8 @@ window.JL_PARTICLES = {
       "romaji": "itsu nihon ni ikimasu ka.",
       "en": "When are you going to Japan?",
       "answer": "I'm going in September.",
+      "answerKana": "くがつにいきます。",
+      "answerRomaji": "kugatsu ni ikimasu.",
       "id": "itsu-nihon-ni-ikimasu-ka",
       "audio": "audio/particles/itsu-nihon-ni-ikimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -81,6 +97,8 @@ window.JL_PARTICLES = {
       "romaji": "doko ni sunde imashita ka.",
       "en": "Where did you live?",
       "answer": "I lived in Thailand and Indonesia.",
+      "answerKana": "タイとインドネシアにすんでいました。",
+      "answerRomaji": "tai to indoneshia ni sunde imashita.",
       "id": "doko-ni-sunde-imashita-ka",
       "audio": "audio/particles/doko-ni-sunde-imashita-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -90,6 +108,8 @@ window.JL_PARTICLES = {
       "romaji": "nani o nomimasu ka.",
       "en": "What do you drink?",
       "answer": "I drink coffee and tea.",
+      "answerKana": "コーヒーとおちゃをのみます。",
+      "answerRomaji": "koohii to ocha o nomimasu.",
       "id": "nani-o-nomimasu-ka",
       "audio": "audio/particles/nani-o-nomimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -99,6 +119,8 @@ window.JL_PARTICLES = {
       "romaji": "chikaku ni nani ga arimasu ka.",
       "en": "What is nearby?",
       "answer": "There is a gym nearby.",
+      "answerKana": "ちかくにジムがあります。",
+      "answerRomaji": "chikaku ni jimu ga arimasu.",
       "id": "chikaku-ni-nani-ga-arimasu-ka",
       "audio": "audio/particles/chikaku-ni-nani-ga-arimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -108,6 +130,8 @@ window.JL_PARTICLES = {
       "romaji": "nihongo de dare to hanashitai desu ka.",
       "en": "Who do you want to speak with in Japanese?",
       "answer": "I want to speak with my fiancée's family.",
+      "answerKana": "こんやくしゃのかぞくとはなしたいです。",
+      "answerRomaji": "kon-yakusha no kazoku to hanashitai desu.",
       "id": "nihongo-de-dare-to-hanashitai-desu-ka",
       "audio": "audio/particles/nihongo-de-dare-to-hanashitai-desu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
