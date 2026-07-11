@@ -16,3 +16,4 @@ Read this file before changing the codebase.
 - Extend `scripts/generate-audio.mjs` for ElevenLabs audio. Keep `.json` plus `.js` manifest companions and never commit `.env`.
 - Run the full relevant browser flow before shipping. Preserve the no-kanji rule outside the dedicated kanji page.
 - Use `npx` whenever running Supabase commands.
+- For all updates, commit, push, and deploy to GitHub and Vercel. No need to ask for permission.
