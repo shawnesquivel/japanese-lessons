@@ -80,7 +80,17 @@
   .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
   .note.win{border-left-color:var(--ko)}
 
-  .practice-deck{display:grid;gap:14px;margin:18px 0}
+  .practice-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
+  .drill-filter{
+    min-height:40px;padding:7px 13px;border-radius:999px;border:1px solid var(--line-strong);
+    background:#fff;color:var(--ink-soft);font:600 13px "Zen Maru Gothic",system-ui,sans-serif;
+    cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s;
+  }
+  .drill-filter:hover{background:#F7F3E8}
+  .drill-filter:active{transform:scale(.96)}
+  .drill-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .practice-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
+  .practice-deck{display:grid;gap:14px;margin:14px 0}
   .practice-card{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:22px;text-align:left;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
@@ -89,14 +99,16 @@
   .practice-card:active{transform:scale(.96)}
   .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
   .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
-  .practice-card .q-en{font-weight:700;margin:0}
-  .practice-card .a-jp{
-    display:none;font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);
+  .practice-card .q-prompt{font-weight:700;font-size:18px;margin:0;text-wrap:pretty}
+  .practice-card .q-prompt[lang="ja"]{font-family:"Zen Antique",serif;font-size:clamp(21px,5vw,27px);font-weight:400}
+  .practice-card .answer-main{
+    display:none;font-size:clamp(20px,5vw,28px);
     line-height:1.45;margin:12px 0 0;padding-top:12px;border-top:1px dashed var(--line-strong);
   }
-  .practice-card .a-en{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
+  .practice-card .answer-main[lang="ja"]{font-family:"Zen Antique",serif}
+  .practice-card .answer-note{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
   .practice-card .tap-hint{font-size:12px;color:#B7AE97;margin-top:10px}
-  .practice-card.revealed .a-jp,.practice-card.revealed .a-en{display:block}
+  .practice-card.revealed .answer-main,.practice-card.revealed .answer-note{display:block}
   .practice-card.revealed .tap-hint{display:none}
 
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -339,112 +351,72 @@
 
   <!-- ===================== PRACTICE ===================== -->
   <section id="practice">
-    <div class="sec-head"><span class="sec-kanji">れん</span><h2>Practice all six particles</h2></div>
-    <p class="lead">Say the Japanese out loud, then tap to reveal. Watch where each particle lands: after the word it marks.</p>
+    <div class="sec-head"><span class="sec-kanji">れん</span><h2>Tutor practice: mixed directions</h2></div>
+    <p class="lead">The prompt never names the target particle. Produce your answer first, then tap to check. Use the filters to isolate a weak skill or keep <strong>Mix all</strong> selected for a realistic review.</p>
 
-    <div class="practice-deck" id="practice-deck">
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Topic · は</div>
-        <p class="q-en">I'm a software engineer.</p>
-        <p class="a-jp">わたし<span class="hl">は</span>ソフトウェアエンジニアです。</p>
-        <p class="a-en">watashi wa sofutowea enjinia desu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Topic · は</div>
-        <p class="q-en">Right now, I live in San Francisco.</p>
-        <p class="a-jp">いま<span class="hl">は</span>サンフランシスコにすんでいます。</p>
-        <p class="a-en">ima wa san furanshisuko ni sunde imasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Subject · が</div>
-        <p class="q-en">I like basketball.</p>
-        <p class="a-jp">バスケットボール<span class="hl">が</span>すきです。</p>
-        <p class="a-en">basuketto booru ga suki desu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Subject · が</div>
-        <p class="q-en">There is a gym nearby.</p>
-        <p class="a-jp">ちかくにジム<span class="hl">が</span>あります。</p>
-        <p class="a-en">chikaku ni jimu ga arimasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Object · を</div>
-        <p class="q-en">I'm studying Japanese.</p>
-        <p class="a-jp">にほんご<span class="hl">を</span>べんきょうしています。</p>
-        <p class="a-en">nihongo o benkyou shite imasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Object · を</div>
-        <p class="q-en">I play basketball.</p>
-        <p class="a-jp">バスケットボール<span class="hl">を</span>します。</p>
-        <p class="a-en">basuketto booru o shimasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Also / too · も</div>
-        <p class="q-en">I like weight training too.</p>
-        <p class="a-jp">ウェイトトレーニング<span class="hl">も</span>すきです。</p>
-        <p class="a-en">ueito toreeningu mo suki desu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Also / too · も</div>
-        <p class="q-en">I also lived in Indonesia.</p>
-        <p class="a-jp">インドネシアに<span class="hl">も</span>すんでいました。</p>
-        <p class="a-en">indoneshia ni mo sunde imashita.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Action place · で</div>
-        <p class="q-en">I work at a startup.</p>
-        <p class="a-jp">スタートアップ<span class="hl">で</span>はたらいています。</p>
-        <p class="a-en">sutaato appu de hataraite imasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Action place · で</div>
-        <p class="q-en">I do weight training at the gym.</p>
-        <p class="a-jp">ジム<span class="hl">で</span>ウェイトトレーニングをします。</p>
-        <p class="a-en">jimu de ueito toreeningu o shimasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Complete list · と</div>
-        <p class="q-en">I lived in Thailand and Indonesia.</p>
-        <p class="a-jp">タイ<span class="hl">と</span>インドネシアにすんでいました。</p>
-        <p class="a-en">tai to indoneshia ni sunde imashita.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">With · と</div>
-        <p class="q-en">I'm going to Japan with my fiancée in September.</p>
-        <p class="a-jp">くがつにこんやくしゃ<span class="hl">と</span>にほんにいきます。</p>
-        <p class="a-en">kugatsu ni kon'yakusha to nihon ni ikimasu.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
+    <div class="practice-toolbar" id="practice-filters" aria-label="Practice modes">
+      <button class="drill-filter active" type="button" data-mode="all">Mix all</button>
+      <button class="drill-filter" type="button" data-mode="en-ja">English → Japanese</button>
+      <button class="drill-filter" type="button" data-mode="ja-en">Japanese → English</button>
+      <button class="drill-filter" type="button" data-mode="particle">Fill the blank</button>
+      <button class="drill-filter" type="button" data-mode="conversation">Conversation &amp; fixes</button>
+      <span class="practice-count" id="practice-count"></span>
     </div>
+
+    <div class="practice-deck" id="practice-deck"></div>
   </section>
 
 </div>
 
 <script>
   (function(){
+    var DRILLS = [
+      { mode:'en-ja', label:'Translate into Japanese', q:"I'm Filipino.", a:'わたしはフィリピンじんです。', note:'watashi wa firipin-jin desu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I like basketball.', a:'バスケットボールがすきです。', note:'basuketto booru ga suki desu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I study Japanese at home.', a:'いえでにほんごをべんきょうします。', note:'ie de nihongo o benkyou shimasu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate both sentences', q:'I like basketball. I like weight training too.', a:'バスケットボールがすきです。ウェイトトレーニングもすきです。', note:'basuketto booru ga suki desu. ueito toreeningu mo suki desu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I work at a startup.', a:'スタートアップではたらいています。', note:'sutaato appu de hataraite imasu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I lived in Thailand and Indonesia.', a:'タイとインドネシアにすんでいました。', note:'tai to indoneshia ni sunde imashita.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:"I'm going to Japan with my fiancée in September.", a:'くがつにこんやくしゃとにほんにいきます。', note:"kugatsu ni kon'yakusha to nihon ni ikimasu.", qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I drink coffee and tea.', a:'コーヒーとおちゃをのみます。', note:'koohii to ocha o nomimasu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'There is a gym nearby.', a:'ちかくにジムがあります。', note:'chikaku ni jimu ga arimasu.', qLang:'en', aLang:'ja' },
+
+      { mode:'ja-en', label:'Translate into English', q:'いまはサンフランシスコにすんでいます。', a:'Right now, I live in San Francisco.', note:'ima wa san furanshisuko ni sunde imasu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'だれがソフトウェアエンジニアですか。', a:'Who is the software engineer?', note:'dare ga sofutowea enjinia desu ka.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'にほんごをべんきょうしています。', a:"I'm studying Japanese.", note:'nihongo o benkyou shite imasu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'わたしもにほんにいきたいです。', a:'I want to go to Japan too.', note:'watashi mo nihon ni ikitai desu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'パソコンでしごとをします。', a:'I work using a computer.', note:'pasokon de shigoto o shimasu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'こんやくしゃとにほんにいきます。', a:"I'm going to Japan with my fiancée.", note:"kon'yakusha to nihon ni ikimasu.", qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'バスケットボールとウェイトトレーニングがすきです。', a:'I like basketball and weight training.', note:'basuketto booru to ueito toreeningu ga suki desu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'こうえんにひとがいます。', a:'There are people in the park.', note:'kouen ni hito ga imasu.', qLang:'ja', aLang:'en' },
+      { mode:'ja-en', label:'Translate into English', q:'コーヒーものみます。', a:'I drink coffee too.', note:'koohii mo nomimasu.', qLang:'ja', aLang:'en' },
+
+      { mode:'particle', label:'Fill in one particle', q:'わたし ___ ソフトウェアエンジニアです。', a:'わたしはソフトウェアエンジニアです。', note:'は sets “I” as the topic.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'だれ ___ ソフトウェアエンジニアですか。', a:'だれがソフトウェアエンジニアですか。', note:'が marks the unknown subject: who?', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'にほんご ___ べんきょうしています。', a:'にほんごをべんきょうしています。', note:'を marks what you study.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'おちゃ ___ のみます。コーヒーものみます。', a:'おちゃをのみます。コーヒーものみます。', note:'を marks tea as the object; も marks coffee as “too.”', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'ジム ___ ウェイトトレーニングをします。', a:'ジムでウェイトトレーニングをします。', note:'で marks where the action happens.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'バス ___ かいしゃにいきます。', a:'バスでかいしゃにいきます。', note:'で marks the means of transportation.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'こんやくしゃ ___ にほんにいきます。', a:'こんやくしゃとにほんにいきます。', note:'と means “with” a person.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'タイ ___ インドネシアにすんでいました。', a:'タイとインドネシアにすんでいました。', note:'と connects every item in a complete list.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'ちかくにジム ___ あります。', a:'ちかくにジムがあります。', note:'が marks the thing that exists.', qLang:'ja', aLang:'ja' },
+      { mode:'particle', label:'Fill in one particle', q:'ウェイトトレーニング ___ すきです。', a:'ウェイトトレーニングもすきです。', note:'も means it is another thing you like.', qLang:'ja', aLang:'ja' },
+
+      { mode:'conversation', label:'Reply naturally', q:'なにがすきですか。', a:'バスケットボールがすきです。', note:'Sample: “I like basketball.” Use が with すき.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Reply naturally', q:'どこでウェイトトレーニングをしますか。', a:'ジムでウェイトトレーニングをします。', note:'Sample: “I do weight training at the gym.”', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Reply naturally', q:'だれとにほんにいきますか。', a:'こんやくしゃといきます。', note:"Sample: “I'm going with my fiancée.”", qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Reply naturally', q:'わたしはにほんごをべんきょうしています。', a:'わたしもべんきょうしています。', note:'“I study it too.” Replace は with も.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Build a sentence', q:'サンフランシスコ / はたらく', a:'サンフランシスコではたらいています。', note:'Use で because working is an action.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Fix the sentence', q:'ジムにウェイトトレーニングをします。', a:'ジムでウェイトトレーニングをします。', note:'Use で for an action at a place.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Fix the sentence', q:'にほんごがべんきょうしています。', a:'にほんごをべんきょうしています。', note:'Japanese is what receives the action, so use を.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Fix the sentence', q:'タイもインドネシアにすんでいました。', a:'タイとインドネシアにすんでいました。', note:'Use と for a complete list. も would mean “Thailand too” in a larger context.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Fix the sentence', q:'コーヒーをおちゃをのみます。', a:'コーヒーとおちゃをのみます。', note:'Connect the nouns with と, then mark the full list with を.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Fix the sentence', q:'こんやくしゃでにほんにいきます。', a:'こんやくしゃとにほんにいきます。', note:'Use と for the person you go with.', qLang:'ja', aLang:'ja' }
+    ];
+    var activeMode = 'all';
+    var deck = document.getElementById('practice-deck');
+    var count = document.getElementById('practice-count');
+
     function shuffle(list){
       var a = list.slice();
       for(var i = a.length - 1; i > 0; i--){
@@ -454,9 +426,8 @@
       return a;
     }
 
-    function shuffleChildren(parent){
-      var nodes = Array.prototype.slice.call(parent.children);
-      shuffle(nodes).forEach(function(node){ parent.appendChild(node); });
+    function visibleDrills(){
+      return activeMode === 'all' ? DRILLS : DRILLS.filter(function(item){ return item.mode === activeMode; });
     }
 
     function bindFlashcards(root){
@@ -475,8 +446,33 @@
       });
     }
 
-    shuffleChildren(document.getElementById('practice-deck'));
-    bindFlashcards(document);
+    function render(){
+      var drills = shuffle(visibleDrills());
+      count.textContent = drills.length + ' prompts';
+      deck.innerHTML = drills.map(function(item, index){
+        var qLang = item.qLang === 'ja' ? ' lang="ja"' : '';
+        var aLang = item.aLang === 'ja' ? ' lang="ja"' : '';
+        return '<div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">' +
+          '<div class="deck-label">' + item.label + ' · ' + (index + 1) + '/' + drills.length + '</div>' +
+          '<p class="q-prompt"' + qLang + '>' + item.q + '</p>' +
+          '<p class="answer-main"' + aLang + '>' + item.a + '</p>' +
+          '<p class="answer-note">' + item.note + '</p>' +
+          '<p class="tap-hint">answer first · tap to check</p>' +
+        '</div>';
+      }).join('');
+      bindFlashcards(deck);
+    }
+
+    document.querySelectorAll('.drill-filter').forEach(function(button){
+      button.addEventListener('click', function(){
+        activeMode = button.getAttribute('data-mode');
+        document.querySelectorAll('.drill-filter').forEach(function(item){ item.classList.remove('active'); });
+        button.classList.add('active');
+        render();
+      });
+    });
+
+    render();
   })();
 </script>
 <script src="nav.js" defer></script>

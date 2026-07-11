@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locations — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
+    --a:#3F6E91;--do:#CB4A2B;--ko-bg:#EDF3E4;--so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;--do-bg:#FAE7E1;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 22px 80px}
+  header{text-align:center;padding:28px 0 20px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font:400 clamp(46px,11vw,82px)/1 "Zen Antique",serif;letter-spacing:.06em;margin:7px 0}
+  .subtitle{color:var(--ink-soft);text-wrap:pretty}
+  .jump-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+  .jump-nav a,.cta{
+    min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;
+    border:1px solid var(--line-strong);border-radius:999px;background:#fff;color:var(--ink);
+    font-size:13px;font-weight:700;text-decoration:none;transition-property:background,transform;transition-duration:.12s;
+  }
+  .jump-nav a:hover,.cta:hover{background:#F3EEE1}
+  .jump-nav a:active,.cta:active{transform:scale(.96)}
+  section{margin-top:48px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kana{font:400 25px/1 "Zen Antique",serif}
+  h2{font-size:22px;line-height:1.3;margin:0;text-wrap:balance}
+  h3{font-size:17px;margin:28px 0 10px}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft);text-wrap:pretty}
+  .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pattern-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:inset 0 0 0 1px rgba(42,46,36,.1),0 2px 10px rgba(42,46,36,.04)}
+  .pattern-card .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .pattern-card .big{font:400 25px/1.45 "Zen Antique",serif;margin:9px 0 6px}
+  .pattern-card .en{font-size:14px;color:var(--ink-soft)}
+  .p-dest{background:var(--ko-bg)}.p-action{background:var(--so-bg)}.p-exist{background:var(--a-bg)}
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 9px 9px 0;color:var(--ink-soft);font-size:15px;margin:16px 0}
+  .note.win{border-left-color:var(--ko)}
+  .table-wrap{overflow-x:auto;margin:12px 0}
+  table{width:100%;border-collapse:collapse;min-width:680px;font-size:15px}
+  th,td{border:1px solid var(--line-strong);padding:10px 12px;text-align:left;vertical-align:top}
+  thead th{background:#F3EEE1}
+  td.row-name{font-weight:700;background:#F7F3E8;min-width:120px}
+  .form-pair{display:grid;gap:9px}
+  .form-line+.form-line{padding-top:8px;border-top:1px dashed var(--line-strong)}
+  .kana{font:400 1.12em/1.4 "Zen Antique",serif;display:block}
+  .rj{font-size:12px;color:var(--ink-soft);display:block}
+  .register{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a);display:block;margin-bottom:2px}
+  .verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+  .verb-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .verb-card .kana{font-size:22px}.verb-card .meaning{font-size:13px;color:var(--ink-soft)}
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+  .vocab-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .vocab-card .en{font-weight:700}.vocab-card .kana{margin-top:3px}.vocab-card .rj{font-size:13px}
+  .conversation-list{display:grid;gap:18px}
+  .conversation{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .conversation h3{margin:0}.context{color:var(--ink-soft);font-size:14px;margin:2px 0 12px}
+  .convo-line{width:100%;display:grid;grid-template-columns:28px 1fr;gap:8px;text-align:left;border:0;border-top:1px dashed var(--line-strong);background:transparent;padding:12px 0;cursor:pointer;font:inherit;color:inherit}
+  .speaker{font-weight:700;color:var(--a)}
+  .convo-jp{font:400 20px/1.45 "Zen Antique",serif}
+  .line-answer{display:none;color:var(--ink-soft);font-size:14px;margin-top:5px}
+  .convo-line.revealed .line-answer{display:block}
+  .convo-line:focus-visible,.quiz-card:focus-visible{outline:3px solid var(--so);outline-offset:2px;border-radius:8px}
+  .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:4px}
+  .convo-line.revealed .tap-hint,.quiz-card.revealed .tap-hint{display:none}
+  .quiz-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 12px}
+  .quiz-filter{min-height:40px;padding:7px 13px;border:1px solid var(--line-strong);border-radius:999px;background:#fff;color:var(--ink-soft);font:600 13px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
+  .quiz-filter:hover{background:#F7F3E8}.quiz-filter:active{transform:scale(.96)}
+  .quiz-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .quiz-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
+  .quiz-deck{display:grid;gap:12px}
+  .quiz-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:left;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s}
+  .quiz-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}.quiz-card:active{transform:scale(.96)}
+  .quiz-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:7px}
+  .quiz-prompt{font-size:18px;font-weight:700;margin:0}.quiz-prompt[lang="ja"]{font:400 23px/1.45 "Zen Antique",serif}
+  .quiz-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong);font-size:19px}
+  .quiz-answer[lang="ja"]{font:400 23px/1.45 "Zen Antique",serif}
+  .quiz-note{display:none;color:var(--ink-soft);font-size:14px;margin-top:5px}
+  .quiz-card.revealed .quiz-answer,.quiz-card.revealed .quiz-note{display:block}
+  @media(max-width:740px){.cards-3{grid-template-columns:1fr}.wrap{padding-inline:16px}.practice-count,.quiz-count{width:100%;margin-left:0}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Japanese · conversational locations</div>
+    <h1>ばしょ</h1>
+    <div class="subtitle">go somewhere · be somewhere · do something somewhere</div>
+    <nav class="jump-nav" aria-label="Locations sections">
+      <a href="#core">に or で?</a>
+      <a href="#forms">Three forms</a>
+      <a href="#questions">Conversation forms</a>
+      <a href="#words">New words</a>
+      <a href="#conversations">Conversations</a>
+      <a href="#quiz">Tutor quiz</a>
+    </nav>
+  </header>
+
+  <section id="core">
+    <div class="sec-head"><span class="sec-kana">に・で</span><h2>The load-bearing split</h2></div>
+    <p class="lead">Choose the particle from the verb. Are you moving to a destination, simply existing there, or doing an action there?</p>
+    <div class="cards-3">
+      <article class="pattern-card p-dest">
+        <span class="tag">Destination · に</span>
+        <p class="big">こうえん<span style="color:var(--do);font-weight:700">に</span>いきます。</p>
+        <p class="en">I go to the park. Use に with いく and かえる.</p>
+      </article>
+      <article class="pattern-card p-exist">
+        <span class="tag">Existence · に</span>
+        <p class="big">かいしゃ<span style="color:var(--do);font-weight:700">に</span>います。</p>
+        <p class="en">I'm at work. Use に with いる / います.</p>
+      </article>
+      <article class="pattern-card p-action">
+        <span class="tag">Action place · で</span>
+        <p class="big">ジム<span style="color:var(--do);font-weight:700">で</span>きんトレをします。</p>
+        <p class="en">I lift at the gym. Use で where an action happens.</p>
+      </article>
+    </div>
+    <div class="note"><strong>Home is special:</strong> “go home” normally uses <span class="kana" style="display:inline">いえにかえる</span>, not <span class="kana" style="display:inline">いえにいく</span>. かえる means “return home.”</div>
+  </section>
+
+  <section id="forms">
+    <div class="sec-head"><span class="sec-kana">かたち</span><h2>The three forms at every place</h2></div>
+    <p class="lead">Top line in each cell is formal. Bottom line is casual. Read across one row, then say all six forms without looking.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Place</th><th>I'm going</th><th>I'm at</th><th>I went</th></tr></thead>
+        <tbody id="places-forms"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="questions">
+    <div class="sec-head"><span class="sec-kana">はなす</span><h2>Conversation forms you will actually use</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Meaning</th><th>Formal</th><th>Casual</th></tr></thead>
+        <tbody>
+          <tr><td class="row-name">Let's go to the gym.</td><td><span class="kana">ジムにいきましょう。</span><span class="rj">jimu ni ikimashou.</span></td><td><span class="kana">ジムにいこう。</span><span class="rj">jimu ni ikou.</span></td></tr>
+          <tr><td class="row-name">Do you want to go to the gym?</td><td><span class="kana">ジムにいきませんか。</span><span class="rj">jimu ni ikimasen ka.</span></td><td><span class="kana">ジムにいかない？</span><span class="rj">jimu ni ikanai?</span></td></tr>
+          <tr><td class="row-name">Where are you going?</td><td><span class="kana">どこにいきますか。</span><span class="rj">doko ni ikimasu ka.</span></td><td><span class="kana">どこいくの？</span><span class="rj">doko iku no?</span></td></tr>
+          <tr><td class="row-name">Where did you go?</td><td><span class="kana">どこにいきましたか。</span><span class="rj">doko ni ikimashita ka.</span></td><td><span class="kana">どこいったの？</span><span class="rj">doko itta no?</span></td></tr>
+          <tr><td class="row-name">Where are you?</td><td><span class="kana">どこにいますか。</span><span class="rj">doko ni imasu ka.</span></td><td><span class="kana">どこにいる？</span><span class="rj">doko ni iru?</span></td></tr>
+          <tr><td class="row-name">Where do you lift?</td><td><span class="kana">どこできんトレをしますか。</span><span class="rj">doko de kintore o shimasu ka.</span></td><td><span class="kana">どこできんトレする？</span><span class="rj">doko de kintore suru?</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>いく form ladder</h3>
+    <div class="verb-grid">
+      <div class="verb-card"><span class="kana">いきます</span><span class="rj">ikimasu</span><span class="meaning">go / will go · formal</span></div>
+      <div class="verb-card"><span class="kana">いく</span><span class="rj">iku</span><span class="meaning">go / will go · casual</span></div>
+      <div class="verb-card"><span class="kana">いきました</span><span class="rj">ikimashita</span><span class="meaning">went · formal</span></div>
+      <div class="verb-card"><span class="kana">いった</span><span class="rj">itta</span><span class="meaning">went · casual</span></div>
+      <div class="verb-card"><span class="kana">いきましょう</span><span class="rj">ikimashou</span><span class="meaning">let's go · formal</span></div>
+      <div class="verb-card"><span class="kana">いこう</span><span class="rj">ikou</span><span class="meaning">let's go · casual</span></div>
+      <div class="verb-card"><span class="kana">いきませんか</span><span class="rj">ikimasen ka</span><span class="meaning">want to go? · formal invitation</span></div>
+      <div class="verb-card"><span class="kana">いかない？</span><span class="rj">ikanai?</span><span class="meaning">wanna go? · casual invitation</span></div>
+      <div class="verb-card"><span class="kana">いきません</span><span class="rj">ikimasen</span><span class="meaning">do not go · formal</span></div>
+      <div class="verb-card"><span class="kana">いかない</span><span class="rj">ikanai</span><span class="meaning">do not go · casual</span></div>
+      <div class="verb-card"><span class="kana">いきませんでした</span><span class="rj">ikimasen deshita</span><span class="meaning">did not go · formal</span></div>
+      <div class="verb-card"><span class="kana">いかなかった</span><span class="rj">ikanakatta</span><span class="meaning">did not go · casual</span></div>
+    </div>
+    <div class="note win"><strong>Sound change:</strong> the casual past of いく is <span class="kana" style="display:inline">いった</span>, not “いいた.” Lock this one in as a unit.</div>
+  </section>
+
+  <section id="words">
+    <div class="sec-head"><span class="sec-kana">ことば</span><h2>Places and conversation words</h2></div>
+    <div class="vocab-grid" id="vocab-grid"></div>
+    <p style="margin-top:16px"><a class="cta" href="flashcards.html">Practice the Locations audio cards →</a></p>
+  </section>
+
+  <section id="conversations">
+    <div class="sec-head"><span class="sec-kana">かいわ</span><h2>Four conversations</h2></div>
+    <p class="lead">Read the Japanese aloud first. Tap each line only after you have guessed its meaning.</p>
+    <div class="conversation-list" id="conversation-list"></div>
+  </section>
+
+  <section id="quiz">
+    <div class="sec-head"><span class="sec-kana">れんしゅう</span><h2>Tutor quiz: broad mixed practice</h2></div>
+    <p class="lead">Nothing in the card label gives away the answer. Say the full answer aloud, including the particle and the correct register, before checking.</p>
+    <div class="quiz-toolbar" id="quiz-filters" aria-label="Locations quiz parts">
+      <button class="quiz-filter active" type="button" data-part="all">Mix all</button>
+      <button class="quiz-filter" type="button" data-part="particle">に or で</button>
+      <button class="quiz-filter" type="button" data-part="en-ja">English → Japanese</button>
+      <button class="quiz-filter" type="button" data-part="ja-en">Japanese → English</button>
+      <button class="quiz-filter" type="button" data-part="casual">Make it casual</button>
+      <button class="quiz-filter" type="button" data-part="formal">Make it formal</button>
+      <button class="quiz-filter" type="button" data-part="fix">Fix the error</button>
+      <button class="quiz-filter" type="button" data-part="reply">Reply naturally</button>
+      <span class="quiz-count" id="quiz-count"></span>
+    </div>
+    <div class="quiz-deck" id="quiz-deck"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var PLACES = [
+    { en:'gym', jp:'ジム', rj:'jimu' },
+    { en:'office / work', jp:'かいしゃ', rj:'kaisha' },
+    { en:'park', jp:'こうえん', rj:'kouen' },
+    { en:'restaurant', jp:'レストラン', rj:'resutoran' },
+    { en:'home', jp:'いえ', rj:'ie', home:true },
+    { en:'movie theater', jp:'えいがかん', rj:'eigakan' },
+    { en:'grocery store', jp:'スーパー', rj:'suupaa' }
+  ];
+  var WORDS = [
+    { jp:'いま', rj:'ima', en:'now' },
+    { jp:'あとで / そのあと', rj:'ato de / sono ato', en:'later / after that' },
+    { jp:'きのう', rj:'kinou', en:'yesterday' },
+    { jp:'きょう', rj:'kyou', en:'today' },
+    { jp:'しゅうまつ', rj:'shuumatsu', en:'weekend' },
+    { jp:'こんど', rj:'kondo', en:'next time' },
+    { jp:'いっしょに', rj:'isshoni', en:'together' },
+    { jp:'いいね / いいなあ', rj:'ii ne / ii naa', en:'nice / sounds good' },
+    { jp:'そっか / そうですか', rj:'sokka / sou desu ka', en:'I see / oh yeah?' },
+    { jp:'じゃあ', rj:'jaa', en:'well then' }
+  ];
+  var CONVERSATIONS = [
+    { title:'Conversation 1', context:'Casual · at the office', lines:[
+      {s:'A',jp:'ねえ、いまどこにいる？',rj:'Nee, ima doko ni iru?',en:'Hey, where are you right now?'},
+      {s:'B',jp:'かいしゃにいるよ。',rj:'Kaisha ni iru yo.',en:"I'm at work."},
+      {s:'A',jp:'そっか。あとでジムにいかない？',rj:'Sokka. Ato de jimu ni ikanai?',en:'Ah, okay. Wanna go to the gym later?'},
+      {s:'B',jp:'いいね！いこう。',rj:'Ii ne! Ikou.',en:"Sounds good! Let's go."}
+    ]},
+    { title:'Conversation 2', context:'Formal · coworkers', lines:[
+      {s:'A',jp:'きょう、どこにいきますか。',rj:'Kyou, doko ni ikimasu ka.',en:'Where are you going today?'},
+      {s:'B',jp:'スーパーにいきます。',rj:'Suupaa ni ikimasu.',en:"I'm going to the grocery store."},
+      {s:'A',jp:'いっしょにいきましょうか。',rj:'Isshoni ikimashou ka.',en:'Shall we go together?'},
+      {s:'B',jp:'はい、いきましょう。',rj:'Hai, ikimashou.',en:"Yes, let's go."}
+    ]},
+    { title:'Conversation 3', context:'Casual · past tense', lines:[
+      {s:'A',jp:'きのうどこいったの？',rj:'Kinou doko itta no?',en:"Where'd you go yesterday?"},
+      {s:'B',jp:'えいがかんにいった。',rj:'Eigakan ni itta.',en:'I went to the movie theater.'},
+      {s:'A',jp:'いいなあ。わたしはいえにかえった。',rj:'Ii naa. Watashi wa ie ni kaetta.',en:'Nice. I just went home.'},
+      {s:'B',jp:'じゃあ、こんどいっしょにいこう。',rj:'Jaa, kondo isshoni ikou.',en:"Well, let's go together next time."}
+    ]},
+    { title:'Conversation 4', context:'Mixed · weekend plans', lines:[
+      {s:'A',jp:'しゅうまつ、こうえんにいきませんか。',rj:'Shuumatsu, kouen ni ikimasen ka.',en:'Do you want to go to the park this weekend?'},
+      {s:'B',jp:'すみません、しゅうまつはジムできんトレをします。',rj:'Sumimasen, shuumatsu wa jimu de kintore o shimasu.',en:"Sorry, I'm lifting at the gym this weekend."},
+      {s:'A',jp:'そうですか。じゃあ、そのあとレストランにいきましょう。',rj:'Sou desu ka. Jaa, sono ato resutoran ni ikimashou.',en:"I see. Then let's go to a restaurant afterward."},
+      {s:'B',jp:'はい、いきましょう。',rj:'Hai, ikimashou.',en:"Yes, let's."}
+    ]}
+  ];
+  var QUIZ = [
+    {part:'particle',label:'Fill in the blank',q:'こうえん ___ いきます。',a:'こうえんにいきます。',note:'に marks the destination.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'レストラン ___ たべます。',a:'レストランでたべます。',note:'で marks where eating happens.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'かいしゃ ___ います。',a:'かいしゃにいます。',note:'に marks the location of existence.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'ジム ___ きんトレをします。',a:'ジムできんトレをします。',note:'で marks where the action happens.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'スーパー ___ いきました。',a:'スーパーにいきました。',note:'に marks the destination.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'いえ ___ にほんごをまなびます。',a:'いえでにほんごをまなびます。',note:'で marks where learning happens.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'えいがかん ___ ともだちにあいます。',a:'えいがかんでともだちにあいます。',note:'で marks the meeting place. The person still takes に.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'どこ ___ いますか。',a:'どこにいますか。',note:'に goes with います.',qLang:'ja',aLang:'ja'},
+
+    {part:'en-ja',label:'Translate · formal',q:"I'm going to the park.",a:'こうえんにいきます。',note:'kouen ni ikimasu.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:"I'm at the grocery store.",a:'スーパーにいます。',note:'suupaa ni imasu.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:'I went to the movie theater.',a:'えいがかんにいきました。',note:'eigakan ni ikimashita.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:"I'm going home.",a:'いえにかえります。',note:'ie ni kaerimasu. Use かえる for going home.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:'Where are you going?',a:'どこにいきますか。',note:'doko ni ikimasu ka.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:"Let's go to the restaurant.",a:'レストランにいきましょう。',note:'resutoran ni ikimashou.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · formal',q:'Do you want to go to the gym?',a:'ジムにいきませんか。',note:'jimu ni ikimasen ka.',qLang:'en',aLang:'ja'},
+    {part:'en-ja',label:'Translate · casual',q:"I didn't go anywhere.",a:'どこにもいかなかった。',note:'doko ni mo ikanakatta.',qLang:'en',aLang:'ja'},
+
+    {part:'ja-en',label:'Translate into English',q:'いまどこにいる？',a:'Where are you right now?',note:'ima doko ni iru?',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'あとでジムにいかない？',a:'Wanna go to the gym later?',note:'ato de jimu ni ikanai?',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'きのうえいがかんにいった。',a:'I went to the movie theater yesterday.',note:'kinou eigakan ni itta.',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'しゅうまつはかいしゃにいません。',a:"I won't be at work this weekend.",note:'shuumatsu wa kaisha ni imasen.',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'レストランでたべました。',a:'I ate at a restaurant.',note:'resutoran de tabemashita.',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'こんどいっしょにいこう。',a:"Let's go together next time.",note:'kondo isshoni ikou.',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'どこにもいきませんでした。',a:"I didn't go anywhere.",note:'doko ni mo ikimasen deshita.',qLang:'ja',aLang:'en'},
+    {part:'ja-en',label:'Translate into English',q:'こうえんにひとがいます。',a:'There are people in the park.',note:'kouen ni hito ga imasu.',qLang:'ja',aLang:'en'},
+
+    {part:'casual',label:'Make it casual',q:'ジムにいきます。',a:'ジムにいく。',note:'jimu ni iku.',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'かいしゃにいます。',a:'かいしゃにいる。',note:'kaisha ni iru.',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'こうえんにいきました。',a:'こうえんにいった。',note:'kouen ni itta.',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'いきましょう。',a:'いこう。',note:"ikou. Casual “let's go.”",qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'いきませんか。',a:'いかない？',note:'ikanai? Casual invitation.',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'いきませんでした。',a:'いかなかった。',note:'ikanakatta. Casual past negative.',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'どこにいますか。',a:'どこにいる？',note:'doko ni iru?',qLang:'ja',aLang:'ja'},
+    {part:'casual',label:'Make it casual',q:'いえにかえりました。',a:'いえにかえった。',note:'ie ni kaetta.',qLang:'ja',aLang:'ja'},
+
+    {part:'formal',label:'Make it formal',q:'スーパーにいく。',a:'スーパーにいきます。',note:'suupaa ni ikimasu.',qLang:'ja',aLang:'ja'},
+    {part:'formal',label:'Make it formal',q:'えいがかんにいった。',a:'えいがかんにいきました。',note:'eigakan ni ikimashita.',qLang:'ja',aLang:'ja'},
+    {part:'formal',label:'Make it formal',q:'いっしょにいこう。',a:'いっしょにいきましょう。',note:'isshoni ikimashou.',qLang:'ja',aLang:'ja'},
+    {part:'formal',label:'Make it formal',q:'ジムにいかない？',a:'ジムにいきませんか。',note:'jimu ni ikimasen ka.',qLang:'ja',aLang:'ja'},
+    {part:'formal',label:'Make it formal',q:'かいしゃにいない。',a:'かいしゃにいません。',note:'kaisha ni imasen.',qLang:'ja',aLang:'ja'},
+    {part:'formal',label:'Make it formal',q:'どこいったの？',a:'どこにいきましたか。',note:'doko ni ikimashita ka.',qLang:'ja',aLang:'ja'},
+
+    {part:'fix',label:'Fix the sentence',q:'いえにいきました。',a:'いえにかえりました。',note:'Use かえる for returning home.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'ジムでいきます。',a:'ジムにいきます。',note:'いく takes destination に.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'レストランにたべます。',a:'レストランでたべます。',note:'Eating is an action, so use で.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'こうえんにいますか。',a:'こうえんにいる？',note:'For a casual question, use いる and rising intonation.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'きのうスーパーにいく。',a:'きのうスーパーにいった。',note:'Yesterday needs the casual past いった.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'ジムにきんトレをします。',a:'ジムできんトレをします。',note:'The action happens at the gym, so use で.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'どこでいますか。',a:'どこにいますか。',note:'いる / います uses に.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'いっしょにいきますか。',a:'いっしょにいきませんか。',note:'Use the negative question for a softer invitation.',qLang:'ja',aLang:'ja'},
+
+    {part:'reply',label:'Reply naturally',q:'きのうどこいったの？',a:'ジムにいった。',note:'Sample answer. Replace ジム with your real destination.',qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'いまどこにいますか。',a:'いえにいます。',note:'Sample: “I am at home.”',qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'あとでジムにいかない？',a:'いいね！いこう。',note:"Sample: “Sounds good! Let's go.”",qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'しゅうまつ、こうえんにいきませんか。',a:'はい、いきましょう。',note:"Sample: “Yes, let's go.”",qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'どこできんトレをする？',a:'ジムでする。',note:'Sample: “I do it at the gym.”',qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'きょう、どこにいきますか。',a:'スーパーにいきます。',note:"Sample: “I'm going to the grocery store.”",qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Decline naturally',q:'いっしょにえいがかんにいかない？',a:'ごめん、きょうはいけない。',note:"Sample: “Sorry, I can't go today.”",qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Continue the plan',q:'じゃあ、そのあとどうする？',a:'レストランにいこう。',note:"Sample: “Let's go to a restaurant.”",qLang:'ja',aLang:'ja'}
+  ];
+
+  function shuffle(list){
+    var a=list.slice();
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
+  function formLine(register,jp,rj){
+    return '<span class="form-line"><span class="register">'+register+'</span><span class="kana">'+jp+'</span><span class="rj">'+rj+'</span></span>';
+  }
+
+  document.getElementById('places-forms').innerHTML=PLACES.map(function(place){
+    var goF=place.home?'いえにかえります。':place.jp+'にいきます。';
+    var goC=place.home?'いえにかえる。':place.jp+'にいく。';
+    var goFR=place.home?'ie ni kaerimasu.':place.rj+' ni ikimasu.';
+    var goCR=place.home?'ie ni kaeru.':place.rj+' ni iku.';
+    var wentF=place.home?'いえにかえりました。':place.jp+'にいきました。';
+    var wentC=place.home?'いえにかえった。':place.jp+'にいった。';
+    var wentFR=place.home?'ie ni kaerimashita.':place.rj+' ni ikimashita.';
+    var wentCR=place.home?'ie ni kaetta.':place.rj+' ni itta.';
+    return '<tr><td class="row-name">'+place.en+'<span class="kana">'+place.jp+'</span><span class="rj">'+place.rj+'</span></td>'+
+      '<td><div class="form-pair">'+formLine('formal',goF,goFR)+formLine('casual',goC,goCR)+'</div></td>'+
+      '<td><div class="form-pair">'+formLine('formal',place.jp+'にいます。',place.rj+' ni imasu.')+formLine('casual',place.jp+'にいる。',place.rj+' ni iru.')+'</div></td>'+
+      '<td><div class="form-pair">'+formLine('formal',wentF,wentFR)+formLine('casual',wentC,wentCR)+'</div></td></tr>';
+  }).join('');
+
+  document.getElementById('vocab-grid').innerHTML=PLACES.concat(WORDS).map(function(word){
+    return '<article class="vocab-card"><span class="en">'+word.en+'</span><span class="kana">'+word.jp+'</span><span class="rj">'+word.rj+'</span></article>';
+  }).join('');
+
+  document.getElementById('conversation-list').innerHTML=CONVERSATIONS.map(function(convo){
+    return '<article class="conversation"><h3>'+convo.title+'</h3><p class="context">'+convo.context+'</p>'+
+      convo.lines.map(function(line){
+        return '<button class="convo-line" type="button" aria-expanded="false"><span class="speaker">'+line.s+':</span><span><span class="convo-jp" lang="ja">'+line.jp+'</span><span class="tap-hint">say the meaning · tap to check</span><span class="line-answer">'+line.rj+'<br>'+line.en+'</span></span></button>';
+      }).join('')+'</article>';
+  }).join('');
+  document.querySelectorAll('.convo-line').forEach(function(line){
+    line.addEventListener('click',function(){line.classList.toggle('revealed');line.setAttribute('aria-expanded',line.classList.contains('revealed'));});
+  });
+
+  var activePart='all';
+  var quizDeck=document.getElementById('quiz-deck');
+  var quizCount=document.getElementById('quiz-count');
+  function renderQuiz(){
+    var list=activePart==='all'?QUIZ:QUIZ.filter(function(item){return item.part===activePart;});
+    list=shuffle(list);
+    quizCount.textContent=list.length+' prompts';
+    quizDeck.innerHTML=list.map(function(item,index){
+      return '<article class="quiz-card" tabindex="0" role="button" aria-expanded="false">'+
+        '<div class="quiz-label">'+item.label+' · '+(index+1)+'/'+list.length+'</div>'+
+        '<p class="quiz-prompt"'+(item.qLang==='ja'?' lang="ja"':'')+'>'+item.q+'</p>'+
+        '<div class="quiz-answer"'+(item.aLang==='ja'?' lang="ja"':'')+'>'+item.a+'</div>'+
+        '<div class="quiz-note">'+item.note+'</div><span class="tap-hint">answer first · tap to check</span></article>';
+    }).join('');
+    quizDeck.querySelectorAll('.quiz-card').forEach(function(card){
+      function toggle(){card.classList.toggle('revealed');card.setAttribute('aria-expanded',card.classList.contains('revealed'));}
+      card.addEventListener('click',toggle);
+      card.addEventListener('keydown',function(event){if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}});
+    });
+  }
+  document.querySelectorAll('.quiz-filter').forEach(function(button){
+    button.addEventListener('click',function(){
+      activePart=button.getAttribute('data-part');
+      document.querySelectorAll('.quiz-filter').forEach(function(item){item.classList.remove('active');});
+      button.classList.add('active');renderQuiz();
+    });
+  });
+  renderQuiz();
+})();
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>
