@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-04T23:55:49.604Z",
+  "generatedAt": "2026-07-11T21:59:29.170Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -92,6 +92,69 @@
       "group": "kosoado",
       "id": "doko",
       "audio": "audio/words/doko.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ジム",
+      "romaji": "jimu",
+      "en": "gym",
+      "group": "locations",
+      "id": "jimu",
+      "audio": "audio/words/jimu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "かいしゃ",
+      "romaji": "kaisha",
+      "en": "office / work",
+      "group": "locations",
+      "id": "kaisha",
+      "audio": "audio/words/kaisha.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "こうえん",
+      "romaji": "kouen",
+      "en": "park",
+      "group": "locations",
+      "id": "kouen",
+      "audio": "audio/words/kouen.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "レストラン",
+      "romaji": "resutoran",
+      "en": "restaurant",
+      "group": "locations",
+      "id": "resutoran",
+      "audio": "audio/words/resutoran.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いえ",
+      "romaji": "ie",
+      "en": "home",
+      "group": "locations",
+      "id": "ie",
+      "audio": "audio/words/ie.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "えいがかん",
+      "romaji": "eigakan",
+      "en": "movie theater",
+      "group": "locations",
+      "id": "eigakan",
+      "audio": "audio/words/eigakan.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "スーパー",
+      "romaji": "suupaa",
+      "en": "grocery store",
+      "group": "locations",
+      "id": "suupaa",
+      "audio": "audio/words/suupaa.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

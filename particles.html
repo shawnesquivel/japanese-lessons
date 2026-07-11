@@ -50,6 +50,17 @@
   .c-also{background:var(--do-bg);color:#9C3119}
   .c-connect{background:var(--a-bg);color:#2C4D66}
   .c-subject{background:#F7F3E8;color:var(--ink);border:1px solid var(--line-strong)}
+  .c-place{background:#E9EFEF;color:#315D5B}
+
+  .jump-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:22px 0 4px}
+  .jump-nav a{
+    min-width:42px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;
+    color:var(--ink);text-decoration:none;background:#fff;border:1px solid var(--line-strong);
+    border-radius:999px;font-weight:700;transition-property:transform,background;transition-duration:.12s;
+  }
+  .jump-nav a:hover{background:#F3EEE1}
+  .jump-nav a:active{transform:scale(.96)}
+  .jump-nav a:focus-visible{outline:3px solid var(--so);outline-offset:2px}
 
   .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
   .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
@@ -74,9 +85,10 @@
   .practice-deck{display:grid;gap:14px;margin:18px 0}
   .practice-card{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:22px;text-align:left;cursor:pointer;transition:background .12s,box-shadow .12s;
+    padding:22px;text-align:left;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
   }
   .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .practice-card:active{transform:scale(.96)}
   .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
   .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
   .practice-card .q-en{font-weight:700;margin:0}
@@ -96,31 +108,129 @@
 <div class="wrap">
 
   <header>
-    <div class="eyebrow">Japanese particles · day 6</div>
+    <div class="eyebrow">Japanese particles · core guide</div>
     <h1>じょし</h1>
-    <div class="subtitle">small words that mark how each word works in the sentence</div>
+    <div class="subtitle">small markers that show each word's job in a sentence</div>
+    <nav class="jump-nav" aria-label="Particle sections">
+      <a href="#wa" aria-label="Topic marker wa">は</a>
+      <a href="#ga" aria-label="Subject marker ga">が</a>
+      <a href="#wo" aria-label="Object marker o">を</a>
+      <a href="#mo" aria-label="Also marker mo">も</a>
+      <a href="#de" aria-label="Action place and means marker de">で</a>
+      <a href="#to" aria-label="Listing and companion marker to">と</a>
+    </nav>
   </header>
 
   <!-- ===================== QUICK MAP ===================== -->
   <section id="map">
     <div class="sec-head"><span class="sec-kanji">助</span><h2>Quick particle map</h2></div>
-    <p class="lead">Particles come after a word and show what job that word is doing. This page keeps the older particles visible, then adds new sections for <span class="chip c-also">も mo</span>, <span class="chip c-connect">と to</span>, and <span class="chip c-subject">が ga</span>.</p>
+    <p class="lead">Particles come <strong>after</strong> a word and label its job. Learn the job first, then swap in words from your real life.</p>
 
     <table class="tbl">
       <thead><tr><th>Particle</th><th>Use</th><th>Simple pattern</th></tr></thead>
       <tbody>
         <tr><td><span class="chip c-topic">は</span><span class="rj">wa</span></td><td class="en">topic: “as for...”</td><td><span class="kana">A は B です。</span><span class="gl">A wa B desu.</span></td></tr>
-        <tr><td><span class="chip c-object">を</span><span class="rj">o</span></td><td class="en">object of an action</td><td><span class="kana">A を ください。</span><span class="gl">A o kudasai.</span></td></tr>
+        <tr><td><span class="chip c-subject">が</span><span class="rj">ga</span></td><td class="en">subject / the thing in focus</td><td><span class="kana">A が 好きです。</span><span class="gl">A ga suki desu.</span></td></tr>
+        <tr><td><span class="chip c-object">を</span><span class="rj">o</span></td><td class="en">object receiving an action</td><td><span class="kana">A を します。</span><span class="gl">A o shimasu.</span></td></tr>
         <tr><td><span class="chip c-also">も</span><span class="rj">mo</span></td><td class="en">also / too</td><td><span class="kana">A も B です。</span><span class="gl">A mo B desu.</span></td></tr>
-        <tr><td><span class="chip c-connect">と</span><span class="rj">to</span></td><td class="en">and / with</td><td><span class="kana">A と B</span><span class="gl">A to B</span></td></tr>
-        <tr><td><span class="chip c-subject">が</span><span class="rj">ga</span></td><td class="en">subject; existence</td><td><span class="kana">A が います。</span><span class="gl">A ga imasu.</span></td></tr>
+        <tr><td><span class="chip c-place">で</span><span class="rj">de</span></td><td class="en">where an action happens / by means of</td><td><span class="kana">A で B を します。</span><span class="gl">A de B o shimasu.</span></td></tr>
+        <tr><td><span class="chip c-connect">と</span><span class="rj">to</span></td><td class="en">and (complete list) / with</td><td><span class="kana">A と B</span><span class="gl">A to B</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Reading note:</strong> the particle は is pronounced <span class="romaji">wa</span>, and を is usually pronounced <span class="romaji">o</span>.</div>
+  </section>
+
+  <!-- ===================== WA LESSON ===================== -->
+  <section id="wa">
+    <div class="sec-head"><span class="sec-kanji">は</span><h2>Topic marker: what are we talking about?</h2></div>
+    <p class="lead"><span class="chip c-topic">は</span> sets the topic. Think “as for...” It tells the listener what the rest of the sentence is about.</p>
+
+    <div class="pattern">
+      <p class="big">Topic + <span class="hl">は</span> + comment</p>
+      <span class="rj">topic + wa + information about it</span>
+    </div>
+
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>私<rt>わたし</rt></ruby><span class="hl">は</span>ソフトウェアエンジニアです。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">watashi wa sofutowea enjinia desu.</span> — “I'm a software engineer.”</p>
+      <div class="gloss">
+        <span class="g"><b><ruby>私<rt>わたし</rt></ruby></b><i>I</i></span>
+        <span class="g key"><b>は</b><i>topic</i></span>
+        <span class="g"><b>ソフトウェアエンジニア</b><i>software engineer</i></span>
+        <span class="g"><b>です</b><i>am / is</i></span>
+      </div>
+    </div>
+
+    <h3>Real-life examples</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">は</span>フィリピン<ruby>人<rt>じん</rt></ruby>です。</span><span class="rj">watashi wa firipin-jin desu.</span></td><td class="en">I'm Filipino.</td></tr>
+        <tr><td><span class="kana"><ruby>今<rt>いま</rt></ruby><span class="hl">は</span>サンフランシスコに<ruby>住<rt>す</rt></ruby>んでいます。</span><span class="rj">ima wa san furanshisuko ni sunde imasu.</span></td><td class="en">Right now, I live in San Francisco.</td></tr>
+        <tr><td><span class="kana"><ruby>婚約者<rt>こんやくしゃ</rt></ruby><span class="hl">は</span><ruby>日本人<rt>にほんじん</rt></ruby>とフィリピン<ruby>人<rt>じん</rt></ruby>のハーフです。</span><span class="rj">kon'yakusha wa nihon-jin to firipin-jin no haafu desu.</span></td><td class="en">My fiancée is half Japanese and half Filipino.</td></tr>
+      </tbody>
+    </table>
+    <div class="note win"><strong>Natural Japanese:</strong> once the topic is obvious, Japanese often drops <span class="romaji">わたしは</span>. You do not need to begin every sentence with “I.”</div>
+  </section>
+
+  <!-- ===================== GA LESSON ===================== -->
+  <section id="ga">
+    <div class="sec-head"><span class="sec-kanji">が</span><h2>Subject marker: which thing is it?</h2></div>
+    <p class="lead"><span class="chip c-subject">が</span> marks the subject—often the specific person or thing being identified, noticed, liked, understood, or said to exist.</p>
+
+    <div class="pattern">
+      <p class="big">Subject + <span class="hl">が</span> + description / action</p>
+      <span class="rj">subject + ga + what is true about it</span>
+    </div>
+
+    <h3>は vs. が</h3>
+    <table class="tbl">
+      <thead><tr><th>Question in your head</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td class="en">“Speaking of Shawn, what does he do?”</td><td><span class="kana">ショーン<span class="hl">は</span>エンジニアです。</span><span class="rj">shoon wa enjinia desu.</span><span class="gl">Shawn is an engineer.</span></td></tr>
+        <tr><td class="en">“Who is the engineer?”</td><td><span class="kana">ショーン<span class="hl">が</span>エンジニアです。</span><span class="rj">shoon ga enjinia desu.</span><span class="gl">Shawn is the engineer.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Common beginner patterns</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">バスケットボール<span class="hl">が</span><ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">basuketto booru ga suki desu.</span></td><td class="en">I like basketball.</td></tr>
+        <tr><td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">が</span>ソフトウェアエンジニアです。</span><span class="rj">watashi ga sofutowea enjinia desu.</span></td><td class="en">I'm the software engineer.</td></tr>
+        <tr><td><span class="kana"><ruby>近<rt>ちか</rt></ruby>くにジム<span class="hl">が</span>あります。</span><span class="rj">chikaku ni jimu ga arimasu.</span></td><td class="en">There is a gym nearby.</td></tr>
+        <tr><td><span class="kana"><ruby>公園<rt>こうえん</rt></ruby>に<ruby>人<rt>ひと</rt></ruby><span class="hl">が</span>います。</span><span class="rj">kouen ni hito ga imasu.</span></td><td class="en">There are people in the park.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Existence:</strong> use <span class="romaji">あります</span> for things and places; use <span class="romaji">います</span> for people and animals.</div>
+  </section>
+
+  <!-- ===================== WO LESSON ===================== -->
+  <section id="wo">
+    <div class="sec-head"><span class="sec-kanji">を</span><h2>Object marker: what gets the action?</h2></div>
+    <p class="lead"><span class="chip c-object">を</span> marks the direct object—the thing you eat, watch, learn, play, buy, or otherwise act on.</p>
+
+    <div class="pattern">
+      <p class="big">Object + <span class="hl">を</span> + verb</p>
+      <span class="rj">object + o + action</span>
+    </div>
+
+    <div class="card">
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>日本語<rt>にほんご</rt></ruby><span class="hl">を</span><ruby>勉強<rt>べんきょう</rt></ruby>しています。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0"><span class="romaji">nihongo o benkyou shite imasu.</span> — “I'm studying Japanese.”</p>
+    </div>
+
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">バスケットボール<span class="hl">を</span>します。</span><span class="rj">basuketto booru o shimasu.</span></td><td class="en">I play basketball.</td></tr>
+        <tr><td><span class="kana">ウェイトトレーニング<span class="hl">を</span>します。</span><span class="rj">ueito toreeningu o shimasu.</span></td><td class="en">I do weight training.</td></tr>
+        <tr><td><span class="kana"><ruby>映画<rt>えいが</rt></ruby><span class="hl">を</span><ruby>見<rt>み</rt></ruby>ます。</span><span class="rj">eiga o mimasu.</span></td><td class="en">I watch a movie.</td></tr>
+        <tr><td><span class="kana">コーヒー<span class="hl">を</span><ruby>飲<rt>の</rt></ruby>みます。</span><span class="rj">koohii o nomimasu.</span></td><td class="en">I drink coffee.</td></tr>
       </tbody>
     </table>
   </section>
 
   <!-- ===================== MO LESSON ===================== -->
   <section id="mo">
-    <div class="sec-head"><span class="sec-kanji">も</span><h2>New section: も means “also” or “too”</h2></div>
+    <div class="sec-head"><span class="sec-kanji">も</span><h2>Also / too: add another matching thing</h2></div>
     <p class="lead"><span class="chip c-also">も</span> is pronounced <span class="romaji">mo</span>. Put it right after the noun or phrase you want to mark as “also.”</p>
 
     <div class="pattern">
@@ -129,15 +239,15 @@
     </div>
 
     <div class="card">
-      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</p>
-      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">watashi mo amerika-jin desu.</span> — “I am American too.”</p>
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(21px,5vw,32px);margin:0 0 6px">バスケットボールが<ruby>好<rt>す</rt></ruby>きです。<br>ウェイトトレーニング<span class="hl">も</span><ruby>好<rt>す</rt></ruby>きです。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">basuketto booru ga suki desu. ueito toreeningu mo suki desu.</span><br>“I like basketball. I like weight training too.”</p>
       <div class="gloss">
-        <span class="g"><b><ruby>私<rt>わたし</rt></ruby></b><i>I</i></span>
+        <span class="g"><b>ウェイトトレーニング</b><i>weight training</i></span>
         <span class="g key"><b>も</b><i>also / too</i></span>
-        <span class="g"><b>アメリカ<ruby>人<rt>じん</rt></ruby></b><i>American</i></span>
-        <span class="g"><b>です</b><i>am / is</i></span>
+        <span class="g"><b><ruby>好<rt>す</rt></ruby>き</b><i>like / favorite</i></span>
+        <span class="g"><b>です</b><i>is</i></span>
       </div>
-      <div class="figcap">The hiragana above the kanji shows how to read it: 私 = わたし, 人 = じん.</div>
+      <div class="figcap">も replaces the particle that the matching item had in the first sentence.</div>
     </div>
 
     <h3>How it changes a sentence</h3>
@@ -145,26 +255,58 @@
       <thead><tr><th>Without も</th><th>With も</th></tr></thead>
       <tbody>
         <tr>
-          <td><span class="kana"><ruby>私<rt>わたし</rt></ruby>は アメリカ<ruby>人<rt>じん</rt></ruby>です。</span><span class="rj">watashi wa amerika-jin desu.</span><span class="gl">I am American.</span></td>
-          <td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</span><span class="rj">watashi mo amerika-jin desu.</span><span class="gl">I am American too.</span></td>
+          <td><span class="kana">ウェイトトレーニング<span class="hl">が</span><ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">ueito toreeningu ga suki desu.</span><span class="gl">I like weight training.</span></td>
+          <td><span class="kana">ウェイトトレーニング<span class="hl">も</span><ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">ueito toreeningu mo suki desu.</span><span class="gl">I like weight training too.</span></td>
         </tr>
       </tbody>
     </table>
 
-    <div class="note win"><strong>Shortcut:</strong> when you mean “I too...” or “me too,” <span class="romaji">わたしも</span> is usually the piece you need.</div>
+    <div class="note win"><strong>Shortcut:</strong> は, が, or を often changes to も when that noun is the “also” part: <span class="romaji">わたしは → わたしも</span>.</div>
 
     <h3>More examples</h3>
     <table class="tbl">
       <tbody>
-        <tr><td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span><ruby>行<rt>い</rt></ruby>きたいです！</span><span class="rj">watashi mo ikitai desu!</span></td><td class="en">I want to go too!</td></tr>
-        <tr><td><span class="kana">テレビ<span class="hl">も</span><ruby>買<rt>か</rt></ruby>いました。</span><span class="rj">terebi mo kaimashita.</span></td><td class="en">I bought a TV too. / I also bought a TV.</td></tr>
+        <tr><td><span class="kana"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span><ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>きたいです！</span><span class="rj">watashi mo nihon ni ikitai desu!</span></td><td class="en">I want to go to Japan too!</td></tr>
+        <tr><td><span class="kana">タイに<ruby>住<rt>す</rt></ruby>んでいました。インドネシアに<span class="hl">も</span><ruby>住<rt>す</rt></ruby>んでいました。</span><span class="rj">tai ni sunde imashita. indoneshia ni mo sunde imashita.</span></td><td class="en">I lived in Thailand. I also lived in Indonesia.</td></tr>
       </tbody>
     </table>
   </section>
 
+  <!-- ===================== DE LESSON ===================== -->
+  <section id="de">
+    <div class="sec-head"><span class="sec-kanji">で</span><h2>At / by means of: where or how an action happens</h2></div>
+    <p class="lead"><span class="chip c-place">で</span> marks the place where an <strong>action</strong> happens. It also marks the tool, language, or transportation used to do something.</p>
+
+    <div class="pattern">
+      <p class="big">Place / means + <span class="hl">で</span> + action</p>
+      <span class="rj">place or tool + de + action</span>
+    </div>
+
+    <h3>Where an action happens</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">サンフランシスコ<span class="hl">で</span><ruby>働<rt>はたら</rt></ruby>いています。</span><span class="rj">san furanshisuko de hataraite imasu.</span></td><td class="en">I work in San Francisco.</td></tr>
+        <tr><td><span class="kana">スタートアップ<span class="hl">で</span><ruby>働<rt>はたら</rt></ruby>いています。</span><span class="rj">sutaato appu de hataraite imasu.</span></td><td class="en">I work at a startup.</td></tr>
+        <tr><td><span class="kana">ジム<span class="hl">で</span>ウェイトトレーニングをします。</span><span class="rj">jimu de ueito toreeningu o shimasu.</span></td><td class="en">I do weight training at the gym.</td></tr>
+        <tr><td><span class="kana"><ruby>家<rt>いえ</rt></ruby><span class="hl">で</span><ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</span><span class="rj">ie de nihongo o benkyou shimasu.</span></td><td class="en">I study Japanese at home.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How / by what means</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">バス<span class="hl">で</span><ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。</span><span class="rj">basu de kaisha ni ikimasu.</span></td><td class="en">I go to work by bus.</td></tr>
+        <tr><td><span class="kana"><ruby>日本語<rt>にほんご</rt></ruby><span class="hl">で</span><ruby>話<rt>はな</rt></ruby>します。</span><span class="rj">nihongo de hanashimasu.</span></td><td class="en">I speak in Japanese.</td></tr>
+        <tr><td><span class="kana">パソコン<span class="hl">で</span><ruby>仕事<rt>しごと</rt></ruby>をします。</span><span class="rj">pasokon de shigoto o shimasu.</span></td><td class="en">I work using a computer.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note"><strong>で vs. に:</strong> use <span class="romaji">で</span> for an action at a place: ジムでトレーニングします. Use <span class="romaji">に</span> for being or living there: サンフランシスコに住んでいます.</div>
+  </section>
+
   <!-- ===================== TO LESSON ===================== -->
   <section id="to">
-    <div class="sec-head"><span class="sec-kanji">と</span><h2>New section: と connects nouns</h2></div>
+    <div class="sec-head"><span class="sec-kanji">と</span><h2>And / with: make a complete list</h2></div>
     <p class="lead"><span class="chip c-connect">と</span> is pronounced <span class="romaji">to</span>. It means “and” between nouns, and can also mean “with” when you do something together with someone.</p>
 
     <div class="pattern">
@@ -177,123 +319,125 @@
     <h3>“And” examples</h3>
     <table class="tbl">
       <tbody>
-        <tr><td><span class="kana">アイスクリーム<span class="hl">と</span>かき<ruby>氷<rt>ごおり</rt></ruby>が<ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">aisu kuriimu to kakigoori ga suki desu.</span></td><td class="en">I like ice cream and shaved ice.</td></tr>
-        <tr><td><span class="kana">コーヒー<span class="hl">と</span>チーズケーキ<span class="hl">と</span>お<ruby>茶<rt>ちゃ</rt></ruby>をください。</span><span class="rj">koohii to chiizu keeki to ocha o kudasai.</span></td><td class="en">Coffee, cheesecake, and tea, please.</td></tr>
-        <tr><td><span class="kana">ワンピース<span class="hl">と</span>Tシャツを<ruby>買<rt>か</rt></ruby>いました。</span><span class="rj">wan piisu to tii shatsu o kaimashita.</span></td><td class="en">I bought One Piece and a T-shirt.</td></tr>
+        <tr><td><span class="kana">タイ<span class="hl">と</span>インドネシアに<ruby>住<rt>す</rt></ruby>んでいました。</span><span class="rj">tai to indoneshia ni sunde imashita.</span></td><td class="en">I lived in Thailand and Indonesia.</td></tr>
+        <tr><td><span class="kana">バスケットボール<span class="hl">と</span>ウェイトトレーニングが<ruby>好<rt>す</rt></ruby>きです。</span><span class="rj">basuketto booru to ueito toreeningu ga suki desu.</span></td><td class="en">I like basketball and weight training.</td></tr>
+        <tr><td><span class="kana"><ruby>婚約者<rt>こんやくしゃ</rt></ruby>は<ruby>日本人<rt>にほんじん</rt></ruby><span class="hl">と</span>フィリピン<ruby>人<rt>じん</rt></ruby>のハーフです。</span><span class="rj">kon'yakusha wa nihon-jin to firipin-jin no haafu desu.</span></td><td class="en">My fiancée is half Japanese and half Filipino.</td></tr>
       </tbody>
     </table>
 
     <h3>Together / with someone</h3>
     <div class="card">
-      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">と</span><ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。</p>
-      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">tomodachi to eiga o mimashita.</span> — “I watched a movie with my friend.”</p>
+      <p style="text-align:center;font-family:'Zen Antique',serif;font-size:clamp(24px,6vw,38px);margin:0 0 6px"><ruby>九月<rt>くがつ</rt></ruby>に<ruby>婚約者<rt>こんやくしゃ</rt></ruby><span class="hl">と</span><ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。</p>
+      <p style="text-align:center;color:var(--ink-soft);margin:0 0 18px"><span class="romaji">kugatsu ni kon'yakusha to nihon ni ikimasu.</span> — “I'm going to Japan with my fiancée in September.”</p>
       <div class="gloss">
-        <span class="g"><b><ruby>友達<rt>ともだち</rt></ruby></b><i>friend</i></span>
+        <span class="g"><b><ruby>婚約者<rt>こんやくしゃ</rt></ruby></b><i>fiancée</i></span>
         <span class="g key"><b>と</b><i>with</i></span>
-        <span class="g"><b><ruby>映画<rt>えいが</rt></ruby></b><i>movie</i></span>
-        <span class="g"><b>を</b><i>object</i></span>
-        <span class="g"><b><ruby>見<rt>み</rt></ruby>ました</b><i>watched</i></span>
+        <span class="g"><b><ruby>日本<rt>にほん</rt></ruby></b><i>Japan</i></span>
+        <span class="g"><b>に</b><i>destination</i></span>
+        <span class="g"><b><ruby>行<rt>い</rt></ruby>きます</b><i>will go</i></span>
       </div>
     </div>
-  </section>
-
-  <!-- ===================== GA LESSON ===================== -->
-  <section id="ga">
-    <div class="sec-head"><span class="sec-kanji">が</span><h2>New section: が marks the subject</h2></div>
-    <p class="lead"><span class="chip c-subject">が</span> is pronounced <span class="romaji">ga</span>. In this lesson, use it to point to what exists: the thing or person that “is there.”</p>
-
-    <div class="pattern">
-      <p class="big">Noun + <span class="hl">が</span> + あります / います</p>
-      <span class="rj">noun + ga + arimasu / imasu — “there is / there are...”</span>
-    </div>
-
-    <table class="tbl">
-      <thead><tr><th>Ending</th><th>Use it for</th></tr></thead>
-      <tbody>
-        <tr><td><span class="kana">あります</span><span class="rj">arimasu</span></td><td class="en">things, objects, places</td></tr>
-        <tr><td><span class="kana">います</span><span class="rj">imasu</span></td><td class="en">people and animals</td></tr>
-      </tbody>
-    </table>
-
-    <h3>People and animals: が います</h3>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="kana"><ruby>妹<rt>いもうと</rt></ruby><span class="hl">が</span>います。</span><span class="rj">imouto ga imasu.</span></td><td class="en">I have a younger sister. / There is a younger sister.</td></tr>
-        <tr><td><span class="kana"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">が</span>います。</span><span class="rj">tomodachi ga imasu.</span></td><td class="en">I have a friend. / There is a friend.</td></tr>
-        <tr><td><span class="kana"><ruby>犬<rt>いぬ</rt></ruby><span class="hl">が</span>います。</span><span class="rj">inu ga imasu.</span></td><td class="en">I have a dog. / There is a dog.</td></tr>
-      </tbody>
-    </table>
-
-    <div class="note win"><strong>Existence shortcut:</strong> if the noun is alive, use <span class="romaji">が います</span>. If it is not alive, use <span class="romaji">が あります</span>.</div>
   </section>
 
   <!-- ===================== PRACTICE ===================== -->
   <section id="practice">
-    <div class="sec-head"><span class="sec-kanji">練</span><h2>Practice: も・と・が</h2></div>
+    <div class="sec-head"><span class="sec-kanji">練</span><h2>Practice all six particles</h2></div>
     <p class="lead">Say the Japanese out loud, then tap to reveal. Watch where each particle lands: after the word it marks.</p>
 
     <div class="practice-deck" id="practice-deck">
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Also / too</div>
-        <p class="q-en">I am American too.</p>
-        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>アメリカ<ruby>人<rt>じん</rt></ruby>です。</p>
-        <p class="a-en">watashi mo amerika-jin desu.</p>
+        <div class="deck-label">Topic · は</div>
+        <p class="q-en">I'm a software engineer.</p>
+        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">は</span>ソフトウェアエンジニアです。</p>
+        <p class="a-en">watashi wa sofutowea enjinia desu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Me too</div>
-        <p class="q-en">Me too. / I also...</p>
-        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span>。</p>
-        <p class="a-en">watashi mo.</p>
+        <div class="deck-label">Topic · は</div>
+        <p class="q-en">Right now, I live in San Francisco.</p>
+        <p class="a-jp"><ruby>今<rt>いま</rt></ruby><span class="hl">は</span>サンフランシスコに<ruby>住<rt>す</rt></ruby>んでいます。</p>
+        <p class="a-en">ima wa san furanshisuko ni sunde imasu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Want to go too</div>
-        <p class="q-en">I want to go too!</p>
-        <p class="a-jp"><ruby>私<rt>わたし</rt></ruby><span class="hl">も</span><ruby>行<rt>い</rt></ruby>きたいです！</p>
-        <p class="a-en">watashi mo ikitai desu!</p>
+        <div class="deck-label">Subject · が</div>
+        <p class="q-en">I like basketball.</p>
+        <p class="a-jp">バスケットボール<span class="hl">が</span><ruby>好<rt>す</rt></ruby>きです。</p>
+        <p class="a-en">basuketto booru ga suki desu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Also bought</div>
-        <p class="q-en">I bought a TV too.</p>
-        <p class="a-jp">テレビ<span class="hl">も</span><ruby>買<rt>か</rt></ruby>いました。</p>
-        <p class="a-en">terebi mo kaimashita.</p>
+        <div class="deck-label">Subject · が</div>
+        <p class="q-en">There is a gym nearby.</p>
+        <p class="a-jp"><ruby>近<rt>ちか</rt></ruby>くにジム<span class="hl">が</span>あります。</p>
+        <p class="a-en">chikaku ni jimu ga arimasu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">And</div>
-        <p class="q-en">Coffee, cheesecake, and tea, please.</p>
-        <p class="a-jp">コーヒー<span class="hl">と</span>チーズケーキ<span class="hl">と</span>お<ruby>茶<rt>ちゃ</rt></ruby>をください。</p>
-        <p class="a-en">koohii to chiizu keeki to ocha o kudasai.</p>
+        <div class="deck-label">Object · を</div>
+        <p class="q-en">I'm studying Japanese.</p>
+        <p class="a-jp"><ruby>日本語<rt>にほんご</rt></ruby><span class="hl">を</span><ruby>勉強<rt>べんきょう</rt></ruby>しています。</p>
+        <p class="a-en">nihongo o benkyou shite imasu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">With someone</div>
-        <p class="q-en">I watched a movie with my friend.</p>
-        <p class="a-jp"><ruby>友達<rt>ともだち</rt></ruby><span class="hl">と</span><ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。</p>
-        <p class="a-en">tomodachi to eiga o mimashita.</p>
+        <div class="deck-label">Object · を</div>
+        <p class="q-en">I play basketball.</p>
+        <p class="a-jp">バスケットボール<span class="hl">を</span>します。</p>
+        <p class="a-en">basuketto booru o shimasu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Existence</div>
-        <p class="q-en">I have a younger sister.</p>
-        <p class="a-jp"><ruby>妹<rt>いもうと</rt></ruby><span class="hl">が</span>います。</p>
-        <p class="a-en">imouto ga imasu.</p>
+        <div class="deck-label">Also / too · も</div>
+        <p class="q-en">I like weight training too.</p>
+        <p class="a-jp">ウェイトトレーニング<span class="hl">も</span><ruby>好<rt>す</rt></ruby>きです。</p>
+        <p class="a-en">ueito toreeningu mo suki desu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
 
       <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Existence</div>
-        <p class="q-en">I have a dog.</p>
-        <p class="a-jp"><ruby>犬<rt>いぬ</rt></ruby><span class="hl">が</span>います。</p>
-        <p class="a-en">inu ga imasu.</p>
+        <div class="deck-label">Also / too · も</div>
+        <p class="q-en">I also lived in Indonesia.</p>
+        <p class="a-jp">インドネシアに<span class="hl">も</span><ruby>住<rt>す</rt></ruby>んでいました。</p>
+        <p class="a-en">indoneshia ni mo sunde imashita.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Action place · で</div>
+        <p class="q-en">I work at a startup.</p>
+        <p class="a-jp">スタートアップ<span class="hl">で</span><ruby>働<rt>はたら</rt></ruby>いています。</p>
+        <p class="a-en">sutaato appu de hataraite imasu.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Action place · で</div>
+        <p class="q-en">I do weight training at the gym.</p>
+        <p class="a-jp">ジム<span class="hl">で</span>ウェイトトレーニングをします。</p>
+        <p class="a-en">jimu de ueito toreeningu o shimasu.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">Complete list · と</div>
+        <p class="q-en">I lived in Thailand and Indonesia.</p>
+        <p class="a-jp">タイ<span class="hl">と</span>インドネシアに<ruby>住<rt>す</rt></ruby>んでいました。</p>
+        <p class="a-en">tai to indoneshia ni sunde imashita.</p>
+        <p class="tap-hint">tap to reveal</p>
+      </div>
+
+      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
+        <div class="deck-label">With · と</div>
+        <p class="q-en">I'm going to Japan with my fiancée in September.</p>
+        <p class="a-jp"><ruby>九月<rt>くがつ</rt></ruby>に<ruby>婚約者<rt>こんやくしゃ</rt></ruby><span class="hl">と</span><ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。</p>
+        <p class="a-en">kugatsu ni kon'yakusha to nihon ni ikimasu.</p>
         <p class="tap-hint">tap to reveal</p>
       </div>
     </div>

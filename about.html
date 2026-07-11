@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#FFFFFF;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
+    --ko-bg:#EDF3E4;--so-bg:#FBF0DC;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-size:17px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:32px 22px 80px}
+  header{text-align:center;padding:28px 0 24px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(44px,10vw,76px);line-height:1;margin:8px 0}
+  .subtitle{color:var(--ink-soft);text-wrap:pretty}
+  .intro{
+    margin:36px 0 28px;padding:24px;background:var(--ko-bg);border-radius:22px;
+    box-shadow:0 1px 2px rgba(42,46,36,.06),0 8px 28px rgba(42,46,36,.05);
+  }
+  .intro-jp{font-family:"Zen Antique",serif;font-size:clamp(21px,4vw,29px);line-height:1.65;margin:0 0 12px}
+  .intro-en{color:var(--ink-soft);margin:0}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin:42px 0 18px}
+  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px}
+  h2{font-size:22px;line-height:1.3;margin:0;text-wrap:balance}
+  .lead{color:var(--ink-soft);text-wrap:pretty}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:20px}
+  .fact{
+    background:var(--card);border-radius:var(--radius);padding:20px;
+    box-shadow:inset 0 0 0 1px rgba(42,46,36,.09),0 2px 10px rgba(42,46,36,.04);
+  }
+  .fact-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ko);font-weight:700;margin-bottom:9px}
+  .fact-jp{font-family:"Zen Antique",serif;font-size:23px;line-height:1.5;margin:0}
+  .fact-rj{font-size:14px;font-weight:500;color:var(--ink-soft);margin:5px 0 12px}
+  .fact-en{margin:0;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .note{background:var(--so-bg);border-left:3px solid var(--so);padding:13px 16px;border-radius:0 9px 9px 0;color:var(--ink-soft);font-size:15px}
+  @media(max-width:560px){.facts{grid-template-columns:1fr}.intro{border-radius:18px}}
+</style>
+<script src="about-me.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Personal example bank</div>
+    <h1>じこしょうかい</h1>
+    <div class="subtitle">About me · facts to reuse in Japanese lessons and practice</div>
+  </header>
+
+  <section class="intro" aria-labelledby="intro-title">
+    <h2 id="intro-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Short self-introduction</h2>
+    <p class="intro-jp">フィリピン人です。バンクーバーで生まれ育ちました。今はサンフランシスコに住んでいて、スタートアップで働いています。婚約者の家族と話すために、日本語を勉強しています。</p>
+    <p class="intro-en">I'm Filipino. I was born and raised in Vancouver. I now live in San Francisco and work at a startup. I'm learning Japanese so I can speak with my fiancée's family.</p>
+  </section>
+
+  <section aria-labelledby="facts-title">
+    <div class="sec-head"><span class="sec-kanji">私</span><h2 id="facts-title">Sentence bank</h2></div>
+    <p class="lead">These are grounded personal facts. Other lessons can mix them with ordinary everyday examples.</p>
+    <div class="facts" id="facts"></div>
+  </section>
+
+  <section aria-labelledby="repo-title">
+    <div class="sec-head"><span class="sec-kanji">源</span><h2 id="repo-title">Reusable source</h2></div>
+    <p class="note">The structured source for this page lives in <strong>about-me.js</strong>. Update it when a personal detail changes, then use those facts for future examples.</p>
+  </section>
+</main>
+
+<script>
+  (function(){
+    var root = document.getElementById('facts');
+    var profile = window.JL_ABOUT_ME;
+    function esc(value){
+      return String(value == null ? '' : value)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    if(!profile || !profile.facts){
+      root.innerHTML = '<p class="lead">Profile data is unavailable.</p>';
+      return;
+    }
+    root.innerHTML = profile.facts.map(function(fact){
+      return '<article class="fact">' +
+        '<div class="fact-label">' + esc(fact.label) + '</div>' +
+        '<p class="fact-jp" lang="ja">' + esc(fact.kana) + '</p>' +
+        '<p class="fact-rj">' + esc(fact.romaji) + '</p>' +
+        '<p class="fact-en">' + esc(fact.en) + '</p>' +
+      '</article>';
+    }).join('');
+  })();
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

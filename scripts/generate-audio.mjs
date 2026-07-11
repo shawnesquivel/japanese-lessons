@@ -148,6 +148,14 @@ const WORDS = [
   { kana: "そこ", romaji: "soko", en: "there (by you)", group: "kosoado" },
   { kana: "あそこ", romaji: "asoko", en: "over there", group: "kosoado" },
   { kana: "どこ", romaji: "doko", en: "where", group: "kosoado" },
+  // locations
+  { kana: "ジム", romaji: "jimu", en: "gym", group: "locations" },
+  { kana: "かいしゃ", romaji: "kaisha", en: "office / work", group: "locations" },
+  { kana: "こうえん", romaji: "kouen", en: "park", group: "locations" },
+  { kana: "レストラン", romaji: "resutoran", en: "restaurant", group: "locations" },
+  { kana: "いえ", romaji: "ie", en: "home", group: "locations" },
+  { kana: "えいがかん", romaji: "eigakan", en: "movie theater", group: "locations" },
+  { kana: "スーパー", romaji: "suupaa", en: "grocery store", group: "locations" },
   // food
   { kana: "たべもの", romaji: "tabemono", en: "food", group: "food" },
   { kana: "パン", romaji: "pan", en: "bread", group: "food" },

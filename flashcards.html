@@ -37,16 +37,19 @@
   .btn{
     font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
     background:var(--ink);color:var(--paper);border:none;border-radius:999px;
-    padding:9px 18px;transition:opacity .15s;
+    min-height:40px;padding:9px 18px;transition-property:opacity,transform;transition-duration:.15s;
   }
   .btn:hover{opacity:.85}
+  .btn:active{transform:scale(.96)}
   .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .gchip{
     font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink-soft);
-    border:1px solid var(--line-strong);border-radius:999px;padding:5px 13px;transition:.12s;
+    border:1px solid var(--line-strong);border-radius:999px;min-height:40px;padding:5px 13px;
+    text-transform:capitalize;transition-property:background,color,border-color,transform;transition-duration:.12s;
   }
   .gchip:hover{background:#F7F3E8}
+  .gchip:active{transform:scale(.96)}
   .gchip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
   .count{color:var(--ink-soft);font-size:14px;margin-left:auto}
 
@@ -68,7 +71,7 @@
     display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s;
   }
   .fc-play:hover{background:#E2EED4}
-  .fc-play:active{transform:scale(.94)}
+  .fc-play:active{transform:scale(.96)}
   .fc-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
   .fc-play:disabled{opacity:.4;cursor:not-allowed}
   .fc-hint{font-size:12px;color:#B7AE97}
