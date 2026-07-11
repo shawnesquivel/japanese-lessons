@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T22:26:39.511Z",
+  "generatedAt": "2026-07-11T23:42:44.271Z",
   "voice": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -50,12 +50,12 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "どこでウェイトトレーニングをしますか。",
-      "romaji": "doko de ueito toreeningu o shimasu ka.",
-      "en": "Where do you do weight training?",
-      "answer": "I do weight training at the gym.",
-      "id": "doko-de-ueito-toreeningu-o-shimasu-ka",
-      "audio": "audio/particles/doko-de-ueito-toreeningu-o-shimasu-ka.mp3",
+      "kana": "どこできんトレをしますか。",
+      "romaji": "doko de kintore o shimasu ka.",
+      "en": "Where do you lift?",
+      "answer": "I lift at the gym.",
+      "id": "doko-de-kintore-o-shimasu-ka",
+      "audio": "audio/particles/doko-de-kintore-o-shimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
@@ -259,11 +259,11 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "ウェイトトレーニング",
-      "romaji": "ueito-toreeningu",
-      "en": "weight training",
-      "id": "ueito-toreeningu",
-      "audio": "audio/particles/words/ueito-toreeningu.mp3",
+      "kana": "きんトレ",
+      "romaji": "kintore",
+      "en": "lifting / weight training",
+      "id": "kintore",
+      "audio": "audio/particles/words/kintore.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

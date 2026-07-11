@@ -10,6 +10,7 @@ Read this file before changing the codebase.
 - Teach polite です／ます forms first, then show casual and past forms explicitly.
 - For verb and conjugation answers, reveal formal, casual, and common spoken contractions when they differ. Label each form and include romaji plus one English meaning (for example: すんでいました / すんでいた / すんでた).
 - Use conversational, everyday examples. Prefer facts from `about-me.js` when personalization helps.
+- Prefer what people commonly say in conversation over textbook-long wording. Use きんトレ (`kintore`) for lifting / weight training, not ウェイトトレーニング.
 - Include varied drills: both translation directions, fill-the-blank, sentence building, corrections, free replies, and audio-only comprehension.
 - Keep interactive targets at least 40×40px, use `transform: scale(.96)` for press feedback, and avoid `transition: all`.
 - Shuffle practice items. Use stable item IDs and `learning.js` for local progress instead of inventing page-specific storage.

@@ -1,5 +1,5 @@
 window.JL_FLASHCARDS = {
-  "generatedAt": "2026-07-11T23:32:12.440Z",
+  "generatedAt": "2026-07-11T23:42:44.269Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -302,12 +302,12 @@ window.JL_FLASHCARDS = {
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "ウェイトトレーニング",
-      "romaji": "ueito-toreeningu",
-      "en": "weight training",
+      "kana": "きんトレ",
+      "romaji": "kintore",
+      "en": "lifting / weight training",
       "group": "particles",
-      "audio": "audio/particles/words/ueito-toreeningu.mp3",
-      "id": "ueito-toreeningu",
+      "audio": "audio/particles/words/kintore.mp3",
+      "id": "kintore",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

@@ -8,7 +8,7 @@ window.JL_STUDY_SENTENCES = [
   {id:"build:particles:engineer",subject:"particles",en:"I'm a software engineer.",tokens:["わたし","は","ソフトウェアエンジニア","です。"]},
   {id:"build:particles:like-basketball",subject:"particles",en:"I like basketball.",tokens:["バスケットボール","が","すき","です。"]},
   {id:"build:particles:study",subject:"particles",en:"I'm studying Japanese.",tokens:["にほんご","を","べんきょうして","います。"]},
-  {id:"build:particles:also-training",subject:"particles",en:"I like weight training too.",tokens:["ウェイトトレーニング","も","すき","です。"]},
+  {id:"build:particles:also-training",subject:"particles",en:"I like weight training too.",tokens:["きんトレ","も","すき","です。"]},
   {id:"build:particles:startup",subject:"particles",en:"I work at a startup.",tokens:["スタートアップ","で","はたらいて","います。"]},
   {id:"build:particles:thailand-indonesia",subject:"particles",en:"I lived in Thailand and Indonesia.",tokens:["タイ","と","インドネシア","に","すんでいました。"]},
   {id:"build:particles:japan-fiancee",subject:"particles",en:"I'm going to Japan with my fiancée.",tokens:["こんやくしゃ","と","にほん","に","いきます。"]},
