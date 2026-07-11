@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--ko-bg:#EDF3E4;
+    --so:#E0962C;--so-bg:#FBF0DC;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 22px 80px}
+  header{text-align:center;padding:28px 0 22px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font:400 clamp(44px,10vw,76px)/1 "Zen Antique",serif;margin:8px 0}
+  .subtitle{color:var(--ink-soft)}
+  section{margin-top:42px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:18px}
+  .sec-kana{font:400 25px/1 "Zen Antique",serif}
+  h2{font-size:21px;margin:0}
+  .intro-card{background:var(--ko-bg);border-radius:20px;padding:24px;box-shadow:0 1px 2px rgba(42,46,36,.05),0 8px 28px rgba(42,46,36,.05)}
+  .full-jp{font:400 clamp(22px,5vw,31px)/1.75 "Zen Antique",serif;margin:0}
+  .lines{display:grid;gap:12px}
+  .line{display:grid;grid-template-columns:1.25fr 1fr 1.25fr;background:var(--card);border-radius:var(--radius);box-shadow:inset 0 0 0 1px rgba(42,46,36,.1);overflow:hidden}
+  .cell{padding:17px 18px}.cell+.cell{border-left:1px solid var(--line)}
+  .label{display:block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+  .jp{font:400 22px/1.5 "Zen Antique",serif}.romaji{font-weight:500;color:var(--ko)}.english{color:var(--ink-soft)}
+  .note{background:var(--so-bg);border-left:3px solid var(--so);padding:12px 16px;border-radius:0 9px 9px 0;color:var(--ink-soft);font-size:14px}
+  @media(max-width:700px){.line{grid-template-columns:1fr}.cell+.cell{border-left:0;border-top:1px solid var(--line)}.wrap{padding-inline:16px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Personal introduction</div>
+    <h1>じこしょうかい</h1>
+    <div class="subtitle">Hiragana · romaji · English</div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-kana">ぜんぶ</span><h2>Full introduction</h2></div>
+    <article class="intro-card">
+      <p class="full-jp" lang="ja">はじめまして。<br><br>わたしはショーンです。<br>にじゅうきゅうさいです。<br>カナダしゅっしんですが、フィリピンじんです。<br>いまはサンフランシスコにすんでいます。<br>しゅみはバスケットボールをすることと、にほんごをべんきょうすることです。<br><br>よろしくおねがいします。</p>
+    </article>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-kana">ひとつずつ</span><h2>Line by line</h2></div>
+    <div class="lines">
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">はじめまして。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Hajimemashite.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">Nice to meet you.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">わたしはショーンです。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Watashi wa Shoon desu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">I'm Shawn.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">にじゅうきゅうさいです。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Nijuukyuu sai desu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">I'm 29 years old.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">カナダしゅっしんですが、フィリピンじんです。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Kanada shusshin desu ga, Firipin-jin desu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">I'm from Canada, but I'm Filipino.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">いまはサンフランシスコにすんでいます。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Ima wa San Furanshisuko ni sunde imasu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">I live in San Francisco now.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">しゅみはバスケットボールをすることと、にほんごをべんきょうすることです。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Shumi wa basuketto booru o suru koto to, nihongo o benkyou suru koto desu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">My hobbies are playing basketball and studying Japanese.</span></div>
+      </article>
+      <article class="line">
+        <div class="cell"><span class="label">Hiragana</span><span class="jp" lang="ja">よろしくおねがいします。</span></div>
+        <div class="cell"><span class="label">Romaji</span><span class="romaji">Yoroshiku onegaishimasu.</span></div>
+        <div class="cell"><span class="label">English</span><span class="english">It's nice to meet you.</span></div>
+      </article>
+    </div>
+    <p class="note" style="margin-top:18px">The Japanese stays kana-only. Names, countries, and loanwords use their normal katakana.</p>
+  </section>
+</main>
+<script src="nav.js" defer></script>
+</body>
+</html>

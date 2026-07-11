@@ -12,6 +12,7 @@
     { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
     { href: "flashcards.html", jp: "フラッシュ", en: "adaptive vocab review" },
     { href: "kanji.html", jp: "かんじ", en: "Kanji Fable · separate track" },
+    { href: "introduction.html", jp: "はじめまして", en: "personal introduction" },
     { href: "about.html", jp: "じこしょうかい", en: "about me · example bank" },
     { href: "games.html", jp: "ゲーム", en: "games" },
   ];
