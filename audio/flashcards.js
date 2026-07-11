@@ -1,5 +1,5 @@
 window.JL_FLASHCARDS = {
-  "generatedAt": "2026-07-11T23:14:19.590Z",
+  "generatedAt": "2026-07-11T23:20:43.458Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -599,6 +599,15 @@ window.JL_FLASHCARDS = {
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "はたらいている",
+      "romaji": "hataraite-iru",
+      "en": "working · casual",
+      "group": "verbs",
+      "id": "hataraite-iru",
+      "audio": "audio/words/hataraite-iru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "はたらいています",
       "romaji": "hataraite-imasu",
       "en": "working · formal",
@@ -623,6 +632,15 @@ window.JL_FLASHCARDS = {
       "group": "verbs",
       "id": "nomimasu",
       "audio": "audio/words/nomimasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "のみました",
+      "romaji": "nomimashita",
+      "en": "drank · formal",
+      "group": "verbs",
+      "id": "nomimashita",
+      "audio": "audio/words/nomimashita.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
@@ -671,6 +689,15 @@ window.JL_FLASHCARDS = {
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "みた",
+      "romaji": "mita",
+      "en": "watched · casual",
+      "group": "verbs",
+      "id": "mita",
+      "audio": "audio/words/mita.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "みました",
       "romaji": "mimashita",
       "en": "watched · formal",
@@ -689,12 +716,30 @@ window.JL_FLASHCARDS = {
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "すんでいる",
+      "romaji": "sunde-iru",
+      "en": "living · casual",
+      "group": "verbs",
+      "id": "sunde-iru",
+      "audio": "audio/words/sunde-iru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "すんでいます",
       "romaji": "sunde-imasu",
       "en": "living · formal",
       "group": "verbs",
       "id": "sunde-imasu",
       "audio": "audio/words/sunde-imasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すんでいた",
+      "romaji": "sunde-ita",
+      "en": "lived · casual",
+      "group": "verbs",
+      "id": "sunde-ita",
+      "audio": "audio/words/sunde-ita.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
