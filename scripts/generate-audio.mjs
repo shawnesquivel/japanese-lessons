@@ -22,9 +22,12 @@ const MANIFEST_PATH = join(AUDIO_DIR, "manifest.json");
 const WORDS_DIR = join(AUDIO_DIR, "words");
 const AGE_DIR = join(AUDIO_DIR, "age");
 const TIME_DIR = join(AUDIO_DIR, "time");
+const PARTICLES_DIR = join(AUDIO_DIR, "particles");
+const PARTICLE_WORDS_DIR = join(PARTICLES_DIR, "words");
 const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
 const AGE_MANIFEST_PATH = join(AUDIO_DIR, "age-days-months.json");
 const TIME_MANIFEST_PATH = join(AUDIO_DIR, "time-parts.json");
+const PARTICLES_MANIFEST_PATH = join(AUDIO_DIR, "particles.json");
 
 // ---- minimal .env loader (no dependency) ----
 (function loadEnv() {
@@ -189,6 +192,51 @@ const WORDS = [
   { kana: "はちみつ", romaji: "hachimitsu", en: "honey", group: "drink" },
 ];
 
+// Audio-only comprehension for the particles lesson.
+// Learners hear the question first, answer its meaning in English, then reveal.
+const PARTICLE_QUESTIONS = [
+  { kana: "なにがすきですか。", romaji: "nani ga suki desu ka.", en: "What do you like?", answer: "I like basketball and weight training." },
+  { kana: "どこにすんでいますか。", romaji: "doko ni sunde imasu ka.", en: "Where do you live?", answer: "I live in San Francisco." },
+  { kana: "どこではたらいていますか。", romaji: "doko de hataraite imasu ka.", en: "Where do you work?", answer: "I work at a startup." },
+  { kana: "しごとはなんですか。", romaji: "shigoto wa nan desu ka.", en: "What do you do for work?", answer: "I'm a software engineer." },
+  { kana: "なにをべんきょうしていますか。", romaji: "nani o benkyou shite imasu ka.", en: "What are you studying?", answer: "I'm studying Japanese." },
+  { kana: "どこでウェイトトレーニングをしますか。", romaji: "doko de ueito toreeningu o shimasu ka.", en: "Where do you do weight training?", answer: "I do weight training at the gym." },
+  { kana: "だれとにほんにいきますか。", romaji: "dare to nihon ni ikimasu ka.", en: "Who are you going to Japan with?", answer: "I'm going with my fiancée." },
+  { kana: "いつにほんにいきますか。", romaji: "itsu nihon ni ikimasu ka.", en: "When are you going to Japan?", answer: "I'm going in September." },
+  { kana: "どこにすんでいましたか。", romaji: "doko ni sunde imashita ka.", en: "Where did you live?", answer: "I lived in Thailand and Indonesia." },
+  { kana: "なにをのみますか。", romaji: "nani o nomimasu ka.", en: "What do you drink?", answer: "I drink coffee and tea." },
+  { kana: "ちかくになにがありますか。", romaji: "chikaku ni nani ga arimasu ka.", en: "What is nearby?", answer: "There is a gym nearby." },
+  { kana: "にほんごでだれとはなしたいですか。", romaji: "nihongo de dare to hanashitai desu ka.", en: "Who do you want to speak with in Japanese?", answer: "I want to speak with my fiancée's family." },
+];
+
+// Isolated-word listening. The page exposes only the sound until reveal.
+const PARTICLE_WORDS = [
+  { kana: "わたし", romaji: "watashi", en: "I / me" },
+  { kana: "だれ", romaji: "dare", en: "who" },
+  { kana: "なに", romaji: "nani", en: "what" },
+  { kana: "ひと", romaji: "hito", en: "person" },
+  { kana: "ともだち", romaji: "tomodachi", en: "friend" },
+  { kana: "こんやくしゃ", romaji: "kon-yakusha", en: "fiancée" },
+  { kana: "かぞく", romaji: "kazoku", en: "family" },
+  { kana: "にほんご", romaji: "nihongo", en: "Japanese language" },
+  { kana: "しごと", romaji: "shigoto", en: "work / job" },
+  { kana: "かいしゃ", romaji: "kaisha", en: "company / office" },
+  { kana: "ジム", romaji: "jimu", en: "gym" },
+  { kana: "こうえん", romaji: "kouen", en: "park" },
+  { kana: "いえ", romaji: "ie", en: "home / house" },
+  { kana: "バス", romaji: "basu", en: "bus" },
+  { kana: "パソコン", romaji: "pasokon", en: "computer" },
+  { kana: "コーヒー", romaji: "koohii", en: "coffee" },
+  { kana: "おちゃ", romaji: "ocha", en: "tea" },
+  { kana: "バスケットボール", romaji: "basuketto-booru", en: "basketball" },
+  { kana: "ウェイトトレーニング", romaji: "ueito-toreeningu", en: "weight training" },
+  { kana: "すき", romaji: "suki", en: "liked / favorite" },
+  { kana: "ちかく", romaji: "chikaku", en: "nearby" },
+  { kana: "いま", romaji: "ima", en: "now" },
+  { kana: "タイ", romaji: "tai", en: "Thailand" },
+  { kana: "インドネシア", romaji: "indoneshia", en: "Indonesia" },
+];
+
 // ---- Lesson 5: age, days of the week, dates & months ----
 // Listening drill: a native voice says it, the learner guesses, then taps to reveal.
 const L5_LISTEN = [
@@ -261,6 +309,8 @@ const phrases = withMeta(PHRASES, "audio");
 const words = withMeta(WORDS, "audio/words");
 const timeParts = withMeta(TIME_PARTS, "audio/time", VOICE_B);
 const l5Listen = withMeta(L5_LISTEN, "audio/age", VOICE_B);
+const particleQuestions = withMeta(PARTICLE_QUESTIONS, "audio/particles", VOICE_B);
+const particleWords = withMeta(PARTICLE_WORDS, "audio/particles/words", VOICE_B);
 const l5Convo = L5_CONVO.map((p, i) => ({
   ...p,
   id: `c${i + 1}-${slug(p.romaji)}`,
@@ -311,6 +361,17 @@ function writeAgeManifest(path, listen, convo, hasAudio) {
   });
 }
 
+function writeParticlesManifest(path, questions, words, hasAudio) {
+  writeManifestFile(path, "JL_PARTICLES", {
+    generatedAt: hasAudio ? new Date().toISOString() : null,
+    voice: VOICE_B,
+    model: MODEL,
+    hasAudio,
+    questions,
+    words,
+  });
+}
+
 async function generateSet(client, label, items) {
   let made = 0;
   let skipped = 0;
@@ -341,14 +402,17 @@ async function main() {
   mkdirSync(WORDS_DIR, { recursive: true });
   mkdirSync(AGE_DIR, { recursive: true });
   mkdirSync(TIME_DIR, { recursive: true });
+  mkdirSync(PARTICLES_DIR, { recursive: true });
+  mkdirSync(PARTICLE_WORDS_DIR, { recursive: true });
 
   if (!API_KEY) {
     writeManifest(MANIFEST_PATH, "phrases", phrases, false, "JL_LISTENING");
     writeManifest(FLASHCARDS_PATH, "words", words, false, "JL_FLASHCARDS");
     writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, false);
     writeTimeManifest(TIME_MANIFEST_PATH, timeParts, false);
+    writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleQuestions, particleWords, false);
     console.log("No ELEVENLABS_API_KEY found.");
-    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts (hasAudio: false).`);
+    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts + ${particleQuestions.length} particle questions / ${particleWords.length} particle words (hasAudio: false).`);
     console.log("The web UI will render the cards; add a key and re-run to enable playback.");
     return;
   }
@@ -362,12 +426,15 @@ async function main() {
   await generateSet(client, "age:listen", l5Listen);
   await generateSet(client, "age:convo", l5Convo);
   await generateSet(client, "time:parts", timeParts);
+  await generateSet(client, "particles:questions", particleQuestions);
+  await generateSet(client, "particles:words", particleWords);
 
   writeManifest(MANIFEST_PATH, "phrases", phrases, true, "JL_LISTENING");
   writeManifest(FLASHCARDS_PATH, "words", words, true, "JL_FLASHCARDS");
   writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, true);
   writeTimeManifest(TIME_MANIFEST_PATH, timeParts, true);
-  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json");
+  writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleQuestions, particleWords, true);
+  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json, audio/particles.json");
 }
 
 main().catch((err) => {

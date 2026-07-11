@@ -79,6 +79,7 @@
   .pattern .rj{color:var(--ink-soft);font-size:14px}
   .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
   .note.win{border-left-color:var(--ko)}
+  .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:8px}
 
   .practice-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
   .drill-filter{
@@ -107,12 +108,74 @@
   }
   .practice-card .answer-main[lang="ja"]{font-family:"Zen Antique",serif}
   .practice-card .answer-note{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
-  .practice-card .tap-hint{font-size:12px;color:#B7AE97;margin-top:10px}
+  .practice-card .tap-hint{margin-top:10px}
   .practice-card.revealed .answer-main,.practice-card.revealed .answer-note{display:block}
   .practice-card.revealed .tap-hint{display:none}
 
+  .vocab-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 12px}
+  .vocab-filter{
+    min-height:40px;padding:7px 13px;border:1px solid var(--line-strong);border-radius:999px;
+    background:#fff;color:var(--ink-soft);font:600 13px "Zen Maru Gothic",system-ui,sans-serif;
+    cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s;
+  }
+  .vocab-filter:hover{background:#F7F3E8}.vocab-filter:active{transform:scale(.96)}
+  .vocab-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .vocab-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
+  .vocab-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .vocab-card{
+    min-height:150px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;
+    transition-property:background,box-shadow,transform;transition-duration:.12s;
+  }
+  .vocab-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .vocab-card:active{transform:scale(.96)}.vocab-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .vocab-card .v-en{font-weight:700;font-size:18px}
+  .vocab-card .v-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .vocab-card .v-kana{font:400 25px/1.35 "Zen Antique",serif;display:block}
+  .vocab-card .v-rj{font-size:13px;color:var(--ko);font-weight:700;display:block;margin-top:3px}
+  .vocab-card.revealed .v-answer{display:block}.vocab-card.revealed .tap-hint{display:none}
+
+  .verb-deck{display:grid;gap:12px}
+  .verb-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+    cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
+  }
+  .verb-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .verb-card:active{transform:scale(.96)}.verb-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .verb-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .verb-scenario{font-weight:700;margin:5px 0 8px}
+  .verb-blank{font:400 23px/1.45 "Zen Antique",serif}
+  .verb-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .verb-answer .kana{font-size:23px}.verb-answer .why{font-size:14px;color:var(--ink-soft);display:block;margin-top:4px}
+  .verb-card.revealed .verb-answer{display:block}.verb-card.revealed .tap-hint{display:none}
+
+  .listen-deck{display:grid;gap:14px}
+  .listen-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+    display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition-property:background,box-shadow,transform;transition-duration:.12s;
+  }
+  .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .listen-card:active{transform:scale(.96)}.listen-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .listen-play{
+    flex:0 0 auto;width:52px;height:52px;border-radius:50%;border:1px solid var(--line-strong);
+    background:var(--ko-bg);color:#3C5E25;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition-property:background,color,border-color,transform;transition-duration:.12s;
+  }
+  .listen-play:hover{background:#E2EED4}.listen-play:active{transform:scale(.96)}
+  .listen-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
+  .listen-play:disabled{opacity:.4;cursor:not-allowed}
+  .listen-body{flex:1;min-width:0}.listen-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .listen-prompt{font-weight:700;margin:4px 0 0}.listen-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+  .listen-answer .kana{font-size:23px}.listen-answer .english{display:block;font-weight:700;margin-top:6px}
+  .listen-answer .sample{display:block;color:var(--ink-soft);font-size:14px;margin-top:4px}
+  .listen-card.revealed .listen-answer{display:block}.listen-card.revealed .tap-hint{display:none}
+  .word-listen-deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .word-listen-deck .listen-card{min-height:155px;flex-direction:column;align-items:center;text-align:center}
+  .listen-status{color:var(--ink-soft)}
+
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+<script src="audio/particles.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -122,14 +185,32 @@
     <h1>じょし</h1>
     <div class="subtitle">small markers that show each word's job in a sentence</div>
     <nav class="jump-nav" aria-label="Particle sections">
+      <a href="#vocab" aria-label="Single word vocabulary">ことば</a>
       <a href="#wa" aria-label="Topic marker wa">は</a>
       <a href="#ga" aria-label="Subject marker ga">が</a>
       <a href="#wo" aria-label="Object marker o">を</a>
       <a href="#mo" aria-label="Also marker mo">も</a>
       <a href="#de" aria-label="Action place and means marker de">で</a>
       <a href="#to" aria-label="Listing and companion marker to">と</a>
+      <a href="#verb-practice" aria-label="Verb scenario practice">どうし</a>
+      <a href="#listening" aria-label="Listening practice">きく</a>
     </nav>
   </header>
+
+  <!-- ===================== VOCAB FIRST ===================== -->
+  <section id="vocab">
+    <div class="sec-head"><span class="sec-kanji">ことば</span><h2>Start here: single-word vocabulary</h2></div>
+    <p class="lead">No sentences yet. Read the English, say one Japanese word, then tap to check. Drill nouns first, then verbs.</p>
+    <div class="vocab-toolbar" aria-label="Vocabulary groups">
+      <button class="vocab-filter active" type="button" data-vocab="all">All words</button>
+      <button class="vocab-filter" type="button" data-vocab="noun">People &amp; things</button>
+      <button class="vocab-filter" type="button" data-vocab="place">Places</button>
+      <button class="vocab-filter" type="button" data-vocab="verb">Verbs</button>
+      <button class="vocab-filter" type="button" data-vocab="other">Useful words</button>
+      <span class="vocab-count" id="vocab-count"></span>
+    </div>
+    <div class="vocab-deck" id="vocab-deck"></div>
+  </section>
 
   <!-- ===================== QUICK MAP ===================== -->
   <section id="map">
@@ -349,6 +430,13 @@
     </div>
   </section>
 
+  <!-- ===================== VERB SCENARIOS ===================== -->
+  <section id="verb-practice">
+    <div class="sec-head"><span class="sec-kanji">どうし</span><h2>Verb scenarios: supply the action</h2></div>
+    <p class="lead">The particle is already there. Read the real-life scenario, then put the right verb into the blank. Some prompts ask for formal speech; others ask for casual speech or past tense.</p>
+    <div class="verb-deck" id="verb-deck"></div>
+  </section>
+
   <!-- ===================== PRACTICE ===================== -->
   <section id="practice">
     <div class="sec-head"><span class="sec-kanji">れん</span><h2>Tutor practice: mixed directions</h2></div>
@@ -366,7 +454,204 @@
     <div class="practice-deck" id="practice-deck"></div>
   </section>
 
+  <!-- ===================== QUESTION LISTENING ===================== -->
+  <section id="listening">
+    <div class="sec-head"><span class="sec-kanji">きく</span><h2>Listening: answer the question in English</h2></div>
+    <p class="lead">You get audio only. Listen, say what the question means in English, and answer it in English. Then tap the card to reveal the Japanese, meaning, and a sample answer.</p>
+    <div class="listen-deck" id="question-listen-deck">
+      <p class="listen-status">Loading ElevenLabs questions…</p>
+    </div>
+  </section>
+
+  <!-- ===================== WORD LISTENING ===================== -->
+  <section id="word-listening">
+    <div class="sec-head"><span class="sec-kanji">みみ</span><h2>Listening comprehension: one word only</h2></div>
+    <p class="lead">No sentence and no written hint. Play the isolated word, say its English meaning, then tap to reveal.</p>
+    <div class="word-listen-deck" id="word-listen-deck">
+      <p class="listen-status">Loading isolated words…</p>
+    </div>
+  </section>
+
 </div>
+
+<script>
+  (function(){
+    var VOCAB = [
+      { group:'noun', en:'I / me', jp:'わたし', rj:'watashi' },
+      { group:'noun', en:'person', jp:'ひと', rj:'hito' },
+      { group:'noun', en:'friend', jp:'ともだち', rj:'tomodachi' },
+      { group:'noun', en:'fiancée', jp:'こんやくしゃ', rj:"kon'yakusha" },
+      { group:'noun', en:'family', jp:'かぞく', rj:'kazoku' },
+      { group:'noun', en:'Japanese language', jp:'にほんご', rj:'nihongo' },
+      { group:'noun', en:'work / job', jp:'しごと', rj:'shigoto' },
+      { group:'noun', en:'computer', jp:'パソコン', rj:'pasokon' },
+      { group:'noun', en:'coffee', jp:'コーヒー', rj:'koohii' },
+      { group:'noun', en:'tea', jp:'おちゃ', rj:'ocha' },
+      { group:'noun', en:'basketball', jp:'バスケットボール', rj:'basuketto booru' },
+      { group:'noun', en:'weight training', jp:'ウェイトトレーニング', rj:'ueito toreeningu' },
+      { group:'place', en:'company / office', jp:'かいしゃ', rj:'kaisha' },
+      { group:'place', en:'gym', jp:'ジム', rj:'jimu' },
+      { group:'place', en:'park', jp:'こうえん', rj:'kouen' },
+      { group:'place', en:'home / house', jp:'いえ', rj:'ie' },
+      { group:'place', en:'San Francisco', jp:'サンフランシスコ', rj:'san furanshisuko' },
+      { group:'place', en:'Japan', jp:'にほん', rj:'nihon' },
+      { group:'place', en:'Thailand', jp:'タイ', rj:'tai' },
+      { group:'place', en:'Indonesia', jp:'インドネシア', rj:'indoneshia' },
+      { group:'verb', en:'to go', jp:'いく', rj:'iku' },
+      { group:'verb', en:'to be / exist (living)', jp:'いる', rj:'iru' },
+      { group:'verb', en:'to exist (not living)', jp:'ある', rj:'aru' },
+      { group:'verb', en:'to do', jp:'する', rj:'suru' },
+      { group:'verb', en:'to study', jp:'べんきょうする', rj:'benkyou suru' },
+      { group:'verb', en:'to work', jp:'はたらく', rj:'hataraku' },
+      { group:'verb', en:'to drink', jp:'のむ', rj:'nomu' },
+      { group:'verb', en:'to speak', jp:'はなす', rj:'hanasu' },
+      { group:'verb', en:'to watch / see', jp:'みる', rj:'miru' },
+      { group:'verb', en:'to live', jp:'すむ', rj:'sumu' },
+      { group:'verb', en:'to return home', jp:'かえる', rj:'kaeru' },
+      { group:'other', en:'who', jp:'だれ', rj:'dare' },
+      { group:'other', en:'what', jp:'なに', rj:'nani' },
+      { group:'other', en:'now', jp:'いま', rj:'ima' },
+      { group:'other', en:'nearby', jp:'ちかく', rj:'chikaku' },
+      { group:'other', en:'together', jp:'いっしょに', rj:'isshoni' },
+      { group:'other', en:'liked / favorite', jp:'すき', rj:'suki' }
+    ];
+    var VERBS = [
+      { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', answer:'スタートアップではたらいています。', why:'はたらく = to work' },
+      { label:'Live · formal', scenario:'Someone asks where you live now.', blank:'サンフランシスコに ___。', answer:'サンフランシスコにすんでいます。', why:'すむ = to live' },
+      { label:'Exercise · formal', scenario:'Describe your usual gym activity.', blank:'ジムでウェイトトレーニングを ___。', answer:'ジムでウェイトトレーニングをします。', why:'する = to do' },
+      { label:'Travel · formal', scenario:'Say that you are going to Japan.', blank:'にほんに ___。', answer:'にほんにいきます。', why:'いく = to go' },
+      { label:'Study · formal', scenario:'Say what you are studying.', blank:'にほんごを ___。', answer:'にほんごをべんきょうしています。', why:'べんきょうする = to study' },
+      { label:'Drink · formal', scenario:'Tell someone what you drink in the morning.', blank:'コーヒーを ___。', answer:'コーヒーをのみます。', why:'のむ = to drink' },
+      { label:'Watch · formal', scenario:'Say that you watch a movie.', blank:'えいがを ___。', answer:'えいがをみます。', why:'みる = to watch / see' },
+      { label:'Speak · formal', scenario:"Say you speak Japanese with your fiancée's family.", blank:'こんやくしゃのかぞくとにほんごで ___。', answer:'こんやくしゃのかぞくとにほんごではなします。', why:'はなす = to speak' },
+      { label:'Existence · formal', scenario:'You see people in the park.', blank:'こうえんにひとが ___。', answer:'こうえんにひとがいます。', why:'いる = to exist for people and animals' },
+      { label:'Existence · formal', scenario:'Tell someone there is a gym nearby.', blank:'ちかくにジムが ___。', answer:'ちかくにジムがあります。', why:'ある = to exist for things and places' },
+      { label:'Past experience · formal', scenario:'Say you used to live in Thailand and Indonesia.', blank:'タイとインドネシアに ___。', answer:'タイとインドネシアにすんでいました。', why:'すんでいました = lived / used to live' },
+      { label:'Invitation · casual', scenario:'Ask a friend if they want to go to the gym.', blank:'ジムに ___？', answer:'ジムにいかない？', why:'いかない？ = wanna go?' },
+      { label:"Let's go · casual", scenario:'Suggest going to Japan together.', blank:'いっしょににほんに ___。', answer:'いっしょににほんにいこう。', why:"いこう = let's go" },
+      { label:'Invitation · formal', scenario:'Invite a coworker to a restaurant.', blank:'レストランに ___。', answer:'レストランにいきませんか。', why:'いきませんか = would you like to go?' },
+      { label:'Going home · formal', scenario:'Tell a coworker you are going home.', blank:'いえに ___。', answer:'いえにかえります。', why:'かえる = to return home' },
+      { label:'Past · formal', scenario:'Say you watched a movie yesterday.', blank:'きのう、えいがを ___。', answer:'きのう、えいがをみました。', why:'みました = watched' },
+      { label:'Past · casual', scenario:'Tell a friend you drank coffee.', blank:'コーヒーを ___。', answer:'コーヒーをのんだ。', why:'のんだ = drank' },
+      { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', answer:'いま、にほんごをべんきょうしている。', why:'べんきょうしている = am studying' }
+    ];
+    var vocabMode = 'all';
+
+    function shuffle(list){
+      var a=list.slice();
+      for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+      return a;
+    }
+    function bindReveal(root, selector){
+      root.querySelectorAll(selector).forEach(function(card){
+        function toggle(){card.classList.toggle('revealed');card.setAttribute('aria-expanded',card.classList.contains('revealed'));}
+        card.addEventListener('click',toggle);
+        card.addEventListener('keydown',function(event){if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}});
+      });
+    }
+    function renderVocab(){
+      var list=vocabMode==='all'?VOCAB:VOCAB.filter(function(item){return item.group===vocabMode;});
+      list=shuffle(list);
+      document.getElementById('vocab-count').textContent=list.length+' words';
+      var deck=document.getElementById('vocab-deck');
+      deck.innerHTML=list.map(function(item){
+        return '<article class="vocab-card" tabindex="0" role="button" aria-expanded="false">'+
+          '<span class="v-en">'+item.en+'</span><span class="tap-hint">say one word · tap to check</span>'+
+          '<span class="v-answer"><span class="v-kana" lang="ja">'+item.jp+'</span><span class="v-rj">'+item.rj+'</span></span></article>';
+      }).join('');
+      bindReveal(deck,'.vocab-card');
+    }
+    document.querySelectorAll('.vocab-filter').forEach(function(button){
+      button.addEventListener('click',function(){
+        vocabMode=button.getAttribute('data-vocab');
+        document.querySelectorAll('.vocab-filter').forEach(function(item){item.classList.remove('active');});
+        button.classList.add('active');renderVocab();
+      });
+    });
+    renderVocab();
+
+    var verbDeck=document.getElementById('verb-deck');
+    verbDeck.innerHTML=shuffle(VERBS).map(function(item,index){
+      return '<article class="verb-card" tabindex="0" role="button" aria-expanded="false">'+
+        '<div class="verb-label">'+item.label+' · '+(index+1)+'/'+VERBS.length+'</div>'+
+        '<p class="verb-scenario">'+item.scenario+'</p><div class="verb-blank" lang="ja">'+item.blank+'</div>'+
+        '<span class="tap-hint">supply the verb · tap to check</span>'+
+        '<div class="verb-answer"><span class="kana" lang="ja">'+item.answer+'</span><span class="why">'+item.why+'</span></div></article>';
+    }).join('');
+    bindReveal(verbDeck,'.verb-card');
+  })();
+</script>
+
+<script>
+  (function(){
+    var questionDeck=document.getElementById('question-listen-deck');
+    var wordDeck=document.getElementById('word-listen-deck');
+    var current=null;
+
+    function esc(value){
+      return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function shuffle(list){
+      var a=list.slice();
+      for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+      return a;
+    }
+    function play(button){
+      var src=button.getAttribute('data-src');
+      if(!src)return;
+      if(current){current.audio.pause();current.button.classList.remove('playing');}
+      var audio=new Audio(src);current={audio:audio,button:button};button.classList.add('playing');
+      audio.play().catch(function(){button.classList.remove('playing');});
+      audio.addEventListener('ended',function(){button.classList.remove('playing');});
+      audio.addEventListener('error',function(){button.classList.remove('playing');button.disabled=true;button.textContent='✕';});
+    }
+    function bind(root){
+      root.querySelectorAll('.listen-card').forEach(function(card){
+        function toggle(){card.classList.toggle('revealed');card.setAttribute('aria-expanded',card.classList.contains('revealed'));}
+        card.addEventListener('click',function(event){if(event.target.closest('.listen-play'))return;toggle();});
+        card.addEventListener('keydown',function(event){
+          if(document.activeElement&&document.activeElement.classList.contains('listen-play'))return;
+          if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}
+        });
+      });
+      root.querySelectorAll('.listen-play').forEach(function(button){
+        button.addEventListener('click',function(event){event.stopPropagation();play(button);});
+      });
+    }
+    function render(manifest){
+      var hasAudio=!!(manifest&&manifest.hasAudio);
+      var questions=shuffle((manifest&&manifest.questions)||[]);
+      var words=shuffle((manifest&&manifest.words)||[]);
+      questionDeck.innerHTML=questions.map(function(item,index){
+        return '<article class="listen-card" tabindex="0" role="button" aria-expanded="false">'+
+          '<button class="listen-play" type="button" aria-label="Play question '+(index+1)+'" data-src="'+esc(item.audio)+'"'+(hasAudio?'':' disabled')+'>▶</button>'+
+          '<div class="listen-body"><span class="listen-label">Question '+(index+1)+' / '+questions.length+'</span>'+
+          '<p class="listen-prompt">What did they ask? Answer in English.</p><span class="tap-hint">audio only · tap card to reveal</span>'+
+          '<div class="listen-answer"><span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span>'+
+          '<span class="english">'+esc(item.en)+'</span><span class="sample">Sample answer: '+esc(item.answer)+'</span></div></div></article>';
+      }).join('');
+      wordDeck.innerHTML=words.map(function(item,index){
+        return '<article class="listen-card" tabindex="0" role="button" aria-expanded="false">'+
+          '<button class="listen-play" type="button" aria-label="Play word '+(index+1)+'" data-src="'+esc(item.audio)+'"'+(hasAudio?'':' disabled')+'>▶</button>'+
+          '<div class="listen-body"><span class="listen-label">Word '+(index+1)+' / '+words.length+'</span>'+
+          '<p class="listen-prompt">What single word did you hear?</p><span class="tap-hint">audio only · tap card to reveal</span>'+
+          '<div class="listen-answer"><span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span>'+
+          '<span class="english">'+esc(item.en)+'</span></div></div></article>';
+      }).join('');
+      bind(questionDeck);bind(wordDeck);
+    }
+    function failed(){
+      questionDeck.innerHTML='<p class="listen-status">Particle audio is unavailable. Run: npm run generate:audio</p>';
+      wordDeck.innerHTML='<p class="listen-status">Word audio is unavailable. Run: npm run generate:audio</p>';
+    }
+    if(location.protocol==='file:'){
+      window.JL_PARTICLES?render(window.JL_PARTICLES):failed();
+    }else{
+      fetch('audio/particles.json',{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error('no manifest');return response.json();})
+        .then(render).catch(function(){window.JL_PARTICLES?render(window.JL_PARTICLES):failed();});
+    }
+  })();
+</script>
 
 <script>
   (function(){

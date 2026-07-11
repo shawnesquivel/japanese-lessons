@@ -1,0 +1,310 @@
+{
+  "generatedAt": "2026-07-11T22:26:39.511Z",
+  "voice": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": true,
+  "questions": [
+    {
+      "kana": "なにがすきですか。",
+      "romaji": "nani ga suki desu ka.",
+      "en": "What do you like?",
+      "answer": "I like basketball and weight training.",
+      "id": "nani-ga-suki-desu-ka",
+      "audio": "audio/particles/nani-ga-suki-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこにすんでいますか。",
+      "romaji": "doko ni sunde imasu ka.",
+      "en": "Where do you live?",
+      "answer": "I live in San Francisco.",
+      "id": "doko-ni-sunde-imasu-ka",
+      "audio": "audio/particles/doko-ni-sunde-imasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこではたらいていますか。",
+      "romaji": "doko de hataraite imasu ka.",
+      "en": "Where do you work?",
+      "answer": "I work at a startup.",
+      "id": "doko-de-hataraite-imasu-ka",
+      "audio": "audio/particles/doko-de-hataraite-imasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "しごとはなんですか。",
+      "romaji": "shigoto wa nan desu ka.",
+      "en": "What do you do for work?",
+      "answer": "I'm a software engineer.",
+      "id": "shigoto-wa-nan-desu-ka",
+      "audio": "audio/particles/shigoto-wa-nan-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "なにをべんきょうしていますか。",
+      "romaji": "nani o benkyou shite imasu ka.",
+      "en": "What are you studying?",
+      "answer": "I'm studying Japanese.",
+      "id": "nani-o-benkyou-shite-imasu-ka",
+      "audio": "audio/particles/nani-o-benkyou-shite-imasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこでウェイトトレーニングをしますか。",
+      "romaji": "doko de ueito toreeningu o shimasu ka.",
+      "en": "Where do you do weight training?",
+      "answer": "I do weight training at the gym.",
+      "id": "doko-de-ueito-toreeningu-o-shimasu-ka",
+      "audio": "audio/particles/doko-de-ueito-toreeningu-o-shimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "だれとにほんにいきますか。",
+      "romaji": "dare to nihon ni ikimasu ka.",
+      "en": "Who are you going to Japan with?",
+      "answer": "I'm going with my fiancée.",
+      "id": "dare-to-nihon-ni-ikimasu-ka",
+      "audio": "audio/particles/dare-to-nihon-ni-ikimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いつにほんにいきますか。",
+      "romaji": "itsu nihon ni ikimasu ka.",
+      "en": "When are you going to Japan?",
+      "answer": "I'm going in September.",
+      "id": "itsu-nihon-ni-ikimasu-ka",
+      "audio": "audio/particles/itsu-nihon-ni-ikimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこにすんでいましたか。",
+      "romaji": "doko ni sunde imashita ka.",
+      "en": "Where did you live?",
+      "answer": "I lived in Thailand and Indonesia.",
+      "id": "doko-ni-sunde-imashita-ka",
+      "audio": "audio/particles/doko-ni-sunde-imashita-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "なにをのみますか。",
+      "romaji": "nani o nomimasu ka.",
+      "en": "What do you drink?",
+      "answer": "I drink coffee and tea.",
+      "id": "nani-o-nomimasu-ka",
+      "audio": "audio/particles/nani-o-nomimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ちかくになにがありますか。",
+      "romaji": "chikaku ni nani ga arimasu ka.",
+      "en": "What is nearby?",
+      "answer": "There is a gym nearby.",
+      "id": "chikaku-ni-nani-ga-arimasu-ka",
+      "audio": "audio/particles/chikaku-ni-nani-ga-arimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にほんごでだれとはなしたいですか。",
+      "romaji": "nihongo de dare to hanashitai desu ka.",
+      "en": "Who do you want to speak with in Japanese?",
+      "answer": "I want to speak with my fiancée's family.",
+      "id": "nihongo-de-dare-to-hanashitai-desu-ka",
+      "audio": "audio/particles/nihongo-de-dare-to-hanashitai-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    }
+  ],
+  "words": [
+    {
+      "kana": "わたし",
+      "romaji": "watashi",
+      "en": "I / me",
+      "id": "watashi",
+      "audio": "audio/particles/words/watashi.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "だれ",
+      "romaji": "dare",
+      "en": "who",
+      "id": "dare",
+      "audio": "audio/particles/words/dare.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "なに",
+      "romaji": "nani",
+      "en": "what",
+      "id": "nani",
+      "audio": "audio/particles/words/nani.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ひと",
+      "romaji": "hito",
+      "en": "person",
+      "id": "hito",
+      "audio": "audio/particles/words/hito.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ともだち",
+      "romaji": "tomodachi",
+      "en": "friend",
+      "id": "tomodachi",
+      "audio": "audio/particles/words/tomodachi.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "こんやくしゃ",
+      "romaji": "kon-yakusha",
+      "en": "fiancée",
+      "id": "kon-yakusha",
+      "audio": "audio/particles/words/kon-yakusha.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "かぞく",
+      "romaji": "kazoku",
+      "en": "family",
+      "id": "kazoku",
+      "audio": "audio/particles/words/kazoku.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にほんご",
+      "romaji": "nihongo",
+      "en": "Japanese language",
+      "id": "nihongo",
+      "audio": "audio/particles/words/nihongo.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "しごと",
+      "romaji": "shigoto",
+      "en": "work / job",
+      "id": "shigoto",
+      "audio": "audio/particles/words/shigoto.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "かいしゃ",
+      "romaji": "kaisha",
+      "en": "company / office",
+      "id": "kaisha",
+      "audio": "audio/particles/words/kaisha.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ジム",
+      "romaji": "jimu",
+      "en": "gym",
+      "id": "jimu",
+      "audio": "audio/particles/words/jimu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "こうえん",
+      "romaji": "kouen",
+      "en": "park",
+      "id": "kouen",
+      "audio": "audio/particles/words/kouen.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いえ",
+      "romaji": "ie",
+      "en": "home / house",
+      "id": "ie",
+      "audio": "audio/particles/words/ie.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "バス",
+      "romaji": "basu",
+      "en": "bus",
+      "id": "basu",
+      "audio": "audio/particles/words/basu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "パソコン",
+      "romaji": "pasokon",
+      "en": "computer",
+      "id": "pasokon",
+      "audio": "audio/particles/words/pasokon.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "コーヒー",
+      "romaji": "koohii",
+      "en": "coffee",
+      "id": "koohii",
+      "audio": "audio/particles/words/koohii.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おちゃ",
+      "romaji": "ocha",
+      "en": "tea",
+      "id": "ocha",
+      "audio": "audio/particles/words/ocha.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "バスケットボール",
+      "romaji": "basuketto-booru",
+      "en": "basketball",
+      "id": "basuketto-booru",
+      "audio": "audio/particles/words/basuketto-booru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ウェイトトレーニング",
+      "romaji": "ueito-toreeningu",
+      "en": "weight training",
+      "id": "ueito-toreeningu",
+      "audio": "audio/particles/words/ueito-toreeningu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すき",
+      "romaji": "suki",
+      "en": "liked / favorite",
+      "id": "suki",
+      "audio": "audio/particles/words/suki.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ちかく",
+      "romaji": "chikaku",
+      "en": "nearby",
+      "id": "chikaku",
+      "audio": "audio/particles/words/chikaku.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いま",
+      "romaji": "ima",
+      "en": "now",
+      "id": "ima",
+      "audio": "audio/particles/words/ima.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "タイ",
+      "romaji": "tai",
+      "en": "Thailand",
+      "id": "tai",
+      "audio": "audio/particles/words/tai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "インドネシア",
+      "romaji": "indoneshia",
+      "en": "Indonesia",
+      "id": "indoneshia",
+      "audio": "audio/particles/words/indoneshia.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    }
+  ]
+}
