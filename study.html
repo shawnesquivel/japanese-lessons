@@ -75,7 +75,7 @@
     document.getElementById('stats').innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>challenges studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' XP</span><div class="level-track"><div class="level-fill" style="width:'+s.levelProgress+'%"></div></div></div>';
   }
   function renderSubjects(){
-    var subjects=['all','kosoado','particles','locations','time','age','food','vegetable','fruit','drink'];
+    var subjects=['all','kosoado','particles','verbs','locations','time','age','food','vegetable','fruit','drink'];
     document.getElementById('subjects').innerHTML=subjects.map(function(name){var p=items.filter(function(i){return name==='all'||i.subject===name}),s=JL_PROGRESS.summary(p.map(function(i){return i.id})),pct=s.total?Math.round(s.mastered/s.total*100):0;return '<button class="subject'+(name===subject?' active':'')+'" data-subject="'+name+'"><strong>'+name+'</strong><span>'+s.due+' due · '+s.mastered+' mastered / '+p.length+'</span><div class="mini-track"><div class="mini-fill" style="width:'+pct+'%"></div></div></button>'}).join('');
     document.querySelectorAll('[data-subject]').forEach(function(btn){btn.onclick=function(){subject=btn.dataset.subject;renderSubjects()}});
   }

@@ -146,7 +146,12 @@
   .verb-scenario{font-weight:700;margin:5px 0 8px}
   .verb-blank{font:400 23px/1.45 "Zen Antique",serif}
   .verb-answer{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
-  .verb-answer .kana{font-size:23px}.verb-answer .why{font-size:14px;color:var(--ink-soft);display:block;margin-top:4px}
+  .verb-answer .kana{font-size:23px}
+  .verb-answer .detail{display:grid;grid-template-columns:90px 1fr;gap:5px 10px;margin-top:10px;font-size:14px}
+  .verb-answer .detail b{color:var(--ink-soft);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .verb-answer .rj{color:var(--ko);font-weight:700}
+  .verb-answer .translation{color:var(--ink)}
+  .verb-answer .why{color:var(--ink-soft)}
   .verb-card.revealed .verb-answer{display:block}.verb-card.revealed .tap-hint{display:none}
 
   .listen-deck{display:grid;gap:14px}
@@ -516,24 +521,24 @@
       { group:'other', en:'liked / favorite', jp:'すき', rj:'suki' }
     ];
     var VERBS = [
-      { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', answer:'スタートアップではたらいています。', why:'はたらく = to work' },
-      { label:'Live · formal', scenario:'Someone asks where you live now.', blank:'サンフランシスコに ___。', answer:'サンフランシスコにすんでいます。', why:'すむ = to live' },
-      { label:'Exercise · formal', scenario:'Describe your usual gym activity.', blank:'ジムでウェイトトレーニングを ___。', answer:'ジムでウェイトトレーニングをします。', why:'する = to do' },
-      { label:'Travel · formal', scenario:'Say that you are going to Japan.', blank:'にほんに ___。', answer:'にほんにいきます。', why:'いく = to go' },
-      { label:'Study · formal', scenario:'Say what you are studying.', blank:'にほんごを ___。', answer:'にほんごをべんきょうしています。', why:'べんきょうする = to study' },
-      { label:'Drink · formal', scenario:'Tell someone what you drink in the morning.', blank:'コーヒーを ___。', answer:'コーヒーをのみます。', why:'のむ = to drink' },
-      { label:'Watch · formal', scenario:'Say that you watch a movie.', blank:'えいがを ___。', answer:'えいがをみます。', why:'みる = to watch / see' },
-      { label:'Speak · formal', scenario:"Say you speak Japanese with your fiancée's family.", blank:'こんやくしゃのかぞくとにほんごで ___。', answer:'こんやくしゃのかぞくとにほんごではなします。', why:'はなす = to speak' },
-      { label:'Existence · formal', scenario:'You see people in the park.', blank:'こうえんにひとが ___。', answer:'こうえんにひとがいます。', why:'いる = to exist for people and animals' },
-      { label:'Existence · formal', scenario:'Tell someone there is a gym nearby.', blank:'ちかくにジムが ___。', answer:'ちかくにジムがあります。', why:'ある = to exist for things and places' },
-      { label:'Past experience · formal', scenario:'Say you used to live in Thailand and Indonesia.', blank:'タイとインドネシアに ___。', answer:'タイとインドネシアにすんでいました。', why:'すんでいました = lived / used to live' },
-      { label:'Invitation · casual', scenario:'Ask a friend if they want to go to the gym.', blank:'ジムに ___？', answer:'ジムにいかない？', why:'いかない？ = wanna go?' },
-      { label:"Let's go · casual", scenario:'Suggest going to Japan together.', blank:'いっしょににほんに ___。', answer:'いっしょににほんにいこう。', why:"いこう = let's go" },
-      { label:'Invitation · formal', scenario:'Invite a coworker to a restaurant.', blank:'レストランに ___。', answer:'レストランにいきませんか。', why:'いきませんか = would you like to go?' },
-      { label:'Going home · formal', scenario:'Tell a coworker you are going home.', blank:'いえに ___。', answer:'いえにかえります。', why:'かえる = to return home' },
-      { label:'Past · formal', scenario:'Say you watched a movie yesterday.', blank:'きのう、えいがを ___。', answer:'きのう、えいがをみました。', why:'みました = watched' },
-      { label:'Past · casual', scenario:'Tell a friend you drank coffee.', blank:'コーヒーを ___。', answer:'コーヒーをのんだ。', why:'のんだ = drank' },
-      { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', answer:'いま、にほんごをべんきょうしている。', why:'べんきょうしている = am studying' }
+      { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', answer:'スタートアップではたらいています。', rj:'Sutaato appu de hataraite imasu.', en:'I work at a startup.', why:'はたらく means “to work.” The ています form describes your current job.' },
+      { label:'Live · formal', scenario:'Someone asks where you live now.', blank:'サンフランシスコに ___。', answer:'サンフランシスコにすんでいます。', rj:'San Furanshisuko ni sunde imasu.', en:'I live in San Francisco.', why:'すむ means “to live.” Use に for the place where you live.' },
+      { label:'Exercise · formal', scenario:'Describe your usual gym activity.', blank:'ジムでウェイトトレーニングを ___。', answer:'ジムでウェイトトレーニングをします。', rj:'Jimu de ueito toreeningu o shimasu.', en:'I do weight training at the gym.', why:'します is the formal form of する, “to do.” で marks where the action happens.' },
+      { label:'Travel · formal', scenario:'Say that you are going to Japan.', blank:'にほんに ___。', answer:'にほんにいきます。', rj:'Nihon ni ikimasu.', en:"I'm going to Japan.", why:'いきます is the formal form of いく, “to go.” に marks the destination.' },
+      { label:'Study · formal', scenario:'Say what you are studying.', blank:'にほんごを ___。', answer:'にほんごをべんきょうしています。', rj:'Nihongo o benkyou shite imasu.', en:"I'm studying Japanese.", why:'べんきょうしています describes an ongoing activity. を marks what you study.' },
+      { label:'Drink · formal', scenario:'Tell someone what you drink in the morning.', blank:'コーヒーを ___。', answer:'コーヒーをのみます。', rj:'Koohii o nomimasu.', en:'I drink coffee.', why:'のみます is the formal form of のむ, “to drink.” を marks the drink.' },
+      { label:'Watch · formal', scenario:'Say that you watch a movie.', blank:'えいがを ___。', answer:'えいがをみます。', rj:'Eiga o mimasu.', en:'I watch a movie.', why:'みます is the formal form of みる, “to watch / see.”' },
+      { label:'Speak · formal', scenario:"Say you speak Japanese with your fiancée's family.", blank:'こんやくしゃのかぞくとにほんごで ___。', answer:'こんやくしゃのかぞくとにほんごではなします。', rj:"Kon'yakusha no kazoku to nihongo de hanashimasu.", en:"I speak Japanese with my fiancée's family.", why:'はなします is the formal form of はなす. と marks who you speak with; で marks the language used.' },
+      { label:'Existence · formal', scenario:'You see people in the park.', blank:'こうえんにひとが ___。', answer:'こうえんにひとがいます。', rj:'Kouen ni hito ga imasu.', en:'There are people in the park.', why:'います is used for people and animals. に marks where they are.' },
+      { label:'Existence · formal', scenario:'Tell someone there is a gym nearby.', blank:'ちかくにジムが ___。', answer:'ちかくにジムがあります。', rj:'Chikaku ni jimu ga arimasu.', en:'There is a gym nearby.', why:'あります is used for things and places that are not alive.' },
+      { label:'Past experience · formal', scenario:'Say you used to live in Thailand and Indonesia.', blank:'タイとインドネシアに ___。', answer:'タイとインドネシアにすんでいました。', rj:'Tai to Indoneshia ni sunde imashita.', en:'I lived in Thailand and Indonesia.', why:'すんでいました is the polite past ongoing form: “was living / used to live.”' },
+      { label:'Invitation · casual', scenario:'Ask a friend if they want to go to the gym.', blank:'ジムに ___？', answer:'ジムにいかない？', rj:'Jimu ni ikanai?', en:'Wanna go to the gym?', why:'The casual negative question いかない？ works as a friendly invitation.' },
+      { label:"Let's go · casual", scenario:'Suggest going to Japan together.', blank:'いっしょににほんに ___。', answer:'いっしょににほんにいこう。', rj:'Isshoni nihon ni ikou.', en:"Let's go to Japan together.", why:'いこう is the casual “let’s go” form of いく.' },
+      { label:'Invitation · formal', scenario:'Invite a coworker to a restaurant.', blank:'レストランに ___。', answer:'レストランにいきませんか。', rj:'Resutoran ni ikimasen ka.', en:'Would you like to go to a restaurant?', why:'いきませんか is a polite invitation, literally “won’t you go?”' },
+      { label:'Going home · formal', scenario:'Tell a coworker you are going home.', blank:'いえに ___。', answer:'いえにかえります。', rj:'Ie ni kaerimasu.', en:"I'm going home.", why:'Use かえる for returning to your own home, rather than いく.' },
+      { label:'Past · formal', scenario:'Say you watched a movie yesterday.', blank:'きのう、えいがを ___。', answer:'きのう、えいがをみました。', rj:'Kinou, eiga o mimashita.', en:'I watched a movie yesterday.', why:'みました is the polite past form of みる.' },
+      { label:'Past · casual', scenario:'Tell a friend you drank coffee.', blank:'コーヒーを ___。', answer:'コーヒーをのんだ。', rj:'Koohii o nonda.', en:'I drank coffee.', why:'のんだ is the casual past form of のむ.' },
+      { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', answer:'いま、にほんごをべんきょうしている。', rj:'Ima, nihongo o benkyou shite iru.', en:"I'm studying Japanese now.", why:'べんきょうしている is the casual ongoing form.' }
     ];
     var vocabMode = 'all';
 
@@ -576,7 +581,9 @@
         '<div class="verb-label">'+item.label+' · '+(index+1)+'/'+VERBS.length+'</div>'+
         '<p class="verb-scenario">'+item.scenario+'</p><div class="verb-blank" lang="ja">'+item.blank+'</div>'+
         '<span class="tap-hint">supply the verb · tap to check</span>'+
-        '<div class="verb-answer"><span class="kana" lang="ja">'+item.answer+'</span><span class="why">'+item.why+'</span></div></article>';
+        '<div class="verb-answer"><span class="kana" lang="ja">'+item.answer+'</span><div class="detail">'+
+        '<b>Romaji</b><span class="rj">'+item.rj+'</span><b>English</b><span class="translation">'+item.en+'</span>'+
+        '<b>Why</b><span class="why">'+item.why+'</span></div></div></article>';
     }).join('');
     bindReveal(verbDeck,'.verb-card');
   })();
