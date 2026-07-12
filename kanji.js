@@ -1,11 +1,14 @@
 (function(){
   "use strict";
-  var KANJI=(window.JL_KANJI||[]).map(function(k){return Object.assign({},k,{frame:k.id,id:"kanji:"+k.id,progressId:"kanji:"+k.id,subject:"kanji",type:"kanji"})});
+  var PART_OVERRIDES={"左":["by one’s side","craft"],"右":["by one’s side","mouth"],"有":["by one’s side","flesh"]};
+  var KANJI=(window.JL_KANJI||[]).map(function(k){return Object.assign({},k,{frame:k.id,id:"kanji:"+k.id,progressId:"kanji:"+k.id,subject:"kanji",type:"kanji",primitives:PART_OVERRIDES[k.kanji]||k.primitives})});
   var NOTES_KEY="japaneseLessons.kanjiNotes.v1";
   var notes=loadNotes(),drawIndex=0,strokes=[],drawing=false,traceOn=false,noteTimer=null;
   var selectedFrames=new Set(),selectionDrag=null;
   var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false,elapsedMs:0,activeSince:0};
   var lastSpaceAt=0;
+  var PRIMITIVE_GLYPHS={"by ones side":"𠂇","sun":"日","flesh":"月","part of the body":"月","part of body":"月"};
+  var KANJI_BY_PRIMITIVE={};
   function $(s){return document.querySelector(s)}
   function $all(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
   function loadNotes(){try{return JSON.parse(localStorage.getItem(NOTES_KEY))||{}}catch(_){return {}}}
@@ -13,6 +16,8 @@
   function saveNote(frame,value){var clean=String(value||"").trim();if(clean)notes[frame]=clean;else delete notes[frame];saveNotes()}
   function shuffle(list){var a=list.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function normalize(value){return String(value||"").toLowerCase().replace(/[^a-z0-9 ]+/g,"").replace(/\s+/g," ").trim()}
+  KANJI.forEach(function(card){[card.rtkKeyword].concat(card.answers||[]).forEach(function(keyword){var key=normalize(keyword);if(key&&!KANJI_BY_PRIMITIVE[key])KANJI_BY_PRIMITIVE[key]=card.kanji})});
+  function primitiveGlyph(part){var key=normalize(part);return PRIMITIVE_GLYPHS[key]||KANJI_BY_PRIMITIVE[key]||""}
   function matches(card,value){var n=normalize(value),tight=n.replace(/ /g,"");return !!n&&card.answers.some(function(answer){var a=normalize(answer);return n===a||tight===a.replace(/ /g,"")})}
   function formatStudyTime(ms){
     if(!ms)return "0m";if(ms<60000)return Math.max(1,Math.round(ms/1000))+"s";var minutes=Math.floor(ms/60000);if(minutes<60)return minutes+"m";var hours=Math.floor(minutes/60),remainder=minutes%60;return hours+"h"+(remainder?" "+remainder+"m":"");
@@ -80,7 +85,7 @@
     $("#picker").value=drawIndex;$("#frame").textContent="RTK frame "+k.rtkFrame+" · strength "+JL_PROGRESS.strength(k.progressId)+"% · next "+JL_PROGRESS.nextLabel(k.progressId);
     $("#meaning").textContent=k.meaning;$("#hint").textContent=k.hint?"primitive: "+k.hint:"";
     $("#revealed").textContent=k.kanji;$("#revealed").hidden=false;$("#reveal").textContent="Hide kanji";
-    $("#notes").value=notes[k.frame]||"";strokes=[];resizeCanvas();
+    fillPrimitiveList("#draw-primitive-list",k.primitives||[],k,false);$("#notes").value=notes[k.frame]||"";strokes=[];resizeCanvas();
   }
   $("#prev").onclick=function(){drawIndex=(drawIndex+KANJI.length-1)%KANJI.length;renderDraw()};
   $("#next").onclick=function(){drawIndex=(drawIndex+1)%KANJI.length;renderDraw()};
@@ -133,9 +138,12 @@
     $("#meaning-input").disabled=true;$all(".choice").forEach(function(button){button.disabled=true;if(button.dataset.id===card.id)button.classList.add("right")});if(picked&&!correct)picked.classList.add("wrong");$("#hint-tools").hidden=true;
     var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
   }
-  function fillPrimitiveList(selector,parts){
+  function fillPrimitiveChip(chip,part,card,masked){
+    var glyph=primitiveGlyph(part);if(glyph){chip.classList.add("has-glyph");var shape=document.createElement("span");shape.className="primitive-glyph";shape.setAttribute("aria-hidden","true");shape.textContent=glyph;chip.appendChild(shape)}var label=document.createElement("span");label.className="primitive-label";if(masked)fillMaskedText(label,part,card);else label.textContent=part;chip.appendChild(label);
+  }
+  function fillPrimitiveList(selector,parts,card,masked){
     var list=$(selector);list.innerHTML="";
-    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";chip.textContent=part;list.appendChild(chip)});
+    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";fillPrimitiveChip(chip,part,card,masked);list.appendChild(chip)});
     else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";list.appendChild(chip)}
   }
   function answerPattern(card){
@@ -147,13 +155,8 @@
     while((match=pattern.exec(source))){var start=match.index+match[1].length;if(start>cursor)element.appendChild(document.createTextNode(source.slice(cursor,start)));var hidden=document.createElement("span");hidden.className="hint-redaction";hidden.setAttribute("aria-hidden","true");hidden.textContent=match[2];element.appendChild(hidden);cursor=start+match[2].length;pattern.lastIndex=cursor}
     if(cursor<source.length)element.appendChild(document.createTextNode(source.slice(cursor)));
   }
-  function fillHintPrimitives(selector,parts,card){
-    var list=$(selector);list.innerHTML="";
-    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";fillMaskedText(chip,part,card);list.appendChild(chip)});
-    else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";list.appendChild(chip)}
-  }
   function renderQuestionHint(card){
-    var parts=card.primitives||[];$("#question-hint-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;fillHintPrimitives("#question-primitive-list",parts,card);
+    var parts=card.primitives||[];$("#question-hint-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;fillPrimitiveList("#question-primitive-list",parts,card,true);
     $("#question-primitive-image").hidden=!card.hint;if(card.hint)fillMaskedText($("#question-primitive-image"),"Extra primitive image: "+card.hint,card);else $("#question-primitive-image").textContent="";
     var existing=notes[card.frame]||"";$("#question-note-preview").hidden=!existing;if(existing)fillMaskedText($("#question-note-preview"),"Your note: "+existing,card);else $("#question-note-preview").textContent="";
   }
@@ -166,7 +169,7 @@
   function renderMemoryCue(card){
     $("#memory-cue").hidden=false;$("#rtk-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;
     var parts=card.primitives||[];
-    fillPrimitiveList("#primitive-list",parts);
+    fillPrimitiveList("#primitive-list",parts,card,false);
     $("#rtk-cue").textContent=(parts.length?parts.join(" + "):"base image")+" → "+card.rtkKeyword;
     $("#primitive-image").hidden=!card.hint;$("#primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
     var existing=notes[card.frame]||"";$("#note-preview").hidden=!existing;$("#note-preview").textContent=existing?"Your note: "+existing:"";$("#quiz-note").value=existing;$("#quiz-note-editor").hidden=true;
