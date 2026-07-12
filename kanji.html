@@ -38,18 +38,20 @@
   .quiz-card{text-align:center}.quiz-meta{display:flex;justify-content:space-between;color:var(--soft);font-size:13px;font-weight:700}.track{height:7px;background:#ECE6DA;border-radius:999px;overflow:hidden;margin:10px 0 22px}.fill{height:100%;background:var(--accent);width:0;transition:width .25s}
   .q-kanji{font:400 clamp(90px,20vw,130px)/1.1 "Zen Antique",serif}.q-keyword{font-size:36px;font-weight:700;margin:35px 0 22px}.quiz-form{display:flex;gap:8px}.quiz-form input{flex:1;min-width:0;min-height:44px;border:0;border-radius:10px;padding:10px 13px;box-shadow:inset 0 0 0 1px rgba(41,37,31,.16);font:inherit}
   .choices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.choice{min-height:68px;background:#FBF7EF;color:var(--ink);font:400 34px "Zen Antique",serif;box-shadow:inset 0 0 0 1px rgba(41,37,31,.13)}.choice.right{background:var(--good-bg);box-shadow:inset 0 0 0 2px var(--good)}.choice.wrong{background:var(--bad-bg);box-shadow:inset 0 0 0 2px var(--bad)}
-  .feedback{margin-top:18px;border-radius:12px;padding:16px}.feedback.good{background:var(--good-bg)}.feedback.bad{background:var(--bad-bg)}.feedback .big{font:400 38px "Zen Antique",serif}.feedback[hidden],.quiz-stage[hidden]{display:none}
+  .feedback{margin-top:18px;border-radius:12px;padding:16px}.feedback.good{background:var(--good-bg)}.feedback.bad{background:var(--bad-bg)}.feedback .big{font:400 38px "Zen Antique",serif}.feedback[hidden],.quiz-stage[hidden],.memory-cue[hidden],.note-editor[hidden],.note-preview[hidden]{display:none}
+  .memory-cue{margin-top:14px;padding-top:14px;border-top:1px solid rgba(41,37,31,.12);text-align:left}.rtk-meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700}.primitive-list{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.primitive{display:inline-flex;align-items:center;min-height:32px;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.65);box-shadow:inset 0 0 0 1px rgba(41,37,31,.12);font-size:13px;font-weight:700}.cue-equation{font-size:17px;font-weight:700;margin:7px 0;text-wrap:pretty}.primitive-image{color:var(--soft);font-size:13px;margin:4px 0}.note-preview{margin:12px 0 0;padding:10px 12px;border-left:3px solid var(--accent);background:rgba(255,255,255,.5);white-space:pre-wrap}.keyboard-hint{margin:12px 0 0;color:var(--soft);font-size:13px}.keyboard-hint kbd{display:inline-block;min-width:25px;padding:1px 6px;border-radius:5px;background:var(--card);box-shadow:inset 0 0 0 1px rgba(41,37,31,.16),0 1px 1px rgba(41,37,31,.08);color:var(--ink);font:700 11px "Zen Maru Gothic",sans-serif;text-align:center}.note-editor{margin-top:12px}.note-editor textarea{min-height:88px;background:rgba(255,255,255,.72)}.feedback-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:13px}.feedback-help{display:block;color:var(--soft);font-size:12px;margin-top:8px}
   .result{text-align:center}.score{font-size:48px;font-weight:700}.missed{display:grid;gap:6px;text-align:left;margin:18px auto;max-width:400px}.missed-row{display:flex;gap:12px;padding:7px;border-bottom:1px solid var(--line)}.missed-row b{font:400 24px "Zen Antique",serif}
   @media(max-width:760px){.practice-grid{grid-template-columns:1fr}.choices{grid-template-columns:repeat(2,1fr)}.wrap{padding-inline:16px}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="learning.js"></script>
+<script src="kanji-rtk-hints.js"></script>
 <script src="kanji-data.js"></script>
 </head>
 <body>
 <main class="wrap">
   <header>
-    <div class="brand"><span class="mark">朱</span><div><h1>Kanji Fable</h1><p>Dedicated kanji track · frames 1–250</p></div></div>
+    <div class="brand"><span class="mark">朱</span><div><h1>Kanji Fable</h1><p>250-kanji track · aligned to RTK frames</p></div></div>
     <nav class="tabs" aria-label="Kanji views"><button class="tab active" data-view="dashboard">Dashboard</button><button class="tab" data-view="draw">Draw</button><button class="tab" data-view="quiz">Quiz</button></nav>
   </header>
 
@@ -80,9 +82,28 @@
         <div class="quiz-meta"><span id="q-progress"></span><span id="q-mode"></span></div><div class="track"><div class="fill" id="q-fill"></div></div>
         <div id="meaning-question"><div class="q-kanji" id="q-kanji"></div><form class="quiz-form" id="meaning-form"><input id="meaning-input" placeholder="Type the English keyword" autocomplete="off"><button class="btn primary">Check</button></form></div>
         <div id="recognition-question" hidden><div class="q-keyword" id="q-keyword"></div><div class="choices" id="choices"></div></div>
-        <div class="feedback" id="feedback" hidden><strong id="verdict"></strong><div id="correct-answer"></div><button class="btn primary" id="continue">Continue →</button></div>
+        <div class="feedback" id="feedback" hidden>
+          <strong id="verdict"></strong>
+          <div id="correct-answer"></div>
+          <div class="memory-cue" id="memory-cue" hidden>
+            <div class="rtk-meta" id="rtk-meta"></div>
+            <div class="primitive-list" id="primitive-list"></div>
+            <p class="cue-equation" id="rtk-cue"></p>
+            <p class="primitive-image" id="primitive-image" hidden></p>
+            <div class="note-preview" id="note-preview" hidden></div>
+            <p class="keyboard-hint">Double-tap <kbd>Space</kbd> to add or edit your note.</p>
+            <div class="note-editor" id="quiz-note-editor" hidden>
+              <label class="label" for="quiz-note">Your mnemonic note</label>
+              <textarea id="quiz-note" placeholder="Add the image or story that will make this stick."></textarea>
+              <button class="btn primary" id="save-note-continue" type="button">Save note &amp; continue</button>
+              <span class="feedback-help"><kbd>Enter</kbd> saves and moves on · <kbd>Shift</kbd> + <kbd>Enter</kbd> adds a new line</span>
+            </div>
+          </div>
+          <div class="feedback-actions"><button class="btn primary" id="continue">Continue →</button></div>
+          <span class="feedback-help" id="feedback-help">Press Enter to continue.</span>
+        </div>
       </div>
-      <div class="quiz-stage panel result" id="quiz-results" hidden><h2>Quiz complete</h2><div class="score" id="score"></div><p class="sub" id="result-copy"></p><div class="missed" id="missed"></div><div class="controls" style="justify-content:center"><button class="btn primary" id="retry">Retry missed</button><button class="btn" id="new-quiz">New quiz</button><button class="btn" id="to-dashboard">Dashboard</button></div></div>
+      <div class="quiz-stage panel result" id="quiz-results" hidden><h2>Quiz complete</h2><div class="score" id="score"></div><p class="sub" id="result-copy"></p><div class="missed" id="missed"></div><div class="controls" style="justify-content:center"><button class="btn primary" id="retry">Retry missed once</button><button class="btn" id="new-quiz">New quiz</button><button class="btn" id="to-dashboard">Dashboard</button></div></div>
     </div>
   </section>
 </main>

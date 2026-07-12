@@ -3,11 +3,13 @@
   var KANJI=(window.JL_KANJI||[]).map(function(k){return Object.assign({},k,{frame:k.id,id:"kanji:"+k.id,progressId:"kanji:"+k.id,subject:"kanji",type:"kanji"})});
   var NOTES_KEY="japaneseLessons.kanjiNotes.v1";
   var notes=loadNotes(),drawIndex=0,strokes=[],drawing=false,traceOn=false,noteTimer=null;
-  var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning"};
+  var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false};
+  var lastSpaceAt=0;
   function $(s){return document.querySelector(s)}
   function $all(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
   function loadNotes(){try{return JSON.parse(localStorage.getItem(NOTES_KEY))||{}}catch(_){return {}}}
   function saveNotes(){localStorage.setItem(NOTES_KEY,JSON.stringify(notes))}
+  function saveNote(frame,value){var clean=String(value||"").trim();if(clean)notes[frame]=clean;else delete notes[frame];saveNotes()}
   function shuffle(list){var a=list.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function normalize(value){return String(value||"").toLowerCase().replace(/[^a-z0-9 ]+/g,"").replace(/\s+/g," ").trim()}
   function matches(card,value){var n=normalize(value),tight=n.replace(/ /g,"");return !!n&&card.answers.some(function(answer){var a=normalize(answer);return n===a||tight===a.replace(/ /g,"")})}
@@ -24,7 +26,7 @@
   function renderDashboard(){
     var ids=KANJI.map(function(k){return k.progressId}),s=JL_PROGRESS.summary(ids);
     $("#kanji-stats").innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' total XP</span></div>';
-    $("#mastery").innerHTML=KANJI.map(function(k){return '<button class="tile" data-id="'+k.frame+'" data-next="'+JL_PROGRESS.nextLabel(k.progressId)+'" title="#'+k.frame+' '+k.meaning+' · '+JL_PROGRESS.strength(k.progressId)+'%" style="background:'+color(k.progressId)+'">'+k.kanji+'</button>'}).join("");
+    $("#mastery").innerHTML=KANJI.map(function(k){return '<button class="tile" data-id="'+k.frame+'" data-next="'+JL_PROGRESS.nextLabel(k.progressId)+'" title="RTK #'+k.rtkFrame+' · '+k.meaning+' · '+JL_PROGRESS.strength(k.progressId)+'%" style="background:'+color(k.progressId)+'">'+k.kanji+'</button>'}).join("");
     $all(".tile").forEach(function(tile){tile.onclick=function(){drawIndex=+tile.dataset.id-1;showView("draw")}});
   }
   $("#quick-review").onclick=function(){quiz.scope=250;quiz.count=10;quiz.mode="adaptive";showView("quiz");startQuiz()};
@@ -32,12 +34,12 @@
   $("#reset-progress").onclick=function(){if(confirm("Reset progress for vocabulary, kanji, and every study mode?")){JL_PROGRESS.reset();notes={};saveNotes();renderDashboard()}};
 
   function buildPicker(){
-    $("#picker").innerHTML=KANJI.map(function(k,i){return '<option value="'+i+'">'+String(k.frame).padStart(4,"0")+' '+k.kanji+' — '+k.meaning+'</option>'}).join("");
+    $("#picker").innerHTML=KANJI.map(function(k,i){return '<option value="'+i+'">RTK '+String(k.rtkFrame).padStart(4,"0")+' · '+k.kanji+' — '+k.meaning+'</option>'}).join("");
     $("#picker").onchange=function(){drawIndex=+this.value;renderDraw()};
   }
   function renderDraw(){
     var k=KANJI[drawIndex];if(!k)return;
-    $("#picker").value=drawIndex;$("#frame").textContent="#"+String(k.frame).padStart(4,"0")+" · strength "+JL_PROGRESS.strength(k.progressId)+"% · next "+JL_PROGRESS.nextLabel(k.progressId);
+    $("#picker").value=drawIndex;$("#frame").textContent="RTK frame "+k.rtkFrame+" · strength "+JL_PROGRESS.strength(k.progressId)+"% · next "+JL_PROGRESS.nextLabel(k.progressId);
     $("#meaning").textContent=k.meaning;$("#hint").textContent=k.hint?"primitive: "+k.hint:"";
     $("#revealed").textContent=k.kanji;$("#revealed").hidden=true;$("#reveal").textContent="Reveal kanji";
     $("#notes").value=notes[k.frame]||"";strokes=[];resizeCanvas();
@@ -46,7 +48,7 @@
   $("#next").onclick=function(){drawIndex=(drawIndex+1)%KANJI.length;renderDraw()};
   $("#random").onclick=function(){drawIndex=Math.floor(Math.random()*KANJI.length);renderDraw()};
   $("#reveal").onclick=function(){var el=$("#revealed");el.hidden=!el.hidden;this.textContent=el.hidden?"Reveal kanji":"Hide kanji"};
-  $("#notes").oninput=function(){var value=this.value,id=KANJI[drawIndex].frame;clearTimeout(noteTimer);noteTimer=setTimeout(function(){if(value.trim())notes[id]=value;else delete notes[id];saveNotes()},350)};
+  $("#notes").oninput=function(){var value=this.value,id=KANJI[drawIndex].frame;clearTimeout(noteTimer);noteTimer=setTimeout(function(){saveNote(id,value)},350)};
 
   var canvas=$("#canvas"),ctx=canvas.getContext("2d"),canvasWrap=$("#canvas-wrap");
   function canvasSize(){return canvasWrap.getBoundingClientRect().width}
@@ -69,13 +71,13 @@
   bindSeg("#scope","scope");bindSeg("#count","count");bindSeg("#mode","mode");
   function setStage(id){["quiz-setup","quiz-question","quiz-results"].forEach(function(stage){$("#"+stage).hidden=stage!==id})}
   $("#start-quiz").onclick=function(){startQuiz()};
-  function startQuiz(custom){
-    var pool=custom||JL_PROGRESS.order(KANJI.slice(0,quiz.scope));quiz.cards=pool.slice(0,Math.min(quiz.count,pool.length));quiz.index=0;quiz.results=[];setStage("quiz-question");renderQuestion();
+  function startQuiz(custom,retryRound){
+    var pool=custom||JL_PROGRESS.order(KANJI.slice(0,quiz.scope));quiz.cards=custom?pool.slice():pool.slice(0,Math.min(quiz.count,pool.length));quiz.index=0;quiz.results=[];quiz.retryRound=!!retryRound;setStage("quiz-question");renderQuestion();
   }
   function renderQuestion(){
     var card=quiz.cards[quiz.index];if(!card){finishQuiz();return}quiz.answered=false;
     quiz.currentMode=quiz.mode==="adaptive"?(JL_PROGRESS.strength(card.progressId)>=55?"recognition":"meaning"):quiz.mode;
-    $("#q-progress").textContent=(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;
+    $("#q-progress").textContent=(quiz.retryRound?"Retry · ":"")+(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;$("#memory-cue").hidden=true;$("#quiz-note-editor").hidden=true;$("#continue").hidden=false;lastSpaceAt=0;
     var meaning=quiz.currentMode==="meaning";$("#meaning-question").hidden=!meaning;$("#recognition-question").hidden=meaning;
     if(meaning){$("#q-kanji").textContent=card.kanji;$("#meaning-input").value="";$("#meaning-input").disabled=false;setTimeout(function(){$("#meaning-input").focus()},50)}
     else{$("#q-keyword").textContent=card.meaning;buildChoices(card)}
@@ -90,15 +92,41 @@
     if(quiz.answered)return;quiz.answered=true;var card=quiz.cards[quiz.index],rating=correct?"good":"again";
     JL_PROGRESS.record(card.progressId,rating,{subject:"kanji",type:"kanji"});quiz.results.push({card:card,correct:correct});
     $("#meaning-input").disabled=true;$all(".choice").forEach(function(button){button.disabled=true;if(button.dataset.id===card.id)button.classList.add("right")});if(picked&&!correct)picked.classList.add("wrong");
-    var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>"+(card.hint?" · "+card.hint:"");feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
+    var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
   }
-  $("#continue").onclick=function(){quiz.index++;renderQuestion()};
+  function renderMemoryCue(card){
+    $("#memory-cue").hidden=false;$("#rtk-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;$("#primitive-list").innerHTML="";
+    var parts=card.primitives||[];
+    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";chip.textContent=part;$("#primitive-list").appendChild(chip)});
+    else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";$("#primitive-list").appendChild(chip)}
+    $("#rtk-cue").textContent=(parts.length?parts.join(" + "):"base image")+" → "+card.rtkKeyword;
+    $("#primitive-image").hidden=!card.hint;$("#primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
+    var existing=notes[card.frame]||"";$("#note-preview").hidden=!existing;$("#note-preview").textContent=existing?"Your note: "+existing:"";$("#quiz-note").value=existing;$("#quiz-note-editor").hidden=true;
+  }
+  function openQuizNoteEditor(){
+    if(!quiz.answered||!$("#feedback").classList.contains("bad"))return;var card=quiz.cards[quiz.index];$("#quiz-note").value=notes[card.frame]||"";$("#quiz-note-editor").hidden=false;$("#continue").hidden=true;$("#feedback-help").textContent="Enter saves your note and moves to the next kanji.";setTimeout(function(){$("#quiz-note").focus();$("#quiz-note").setSelectionRange($("#quiz-note").value.length,$("#quiz-note").value.length)},20);
+  }
+  function advanceQuestion(){
+    if(!$("#quiz-note-editor").hidden){var card=quiz.cards[quiz.index];saveNote(card.frame,$("#quiz-note").value)}quiz.index++;renderQuestion();
+  }
+  $("#continue").onclick=advanceQuestion;$("#save-note-continue").onclick=advanceQuestion;
+  $("#quiz-note").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();advanceQuestion()}});
   function finishQuiz(){
     setStage("quiz-results");var correct=quiz.results.filter(function(r){return r.correct}).length,total=quiz.results.length,missed=quiz.results.filter(function(r){return !r.correct});
-    JL_PROGRESS.addSession({kind:"kanji",total:total,correct:correct,mode:quiz.mode});$("#score").textContent=correct+" / "+total;$("#result-copy").textContent=missed.length?"Missed characters were scheduled sooner. Retry them now or let the adaptive queue bring them back.":"Perfect run. These characters are now spaced farther out.";
-    $("#missed").innerHTML=missed.map(function(r){return '<div class="missed-row"><b>'+r.card.kanji+'</b><span>'+r.card.meaning+"</span></div>"}).join("");$("#retry").hidden=!missed.length;$("#retry").onclick=function(){startQuiz(missed.map(function(r){return r.card}))};
+    JL_PROGRESS.addSession({kind:"kanji",total:total,correct:correct,mode:quiz.mode,retry:quiz.retryRound});$("#score").textContent=correct+" / "+total;
+    if(quiz.retryRound)$("#result-copy").textContent=missed.length?"Retry round complete. Anything still missed stays scheduled for earlier adaptive review.":"Retry round complete. You recovered every missed kanji.";
+    else $("#result-copy").textContent=missed.length?"Practice every missed kanji once more, or let the adaptive queue bring them back.":"Perfect run. These characters are now spaced farther out.";
+    $("#missed").innerHTML=missed.map(function(r){return '<div class="missed-row"><b>'+r.card.kanji+'</b><span>'+r.card.meaning+"</span></div>"}).join("");$("#retry").hidden=!missed.length||quiz.retryRound;$("#retry").onclick=function(){startQuiz(missed.map(function(r){return r.card}),true)};
   }
   $("#new-quiz").onclick=function(){setStage("quiz-setup")};$("#to-dashboard").onclick=function(){showView("dashboard")};
-  document.addEventListener("keydown",function(e){if($("#quiz-question").hidden||quiz.answered||quiz.currentMode!=="recognition")return;var n=+e.key;if(n>=1&&n<=8){var button=$all(".choice")[n-1];if(button)button.click()}});
+  document.addEventListener("keydown",function(e){
+    if($("#quiz-question").hidden)return;
+    if(quiz.answered){
+      if(!$("#quiz-note-editor").hidden)return;
+      if(e.code==="Space"&&$("#feedback").classList.contains("bad")){e.preventDefault();var now=Date.now();if(lastSpaceAt&&now-lastSpaceAt<450){lastSpaceAt=0;openQuizNoteEditor()}else lastSpaceAt=now;return}
+      if(e.key==="Enter"){e.preventDefault();advanceQuestion()}return;
+    }
+    if(quiz.currentMode!=="recognition")return;var n=+e.key;if(n>=1&&n<=8){var button=$all(".choice")[n-1];if(button)button.click()}
+  });
   buildPicker();renderDashboard();
 })();

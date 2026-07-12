@@ -50,5 +50,15 @@ window.JL_KANJI = [
   ["然","sort of thing",""],["荻","reed",""],["狩","hunt",""],["猫","cat",""],["牛","cow",""],
   ["特","special",""],["告","revelation",""],["先","before",""],["洗","wash",""],["介","jammed in",""]
 ].map(function(row,index){
-  return {id:index+1,kanji:row[0],meaning:row[1],hint:row[2],answers:row[1].split("/").map(function(value){return value.trim()})};
+  var rtk=(window.JL_RTK_HINTS||{})[row[0]]||{};
+  return {
+    id:index+1,
+    kanji:row[0],
+    meaning:row[1],
+    hint:row[2],
+    answers:row[1].split("/").map(function(value){return value.trim()}),
+    rtkFrame:rtk.frame||index+1,
+    rtkKeyword:rtk.keyword||row[1].split("/")[0].trim(),
+    primitives:rtk.parts||[]
+  };
 });
