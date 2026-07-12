@@ -12,7 +12,7 @@
     { href: "time.html", icon: "🕒", label: "Time", detail: "telling time" },
     { href: "age-days-months.html", icon: "📅", label: "Calendar", detail: "age, days & months" },
     { href: "flashcards.html", icon: "🃏", label: "Vocabulary", detail: "adaptive review" },
-    { href: "kanji.html", icon: "🖌️", label: "Kanji", detail: "Kanji Fable" },
+    { href: "kanji.html", icon: "🖌️", label: "Kanji Game", detail: "draw, learn & quiz" },
     { href: "introduction.html", icon: "👋", label: "Introductions", detail: "personal introduction" },
     { href: "about.html", icon: "🙋", label: "About me", detail: "example bank" },
     { href: "games.html", icon: "🎮", label: "Games", detail: "practice games" },

@@ -5,7 +5,7 @@ Read this file before changing the codebase.
 - Keep the site static: plain HTML, CSS, and vanilla JavaScript with no runtime backend or build step.
 - Follow the lesson progression: single-word vocabulary → explanation → guided examples → scenarios → mixed practice → listening.
 - Never reveal an answer in the prompt, card label, or accessibility text. Learners answer first, then reveal or submit.
-- Keep learner-facing Japanese in hiragana. Use katakana for normal loanwords. Kanji is allowed only inside the dedicated Kanji Fable page and its data.
+- Keep learner-facing Japanese in hiragana. Use katakana for normal loanwords. Kanji is allowed only inside the dedicated Kanji Game page and its data.
 - Pair Japanese with romaji and plain English when an answer is revealed.
 - Teach polite です／ます forms first, then show casual and past forms explicitly.
 - For verb and conjugation answers, reveal formal, casual, and common spoken contractions when they differ. Label each form and include romaji plus one English meaning (for example: すんでいました / すんでいた / すんでた).
