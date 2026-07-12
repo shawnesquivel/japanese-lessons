@@ -107,7 +107,8 @@
   .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
   .practice-card:active{transform:scale(.96)}
   .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
+  .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .practice-card .form-emoji{font-size:20px;letter-spacing:0;line-height:1;filter:saturate(.95)}
   .practice-card .q-prompt{font-weight:700;font-size:18px;margin:0;text-wrap:pretty}
   .practice-card .q-prompt[lang="ja"]{font-family:"Zen Antique",serif;font-size:clamp(21px,5vw,27px);font-weight:400}
   .practice-card .answer-main{
@@ -345,12 +346,12 @@
       <p class="lead">The same verb can show up as a dictionary form, polite form, te-form, ongoing form, past form, or want-to form. Practice the annoying swaps here before the sentence cards.</p>
       <div class="note win"><strong>Quick split:</strong> <span class="romaji">します</span> is “I do / I will do” as a habit or plan. <span class="romaji">しています</span> is “I am doing” as an ongoing action. <span class="romaji">して</span> is the short te-form bridge.</div>
       <div class="practice-toolbar" id="form-filters" aria-label="Verb form practice groups">
-        <button class="drill-filter active" type="button" data-form="all">Mix all</button>
-        <button class="drill-filter" type="button" data-form="do">する / study</button>
-        <button class="drill-filter" type="button" data-form="eat">Eat</button>
-        <button class="drill-filter" type="button" data-form="drink">Drink</button>
-        <button class="drill-filter" type="button" data-form="go">Go</button>
-        <button class="drill-filter" type="button" data-form="other">Other weird ones</button>
+        <button class="drill-filter active" type="button" data-form="all">🔀 Mix all</button>
+        <button class="drill-filter" type="button" data-form="do">📚 する / study</button>
+        <button class="drill-filter" type="button" data-form="eat">🍚 Eat</button>
+        <button class="drill-filter" type="button" data-form="drink">🥤 Drink</button>
+        <button class="drill-filter" type="button" data-form="go">🚶 Go</button>
+        <button class="drill-filter" type="button" data-form="other">🔁 Other weird ones</button>
         <span class="practice-count" id="form-count"></span>
       </div>
       <div class="practice-deck" id="form-deck"></div>
@@ -816,6 +817,16 @@
       formIndex=0;formMissed=[];formCorrect=0;formSkipped=0;
       renderForm();
     }
+    function formIcon(item){
+      if(item.group==='drink')return '🥤';
+      if(item.group==='eat')return '🍚';
+      if(item.group==='go')return '🚶';
+      if(item.group==='do')return '📚';
+      if(/watch/i.test(item.label))return '🎬';
+      if(/work/i.test(item.label))return '💼';
+      if(/live|return home/i.test(item.label))return '🏠';
+      return '🔁';
+    }
     function renderForm(){
       formCount.textContent=formItems.length+' prompts';
       if(formIndex>=formItems.length){renderFormResults();return;}
@@ -825,7 +836,7 @@
         '<div class="session-meta"><span>'+(formIndex+1)+' / '+formItems.length+'</span><span>✅ '+formCorrect+' · ❌ '+formMissed.length+'</span></div>'+
         '<div class="session-track"><div class="session-fill" style="width:'+(formIndex/formItems.length*100)+'%"></div></div>'+
         '<article class="practice-card" tabindex="0" role="button" aria-expanded="false">'+
-          '<div class="deck-label">'+esc(item.label)+'</div><p class="q-prompt">'+esc(item.q)+'</p>'+
+          '<div class="deck-label"><span class="form-emoji" aria-hidden="true">'+formIcon(item)+'</span><span>'+esc(item.label)+'</span></div><p class="q-prompt">'+esc(item.q)+'</p>'+
           '<p class="answer-main"'+aLang+'>'+item.a+'</p><p class="answer-note">'+esc(item.note)+'</p>'+
           '<p class="tap-hint">answer first · tap to check</p></article>'+
         '<div class="self-grade"><button class="grade-btn correct" data-form-outcome="correct">✅ Got it</button><button class="grade-btn missed" data-form-outcome="missed">❌ Missed</button></div>'+
@@ -1270,10 +1281,10 @@
       document.getElementById('restart-round').addEventListener('click',function(){resetSession();});
     }
 
-    document.querySelectorAll('.drill-filter').forEach(function(button){
+    document.querySelectorAll('[data-mode]').forEach(function(button){
       button.addEventListener('click', function(){
         activeMode = button.getAttribute('data-mode');
-        document.querySelectorAll('.drill-filter').forEach(function(item){ item.classList.remove('active'); });
+        document.querySelectorAll('[data-mode]').forEach(function(item){ item.classList.remove('active'); });
         button.classList.add('active');
         resetSession();
       });
