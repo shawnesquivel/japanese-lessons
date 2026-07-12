@@ -118,6 +118,7 @@
   .practice-card .answer-main[lang="ja"]{font-family:"Zen Antique",serif}
   .practice-card .answer-variant{display:block;padding:9px 12px;border-radius:9px;background:#F7F3E8}
   .practice-card .answer-variant+.answer-variant{margin-top:7px}
+  .practice-card .answer-variant.polite-spoken{background:#FBF0DC}
   .practice-card .answer-variant.casual{background:var(--a-bg)}
   .practice-card .answer-variant.spoken{background:var(--ko-bg)}
   .practice-card .answer-variant b{display:block;font:700 10px "Zen Maru Gothic",system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px}
@@ -309,11 +310,11 @@
     <div class="vocab-deck" id="vocab-deck"></div>
 
     <div class="form-practice" id="form-practice">
-      <h3>Pattern to memorize: ongoing action</h3>
+      <h3>Pattern to memorize: active situation</h3>
       <div class="form-snapshot">
         <div class="pattern">
-          <p class="big">て-form + います = ongoing action</p>
-          <span class="rj">te-form + imasu = “am / is doing”</span>
+          <p class="big">て-form + いる = active situation</p>
+          <span class="rj">te-form + iru = doing now, current routine, or ongoing state</span>
         </div>
         <table class="tbl">
           <thead><tr><th>What you want</th><th>How it is built</th></tr></thead>
@@ -325,13 +326,25 @@
           </tbody>
         </table>
         <div class="note win">
-          <strong>Any action verb:</strong> once you know the て-form, add <span class="romaji">います</span> for ongoing action.
+          <strong>Any action verb:</strong> once you know the て-form, add <span class="romaji">いる</span>. Then make <span class="romaji">いる</span> polite, past, or casual.
           <ul class="form-example-list">
             <li><span class="kana">のむ → のんで + います = のんでいます</span><span class="rj">nomu → nonde + imasu = nonde imasu · drinking</span></li>
             <li><span class="kana">みる → みて + います = みています</span><span class="rj">miru → mite + imasu = mite imasu · watching</span></li>
             <li><span class="kana">はなす → はなして + います = はなしています</span><span class="rj">hanasu → hanashite + imasu = hanashite imasu · speaking</span></li>
           </ul>
         </div>
+        <div class="note">
+          <strong>Nuance check:</strong> <span class="romaji">ている</span> is not only “right this second.” For action verbs it can mean doing now. With words like <span class="romaji">さいきん</span> or <span class="romaji">まいにち</span>, it can also mean a current or repeated routine. Some verbs use it for an ongoing state, like <span class="romaji">すんでいます</span> = “live / am living.”
+        </div>
+        <table class="tbl">
+          <thead><tr><th>Register</th><th>Shape</th><th>Drink example</th></tr></thead>
+          <tbody>
+            <tr><td class="en">careful polite</td><td><span class="rj">て-form + imasu</span></td><td><span class="kana">のんでいます</span><span class="rj">nonde imasu</span></td></tr>
+            <tr><td class="en">spoken polite</td><td><span class="rj">drop i before masu</span></td><td><span class="kana">のんでます</span><span class="rj">nonde masu</span></td></tr>
+            <tr><td class="en">plain / casual</td><td><span class="rj">て-form + iru</span></td><td><span class="kana">のんでいる</span><span class="rj">nonde iru</span></td></tr>
+            <tr><td class="en">casual spoken</td><td><span class="rj">drop i: de iru → deru</span></td><td><span class="kana">のんでる</span><span class="rj">nonderu</span></td></tr>
+          </tbody>
+        </table>
         <table class="tbl">
           <thead><tr><th>If English says...</th><th>Use this shape</th></tr></thead>
           <tbody>
@@ -344,7 +357,7 @@
       </div>
       <h3>Verb form families</h3>
       <p class="lead">The same verb can show up as a dictionary form, polite form, te-form, ongoing form, past form, or want-to form. Practice the annoying swaps here before the sentence cards.</p>
-      <div class="note win"><strong>Quick split:</strong> <span class="romaji">します</span> is “I do / I will do” as a habit or plan. <span class="romaji">しています</span> is “I am doing” as an ongoing action. <span class="romaji">して</span> is the short te-form bridge.</div>
+      <div class="note win"><strong>Quick split:</strong> <span class="romaji">します</span> is “I do / I will do” as a general habit or plan. <span class="romaji">しています</span> is an active situation: doing now, a current routine, or an ongoing state. <span class="romaji">して</span> is the short te-form bridge.</div>
       <div class="practice-toolbar" id="form-filters" aria-label="Verb form practice groups">
         <button class="drill-filter active" type="button" data-form="all">🔀 Mix all</button>
         <button class="drill-filter" type="button" data-form="do">📚 する / study</button>
@@ -742,7 +755,9 @@
       { group:'drink', label:'Drink family', q:'to drink · casual dictionary form', a:'のむ', note:'nomu. The base form.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'te-form: drink and…', a:'のんで', note:'nonde. This is the annoying one: のむ becomes のんで, not のみて.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I drink / I will drink · formal', a:'のみます', note:'nomimasu. Habitual or future.', aLang:'ja' },
-      { group:'drink', label:'Drink family', q:"I'm drinking · formal / casual / spoken", a:'<span class="answer-variant"><b>Formal</b>のんでいます。</span><span class="answer-variant casual"><b>Casual</b>のんでいる。</span><span class="answer-variant spoken"><b>Common spoken</b>のんでる。</span>', note:'nonde imasu. / nonde iru. / nonderu.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:"I'm drinking · polite / casual / contractions", a:'<span class="answer-variant"><b>Careful polite</b>のんでいます。</span><span class="answer-variant polite-spoken"><b>Spoken polite</b>のんでます。</span><span class="answer-variant casual"><b>Plain / casual</b>のんでいる。</span><span class="answer-variant spoken"><b>Casual spoken</b>のんでる。</span>', note:'nonde imasu / nonde masu / nonde iru / nonderu. のんでます and のんでる drop the い from います or いる.', aLang:'ja' },
+      { group:'drink', label:'Drink contraction', q:"I'm drinking · everyday polite spoken", a:'のんでます。', note:'nonde masu. This is the common spoken contraction of のんでいます; useful in everyday polite speech, less careful than the full form.', aLang:'ja' },
+      { group:'drink', label:'Drink contraction', q:"I'm drinking · casual spoken", a:'のんでる。', note:'nonderu. This is のんでいる with the い dropped: のんでいる → のんでる.', aLang:'ja' },
       { group:'drink', label:'Drink question trap', q:'What are you drinking? · formal question', a:'なにをのんでいますか。', note:'nani o nonde imasu ka. Ongoing uses のんでいます, and a polite question ends with か.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I drank · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみました。</span><span class="answer-variant casual"><b>Casual</b>のんだ。</span>', note:'nomimashita. / nonda.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I want to drink · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみたいです。</span><span class="answer-variant casual"><b>Casual</b>のみたい。</span>', note:'nomitai desu. / nomitai.', aLang:'ja' },
