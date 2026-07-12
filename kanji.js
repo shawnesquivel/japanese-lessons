@@ -3,6 +3,7 @@
   var KANJI=(window.JL_KANJI||[]).map(function(k){return Object.assign({},k,{frame:k.id,id:"kanji:"+k.id,progressId:"kanji:"+k.id,subject:"kanji",type:"kanji"})});
   var NOTES_KEY="japaneseLessons.kanjiNotes.v1";
   var notes=loadNotes(),drawIndex=0,strokes=[],drawing=false,traceOn=false,noteTimer=null;
+  var selectedFrames=new Set(),selectionDrag=null;
   var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false};
   var lastSpaceAt=0;
   function $(s){return document.querySelector(s)}
@@ -17,6 +18,18 @@
     var s=JL_PROGRESS.strength(id);if(!JL_PROGRESS.card(id).reviews)return "#ECE6DA";
     var hue=s<50?8+(38*s/50):46+(94*(s-50)/50);return "hsl("+Math.round(hue)+",55%,"+(67-Math.min(18,s*.18))+"%)";
   }
+  function weakKanji(){
+    return KANJI.filter(function(k){var state=JL_PROGRESS.card(k.progressId);return state.reviews&&(JL_PROGRESS.strength(k.progressId)<60||state.lastRating==="again")}).sort(function(a,b){
+      var aState=JL_PROGRESS.card(a.progressId),bState=JL_PROGRESS.card(b.progressId),aScore=(100-JL_PROGRESS.strength(a.progressId))+aState.lapses*10+aState.again*3+(aState.lastRating==="again"?30:0),bScore=(100-JL_PROGRESS.strength(b.progressId))+bState.lapses*10+bState.again*3+(bState.lastRating==="again"?30:0);return bScore-aScore;
+    });
+  }
+  function selectedKanji(){return KANJI.filter(function(k){return selectedFrames.has(k.frame)})}
+  function setTileSelected(tile,selected){
+    var frame=+tile.dataset.id;if(selected)selectedFrames.add(frame);else selectedFrames.delete(frame);tile.classList.toggle("selected",selected);tile.setAttribute("aria-pressed",selected?"true":"false");
+  }
+  function updateSelectionControls(){
+    var count=selectedFrames.size,weak=weakKanji(),weakCount=Math.min(20,weak.length);$("#selection-count").textContent=count+" selected";$("#selection-copy").textContent=count?"Drag from a selected tile to remove a group.":"Weak = studied below 60% or missed last time.";$("#clear-selection").disabled=!count;$("#quiz-selection").disabled=!count;$("#quiz-selection").textContent=count?"Quiz selected ("+count+")":"Quiz selected";$("#quiz-weak").disabled=!weakCount;$("#quiz-weak").textContent=!weakCount?"No weak kanji yet":weak.length>20?"Quiz weakest 20":"Quiz weak ("+weakCount+")";$("#quiz-weak").title=weakCount?"Studied kanji below 60% strength or missed on their latest review":"Weak quizzes appear after you have reviewed kanji";
+  }
   function showView(name){
     $all(".tab").forEach(function(tab){tab.classList.toggle("active",tab.dataset.view===name)});
     $all(".view").forEach(function(view){view.classList.toggle("active",view.id==="view-"+name)});
@@ -26,10 +39,29 @@
   function renderDashboard(){
     var ids=KANJI.map(function(k){return k.progressId}),s=JL_PROGRESS.summary(ids);
     $("#kanji-stats").innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' total XP</span></div>';
-    $("#mastery").innerHTML=KANJI.map(function(k){return '<button class="tile" data-id="'+k.frame+'" data-next="'+JL_PROGRESS.nextLabel(k.progressId)+'" title="RTK #'+k.rtkFrame+' · '+k.meaning+' · '+JL_PROGRESS.strength(k.progressId)+'%" style="background:'+color(k.progressId)+'">'+k.kanji+'</button>'}).join("");
-    $all(".tile").forEach(function(tile){tile.onclick=function(){drawIndex=+tile.dataset.id-1;showView("draw")}});
+    $("#mastery").innerHTML=KANJI.map(function(k){var selected=selectedFrames.has(k.frame);return '<button class="tile'+(selected?' selected':'')+'" data-id="'+k.frame+'" data-next="'+JL_PROGRESS.nextLabel(k.progressId)+'" aria-pressed="'+selected+'" title="RTK #'+k.rtkFrame+' · '+k.meaning+' · '+JL_PROGRESS.strength(k.progressId)+'%" style="background:'+color(k.progressId)+'">'+k.kanji+'</button>'}).join("");updateSelectionControls();
   }
-  $("#quick-review").onclick=function(){quiz.scope=250;quiz.count=10;quiz.mode="adaptive";showView("quiz");startQuiz()};
+  function launchDashboardQuiz(cards){
+    if(!cards.length)return;quiz.scope=250;quiz.count=cards.length;quiz.mode="adaptive";$all("#mode .seg-btn").forEach(function(button){button.classList.toggle("active",button.dataset.mode==="adaptive")});showView("quiz");startQuiz(cards);
+  }
+  var mastery=$("#mastery");
+  function dragOverTile(tile){
+    if(!selectionDrag||!tile||!mastery.contains(tile)||selectionDrag.seen[tile.dataset.id])return;selectionDrag.seen[tile.dataset.id]=true;setTileSelected(tile,selectionDrag.selecting);updateSelectionControls();
+  }
+  mastery.addEventListener("pointerdown",function(e){
+    var tile=e.target.closest(".tile");if(!tile||e.button!==0)return;selectionDrag={pointerId:e.pointerId,pointerType:e.pointerType,selecting:!selectedFrames.has(+tile.dataset.id),seen:{},startTile:tile,startX:e.clientX,startY:e.clientY,moved:false};mastery.classList.add("selecting");mastery.setPointerCapture(e.pointerId);if(e.pointerType!=="touch")dragOverTile(tile);if(e.pointerType==="mouse")e.preventDefault();
+  });
+  mastery.addEventListener("pointermove",function(e){
+    if(!selectionDrag||selectionDrag.pointerId!==e.pointerId)return;var dx=Math.abs(e.clientX-selectionDrag.startX),dy=Math.abs(e.clientY-selectionDrag.startY);if(e.pointerType==="touch"){if(!selectionDrag.moved&&dx>8&&dx>dy){selectionDrag.moved=true;dragOverTile(selectionDrag.startTile)}if(!selectionDrag.moved)return}else if(dx>5||dy>5)selectionDrag.moved=true;var target=document.elementFromPoint(e.clientX,e.clientY);dragOverTile(target&&target.closest(".tile"));if(selectionDrag.moved&&e.pointerType==="mouse")e.preventDefault();
+  });
+  function endSelectionDrag(e){if(!selectionDrag||selectionDrag.pointerId!==e.pointerId)return;if(selectionDrag.pointerType==="touch"&&!selectionDrag.moved&&e.type==="pointerup")dragOverTile(selectionDrag.startTile);selectionDrag=null;mastery.classList.remove("selecting")}
+  mastery.addEventListener("pointerup",endSelectionDrag);mastery.addEventListener("pointercancel",endSelectionDrag);
+  mastery.addEventListener("click",function(e){var tile=e.target.closest(".tile");if(!tile)return;e.preventDefault();if(e.detail===0){setTileSelected(tile,!selectedFrames.has(+tile.dataset.id));updateSelectionControls()}});
+  mastery.addEventListener("dblclick",function(e){var tile=e.target.closest(".tile");if(!tile)return;drawIndex=+tile.dataset.id-1;showView("draw")});
+  $("#clear-selection").onclick=function(){selectedFrames.clear();$all(".tile").forEach(function(tile){setTileSelected(tile,false)});updateSelectionControls()};
+  $("#quiz-selection").onclick=function(){launchDashboardQuiz(shuffle(selectedKanji()))};
+  $("#quiz-weak").onclick=function(){launchDashboardQuiz(weakKanji().slice(0,20))};
+  $("#quick-review").onclick=function(){quiz.scope=250;quiz.count=10;quiz.mode="adaptive";$all("#mode .seg-btn").forEach(function(button){button.classList.toggle("active",button.dataset.mode==="adaptive")});showView("quiz");startQuiz()};
   $("#export-progress").onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="japanese-lessons-progress.json";a.click();URL.revokeObjectURL(a.href)};
   $("#reset-progress").onclick=function(){if(confirm("Reset progress for vocabulary, kanji, and every study mode?")){JL_PROGRESS.reset();notes={};saveNotes();renderDashboard()}};
 
