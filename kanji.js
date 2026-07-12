@@ -143,8 +143,11 @@
     $("#question-primitive-image").hidden=!card.hint;$("#question-primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
     var existing=notes[card.frame]||"";$("#question-note-preview").hidden=!existing;$("#question-note-preview").textContent=existing?"Your note: "+existing:"";
   }
+  function setQuestionHint(open){
+    if(quiz.answered)return;var panel=$("#question-hint"),button=$("#show-hint");panel.hidden=!open;button.textContent=open?"Hide hint":"Hint";button.setAttribute("aria-expanded",open?"true":"false");if(open)renderQuestionHint(quiz.cards[quiz.index]);
+  }
   $("#show-hint").onclick=function(){
-    if(quiz.answered)return;var panel=$("#question-hint"),opening=panel.hidden;panel.hidden=!opening;this.textContent=opening?"Hide hint":"Hint";this.setAttribute("aria-expanded",opening?"true":"false");if(opening)renderQuestionHint(quiz.cards[quiz.index]);
+    setQuestionHint($("#question-hint").hidden);
   };
   function renderMemoryCue(card){
     $("#memory-cue").hidden=false;$("#rtk-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;
@@ -177,6 +180,9 @@
       if(!$("#quiz-note-editor").hidden)return;
       if(e.code==="Space"&&$("#feedback").classList.contains("bad")){e.preventDefault();var now=Date.now();if(lastSpaceAt&&now-lastSpaceAt<450){lastSpaceAt=0;openQuizNoteEditor()}else lastSpaceAt=now;return}
       if(e.key==="Enter"){e.preventDefault();advanceQuestion()}return;
+    }
+    if(e.code==="Space"){
+      var now=Date.now(),input=$("#meaning-input"),inAnswer=e.target===input;if(!inAnswer)e.preventDefault();if(lastSpaceAt&&now-lastSpaceAt<450){e.preventDefault();lastSpaceAt=0;if(inAnswer&&input.selectionStart===input.selectionEnd&&input.selectionStart>0&&input.value.charAt(input.selectionStart-1)===" ")input.setRangeText("",input.selectionStart-1,input.selectionStart,"end");setQuestionHint(true)}else lastSpaceAt=now;return;
     }
     if(quiz.currentMode!=="recognition")return;var n=+e.key;if(n>=1&&n<=8){var button=$all(".choice")[n-1];if(button)button.click()}
   });
