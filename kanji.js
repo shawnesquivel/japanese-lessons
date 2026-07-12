@@ -186,9 +186,9 @@
   function finishQuiz(){
     pauseQuizTimer();setStage("quiz-results");var correct=quiz.results.filter(function(r){return r.correct}).length,total=quiz.results.length,missed=quiz.results.filter(function(r){return !r.correct});
     JL_PROGRESS.addSession({kind:"kanji",total:total,correct:correct,mode:quiz.mode,retry:quiz.retryRound,durationMs:Math.round(quiz.elapsedMs)});$("#score").textContent=correct+" / "+total;
-    if(quiz.retryRound)$("#result-copy").textContent=missed.length?"Retry round complete. Anything still missed stays scheduled for earlier adaptive review.":"Retry round complete. You recovered every missed kanji.";
-    else $("#result-copy").textContent=missed.length?"Practice every missed kanji once more, or let the adaptive queue bring them back.":"Perfect run. These characters are now spaced farther out.";
-    $("#missed").innerHTML=missed.map(function(r){return '<div class="missed-row"><b>'+r.card.kanji+'</b><span>'+r.card.meaning+"</span></div>"}).join("");$("#retry").hidden=!missed.length||quiz.retryRound;$("#retry").onclick=function(){startQuiz(missed.map(function(r){return r.card}),true)};
+    if(quiz.retryRound)$("#result-copy").textContent=missed.length?"Retry round complete. Practice only what you missed in this round again.":"Retry round complete. You recovered every missed kanji.";
+    else $("#result-copy").textContent=missed.length?"Practice only what you missed, repeating as many rounds as you need.":"Perfect run. These characters are now spaced farther out.";
+    $("#missed").innerHTML=missed.map(function(r){return '<div class="missed-row"><b>'+r.card.kanji+'</b><span>'+r.card.meaning+"</span></div>"}).join("");$("#retry").hidden=!missed.length;$("#retry").textContent="Retry missed ("+missed.length+")";$("#retry").onclick=function(){startQuiz(missed.map(function(r){return r.card}),true)};
   }
   $("#new-quiz").onclick=function(){setStage("quiz-setup")};$("#to-dashboard").onclick=function(){showView("dashboard")};
   document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")resumeQuizTimer();else pauseQuizTimer()});
