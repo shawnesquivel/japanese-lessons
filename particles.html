@@ -29,6 +29,7 @@
   h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(46px,11vw,82px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
   .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
 
+  section,.form-practice{scroll-margin-top:72px}
   section{margin-top:46px}
   .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
   .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
@@ -50,15 +51,21 @@
   .c-subject{background:#F7F3E8;color:var(--ink);border:1px solid var(--line-strong)}
   .c-place{background:#E9EFEF;color:#315D5B}
 
-  .jump-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:22px 0 4px}
-  .jump-nav a{
-    min-width:42px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;
-    color:var(--ink);text-decoration:none;background:#fff;border:1px solid var(--line-strong);
-    border-radius:999px;font-weight:700;transition-property:transform,background;transition-duration:.12s;
+  .jump-nav{
+    position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;justify-content:flex-start;
+    margin:0 -22px 20px;padding:10px 22px;background:rgba(251,248,241,.94);border-bottom:1px solid var(--line);
+    overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;backdrop-filter:blur(10px);
   }
-  .jump-nav a:hover{background:#F3EEE1}
+  .jump-nav a{
+    flex:0 0 auto;min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+    color:var(--ink);text-decoration:none;background:#fff;border:1px solid var(--line-strong);
+    border-radius:999px;font-weight:700;font-size:13px;line-height:1.15;padding:8px 12px;
+    transition-property:transform,background,border-color;transition-duration:.12s;
+  }
+  .jump-nav a:hover{background:#F3EEE1;border-color:#CBBF9F}
   .jump-nav a:active{transform:scale(.96)}
   .jump-nav a:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .jump-nav .nav-kana{font-family:"Zen Antique",serif;font-weight:400}
 
   .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
   .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
@@ -267,19 +274,24 @@
     <div class="eyebrow">Japanese particles · core guide</div>
     <h1>じょし</h1>
     <div class="subtitle">small markers that show each word's job in a sentence</div>
-    <nav class="jump-nav" aria-label="Particle sections">
-      <a href="#vocab" aria-label="Single word vocabulary">ことば</a>
-      <a href="#wa" aria-label="Topic marker wa">は</a>
-      <a href="#ga" aria-label="Subject marker ga">が</a>
-      <a href="#wo" aria-label="Object marker o">を</a>
-      <a href="#mo" aria-label="Also marker mo">も</a>
-      <a href="#de" aria-label="Action place and means marker de">で</a>
-      <a href="#to" aria-label="Listing and companion marker to">と</a>
-      <a href="#verb-practice" aria-label="Verb scenario practice">どうし</a>
-      <a href="#sentence-builder" aria-label="Romaji sentence builder">つくる</a>
-      <a href="#listening" aria-label="Listening practice">きく</a>
-    </nav>
   </header>
+
+  <nav class="jump-nav" aria-label="Study menu">
+    <a href="#vocab">Vocab</a>
+    <a href="#form-practice">Verb forms</a>
+    <a href="#map">Particle map</a>
+    <a href="#wa"><span class="nav-kana">は</span> Topic</a>
+    <a href="#ga"><span class="nav-kana">が</span> Subject</a>
+    <a href="#wo"><span class="nav-kana">を</span> Object</a>
+    <a href="#mo"><span class="nav-kana">も</span> Also</a>
+    <a href="#de"><span class="nav-kana">で</span> Place/how</a>
+    <a href="#to"><span class="nav-kana">と</span> With/and</a>
+    <a href="#verb-practice">Verb scenarios</a>
+    <a href="#sentence-builder">Build sentences</a>
+    <a href="#practice">Mixed practice</a>
+    <a href="#listening">Listening</a>
+    <a href="#word-listening">Word audio</a>
+  </nav>
 
   <!-- ===================== VOCAB FIRST ===================== -->
   <section id="vocab">
@@ -295,7 +307,7 @@
     </div>
     <div class="vocab-deck" id="vocab-deck"></div>
 
-    <div class="form-practice">
+    <div class="form-practice" id="form-practice">
       <h3>Pattern to memorize: ongoing action</h3>
       <div class="form-snapshot">
         <div class="pattern">
@@ -963,6 +975,13 @@
     }
     function shuffle(source){var a=source.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
     function restart(source){items=shuffle(source||ITEMS);index=0;correct=0;missed=[];skipped=0;draw();}
+    function redrawBuilder(){
+      var beforeTop=deck.getBoundingClientRect().top;
+      if(document.activeElement&&deck.contains(document.activeElement))document.activeElement.blur();
+      draw();
+      var afterTop=deck.getBoundingClientRect().top;
+      if(Math.abs(afterTop-beforeTop)>1)window.scrollBy(0,afterTop-beforeTop);
+    }
     function draw(){
       if(index>=items.length){results();return;}
       var item=items[index];
@@ -981,13 +1000,12 @@
         input.disabled=true;form.querySelector('.builder-submit').disabled=true;deck.querySelector('.builder-actions').classList.add('show');
       });
       deck.querySelectorAll('[data-builder-outcome]').forEach(function(button){button.addEventListener('click',function(){grade(item,button.getAttribute('data-builder-outcome'));});});
-      input.focus();
     }
     function grade(item,outcome){
       if(outcome==='correct'){correct++;if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'good',{subject:'particles',type:'sentence-builder'});}
       else if(outcome==='missed'){missed.push(item);if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'again',{subject:'particles',type:'sentence-builder'});}
       else{skipped++;}
-      index++;draw();
+      index++;redrawBuilder();
     }
     function results(){
       var attempted=correct+missed.length;
