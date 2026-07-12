@@ -126,6 +126,7 @@
     $all(".choice").forEach(function(button){button.onclick=function(){submit(button.dataset.id===card.id,button)}});
   }
   $("#meaning-form").onsubmit=function(e){e.preventDefault();if(!quiz.answered)submit(matches(quiz.cards[quiz.index],$("#meaning-input").value))};
+  $("#meaning-input").oninput=function(e){if(e.isComposing||quiz.answered||quiz.currentMode!=="meaning")return;if(matches(quiz.cards[quiz.index],this.value))submit(true)};
   function submit(correct,picked){
     if(quiz.answered)return;quiz.answered=true;var card=quiz.cards[quiz.index],rating=correct?"good":"again";
     JL_PROGRESS.record(card.progressId,rating,{subject:"kanji",type:"kanji"});quiz.results.push({card:card,correct:correct});
