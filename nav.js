@@ -4,18 +4,18 @@
 // and marks the current page automatically.
 (function () {
   var LINKS = [
-    { href: "study.html", jp: "まなぶ", en: "adaptive study arcade" },
-    { href: "index.html", jp: "こそあど", en: "this · that · which" },
-    { href: "particles.html", jp: "じょし", en: "particles · は/が/を/も/で/と" },
-    { href: "locations.html", jp: "ばしょ", en: "locations · go, be & do" },
-    { href: "conversation.html", jp: "かいわ", en: "real conversation · reply & follow up" },
-    { href: "time.html", jp: "じかん", en: "telling time" },
-    { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
-    { href: "flashcards.html", jp: "フラッシュ", en: "adaptive vocab review" },
-    { href: "kanji.html", jp: "かんじ", en: "Kanji Fable · separate track" },
-    { href: "introduction.html", jp: "はじめまして", en: "personal introduction" },
-    { href: "about.html", jp: "じこしょうかい", en: "about me · example bank" },
-    { href: "games.html", jp: "ゲーム", en: "games" },
+    { href: "study.html", icon: "🧠", label: "Study", detail: "adaptive arcade" },
+    { href: "index.html", icon: "👉", label: "This & that", detail: "this, that & which" },
+    { href: "particles.html", icon: "🧩", label: "Particles", detail: "topic, object, place & more" },
+    { href: "locations.html", icon: "📍", label: "Locations", detail: "go, be & do" },
+    { href: "conversation.html", icon: "💬", label: "Conversations", detail: "reply & follow up" },
+    { href: "time.html", icon: "🕒", label: "Time", detail: "telling time" },
+    { href: "age-days-months.html", icon: "📅", label: "Calendar", detail: "age, days & months" },
+    { href: "flashcards.html", icon: "🃏", label: "Vocabulary", detail: "adaptive review" },
+    { href: "kanji.html", icon: "🖌️", label: "Kanji", detail: "Kanji Fable" },
+    { href: "introduction.html", icon: "👋", label: "Introductions", detail: "personal introduction" },
+    { href: "about.html", icon: "🙋", label: "About me", detail: "example bank" },
+    { href: "games.html", icon: "🎮", label: "Games", detail: "practice games" },
   ];
 
   var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -38,12 +38,14 @@
     "transform:translateX(-100%);transition:transform .24s ease;padding:74px 0 24px;overflow-y:auto}" +
     "body.menu-open .menu-drawer{transform:translateX(0)}" +
     ".menu-drawer .menu-title{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft,#5C6150);font-weight:700;padding:0 22px 10px;margin:0}" +
-    ".menu-drawer a{display:flex;align-items:baseline;gap:10px;padding:13px 22px;text-decoration:none;color:var(--ink,#2A2E24);border-top:1px solid var(--line,#E6DFCF);transition:background .12s}" +
+    ".menu-drawer a{display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 22px;text-decoration:none;color:var(--ink,#2A2E24);border-top:1px solid var(--line,#E6DFCF);transition:background .12s}" +
     ".menu-drawer a:hover{background:#F3EEE1}" +
     ".menu-drawer a:last-of-type{border-bottom:1px solid var(--line,#E6DFCF)}" +
     ".menu-drawer a.current{background:#F3EEE1;font-weight:700;cursor:default}" +
-    ".menu-drawer a .jp-label{font-family:'Zen Antique',serif;font-size:19px}" +
-    ".menu-drawer a .en-label{color:var(--ink-soft,#5C6150);font-size:13px}" +
+    ".menu-drawer a .emoji-label{flex:0 0 32px;width:32px;font-size:22px;line-height:1;text-align:center}" +
+    ".menu-drawer a .link-copy{display:flex;min-width:0;flex-direction:column;line-height:1.3}" +
+    ".menu-drawer a .link-copy strong{font-size:14px;color:var(--ink,#2A2E24)}" +
+    ".menu-drawer a .link-copy small{color:var(--ink-soft,#5C6150);font-size:12px;text-wrap:pretty}" +
     ".menu-progress{margin:18px 18px 0;padding:13px 14px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px rgba(42,46,36,.1)}" +
     ".menu-progress b{display:block;font-size:14px}.menu-progress span{display:block;color:var(--ink-soft,#5C6150);font-size:12px;margin-top:2px}";
 
@@ -75,8 +77,8 @@
       var cur = l.href.toLowerCase() === current ? ' class="current"' : "";
       return (
         '<a href="' + l.href + '"' + cur + ">" +
-        '<span class="jp-label">' + l.jp + "</span>" +
-        '<span class="en-label">' + l.en + "</span></a>"
+        '<span class="emoji-label" aria-hidden="true">' + l.icon + "</span>" +
+        '<span class="link-copy"><strong>' + l.label + "</strong><small>" + l.detail + "</small></span></a>"
       );
     }).join("") +
     '<div class="menu-progress"><b>Study level ' + level + '</b><span>' +
