@@ -1,5 +1,5 @@
 window.JL_FLASHCARDS = {
-  "generatedAt": "2026-07-11T23:58:54.378Z",
+  "generatedAt": "2026-07-12T00:04:35.099Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -425,6 +425,51 @@ window.JL_FLASHCARDS = {
       "group": "particles",
       "audio": "audio/particles/words/suki.mp3",
       "id": "suki",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すきな",
+      "romaji": "suki-na",
+      "en": "favorite / liked",
+      "group": "particles",
+      "audio": "audio/particles/words/suki-na.mp3",
+      "id": "suki-na",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "こと",
+      "romaji": "koto",
+      "en": "activity / abstract thing",
+      "group": "particles",
+      "audio": "audio/particles/words/koto.mp3",
+      "id": "koto",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "もの",
+      "romaji": "mono",
+      "en": "thing / object",
+      "group": "particles",
+      "audio": "audio/particles/words/mono.mp3",
+      "id": "mono",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "そうなんですね",
+      "romaji": "sou-nan-desu-ne",
+      "en": "I see / oh, is that so? · formal",
+      "group": "conversation",
+      "id": "sou-nan-desu-ne",
+      "audio": "audio/words/sou-nan-desu-ne.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "そうなんだ",
+      "romaji": "sou-nan-da",
+      "en": "I see / oh, is that so? · casual",
+      "group": "conversation",
+      "id": "sou-nan-da",
+      "audio": "audio/words/sou-nan-da.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

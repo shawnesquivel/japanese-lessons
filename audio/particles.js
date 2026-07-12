@@ -1,5 +1,5 @@
 window.JL_PARTICLES = {
-  "generatedAt": "2026-07-11T23:58:54.379Z",
+  "generatedAt": "2026-07-12T00:04:35.100Z",
   "voice": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -296,6 +296,30 @@ window.JL_PARTICLES = {
       "en": "liked / favorite",
       "id": "suki",
       "audio": "audio/particles/words/suki.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すきな",
+      "romaji": "suki-na",
+      "en": "favorite / liked",
+      "id": "suki-na",
+      "audio": "audio/particles/words/suki-na.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "こと",
+      "romaji": "koto",
+      "en": "activity / abstract thing",
+      "id": "koto",
+      "audio": "audio/particles/words/koto.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "もの",
+      "romaji": "mono",
+      "en": "thing / object",
+      "id": "mono",
+      "audio": "audio/particles/words/mono.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

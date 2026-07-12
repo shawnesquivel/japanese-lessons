@@ -473,6 +473,16 @@
       <span class="kana">くがつにこんやくしゃとにほんにいきます。</span><span class="rj">kugatsu ni kon-yakusha to nihon ni ikimasu.</span><br>
       <span class="kana">あした、ともだちととうきょうにいきます。</span><span class="rj">ashita, tomodachi to toukyou ni ikimasu.</span>
     </div>
+
+    <h3>Natural conversation chunks</h3>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="kana">そうなんですね。</span><span class="rj">sou nan desu ne.</span></td><td class="en">I see! / Oh, is that so?</td></tr>
+        <tr><td><span class="kana">こんやくしゃ<span class="hl">と</span>にほんにいきます。</span><span class="rj">kon-yakusha to nihon ni ikimasu.</span></td><td class="en">I'm going to Japan with my fiancée.</td></tr>
+        <tr><td><span class="kana">すきなこと<span class="hl">は</span>きんトレです。</span><span class="rj">suki na koto wa kintore desu.</span></td><td class="en">My favorite activity is lifting.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>こと vs. もの:</strong> use <span class="romaji">すきなこと</span> for an activity you like doing. <span class="romaji">すきなもの</span> is a favorite thing or object.</div>
   </section>
 
   <!-- ===================== VERB SCENARIOS ===================== -->
@@ -529,6 +539,8 @@
       { group:'noun', en:'family', jp:'かぞく', rj:'kazoku' },
       { group:'noun', en:'Japanese language', jp:'にほんご', rj:'nihongo' },
       { group:'noun', en:'work / job', jp:'しごと', rj:'shigoto' },
+      { group:'noun', en:'activity / abstract thing', jp:'こと', rj:'koto' },
+      { group:'noun', en:'thing / object', jp:'もの', rj:'mono' },
       { group:'noun', en:'computer', jp:'パソコン', rj:'pasokon' },
       { group:'noun', en:'coffee', jp:'コーヒー', rj:'koohii' },
       { group:'noun', en:'tea', jp:'おちゃ', rj:'ocha' },
@@ -560,7 +572,8 @@
       { group:'other', en:'tomorrow', jp:'あした', rj:'ashita' },
       { group:'other', en:'nearby', jp:'ちかく', rj:'chikaku' },
       { group:'other', en:'together', jp:'いっしょに', rj:'isshoni' },
-      { group:'other', en:'liked / favorite', jp:'すき', rj:'suki' }
+      { group:'other', en:'liked / favorite', jp:'すき', rj:'suki' },
+      { group:'other', en:'favorite / liked', jp:'すきな', rj:'suki na' }
     ];
     var VERBS = [
       { label:'Work · formal', scenario:'A coworker asks what you do at your startup.', blank:'スタートアップで ___。', formal:'スタートアップではたらいています。', formalRj:'Sutaato appu de hataraite imasu.', casual:'スタートアップではたらいている。', casualRj:'Sutaato appu de hataraite iru.', spoken:'スタートアップではたらいてる。', spokenRj:'Sutaato appu de hataraiteru.', en:'I work at a startup.', why:'はたらく means “to work.” In conversation, ている often contracts to てる.' },
@@ -761,6 +774,9 @@
       { mode:'en-ja', label:'Translate into Japanese', q:'I lived in Thailand and Indonesia.', a:'<span class="answer-variant"><b>Formal</b>タイとインドネシアにすんでいました。</span><span class="answer-variant casual"><b>Casual</b>タイとインドネシアにすんでいた。</span><span class="answer-variant spoken"><b>Common spoken</b>タイとインドネシアにすんでた。</span>', note:'tai to indoneshia ni sunde imashita. / tai to indoneshia ni sunde ita. / tai to indoneshia ni sundeta. — I lived in Thailand and Indonesia.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Harder sentence · translate', q:"I'm going to Japan with my fiancée in September.", a:'<span class="answer-variant"><b>Formal</b>くがつにこんやくしゃとにほんにいきます。</span><span class="answer-variant casual"><b>Casual</b>くがつにこんやくしゃとにほんにいく。</span>', note:"kugatsu ni kon-yakusha to nihon ni ikimasu. / kugatsu ni kon-yakusha to nihon ni iku.", qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Harder sentence · translate', q:"I'm going to Tokyo with a friend tomorrow.", a:'<span class="answer-variant"><b>Formal</b>あした、ともだちととうきょうにいきます。</span><span class="answer-variant casual"><b>Casual</b>あした、ともだちととうきょうにいく。</span>', note:"ashita, tomodachi to toukyou ni ikimasu. / ashita, tomodachi to toukyou ni iku.", qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Conversation chunk · translate', q:'I see! / Oh, is that so?', a:'<span class="answer-variant"><b>Formal</b>そうなんですね。</span><span class="answer-variant casual"><b>Casual</b>そうなんだ。</span>', note:'sou nan desu ne. / sou nan da.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Conversation chunk · translate', q:"I'm going to Japan with my fiancée.", a:'<span class="answer-variant"><b>Formal</b>こんやくしゃとにほんにいきます。</span><span class="answer-variant casual"><b>Casual</b>こんやくしゃとにほんにいく。</span>', note:'kon-yakusha to nihon ni ikimasu. / kon-yakusha to nihon ni iku.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Conversation chunk · translate', q:'My favorite activity is lifting.', a:'<span class="answer-variant"><b>Formal</b>すきなことはきんトレです。</span><span class="answer-variant casual"><b>Casual</b>すきなことはきんトレ。</span>', note:'suki na koto wa kintore desu. / suki na koto wa kintore.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I drink coffee and tea.', a:'コーヒーとおちゃをのみます。', note:'koohii to ocha o nomimasu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'There is a gym nearby.', a:'ちかくにジムがあります。', note:'chikaku ni jimu ga arimasu.', qLang:'en', aLang:'ja' },
 
