@@ -1,13 +1,14 @@
 (function(){
   "use strict";
-  var PART_OVERRIDES={"左":["by one’s side","craft"],"右":["by one’s side","mouth"],"有":["by one’s side","flesh"]};
+  var PART_OVERRIDES={"左":["by one’s side","craft"],"右":["by one’s side","mouth"],"有":["by one’s side","flesh"],"富":["house","wealth"]};
   var KANJI=(window.JL_KANJI||[]).map(function(k){return Object.assign({},k,{frame:k.id,id:"kanji:"+k.id,progressId:"kanji:"+k.id,subject:"kanji",type:"kanji",primitives:PART_OVERRIDES[k.kanji]||k.primitives})});
   var NOTES_KEY="japaneseLessons.kanjiNotes.v1";
   var notes=loadNotes(),drawIndex=0,strokes=[],drawing=false,traceOn=false,noteTimer=null;
   var selectedFrames=new Set(),selectionDrag=null;
   var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false,elapsedMs:0,activeSince:0};
   var lastSpaceAt=0;
-  var PRIMITIVE_GLYPHS={"by ones side":"𠂇","sun":"日","flesh":"月","part of the body":"月","part of body":"月"};
+  var PRIMITIVE_GLYPHS={"by ones side":"𠂇","sun":"日","flesh":"月","part of the body":"月","part of body":"月","wealth":"畐","house":"宀","roof":"宀","saber":"刂"};
+  var PRIMITIVE_CUES={"wealth":"一 + 口 + 田"};
   var KANJI_BY_PRIMITIVE={};
   function $(s){return document.querySelector(s)}
   function $all(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -139,7 +140,7 @@
     var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
   }
   function fillPrimitiveChip(chip,part,card,masked){
-    var glyph=primitiveGlyph(part);if(glyph){chip.classList.add("has-glyph");var shape=document.createElement("span");shape.className="primitive-glyph";shape.setAttribute("aria-hidden","true");shape.textContent=glyph;chip.appendChild(shape)}var label=document.createElement("span");label.className="primitive-label";if(masked)fillMaskedText(label,part,card);else label.textContent=part;chip.appendChild(label);
+    var key=normalize(part),glyph=primitiveGlyph(part),cue=PRIMITIVE_CUES[key];if(glyph){chip.classList.add("has-glyph");var shape=document.createElement("span");shape.className="primitive-glyph";shape.setAttribute("aria-hidden","true");shape.textContent=glyph;chip.appendChild(shape)}var label=document.createElement("span");label.className="primitive-label";if(masked)fillMaskedText(label,part,card);else label.textContent=part;chip.appendChild(label);if(cue){chip.classList.add("has-cue");chip.title=part+": one + mouth + rice field";var detail=document.createElement("span");detail.className="primitive-cue";detail.textContent=cue;chip.appendChild(detail)}
   }
   function fillPrimitiveList(selector,parts,card,masked){
     var list=$(selector);list.innerHTML="";
