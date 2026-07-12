@@ -12,6 +12,7 @@ Read this file before changing the codebase.
 - Use conversational, everyday examples. Prefer facts from `about-me.js` when personalization helps.
 - Prefer what people commonly say in conversation over textbook-long wording. Use きんトレ (`kintore`) for lifting / weight training, not ウェイトトレーニング.
 - Include varied drills: both translation directions, fill-the-blank, sentence building, corrections, free replies, and audio-only comprehension.
+- Include harder composition drills that combine multiple chunks such as time + companion + destination, not only single-pattern sentences.
 - Present practice and listening sessions one card at a time. After reveal, offer clear ✅ Got it and ❌ Missed actions plus a smaller Skip action; end with a review of missed cards.
 - When a listening prompt expects a response, reveal a natural sample Japanese answer with romaji and English.
 - Keep interactive targets at least 40×40px, use `transform: scale(.96)` for press feedback, and avoid `transition: all`.

@@ -11,7 +11,8 @@ window.JL_STUDY_SENTENCES = [
   {id:"build:particles:also-training",subject:"particles",en:"I like weight training too.",tokens:["きんトレ","も","すき","です。"]},
   {id:"build:particles:startup",subject:"particles",en:"I work at a startup.",tokens:["スタートアップ","で","はたらいて","います。"]},
   {id:"build:particles:thailand-indonesia",subject:"particles",en:"I lived in Thailand and Indonesia.",tokens:["タイ","と","インドネシア","に","すんでいました。"]},
-  {id:"build:particles:japan-fiancee",subject:"particles",en:"I'm going to Japan with my fiancée.",tokens:["こんやくしゃ","と","にほん","に","いきます。"]},
+  {id:"build:particles:japan-fiancee",subject:"particles",en:"I'm going to Japan with my fiancée in September.",tokens:["くがつ","に","こんやくしゃ","と","にほん","に","いきます。"]},
+  {id:"build:particles:tokyo-friend-tomorrow",subject:"particles",en:"I'm going to Tokyo with a friend tomorrow.",tokens:["あした、","ともだち","と","とうきょう","に","いきます。"]},
   {id:"build:particles:coffee-tea",subject:"particles",en:"I drink coffee and tea.",tokens:["コーヒー","と","おちゃ","を","のみます。"]},
 
   {id:"build:locations:park",subject:"locations",en:"I'm going to the park.",tokens:["こうえん","に","いきます。"]},

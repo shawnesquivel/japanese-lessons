@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T23:42:44.269Z",
+  "generatedAt": "2026-07-11T23:58:54.378Z",
   "voiceId": "C8e2F6Cm3l58PjXaVpUW",
   "model": "eleven_multilingual_v2",
   "hasAudio": true,
@@ -329,6 +329,15 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
+      "kana": "とうきょう",
+      "romaji": "toukyou",
+      "en": "Tokyo",
+      "group": "particles",
+      "audio": "audio/particles/words/toukyou.mp3",
+      "id": "toukyou",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
       "kana": "タイ",
       "romaji": "tai",
       "en": "Thailand",
@@ -380,6 +389,15 @@
       "group": "particles",
       "audio": "audio/particles/words/ima.mp3",
       "id": "ima",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "あした",
+      "romaji": "ashita",
+      "en": "tomorrow",
+      "group": "particles",
+      "audio": "audio/particles/words/ashita.mp3",
+      "id": "ashita",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
