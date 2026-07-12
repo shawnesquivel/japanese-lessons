@@ -10,9 +10,22 @@
       version: 1,
       cards: {},
       sessions: [],
+      studyMs: {},
       xp: 0,
       streak: { count: 0, lastDay: "" },
     };
+  }
+
+  function ensureStudyMs(data) {
+    data.sessions = data.sessions || [];
+    if (data.studyMs && typeof data.studyMs === "object") return;
+    data.studyMs = {};
+    data.sessions.forEach(function (session) {
+      var duration = Math.max(0, Number(session.durationMs) || 0);
+      if (!duration) return;
+      var kind = session.kind || "other";
+      data.studyMs[kind] = (data.studyMs[kind] || 0) + duration;
+    });
   }
 
   function load() {
@@ -21,6 +34,7 @@
       if (parsed && parsed.version === 1) {
         parsed.cards = parsed.cards || {};
         parsed.sessions = parsed.sessions || [];
+        ensureStudyMs(parsed);
         parsed.xp = parsed.xp || 0;
         parsed.streak = parsed.streak || { count: 0, lastDay: "" };
         return parsed;
@@ -175,9 +189,20 @@
   }
 
   function addSession(session) {
-    store.sessions.push(Object.assign({ ts: Date.now() }, session));
+    var entry = Object.assign({ ts: Date.now() }, session);
+    var duration = Math.max(0, Number(entry.durationMs) || 0);
+    store.sessions.push(entry);
     store.sessions = store.sessions.slice(-50);
+    store.studyMs = store.studyMs || {};
+    if (duration) {
+      var kind = entry.kind || "other";
+      store.studyMs[kind] = (store.studyMs[kind] || 0) + duration;
+    }
     save();
+  }
+
+  function studyTime(kind) {
+    return Math.max(0, Number(store.studyMs && store.studyMs[kind]) || 0);
   }
 
   function exportData() {
@@ -187,6 +212,7 @@
   function importData(value) {
     var parsed = typeof value === "string" ? JSON.parse(value) : value;
     if (!parsed || parsed.version !== 1 || !parsed.cards) throw new Error("Invalid progress file");
+    ensureStudyMs(parsed);
     store = parsed;
     save();
   }
@@ -217,6 +243,7 @@
     summary: summary,
     sessions: function () { return store.sessions.slice(); },
     addSession: addSession,
+    studyTime: studyTime,
     exportData: exportData,
     importData: importData,
     reset: reset,

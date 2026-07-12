@@ -4,7 +4,7 @@
   var NOTES_KEY="japaneseLessons.kanjiNotes.v1";
   var notes=loadNotes(),drawIndex=0,strokes=[],drawing=false,traceOn=false,noteTimer=null;
   var selectedFrames=new Set(),selectionDrag=null;
-  var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false};
+  var quiz={scope:50,count:10,mode:"adaptive",cards:[],index:0,results:[],answered:false,currentMode:"meaning",retryRound:false,elapsedMs:0,activeSince:0};
   var lastSpaceAt=0;
   function $(s){return document.querySelector(s)}
   function $all(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -14,6 +14,11 @@
   function shuffle(list){var a=list.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function normalize(value){return String(value||"").toLowerCase().replace(/[^a-z0-9 ]+/g,"").replace(/\s+/g," ").trim()}
   function matches(card,value){var n=normalize(value),tight=n.replace(/ /g,"");return !!n&&card.answers.some(function(answer){var a=normalize(answer);return n===a||tight===a.replace(/ /g,"")})}
+  function formatStudyTime(ms){
+    if(!ms)return "0m";if(ms<60000)return Math.max(1,Math.round(ms/1000))+"s";var minutes=Math.floor(ms/60000);if(minutes<60)return minutes+"m";var hours=Math.floor(minutes/60),remainder=minutes%60;return hours+"h"+(remainder?" "+remainder+"m":"");
+  }
+  function pauseQuizTimer(){if(!quiz.activeSince)return;quiz.elapsedMs+=Date.now()-quiz.activeSince;quiz.activeSince=0}
+  function resumeQuizTimer(){if(quiz.activeSince||document.visibilityState!=="visible"||!$("#view-quiz").classList.contains("active")||$("#quiz-question").hidden)return;quiz.activeSince=Date.now()}
   function color(id){
     var s=JL_PROGRESS.strength(id);if(!JL_PROGRESS.card(id).reviews)return "#ECE6DA";
     var hue=s<50?8+(38*s/50):46+(94*(s-50)/50);return "hsl("+Math.round(hue)+",55%,"+(67-Math.min(18,s*.18))+"%)";
@@ -31,6 +36,7 @@
     var count=selectedFrames.size,weak=weakKanji(),weakCount=Math.min(20,weak.length);$("#selection-count").textContent=count+" selected";$("#selection-copy").textContent=count?"Drag from a selected tile to remove a group.":"Weak = studied below 60% or missed last time.";$("#clear-selection").disabled=!count;$("#quiz-selection").disabled=!count;$("#quiz-selection").textContent=count?"Quiz selected ("+count+")":"Quiz selected";$("#quiz-weak").disabled=!weakCount;$("#quiz-weak").textContent=!weakCount?"No weak kanji yet":weak.length>20?"Quiz weakest 20":"Quiz weak ("+weakCount+")";$("#quiz-weak").title=weakCount?"Studied kanji below 60% strength or missed on their latest review":"Weak quizzes appear after you have reviewed kanji";
   }
   function showView(name){
+    if(name!=="quiz")pauseQuizTimer();
     $all(".tab").forEach(function(tab){tab.classList.toggle("active",tab.dataset.view===name)});
     $all(".view").forEach(function(view){view.classList.toggle("active",view.id==="view-"+name)});
     if(name==="dashboard")renderDashboard();if(name==="draw")renderDraw();if(name==="quiz")setStage("quiz-setup");
@@ -38,7 +44,7 @@
   $all(".tab").forEach(function(tab){tab.onclick=function(){showView(tab.dataset.view)}});
   function renderDashboard(){
     var ids=KANJI.map(function(k){return k.progressId}),s=JL_PROGRESS.summary(ids);
-    $("#kanji-stats").innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' total XP</span></div>';
+    $("#kanji-stats").innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+formatStudyTime(JL_PROGRESS.studyTime("kanji"))+'</strong><span>kanji quiz time</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div><div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' total XP</span></div>';
     $("#mastery").innerHTML=KANJI.map(function(k){var selected=selectedFrames.has(k.frame);return '<button class="tile'+(selected?' selected':'')+'" data-id="'+k.frame+'" data-next="'+JL_PROGRESS.nextLabel(k.progressId)+'" aria-pressed="'+selected+'" title="RTK #'+k.rtkFrame+' · '+k.meaning+' · '+JL_PROGRESS.strength(k.progressId)+'%" style="background:'+color(k.progressId)+'">'+k.kanji+'</button>'}).join("");updateSelectionControls();
   }
   function launchDashboardQuiz(cards){
@@ -101,10 +107,10 @@
     $(id).onclick=function(e){var button=e.target.closest("[data-"+key+"]");if(!button)return;$all(id+" .seg-btn").forEach(function(b){b.classList.toggle("active",b===button)});quiz[key]=isNaN(+button.dataset[key])?button.dataset[key]:+button.dataset[key]};
   }
   bindSeg("#scope","scope");bindSeg("#count","count");bindSeg("#mode","mode");
-  function setStage(id){["quiz-setup","quiz-question","quiz-results"].forEach(function(stage){$("#"+stage).hidden=stage!==id})}
+  function setStage(id){["quiz-setup","quiz-question","quiz-results"].forEach(function(stage){$("#"+stage).hidden=stage!==id});if(id==="quiz-question")resumeQuizTimer();else pauseQuizTimer()}
   $("#start-quiz").onclick=function(){startQuiz()};
   function startQuiz(custom,retryRound){
-    var pool=custom||JL_PROGRESS.order(KANJI.slice(0,quiz.scope));quiz.cards=custom?pool.slice():pool.slice(0,Math.min(quiz.count,pool.length));quiz.index=0;quiz.results=[];quiz.retryRound=!!retryRound;setStage("quiz-question");renderQuestion();
+    pauseQuizTimer();quiz.elapsedMs=0;quiz.activeSince=0;var pool=custom||JL_PROGRESS.order(KANJI.slice(0,quiz.scope));quiz.cards=custom?pool.slice():pool.slice(0,Math.min(quiz.count,pool.length));quiz.index=0;quiz.results=[];quiz.retryRound=!!retryRound;setStage("quiz-question");renderQuestion();
   }
   function renderQuestion(){
     var card=quiz.cards[quiz.index];if(!card){finishQuiz();return}quiz.answered=false;
@@ -156,13 +162,14 @@
   $("#continue").onclick=advanceQuestion;$("#save-note-continue").onclick=advanceQuestion;
   $("#quiz-note").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();advanceQuestion()}});
   function finishQuiz(){
-    setStage("quiz-results");var correct=quiz.results.filter(function(r){return r.correct}).length,total=quiz.results.length,missed=quiz.results.filter(function(r){return !r.correct});
-    JL_PROGRESS.addSession({kind:"kanji",total:total,correct:correct,mode:quiz.mode,retry:quiz.retryRound});$("#score").textContent=correct+" / "+total;
+    pauseQuizTimer();setStage("quiz-results");var correct=quiz.results.filter(function(r){return r.correct}).length,total=quiz.results.length,missed=quiz.results.filter(function(r){return !r.correct});
+    JL_PROGRESS.addSession({kind:"kanji",total:total,correct:correct,mode:quiz.mode,retry:quiz.retryRound,durationMs:Math.round(quiz.elapsedMs)});$("#score").textContent=correct+" / "+total;
     if(quiz.retryRound)$("#result-copy").textContent=missed.length?"Retry round complete. Anything still missed stays scheduled for earlier adaptive review.":"Retry round complete. You recovered every missed kanji.";
     else $("#result-copy").textContent=missed.length?"Practice every missed kanji once more, or let the adaptive queue bring them back.":"Perfect run. These characters are now spaced farther out.";
     $("#missed").innerHTML=missed.map(function(r){return '<div class="missed-row"><b>'+r.card.kanji+'</b><span>'+r.card.meaning+"</span></div>"}).join("");$("#retry").hidden=!missed.length||quiz.retryRound;$("#retry").onclick=function(){startQuiz(missed.map(function(r){return r.card}),true)};
   }
   $("#new-quiz").onclick=function(){setStage("quiz-setup")};$("#to-dashboard").onclick=function(){showView("dashboard")};
+  document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")resumeQuizTimer();else pauseQuizTimer()});
   document.addEventListener("keydown",function(e){
     if($("#quiz-question").hidden)return;
     if(quiz.answered){
