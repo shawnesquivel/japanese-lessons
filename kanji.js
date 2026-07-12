@@ -79,7 +79,7 @@
     var k=KANJI[drawIndex];if(!k)return;
     $("#picker").value=drawIndex;$("#frame").textContent="RTK frame "+k.rtkFrame+" · strength "+JL_PROGRESS.strength(k.progressId)+"% · next "+JL_PROGRESS.nextLabel(k.progressId);
     $("#meaning").textContent=k.meaning;$("#hint").textContent=k.hint?"primitive: "+k.hint:"";
-    $("#revealed").textContent=k.kanji;$("#revealed").hidden=true;$("#reveal").textContent="Reveal kanji";
+    $("#revealed").textContent=k.kanji;$("#revealed").hidden=false;$("#reveal").textContent="Hide kanji";
     $("#notes").value=notes[k.frame]||"";strokes=[];resizeCanvas();
   }
   $("#prev").onclick=function(){drawIndex=(drawIndex+KANJI.length-1)%KANJI.length;renderDraw()};
