@@ -196,6 +196,12 @@
   .vocab-card .v-rj{font-size:13px;color:var(--ko);font-weight:700;display:block;margin-top:3px}
   .vocab-card.revealed .v-answer{display:block}.vocab-card.revealed .tap-hint{display:none}
   .form-practice{margin-top:30px}
+  .form-snapshot{display:grid;gap:14px;margin:18px 0 24px}
+  .form-snapshot .pattern{margin:0}
+  .form-example-list{display:grid;gap:8px;margin:12px 0 0;padding:0;list-style:none}
+  .form-example-list li{padding:10px 12px;border-radius:9px;background:#fff;border:1px solid var(--line)}
+  .form-example-list .kana{font-family:"Zen Antique",serif;font-size:1.16em}
+  .form-example-list .rj{display:block;color:var(--ink-soft);font-size:13px}
 
   .verb-deck{display:grid;gap:12px}
   .verb-card{
@@ -290,6 +296,30 @@
     <div class="vocab-deck" id="vocab-deck"></div>
 
     <div class="form-practice">
+      <h3>Pattern to memorize: ongoing action</h3>
+      <div class="form-snapshot">
+        <div class="pattern">
+          <p class="big">て-form + います = ongoing action</p>
+          <span class="rj">te-form + imasu = “am / is doing”</span>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>What you want</th><th>How it is built</th></tr></thead>
+          <tbody>
+            <tr><td class="en">I study (habit / plan)</td><td><span class="kana">べんきょうします</span><span class="rj">benkyou shimasu</span></td></tr>
+            <tr><td class="en">I am studying</td><td><span class="kana">べんきょうしています</span><span class="rj">benkyou shite imasu</span></td></tr>
+            <tr><td class="en">I studied</td><td><span class="kana">べんきょうしました</span><span class="rj">benkyou shimashita</span></td></tr>
+            <tr><td class="en">I was studying</td><td><span class="kana">べんきょうしていました</span><span class="rj">benkyou shite imashita</span></td></tr>
+          </tbody>
+        </table>
+        <div class="note win">
+          <strong>Any action verb:</strong> once you know the て-form, add <span class="romaji">います</span> for ongoing action.
+          <ul class="form-example-list">
+            <li><span class="kana">のむ → のんで + います = のんでいます</span><span class="rj">nomu → nonde + imasu = nonde imasu · drinking</span></li>
+            <li><span class="kana">みる → みて + います = みています</span><span class="rj">miru → mite + imasu = mite imasu · watching</span></li>
+            <li><span class="kana">はなす → はなして + います = はなしています</span><span class="rj">hanasu → hanashite + imasu = hanashite imasu · speaking</span></li>
+          </ul>
+        </div>
+      </div>
       <h3>Verb form families</h3>
       <p class="lead">The same verb can show up as a dictionary form, polite form, te-form, ongoing form, past form, or want-to form. Practice the annoying swaps here before the sentence cards.</p>
       <div class="note win"><strong>Quick split:</strong> <span class="romaji">します</span> is “I do / I will do” as a habit or plan. <span class="romaji">しています</span> is “I am doing” as an ongoing action. <span class="romaji">して</span> is the short te-form bridge.</div>
