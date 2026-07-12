@@ -137,6 +137,22 @@
   .session-btn.secondary{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-strong)}
   .session-btn:active{transform:scale(.96)}
 
+  .builder-deck{max-width:760px;margin:14px auto}
+  .builder-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .builder-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .builder-prompt{font-size:20px;font-weight:700;margin:8px 0 4px;text-wrap:pretty}
+  .builder-hint{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  .builder-form{display:grid;gap:10px}
+  .builder-input{width:100%;min-height:48px;border:1px solid var(--line-strong);border-radius:11px;padding:11px 13px;background:#fff;color:var(--ink);font:500 16px "Zen Maru Gothic",system-ui,sans-serif}
+  .builder-input:focus{outline:3px solid var(--so);outline-offset:2px;border-color:transparent}
+  .builder-submit{min-height:48px;border:0;border-radius:11px;padding:10px 16px;background:var(--ink);color:var(--paper);font:700 15px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .builder-submit:active{transform:scale(.96)}
+  .builder-feedback{display:none;margin-top:16px;padding:14px 16px;border-radius:10px}
+  .builder-feedback.show{display:block}.builder-feedback.correct{background:var(--ko-bg);color:#3C5E25}.builder-feedback.missed{background:var(--do-bg);color:#7E2B19}
+  .builder-answer{display:block;margin-top:8px;color:var(--ink)}
+  .builder-answer .kana{display:block;font-size:22px}.builder-answer .rj{display:block;color:var(--ko);font-weight:700}
+  .builder-actions{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.builder-actions.show{display:grid}
+
   .vocab-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 12px}
   .vocab-filter{
     min-height:40px;padding:7px 13px;border:1px solid var(--line-strong);border-radius:999px;
@@ -233,6 +249,7 @@
       <a href="#de" aria-label="Action place and means marker de">で</a>
       <a href="#to" aria-label="Listing and companion marker to">と</a>
       <a href="#verb-practice" aria-label="Verb scenario practice">どうし</a>
+      <a href="#sentence-builder" aria-label="Romaji sentence builder">つくる</a>
       <a href="#listening" aria-label="Listening practice">きく</a>
     </nav>
   </header>
@@ -492,6 +509,14 @@
     <div class="verb-deck" id="verb-deck"></div>
   </section>
 
+  <!-- ===================== SENTENCE BUILDER ===================== -->
+  <section id="sentence-builder">
+    <div class="sec-head"><span class="sec-kanji">つくる</span><h2>Build the whole sentence in romaji</h2></div>
+    <p class="lead">Turn the English idea into one natural Japanese sentence. Type every chunk and particle in romaji, then submit. Macrons and accent marks are optional, and natural alternate word orders are accepted.</p>
+    <div class="note"><strong>Mental model:</strong> build labeled chunks, then put the action last. A natural default is time → companion or place → object or destination → verb.</div>
+    <div class="builder-deck" id="builder-deck"></div>
+  </section>
+
   <!-- ===================== PRACTICE ===================== -->
   <section id="practice">
     <div class="sec-head"><span class="sec-kanji">れん</span><h2>Tutor practice: mixed directions</h2></div>
@@ -644,6 +669,63 @@
         '<b>Why</b><span class="why">'+item.why+'</span></div></div></article>';
     }).join('');
     bindReveal(verbDeck,'.verb-card');
+  })();
+</script>
+
+<script>
+  (function(){
+    var ITEMS = [
+      { id:'particles:builder:september-japan', prompt:"I'm going to Japan with my fiancée in September.", hint:'time + companion + destination + action', kana:'くがつにこんやくしゃとにほんにいきます。', romaji:"kugatsu ni kon'yakusha to nihon ni ikimasu", why:'くがつに is the time, こんやくしゃと is the companion, and にほんに is the destination.', answers:["kugatsu ni kon'yakusha to nihon ni ikimasu","kugatsu ni nihon ni kon'yakusha to ikimasu","kon'yakusha to kugatsu ni nihon ni ikimasu"] },
+      { id:'particles:builder:tomorrow-tokyo', prompt:"I'm going to Tokyo with a friend tomorrow.", hint:'time + companion + destination + action', kana:'あした、ともだちととうきょうにいきます。', romaji:'ashita, tomodachi to toukyou ni ikimasu', why:'あした is a relative time word, so it does not need に. と marks the friend and に marks Tokyo as the destination.', answers:['ashita tomodachi to toukyou ni ikimasu','ashita tomodachi to tokyo ni ikimasu','ashita toukyou ni tomodachi to ikimasu','ashita tokyo ni tomodachi to ikimasu'] },
+      { id:'particles:builder:monday-library', prompt:"I'm going to the library with my friend on Monday.", hint:'day + companion + destination + action', kana:'げつようびにともだちととしょかんにいきます。', romaji:'getsuyoubi ni tomodachi to toshokan ni ikimasu', why:'A named day takes に. The companion takes と, and the destination takes に.', answers:['getsuyoubi ni tomodachi to toshokan ni ikimasu','getsuyobi ni tomodachi to toshokan ni ikimasu','getsuyoubi ni toshokan ni tomodachi to ikimasu','getsuyobi ni toshokan ni tomodachi to ikimasu'] },
+      { id:'particles:builder:study-home', prompt:"I'm studying Japanese at home today.", hint:'time topic + action place + object + ongoing action', kana:'きょうはいえでにほんごをべんきょうしています。', romaji:'kyou wa ie de nihongo o benkyou shite imasu', why:'Studying is an action, so home takes で rather than に. Japanese is the object, so it takes を.', answers:['kyou wa ie de nihongo o benkyou shite imasu','kyo wa ie de nihongo o benkyo shite imasu','kyou ie de nihongo o benkyou shite imasu','kyo ie de nihongo o benkyo shite imasu'] },
+      { id:'particles:builder:weekend-gym', prompt:'I lift at the gym on weekends.', hint:'time topic + action place + object + action', kana:'しゅうまつはジムできんトレをします。', romaji:'shuumatsu wa jimu de kintore o shimasu', why:'The gym is where the action happens, so it takes で. きんトレ is what you do, so it takes を.', answers:['shuumatsu wa jimu de kintore o shimasu','shumatsu wa jimu de kintore o shimasu','shuumatsu ni jimu de kintore o shimasu','shumatsu ni jimu de kintore o shimasu'] },
+      { id:'particles:builder:coffee-home', prompt:'I drink coffee at home in the morning.', hint:'time + action place + object + action', kana:'あさ、いえでコーヒーをのみます。', romaji:'asa, ie de koohii o nomimasu', why:'Drinking happens at home, so いえ takes で. Coffee receives the action, so it takes を.', answers:['asa ie de koohii o nomimasu','asa ie de kohii o nomimasu'] },
+      { id:'particles:builder:study-question', prompt:'What are you studying?', hint:'question word + object particle + ongoing action + question marker', kana:'なにをべんきょうしていますか。', romaji:'nani o benkyou shite imasu ka', why:'なに is the thing being studied, so it takes を. The ています form makes the action ongoing.', answers:['nani o benkyou shite imasu ka','nani o benkyo shite imasu ka'] },
+      { id:'particles:builder:people-park', prompt:'There are people in the park.', hint:'place of existence + subject + existence verb', kana:'こうえんにひとがいます。', romaji:'kouen ni hito ga imasu', why:'For existence, the place takes に, the thing that exists takes が, and people use います.', answers:['kouen ni hito ga imasu','koen ni hito ga imasu'] }
+    ];
+    var deck=document.getElementById('builder-deck');
+    var items=[];var index=0;var correct=0;var missed=[];var skipped=0;
+    function esc(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    function normalize(value){
+      return String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+    }
+    function shuffle(source){var a=source.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+    function restart(source){items=shuffle(source||ITEMS);index=0;correct=0;missed=[];skipped=0;draw();}
+    function draw(){
+      if(index>=items.length){results();return;}
+      var item=items[index];
+      deck.innerHTML='<div class="session-meta"><span>'+(index+1)+' / '+items.length+'</span><span>✅ '+correct+' · ❌ '+missed.length+'</span></div>'+
+        '<div class="session-track"><div class="session-fill" style="width:'+(index/items.length*100)+'%"></div></div>'+
+        '<article class="builder-card"><div class="builder-label">Build the sentence</div><p class="builder-prompt">'+esc(item.prompt)+'</p><p class="builder-hint">Chunk guide: '+esc(item.hint)+'</p>'+
+        '<form class="builder-form"><label class="eyebrow" for="builder-input">Your romaji</label><input class="builder-input" id="builder-input" name="answer" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the full Japanese sentence in romaji"><button class="builder-submit" type="submit">Check sentence</button></form>'+
+        '<div class="builder-feedback" role="status" aria-live="polite"></div><div class="builder-actions"><button class="grade-btn correct" type="button" data-builder-outcome="correct">✅ Got it</button><button class="grade-btn missed" type="button" data-builder-outcome="missed">❌ Missed</button></div></article><button class="skip-btn" type="button" data-builder-outcome="skip">Skip</button>';
+      var form=deck.querySelector('.builder-form');var input=deck.querySelector('.builder-input');var feedback=deck.querySelector('.builder-feedback');var submitted=false;
+      form.addEventListener('submit',function(event){
+        event.preventDefault();if(submitted||!input.value.trim())return;
+        submitted=true;var matched=item.answers.some(function(answer){return normalize(answer)===normalize(input.value);});
+        feedback.className='builder-feedback show '+(matched?'correct':'missed');
+        feedback.innerHTML='<strong>'+(matched?'That works.':'Not quite. Compare the particle jobs:')+'</strong><span class="builder-answer"><span class="kana" lang="ja">'+esc(item.kana)+'</span><span class="rj">'+esc(item.romaji)+'</span><span>'+esc(item.why)+'</span></span>';
+        input.disabled=true;form.querySelector('.builder-submit').disabled=true;deck.querySelector('.builder-actions').classList.add('show');
+      });
+      deck.querySelectorAll('[data-builder-outcome]').forEach(function(button){button.addEventListener('click',function(){grade(item,button.getAttribute('data-builder-outcome'));});});
+      input.focus();
+    }
+    function grade(item,outcome){
+      if(outcome==='correct'){correct++;if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'good',{subject:'particles',type:'sentence-builder'});}
+      else if(outcome==='missed'){missed.push(item);if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'again',{subject:'particles',type:'sentence-builder'});}
+      else{skipped++;}
+      index++;draw();
+    }
+    function results(){
+      var attempted=correct+missed.length;
+      deck.innerHTML='<div class="session-results"><h3>Sentence round complete</h3><div class="score">'+correct+' / '+attempted+'</div><p class="lead">'+(missed.length?'Rebuild the sentences you missed while the particle choices are fresh.':'Clean round. You built every sentence correctly.')+'</p>'+
+        (missed.length?'<div class="missed-list">'+missed.map(function(item){return '<div class="missed-item">'+esc(item.prompt)+'</div>';}).join('')+'</div>':'')+
+        '<div class="result-actions">'+(missed.length?'<button class="session-btn" id="review-builder-missed">Review missed</button>':'')+'<button class="session-btn secondary" id="restart-builder">Start new round</button></div>'+(skipped?'<p class="tap-hint">'+skipped+' skipped</p>':'')+'</div>';
+      var review=document.getElementById('review-builder-missed');if(review)review.addEventListener('click',function(){restart(missed.slice());});
+      document.getElementById('restart-builder').addEventListener('click',function(){restart();});
+    }
+    restart();
   })();
 </script>
 
