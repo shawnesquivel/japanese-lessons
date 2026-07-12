@@ -175,6 +175,7 @@
   .vocab-card .v-kana{font:400 25px/1.35 "Zen Antique",serif;display:block}
   .vocab-card .v-rj{font-size:13px;color:var(--ko);font-weight:700;display:block;margin-top:3px}
   .vocab-card.revealed .v-answer{display:block}.vocab-card.revealed .tap-hint{display:none}
+  .form-practice{margin-top:30px}
 
   .verb-deck{display:grid;gap:12px}
   .verb-card{
@@ -267,6 +268,22 @@
       <span class="vocab-count" id="vocab-count"></span>
     </div>
     <div class="vocab-deck" id="vocab-deck"></div>
+
+    <div class="form-practice">
+      <h3>Verb form families</h3>
+      <p class="lead">The same verb can show up as a dictionary form, polite form, te-form, ongoing form, past form, or want-to form. Practice the annoying swaps here before the sentence cards.</p>
+      <div class="note win"><strong>Quick split:</strong> <span class="romaji">します</span> is “I do / I will do” as a habit or plan. <span class="romaji">しています</span> is “I am doing” as an ongoing action. <span class="romaji">して</span> is the short te-form bridge.</div>
+      <div class="practice-toolbar" id="form-filters" aria-label="Verb form practice groups">
+        <button class="drill-filter active" type="button" data-form="all">Mix all</button>
+        <button class="drill-filter" type="button" data-form="do">する / study</button>
+        <button class="drill-filter" type="button" data-form="eat">Eat</button>
+        <button class="drill-filter" type="button" data-form="drink">Drink</button>
+        <button class="drill-filter" type="button" data-form="go">Go</button>
+        <button class="drill-filter" type="button" data-form="other">Other weird ones</button>
+        <span class="practice-count" id="form-count"></span>
+      </div>
+      <div class="practice-deck" id="form-deck"></div>
+    </div>
   </section>
 
   <!-- ===================== QUICK MAP ===================== -->
@@ -436,7 +453,7 @@
         <tr><td><span class="kana">サンフランシスコ<span class="hl">で</span>はたらいています。</span><span class="rj">san furanshisuko de hataraite imasu.</span></td><td class="en">I work in San Francisco.</td></tr>
         <tr><td><span class="kana">スタートアップ<span class="hl">で</span>はたらいています。</span><span class="rj">sutaato appu de hataraite imasu.</span></td><td class="en">I work at a startup.</td></tr>
         <tr><td><span class="kana">ジム<span class="hl">で</span>きんトレをします。</span><span class="rj">jimu de kintore o shimasu.</span></td><td class="en">I lift at the gym.</td></tr>
-        <tr><td><span class="kana">いえ<span class="hl">で</span>にほんごをべんきょうします。</span><span class="rj">ie de nihongo o benkyou shimasu.</span></td><td class="en">I study Japanese at home.</td></tr>
+        <tr><td><span class="kana">いえ<span class="hl">で</span>にほんごをべんきょうします。</span><span class="rj">ie de nihongo o benkyou shimasu.</span></td><td class="en">I usually study Japanese at home.</td></tr>
       </tbody>
     </table>
 
@@ -585,6 +602,7 @@
       { group:'verb', en:'to exist (not living)', jp:'ある', rj:'aru' },
       { group:'verb', en:'to do', jp:'する', rj:'suru' },
       { group:'verb', en:'to study', jp:'べんきょうする', rj:'benkyou suru' },
+      { group:'verb', en:'to eat', jp:'たべる', rj:'taberu' },
       { group:'verb', en:'to work', jp:'はたらく', rj:'hataraku' },
       { group:'verb', en:'to drink', jp:'のむ', rj:'nomu' },
       { group:'verb', en:'to speak', jp:'はなす', rj:'hanasu' },
@@ -620,12 +638,51 @@
       { label:'Past · casual', scenario:'Tell a friend you drank coffee.', blank:'コーヒーを ___。', formal:'コーヒーをのみました。', formalRj:'Koohii o nomimashita.', casual:'コーヒーをのんだ。', casualRj:'Koohii o nonda.', en:'I drank coffee.', why:'のみました is polite past; のんだ is casual past.' },
       { label:'Current action · casual', scenario:'Tell a friend you are studying Japanese now.', blank:'いま、にほんごを ___。', formal:'いま、にほんごをべんきょうしています。', formalRj:'Ima, nihongo o benkyou shite imasu.', casual:'いま、にほんごをべんきょうしている。', casualRj:'Ima, nihongo o benkyou shite iru.', spoken:'いま、にほんごをべんきょうしてる。', spokenRj:'Ima, nihongo o benkyou shiteru.', en:"I'm studying Japanese now.", why:'The casual ている form commonly contracts to てる in speech.' }
     ];
+    var FORM_DRILLS = [
+      { group:'do', label:'する family', q:'shite / te-form: “do and…”', a:'して', note:'shite. This is the bridge form; add います to make the polite ongoing form: しています.', aLang:'ja' },
+      { group:'do', label:'する family', q:'I do it / I will do it · formal', a:'します', note:'shimasu. Habitual or future, not “I am doing it right now.”', aLang:'ja' },
+      { group:'do', label:'する family', q:'I am doing it now · formal', a:'しています', note:'shite imasu. The ている form marks an ongoing action.', aLang:'ja' },
+      { group:'do', label:'Study contrast', q:'I study Japanese / I will study Japanese · formal', a:'にほんごをべんきょうします。', note:'nihongo o benkyou shimasu. Habitual or future.', aLang:'ja' },
+      { group:'do', label:'Study contrast', q:"I'm studying Japanese · formal", a:'にほんごをべんきょうしています。', note:'nihongo o benkyou shite imasu. Ongoing now, or your current active study.', aLang:'ja' },
+      { group:'do', label:'Study contrast', q:"I'm studying Japanese · casual / spoken", a:'<span class="answer-variant casual"><b>Casual</b>にほんごをべんきょうしている。</span><span class="answer-variant spoken"><b>Common spoken</b>にほんごをべんきょうしてる。</span>', note:'nihongo o benkyou shite iru. / nihongo o benkyou shiteru.', aLang:'ja' },
+
+      { group:'eat', label:'Eat family', q:'to eat · casual dictionary form', a:'たべる', note:'taberu. The base form you look up.', aLang:'ja' },
+      { group:'eat', label:'Eat family', q:'I eat / I will eat · formal', a:'たべます', note:'tabemasu. Habitual or future.', aLang:'ja' },
+      { group:'eat', label:'Eat family', q:"I'm eating · formal", a:'たべています', note:'tabete imasu. Add います to the te-form たべて.', aLang:'ja' },
+      { group:'eat', label:'Eat family', q:'I ate · formal / casual', a:'<span class="answer-variant"><b>Formal</b>たべました。</span><span class="answer-variant casual"><b>Casual</b>たべた。</span>', note:'tabemashita. / tabeta.', aLang:'ja' },
+      { group:'eat', label:'Eat family', q:'I want to eat · formal / casual', a:'<span class="answer-variant"><b>Formal</b>たべたいです。</span><span class="answer-variant casual"><b>Casual</b>たべたい。</span>', note:'tabetai desu. / tabetai.', aLang:'ja' },
+
+      { group:'drink', label:'Drink family', q:'to drink · casual dictionary form', a:'のむ', note:'nomu. The base form.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:'te-form: drink and…', a:'のんで', note:'nonde. This is the annoying one: のむ becomes のんで, not のみて.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:'I drink / I will drink · formal', a:'のみます', note:'nomimasu. Habitual or future.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:"I'm drinking · formal / casual / spoken", a:'<span class="answer-variant"><b>Formal</b>のんでいます。</span><span class="answer-variant casual"><b>Casual</b>のんでいる。</span><span class="answer-variant spoken"><b>Common spoken</b>のんでる。</span>', note:'nonde imasu. / nonde iru. / nonderu.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:'I drank · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみました。</span><span class="answer-variant casual"><b>Casual</b>のんだ。</span>', note:'nomimashita. / nonda.', aLang:'ja' },
+      { group:'drink', label:'Drink family', q:'I want to drink · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみたいです。</span><span class="answer-variant casual"><b>Casual</b>のみたい。</span>', note:'nomitai desu. / nomitai.', aLang:'ja' },
+
+      { group:'go', label:'Go family', q:'to go · casual dictionary form', a:'いく', note:'iku. The base form.', aLang:'ja' },
+      { group:'go', label:'Go family', q:"I'm going to Japan · plan / future", a:'にほんにいきます。', note:'nihon ni ikimasu. English says “I’m going,” but Japanese usually uses いきます for a plan.', aLang:'ja' },
+      { group:'go', label:'Go family', q:'te-form: go and…', a:'いって', note:'itte. This is irregular: いく becomes いって.', aLang:'ja' },
+      { group:'go', label:'Go family', q:'I went · formal / casual', a:'<span class="answer-variant"><b>Formal</b>いきました。</span><span class="answer-variant casual"><b>Casual</b>いった。</span>', note:'ikimashita. / itta.', aLang:'ja' },
+      { group:'go', label:'Go family', q:'I want to go · formal / casual', a:'<span class="answer-variant"><b>Formal</b>いきたいです。</span><span class="answer-variant casual"><b>Casual</b>いきたい。</span>', note:'ikitai desu. / ikitai.', aLang:'ja' },
+      { group:'go', label:'Go family', q:'Do you want to go? · formal / casual invitation', a:'<span class="answer-variant"><b>Formal</b>いきませんか。</span><span class="answer-variant casual"><b>Casual</b>いかない？</span>', note:'ikimasen ka. / ikanai? A negative question works as an invitation.', aLang:'ja' },
+      { group:'go', label:'Go family', q:"Let's go · formal / casual", a:'<span class="answer-variant"><b>Formal</b>いきましょう。</span><span class="answer-variant casual"><b>Casual</b>いこう。</span>', note:'ikimashou. / ikou.', aLang:'ja' },
+
+      { group:'other', label:'Live family', q:'I live in San Francisco · formal', a:'サンフランシスコにすんでいます。', note:'san furanshisuko ni sunde imasu. Current living situation uses ている.', aLang:'ja' },
+      { group:'other', label:'Live family', q:'I lived in Thailand and Indonesia · formal / casual / spoken', a:'<span class="answer-variant"><b>Formal</b>タイとインドネシアにすんでいました。</span><span class="answer-variant casual"><b>Casual</b>タイとインドネシアにすんでいた。</span><span class="answer-variant spoken"><b>Common spoken</b>タイとインドネシアにすんでた。</span>', note:'sunde imashita. / sunde ita. / sundeta.', aLang:'ja' },
+      { group:'other', label:'Work family', q:"I'm working at a startup · formal", a:'スタートアップではたらいています。', note:'sutaato appu de hataraite imasu. Work in progress/current job uses ている.', aLang:'ja' },
+      { group:'other', label:'Return home family', q:'I went home · formal / casual', a:'<span class="answer-variant"><b>Formal</b>いえにかえりました。</span><span class="answer-variant casual"><b>Casual</b>いえにかえった。</span>', note:'ie ni kaerimashita. / ie ni kaetta.', aLang:'ja' },
+      { group:'other', label:'Watch family', q:'I watched a movie · formal / casual', a:'<span class="answer-variant"><b>Formal</b>えいがをみました。</span><span class="answer-variant casual"><b>Casual</b>えいがをみた。</span>', note:'eiga o mimashita. / eiga o mita.', aLang:'ja' }
+    ];
     var vocabMode = 'all';
+    var formMode = 'all';
 
     function shuffle(list){
       var a=list.slice();
       for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
       return a;
+    }
+    function esc(value){
+      return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
     function bindReveal(root, selector){
       root.querySelectorAll(selector).forEach(function(card){
@@ -654,6 +711,82 @@
       });
     });
     renderVocab();
+
+    FORM_DRILLS.forEach(function(item,index){item.id='particles:forms:'+item.group+':'+index;});
+    var formDeck=document.getElementById('form-deck');
+    var formCount=document.getElementById('form-count');
+    var formItems=[];
+    var formIndex=0;
+    var formMissed=[];
+    var formCorrect=0;
+    var formSkipped=0;
+    function visibleForms(){
+      return formMode==='all'?FORM_DRILLS:FORM_DRILLS.filter(function(item){return item.group===formMode;});
+    }
+    function resetFormSession(items){
+      formItems=shuffle(items||visibleForms());
+      formIndex=0;formMissed=[];formCorrect=0;formSkipped=0;
+      renderForm();
+    }
+    function renderForm(){
+      formCount.textContent=formItems.length+' prompts';
+      if(formIndex>=formItems.length){renderFormResults();return;}
+      var item=formItems[formIndex];
+      var aLang=item.aLang==='ja'?' lang="ja"':'';
+      formDeck.innerHTML=
+        '<div class="session-meta"><span>'+(formIndex+1)+' / '+formItems.length+'</span><span>✅ '+formCorrect+' · ❌ '+formMissed.length+'</span></div>'+
+        '<div class="session-track"><div class="session-fill" style="width:'+(formIndex/formItems.length*100)+'%"></div></div>'+
+        '<article class="practice-card" tabindex="0" role="button" aria-expanded="false">'+
+          '<div class="deck-label">'+esc(item.label)+'</div><p class="q-prompt">'+esc(item.q)+'</p>'+
+          '<p class="answer-main"'+aLang+'>'+item.a+'</p><p class="answer-note">'+esc(item.note)+'</p>'+
+          '<p class="tap-hint">answer first · tap to check</p></article>'+
+        '<div class="self-grade"><button class="grade-btn correct" data-form-outcome="correct">✅ Got it</button><button class="grade-btn missed" data-form-outcome="missed">❌ Missed</button></div>'+
+        '<button class="skip-btn" data-form-outcome="skip">Skip</button>';
+      var card=formDeck.querySelector('.practice-card');
+      function reveal(){
+        if(card.classList.contains('revealed'))return;
+        card.classList.add('revealed');card.setAttribute('aria-expanded','true');
+        formDeck.querySelector('.self-grade').classList.add('show');
+      }
+      card.addEventListener('click',reveal);
+      card.addEventListener('keydown',function(event){if(event.key==='Enter'||event.key===' '){event.preventDefault();reveal();}});
+      formDeck.querySelectorAll('[data-form-outcome]').forEach(function(button){
+        button.addEventListener('click',function(){gradeForm(item,button.getAttribute('data-form-outcome'));});
+      });
+    }
+    function gradeForm(item,outcome){
+      if(outcome==='correct'){
+        formCorrect++;
+        if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'good',{subject:'particles',type:'verb-forms'});
+      }else if(outcome==='missed'){
+        formMissed.push(item);
+        if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,'again',{subject:'particles',type:'verb-forms'});
+      }else{
+        formSkipped++;
+      }
+      formIndex++;renderForm();
+    }
+    function renderFormResults(){
+      var attempted=formCorrect+formMissed.length;
+      formDeck.innerHTML='<div class="session-results"><h3>Form round complete</h3>'+
+        '<div class="score">'+formCorrect+' / '+attempted+'</div>'+
+        '<p class="lead">'+(formMissed.length?'Run the missed forms again while the pattern is still warm.':'Clean round. These forms are starting to behave.')+'</p>'+
+        (formMissed.length?'<div class="missed-list">'+formMissed.map(function(item){return '<div class="missed-item">'+esc(item.q)+'</div>';}).join('')+'</div>':'')+
+        '<div class="result-actions">'+(formMissed.length?'<button class="session-btn" id="review-form-missed">Review missed</button>':'')+
+        '<button class="session-btn secondary" id="restart-form-round">Start new round</button></div>'+
+        (formSkipped?'<p class="tap-hint">'+formSkipped+' skipped</p>':'')+'</div>';
+      var missedButton=document.getElementById('review-form-missed');
+      if(missedButton)missedButton.addEventListener('click',function(){resetFormSession(formMissed.slice());});
+      document.getElementById('restart-form-round').addEventListener('click',function(){resetFormSession();});
+    }
+    document.querySelectorAll('[data-form]').forEach(function(button){
+      button.addEventListener('click',function(){
+        formMode=button.getAttribute('data-form');
+        document.querySelectorAll('[data-form]').forEach(function(item){item.classList.remove('active');});
+        button.classList.add('active');resetFormSession();
+      });
+    });
+    resetFormSession();
 
     var verbDeck=document.getElementById('verb-deck');
     verbDeck.innerHTML=shuffle(VERBS).map(function(item,index){
@@ -850,7 +983,7 @@
     var DRILLS = [
       { mode:'en-ja', label:'Translate into Japanese', q:"I'm Filipino.", a:'わたしはフィリピンじんです。', note:'watashi wa firipin-jin desu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I like basketball.', a:'バスケットボールがすきです。', note:'basuketto booru ga suki desu.', qLang:'en', aLang:'ja' },
-      { mode:'en-ja', label:'Translate into Japanese', q:'I study Japanese at home.', a:'いえでにほんごをべんきょうします。', note:'ie de nihongo o benkyou shimasu.', qLang:'en', aLang:'ja' },
+      { mode:'en-ja', label:'Translate into Japanese', q:'I usually study Japanese at home.', a:'いえでにほんごをべんきょうします。', note:'ie de nihongo o benkyou shimasu. Habit/routine, so this uses します.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate both sentences', q:'I like basketball. I like weight training too.', a:'バスケットボールがすきです。きんトレもすきです。', note:'basuketto booru ga suki desu. kintore mo suki desu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I work at a startup.', a:'スタートアップではたらいています。', note:'sutaato appu de hataraite imasu.', qLang:'en', aLang:'ja' },
       { mode:'en-ja', label:'Translate into Japanese', q:'I lived in Thailand and Indonesia.', a:'<span class="answer-variant"><b>Formal</b>タイとインドネシアにすんでいました。</span><span class="answer-variant casual"><b>Casual</b>タイとインドネシアにすんでいた。</span><span class="answer-variant spoken"><b>Common spoken</b>タイとインドネシアにすんでた。</span>', note:'tai to indoneshia ni sunde imashita. / tai to indoneshia ni sunde ita. / tai to indoneshia ni sundeta. — I lived in Thailand and Indonesia.', qLang:'en', aLang:'ja' },
@@ -886,7 +1019,7 @@
       { mode:'conversation', label:'Reply naturally', q:'なにがすきですか。', a:'バスケットボールがすきです。', note:'Sample: “I like basketball.” Use が with すき.', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Reply naturally', q:'どこできんトレをしますか。', a:'ジムできんトレをします。', note:'Sample: “I lift at the gym.”', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Reply naturally', q:'だれとにほんにいきますか。', a:'こんやくしゃといきます。', note:"Sample: “I'm going with my fiancée.”", qLang:'ja', aLang:'ja' },
-      { mode:'conversation', label:'Reply naturally', q:'わたしはにほんごをべんきょうしています。', a:'わたしもべんきょうしています。', note:'“I study it too.” Replace は with も.', qLang:'ja', aLang:'ja' },
+      { mode:'conversation', label:'Reply naturally', q:'わたしはにほんごをべんきょうしています。', a:'わたしもべんきょうしています。', note:'“I’m studying it too.” Replace は with も.', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Build a sentence', q:'サンフランシスコ / はたらく', a:'サンフランシスコではたらいています。', note:'Use で because working is an action.', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Fix the sentence', q:'ジムにきんトレをします。', a:'ジムできんトレをします。', note:'Use で for an action at a place.', qLang:'ja', aLang:'ja' },
       { mode:'conversation', label:'Fix the sentence', q:'にほんごがべんきょうしています。', a:'にほんごをべんきょうしています。', note:'Japanese is what receives the action, so use を.', qLang:'ja', aLang:'ja' },
