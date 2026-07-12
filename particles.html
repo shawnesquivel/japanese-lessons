@@ -141,6 +141,26 @@
   .builder-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px}
   .builder-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
   .builder-prompt{font-size:20px;font-weight:700;margin:8px 0 4px;text-wrap:pretty}
+  .builder-term{
+    position:relative;display:inline-flex;align-items:baseline;border-bottom:2px dotted #BEB59F;
+    color:var(--ink);cursor:help;line-height:1.25;outline:0;
+  }
+  .builder-term:hover,.builder-term:focus,.builder-term.hint-active{color:#3C5E25;border-bottom-color:var(--ko)}
+  .builder-term::before,.builder-term::after{
+    position:absolute;left:50%;bottom:calc(100% + 7px);opacity:0;pointer-events:none;
+    transform:translate(-50%,4px);transition-property:opacity,transform;transition-duration:.12s;z-index:6;
+  }
+  .builder-term::before{content:"";border:6px solid transparent;border-top-color:var(--ink);bottom:calc(100% - 5px)}
+  .builder-term::after{
+    content:attr(data-hint);width:max-content;max-width:min(270px,80vw);padding:6px 9px;border-radius:8px;
+    background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;line-height:1.25;
+    white-space:normal;text-align:center;box-shadow:0 6px 18px rgba(42,46,36,.16);
+  }
+  .builder-term:hover::before,.builder-term:hover::after,.builder-term:focus::before,.builder-term:focus::after,
+  .builder-term.hint-active::before,.builder-term.hint-active::after{
+    opacity:1;transform:translate(-50%,0);
+  }
+  .builder-term:focus-visible{outline:2px solid var(--so);outline-offset:3px;border-radius:4px}
   .builder-hint{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
   .builder-form{display:grid;gap:10px}
   .builder-input{width:100%;min-height:48px;border:1px solid var(--line-strong);border-radius:11px;padding:11px 13px;background:#fff;color:var(--ink);font:500 16px "Zen Maru Gothic",system-ui,sans-serif}
@@ -835,6 +855,62 @@
     var deck=document.getElementById('builder-deck');
     var items=[];var index=0;var correct=0;var missed=[];var skipped=0;
     function esc(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    var PROMPT_HINTS = [
+      { text:'going', jp:'いきます', rj:'ikimasu' },
+      { text:'Japan', jp:'にほん', rj:'nihon' },
+      { text:'fiancée', jp:'こんやくしゃ', rj:"kon'yakusha" },
+      { text:'September', jp:'くがつ', rj:'kugatsu' },
+      { text:'Tokyo', jp:'とうきょう', rj:'toukyou' },
+      { text:'friend', jp:'ともだち', rj:'tomodachi' },
+      { text:'tomorrow', jp:'あした', rj:'ashita' },
+      { text:'Monday', jp:'げつようび', rj:'getsuyoubi' },
+      { text:'library', jp:'としょかん', rj:'toshokan' },
+      { text:'studying', jp:'べんきょうしています', rj:'benkyou shite imasu' },
+      { text:'Japanese', jp:'にほんご', rj:'nihongo' },
+      { text:'home', jp:'いえ', rj:'ie' },
+      { text:'today', jp:'きょう', rj:'kyou' },
+      { text:'lift', jp:'ウェイトリフティングをします', rj:'ueito rifutingu o shimasu' },
+      { text:'gym', jp:'ジム', rj:'jimu' },
+      { text:'weekends', jp:'しゅうまつ', rj:'shuumatsu' },
+      { text:'drink', jp:'のみます', rj:'nomimasu' },
+      { text:'coffee', jp:'コーヒー', rj:'koohii' },
+      { text:'morning', jp:'あさ', rj:'asa' },
+      { text:'What', jp:'なに', rj:'nani' },
+      { text:'people', jp:'ひと', rj:'hito' },
+      { text:'park', jp:'こうえん', rj:'kouen' }
+    ];
+    function isPromptBoundary(char){return !char||!/[\w]/.test(char);}
+    function renderPrompt(value){
+      var hints=PROMPT_HINTS.slice().sort(function(a,b){return b.text.length-a.text.length;});
+      var output='';var i=0;
+      while(i<value.length){
+        var hit=null;
+        for(var h=0;h<hints.length;h++){
+          var hint=hints[h];var phrase=value.slice(i,i+hint.text.length);
+          if(phrase.toLowerCase()===hint.text.toLowerCase()&&isPromptBoundary(value[i-1])&&isPromptBoundary(value[i+hint.text.length])){hit=hint;break;}
+        }
+        if(hit){
+          var label=value.slice(i,i+hit.text.length);var hintText=hit.jp+' / '+hit.rj;
+          output+='<span class="builder-term" tabindex="0" data-hint="'+esc(hintText)+'" aria-label="'+esc(label+': '+hintText)+'">'+esc(label)+'</span>';
+          i+=hit.text.length;
+        }else{
+          output+=esc(value[i]);i++;
+        }
+      }
+      return output;
+    }
+    function bindPromptHints(root){
+      root.querySelectorAll('.builder-term').forEach(function(term){
+        function show(){term.classList.add('hint-active');}
+        function hide(){term.classList.remove('hint-active');}
+        term.addEventListener('mouseenter',show);
+        term.addEventListener('mouseleave',hide);
+        term.addEventListener('focus',show);
+        term.addEventListener('blur',hide);
+        term.addEventListener('click',show);
+        term.addEventListener('touchstart',show,{passive:true});
+      });
+    }
     function normalize(value){
       return String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
     }
@@ -845,9 +921,10 @@
       var item=items[index];
       deck.innerHTML='<div class="session-meta"><span>'+(index+1)+' / '+items.length+'</span><span>✅ '+correct+' · ❌ '+missed.length+'</span></div>'+
         '<div class="session-track"><div class="session-fill" style="width:'+(index/items.length*100)+'%"></div></div>'+
-        '<article class="builder-card"><div class="builder-label">Build the sentence</div><p class="builder-prompt">'+esc(item.prompt)+'</p><p class="builder-hint">Chunk guide: '+esc(item.hint)+'</p>'+
+        '<article class="builder-card"><div class="builder-label">Build the sentence</div><p class="builder-prompt">'+renderPrompt(item.prompt)+'</p><p class="builder-hint">Chunk guide: '+esc(item.hint)+'</p>'+
         '<form class="builder-form"><label class="eyebrow" for="builder-input">Your romaji</label><input class="builder-input" id="builder-input" name="answer" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the full Japanese sentence in romaji"><button class="builder-submit" type="submit">Check sentence</button></form>'+
         '<div class="builder-feedback" role="status" aria-live="polite"></div><div class="builder-actions"><button class="grade-btn correct" type="button" data-builder-outcome="correct">✅ Got it</button><button class="grade-btn missed" type="button" data-builder-outcome="missed">❌ Missed</button></div></article><button class="skip-btn" type="button" data-builder-outcome="skip">Skip</button>';
+      bindPromptHints(deck);
       var form=deck.querySelector('.builder-form');var input=deck.querySelector('.builder-input');var feedback=deck.querySelector('.builder-feedback');var submitted=false;
       form.addEventListener('submit',function(event){
         event.preventDefault();if(submitted||!input.value.trim())return;
