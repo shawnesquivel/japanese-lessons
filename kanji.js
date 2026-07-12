@@ -153,7 +153,7 @@
   }
   function fillMaskedText(element,text,card){
     element.textContent="";var pattern=answerPattern(card),source=String(text||"");if(!pattern){element.textContent=source;return}var cursor=0,match;
-    while((match=pattern.exec(source))){var start=match.index+match[1].length;if(start>cursor)element.appendChild(document.createTextNode(source.slice(cursor,start)));var hidden=document.createElement("span");hidden.className="hint-redaction";hidden.setAttribute("aria-hidden","true");hidden.textContent=match[2];element.appendChild(hidden);cursor=start+match[2].length;pattern.lastIndex=cursor}
+    while((match=pattern.exec(source))){var start=match.index+match[1].length;if(start>cursor)element.appendChild(document.createTextNode(source.slice(cursor,start)));var hidden=document.createElement("span");hidden.className="hint-redaction";hidden.setAttribute("aria-hidden","true");hidden.textContent=match[2].replace(/[a-z0-9]/gi,"_");element.appendChild(hidden);cursor=start+match[2].length;pattern.lastIndex=cursor}
     if(cursor<source.length)element.appendChild(document.createTextNode(source.slice(cursor)));
   }
   function renderQuestionHint(card){
