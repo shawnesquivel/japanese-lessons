@@ -138,10 +138,24 @@
     if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";chip.textContent=part;list.appendChild(chip)});
     else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";list.appendChild(chip)}
   }
+  function answerPattern(card){
+    var terms=(card.answers||[]).concat(card.rtkKeyword||[]).map(function(term){return String(term||"").trim()}).filter(Boolean).filter(function(term,index,list){return list.indexOf(term)===index}).sort(function(a,b){return b.length-a.length});
+    if(!terms.length)return null;return new RegExp("(^|[^a-z0-9])("+terms.map(function(term){return term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}).join("|")+")(?=$|[^a-z0-9])","gi");
+  }
+  function fillMaskedText(element,text,card){
+    element.textContent="";var pattern=answerPattern(card),source=String(text||"");if(!pattern){element.textContent=source;return}var cursor=0,match;
+    while((match=pattern.exec(source))){var start=match.index+match[1].length;if(start>cursor)element.appendChild(document.createTextNode(source.slice(cursor,start)));var hidden=document.createElement("span");hidden.className="hint-redaction";hidden.setAttribute("aria-hidden","true");hidden.textContent=match[2];element.appendChild(hidden);cursor=start+match[2].length;pattern.lastIndex=cursor}
+    if(cursor<source.length)element.appendChild(document.createTextNode(source.slice(cursor)));
+  }
+  function fillHintPrimitives(selector,parts,card){
+    var list=$(selector);list.innerHTML="";
+    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";fillMaskedText(chip,part,card);list.appendChild(chip)});
+    else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";list.appendChild(chip)}
+  }
   function renderQuestionHint(card){
-    var parts=card.primitives||[];$("#question-hint-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;fillPrimitiveList("#question-primitive-list",parts);
-    $("#question-primitive-image").hidden=!card.hint;$("#question-primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
-    var existing=notes[card.frame]||"";$("#question-note-preview").hidden=!existing;$("#question-note-preview").textContent=existing?"Your note: "+existing:"";
+    var parts=card.primitives||[];$("#question-hint-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;fillHintPrimitives("#question-primitive-list",parts,card);
+    $("#question-primitive-image").hidden=!card.hint;if(card.hint)fillMaskedText($("#question-primitive-image"),"Extra primitive image: "+card.hint,card);else $("#question-primitive-image").textContent="";
+    var existing=notes[card.frame]||"";$("#question-note-preview").hidden=!existing;if(existing)fillMaskedText($("#question-note-preview"),"Your note: "+existing,card);else $("#question-note-preview").textContent="";
   }
   function setQuestionHint(open){
     if(quiz.answered)return;var panel=$("#question-hint"),button=$("#show-hint");panel.hidden=!open;button.textContent=open?"Hide hint":"Hint";button.setAttribute("aria-expanded",open?"true":"false");if(open)renderQuestionHint(quiz.cards[quiz.index]);
