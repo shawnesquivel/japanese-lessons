@@ -319,6 +319,15 @@
             <li><span class="kana">はなす → はなして + います = はなしています</span><span class="rj">hanasu → hanashite + imasu = hanashite imasu · speaking</span></li>
           </ul>
         </div>
+        <table class="tbl">
+          <thead><tr><th>If English says...</th><th>Use this shape</th></tr></thead>
+          <tbody>
+            <tr><td class="en">What do you drink?</td><td><span class="kana">なにをのみますか。</span><span class="rj">nani o nomimasu ka</span><span class="gl">habit / general question + か</span></td></tr>
+            <tr><td class="en">What are you drinking?</td><td><span class="kana">なにをのんでいますか。</span><span class="rj">nani o nonde imasu ka</span><span class="gl">ongoing question: のむ → のんで + います + か</span></td></tr>
+            <tr><td class="en">My friend watched a movie at home yesterday.</td><td><span class="kana">きのう、ともだちはいえでえいがをみました。</span><span class="rj">kinou, tomodachi wa ie de eiga o mimashita</span><span class="gl">simple past</span></td></tr>
+            <tr><td class="en">My friend was watching a movie at home yesterday.</td><td><span class="kana">きのう、ともだちはいえでえいがをみていました。</span><span class="rj">kinou, tomodachi wa ie de eiga o mite imashita</span><span class="gl">past ongoing: みる → みて + いました</span></td></tr>
+          </tbody>
+        </table>
       </div>
       <h3>Verb form families</h3>
       <p class="lead">The same verb can show up as a dictionary form, polite form, te-form, ongoing form, past form, or want-to form. Practice the annoying swaps here before the sentence cards.</p>
@@ -721,6 +730,7 @@
       { group:'drink', label:'Drink family', q:'te-form: drink and…', a:'のんで', note:'nonde. This is the annoying one: のむ becomes のんで, not のみて.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I drink / I will drink · formal', a:'のみます', note:'nomimasu. Habitual or future.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:"I'm drinking · formal / casual / spoken", a:'<span class="answer-variant"><b>Formal</b>のんでいます。</span><span class="answer-variant casual"><b>Casual</b>のんでいる。</span><span class="answer-variant spoken"><b>Common spoken</b>のんでる。</span>', note:'nonde imasu. / nonde iru. / nonderu.', aLang:'ja' },
+      { group:'drink', label:'Drink question trap', q:'What are you drinking? · formal question', a:'なにをのんでいますか。', note:'nani o nonde imasu ka. Ongoing uses のんでいます, and a polite question ends with か.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I drank · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみました。</span><span class="answer-variant casual"><b>Casual</b>のんだ。</span>', note:'nomimashita. / nonda.', aLang:'ja' },
       { group:'drink', label:'Drink family', q:'I want to drink · formal / casual', a:'<span class="answer-variant"><b>Formal</b>のみたいです。</span><span class="answer-variant casual"><b>Casual</b>のみたい。</span>', note:'nomitai desu. / nomitai.', aLang:'ja' },
 
@@ -736,7 +746,8 @@
       { group:'other', label:'Live family', q:'I lived in Thailand and Indonesia · formal / casual / spoken', a:'<span class="answer-variant"><b>Formal</b>タイとインドネシアにすんでいました。</span><span class="answer-variant casual"><b>Casual</b>タイとインドネシアにすんでいた。</span><span class="answer-variant spoken"><b>Common spoken</b>タイとインドネシアにすんでた。</span>', note:'sunde imashita. / sunde ita. / sundeta.', aLang:'ja' },
       { group:'other', label:'Work family', q:"I'm working at a startup · formal", a:'スタートアップではたらいています。', note:'sutaato appu de hataraite imasu. Work in progress/current job uses ている.', aLang:'ja' },
       { group:'other', label:'Return home family', q:'I went home · formal / casual', a:'<span class="answer-variant"><b>Formal</b>いえにかえりました。</span><span class="answer-variant casual"><b>Casual</b>いえにかえった。</span>', note:'ie ni kaerimashita. / ie ni kaetta.', aLang:'ja' },
-      { group:'other', label:'Watch family', q:'I watched a movie · formal / casual', a:'<span class="answer-variant"><b>Formal</b>えいがをみました。</span><span class="answer-variant casual"><b>Casual</b>えいがをみた。</span>', note:'eiga o mimashita. / eiga o mita.', aLang:'ja' }
+      { group:'other', label:'Watch family', q:'I watched a movie · formal / casual', a:'<span class="answer-variant"><b>Formal</b>えいがをみました。</span><span class="answer-variant casual"><b>Casual</b>えいがをみた。</span>', note:'eiga o mimashita. / eiga o mita.', aLang:'ja' },
+      { group:'other', label:'Watch past ongoing', q:'My friend was watching a movie at home yesterday · formal', a:'きのう、ともだちはいえでえいがをみていました。', note:'kinou, tomodachi wa ie de eiga o mite imashita. “Was watching” uses みていました, not みます or みました.', aLang:'ja' }
     ];
     var vocabMode = 'all';
     var formMode = 'all';
@@ -879,6 +890,8 @@
       { id:'particles:builder:study-home', prompt:"I'm studying Japanese at home today.", hint:'time topic + action place + object + ongoing action', kana:'きょうはいえでにほんごをべんきょうしています。', romaji:'kyou wa ie de nihongo o benkyou shite imasu', why:'Studying is an action, so home takes で rather than に. Japanese is the object, so it takes を.', answers:['kyou wa ie de nihongo o benkyou shite imasu','kyo wa ie de nihongo o benkyo shite imasu','kyou ie de nihongo o benkyou shite imasu','kyo ie de nihongo o benkyo shite imasu'] },
       { id:'particles:builder:weekend-gym', prompt:'I lift at the gym on weekends.', hint:'time topic + action place + object + action', kana:'しゅうまつはジムでウェイトリフティングをします。', romaji:'shuumatsu wa jimu de ueito rifutingu o shimasu', why:'The gym is where the action happens, so it takes で. ウェイトリフティング is what you do, so it takes を.', answers:['shuumatsu wa jimu de ueito rifutingu o shimasu','shumatsu wa jimu de ueito rifutingu o shimasu','shuumatsu ni jimu de ueito rifutingu o shimasu','shumatsu ni jimu de ueito rifutingu o shimasu','shuumatsu wa jimu de ueito lifutingu o shimasu','shumatsu wa jimu de ueito lifutingu o shimasu'] },
       { id:'particles:builder:coffee-home', prompt:'I drink coffee at home in the morning.', hint:'time + action place + object + action', kana:'あさ、いえでコーヒーをのみます。', romaji:'asa, ie de koohii o nomimasu', why:'Drinking happens at home, so いえ takes で. Coffee receives the action, so it takes を.', answers:['asa ie de koohii o nomimasu','asa ie de kohii o nomimasu'] },
+      { id:'particles:builder:drinking-question', prompt:'What are you drinking?', hint:'question word + object particle + ongoing action + question marker', kana:'なにをのんでいますか。', romaji:'nani o nonde imasu ka', why:'“Are drinking” is ongoing, so のむ becomes のんでいます. Polite questions end with か.', answers:['nani o nonde imasu ka','nani o nondeimasu ka'] },
+      { id:'particles:builder:friend-watching-home', prompt:'My friend was watching a movie at home yesterday.', hint:'time + topic + action place + object + past ongoing action', kana:'きのう、ともだちはいえでえいがをみていました。', romaji:'kinou, tomodachi wa ie de eiga o mite imashita', why:'“Was watching” is past ongoing: みる becomes みていました. Home is the action place, so it takes で.', answers:['kinou tomodachi wa ie de eiga o mite imashita','kinou tomodachi wa ie de eiga o miteimashita','kinou tomodachi wa ie de eiga wo mite imashita','kinou tomodachi wa ie de eiga wo miteimashita'] },
       { id:'particles:builder:study-question', prompt:'What are you studying?', hint:'question word + object particle + ongoing action + question marker', kana:'なにをべんきょうしていますか。', romaji:'nani o benkyou shite imasu ka', why:'なに is the thing being studied, so it takes を. The ています form makes the action ongoing.', answers:['nani o benkyou shite imasu ka','nani o benkyo shite imasu ka'] },
       { id:'particles:builder:people-park', prompt:'There are people in the park.', hint:'place of existence + subject + existence verb', kana:'こうえんにひとがいます。', romaji:'kouen ni hito ga imasu', why:'For existence, the place takes に, the thing that exists takes が, and people use います.', answers:['kouen ni hito ga imasu','koen ni hito ga imasu'] }
     ];
@@ -903,8 +916,12 @@
       { text:'gym', jp:'ジム', rj:'jimu' },
       { text:'weekends', jp:'しゅうまつ', rj:'shuumatsu' },
       { text:'drink', jp:'のみます', rj:'nomimasu' },
+      { text:'drinking', jp:'のんでいます', rj:'nonde imasu' },
       { text:'coffee', jp:'コーヒー', rj:'koohii' },
       { text:'morning', jp:'あさ', rj:'asa' },
+      { text:'was watching', jp:'みていました', rj:'mite imashita' },
+      { text:'movie', jp:'えいが', rj:'eiga' },
+      { text:'yesterday', jp:'きのう', rj:'kinou' },
       { text:'What', jp:'なに', rj:'nani' },
       { text:'people', jp:'ひと', rj:'hito' },
       { text:'park', jp:'こうえん', rj:'kouen' }
