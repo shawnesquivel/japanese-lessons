@@ -77,7 +77,7 @@
   function renderQuestion(){
     var card=quiz.cards[quiz.index];if(!card){finishQuiz();return}quiz.answered=false;
     quiz.currentMode=quiz.mode==="adaptive"?(JL_PROGRESS.strength(card.progressId)>=55?"recognition":"meaning"):quiz.mode;
-    $("#q-progress").textContent=(quiz.retryRound?"Retry · ":"")+(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;$("#memory-cue").hidden=true;$("#quiz-note-editor").hidden=true;$("#continue").hidden=false;lastSpaceAt=0;
+    $("#q-progress").textContent=(quiz.retryRound?"Retry · ":"")+(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;$("#memory-cue").hidden=true;$("#quiz-note-editor").hidden=true;$("#continue").hidden=false;$("#hint-tools").hidden=false;$("#question-hint").hidden=true;$("#show-hint").textContent="Hint";$("#show-hint").setAttribute("aria-expanded","false");lastSpaceAt=0;
     var meaning=quiz.currentMode==="meaning";$("#meaning-question").hidden=!meaning;$("#recognition-question").hidden=meaning;
     if(meaning){$("#q-kanji").textContent=card.kanji;$("#meaning-input").value="";$("#meaning-input").disabled=false;setTimeout(function(){$("#meaning-input").focus()},50)}
     else{$("#q-keyword").textContent=card.meaning;buildChoices(card)}
@@ -91,14 +91,26 @@
   function submit(correct,picked){
     if(quiz.answered)return;quiz.answered=true;var card=quiz.cards[quiz.index],rating=correct?"good":"again";
     JL_PROGRESS.record(card.progressId,rating,{subject:"kanji",type:"kanji"});quiz.results.push({card:card,correct:correct});
-    $("#meaning-input").disabled=true;$all(".choice").forEach(function(button){button.disabled=true;if(button.dataset.id===card.id)button.classList.add("right")});if(picked&&!correct)picked.classList.add("wrong");
+    $("#meaning-input").disabled=true;$all(".choice").forEach(function(button){button.disabled=true;if(button.dataset.id===card.id)button.classList.add("right")});if(picked&&!correct)picked.classList.add("wrong");$("#hint-tools").hidden=true;
     var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
   }
+  function fillPrimitiveList(selector,parts){
+    var list=$(selector);list.innerHTML="";
+    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";chip.textContent=part;list.appendChild(chip)});
+    else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";list.appendChild(chip)}
+  }
+  function renderQuestionHint(card){
+    var parts=card.primitives||[];$("#question-hint-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;fillPrimitiveList("#question-primitive-list",parts);
+    $("#question-primitive-image").hidden=!card.hint;$("#question-primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
+    var existing=notes[card.frame]||"";$("#question-note-preview").hidden=!existing;$("#question-note-preview").textContent=existing?"Your note: "+existing:"";
+  }
+  $("#show-hint").onclick=function(){
+    if(quiz.answered)return;var panel=$("#question-hint"),opening=panel.hidden;panel.hidden=!opening;this.textContent=opening?"Hide hint":"Hint";this.setAttribute("aria-expanded",opening?"true":"false");if(opening)renderQuestionHint(quiz.cards[quiz.index]);
+  };
   function renderMemoryCue(card){
-    $("#memory-cue").hidden=false;$("#rtk-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;$("#primitive-list").innerHTML="";
+    $("#memory-cue").hidden=false;$("#rtk-meta").textContent="Remembering the Kanji 1 · RTK frame "+card.rtkFrame;
     var parts=card.primitives||[];
-    if(parts.length)parts.forEach(function(part){var chip=document.createElement("span");chip.className="primitive";chip.textContent=part;$("#primitive-list").appendChild(chip)});
-    else{var chip=document.createElement("span");chip.className="primitive";chip.textContent="base character";$("#primitive-list").appendChild(chip)}
+    fillPrimitiveList("#primitive-list",parts);
     $("#rtk-cue").textContent=(parts.length?parts.join(" + "):"base image")+" → "+card.rtkKeyword;
     $("#primitive-image").hidden=!card.hint;$("#primitive-image").textContent=card.hint?"Extra primitive image: "+card.hint:"";
     var existing=notes[card.frame]||"";$("#note-preview").hidden=!existing;$("#note-preview").textContent=existing?"Your note: "+existing:"";$("#quiz-note").value=existing;$("#quiz-note-editor").hidden=true;
