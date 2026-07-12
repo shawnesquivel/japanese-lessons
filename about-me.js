@@ -41,9 +41,9 @@ window.JL_ABOUT_ME = {
     {
       id: "hobbies",
       label: "Hobbies",
-      en: "I like basketball and weight training.",
-      kana: "バスケットボールときんトレがすきです。",
-      romaji: "basuketto booru to kintore ga suki desu."
+      en: "I like basketball and weightlifting.",
+      kana: "バスケットボールとウェイトリフティングがすきです。",
+      romaji: "basuketto booru to ueito rifutingu ga suki desu."
     },
     {
       id: "japanese",

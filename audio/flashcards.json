@@ -302,12 +302,12 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "きんトレ",
-      "romaji": "kintore",
-      "en": "lifting / weight training",
+      "kana": "ウェイトリフティング",
+      "romaji": "ueito rifutingu",
+      "en": "weightlifting",
       "group": "particles",
-      "audio": "audio/particles/words/kintore.mp3",
-      "id": "kintore",
+      "audio": "audio/particles/words/ueito-rifutingu.mp3",
+      "id": "ueito-rifutingu",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

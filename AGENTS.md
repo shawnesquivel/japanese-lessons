@@ -10,7 +10,7 @@ Read this file before changing the codebase.
 - Teach polite です／ます forms first, then show casual and past forms explicitly.
 - For verb and conjugation answers, reveal formal, casual, and common spoken contractions when they differ. Label each form and include romaji plus one English meaning (for example: すんでいました / すんでいた / すんでた).
 - Use conversational, everyday examples. Prefer facts from `about-me.js` when personalization helps.
-- Prefer what people commonly say in conversation over textbook-long wording. Use きんトレ (`kintore`) for lifting / weight training, not ウェイトトレーニング.
+- Prefer what people commonly say in conversation over textbook-long wording. Use ウェイトリフティング (`ueito rifutingu`) for weightlifting by default; do not switch it back to きんトレ unless explicitly asked.
 - Include varied drills: both translation directions, fill-the-blank, sentence building, corrections, free replies, and audio-only comprehension.
 - Include harder composition drills that combine multiple chunks such as time + companion + destination, not only single-pattern sentences.
 - Present practice and listening sessions one card at a time. After reveal, offer clear ✅ Got it and ❌ Missed actions plus a smaller Skip action; end with a review of missed cards.

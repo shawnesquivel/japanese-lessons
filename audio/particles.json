@@ -8,9 +8,9 @@
       "kana": "なにがすきですか。",
       "romaji": "nani ga suki desu ka.",
       "en": "What do you like?",
-      "answer": "I like basketball and weight training.",
-      "answerKana": "バスケットボールときんトレがすきです。",
-      "answerRomaji": "basuketto booru to kintore ga suki desu.",
+      "answer": "I like basketball and weightlifting.",
+      "answerKana": "バスケットボールとウェイトリフティングがすきです。",
+      "answerRomaji": "basuketto booru to ueito rifutingu ga suki desu.",
       "id": "nani-ga-suki-desu-ka",
       "audio": "audio/particles/nani-ga-suki-desu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
@@ -60,14 +60,14 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "どこできんトレをしますか。",
-      "romaji": "doko de kintore o shimasu ka.",
+      "kana": "どこでウェイトリフティングをしますか。",
+      "romaji": "doko de ueito rifutingu o shimasu ka.",
       "en": "Where do you lift?",
       "answer": "I lift at the gym.",
-      "answerKana": "ジムできんトレをします。",
-      "answerRomaji": "jimu de kintore o shimasu.",
-      "id": "doko-de-kintore-o-shimasu-ka",
-      "audio": "audio/particles/doko-de-kintore-o-shimasu-ka.mp3",
+      "answerKana": "ジムでウェイトリフティングをします。",
+      "answerRomaji": "jimu de ueito rifutingu o shimasu.",
+      "id": "doko-de-ueito-rifutingu-o-shimasu-ka",
+      "audio": "audio/particles/doko-de-ueito-rifutingu-o-shimasu-ka.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
@@ -283,11 +283,11 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "きんトレ",
-      "romaji": "kintore",
-      "en": "lifting / weight training",
-      "id": "kintore",
-      "audio": "audio/particles/words/kintore.mp3",
+      "kana": "ウェイトリフティング",
+      "romaji": "ueito rifutingu",
+      "en": "weightlifting",
+      "id": "ueito-rifutingu",
+      "audio": "audio/particles/words/ueito-rifutingu.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {

@@ -177,7 +177,7 @@ const WORDS = [
   { kana: "パソコン", romaji: "pasokon", en: "computer", group: "particles", audio: "audio/particles/words/pasokon.mp3" },
   { kana: "コーヒー", romaji: "koohii", en: "coffee", group: "particles", audio: "audio/particles/words/koohii.mp3" },
   { kana: "バスケットボール", romaji: "basuketto-booru", en: "basketball", group: "particles", audio: "audio/particles/words/basuketto-booru.mp3" },
-  { kana: "きんトレ", romaji: "kintore", en: "lifting / weight training", group: "particles", audio: "audio/particles/words/kintore.mp3" },
+  { kana: "ウェイトリフティング", romaji: "ueito rifutingu", en: "weightlifting", group: "particles", audio: "audio/particles/words/ueito-rifutingu.mp3" },
   { kana: "サンフランシスコ", romaji: "san-furanshisuko", en: "San Francisco", group: "particles" },
   { kana: "にほん", romaji: "nihon", en: "Japan", group: "particles" },
   { kana: "とうきょう", romaji: "toukyou", en: "Tokyo", group: "particles", audio: "audio/particles/words/toukyou.mp3" },
@@ -301,12 +301,12 @@ const WORDS = [
 // Audio-only comprehension for the particles lesson.
 // Learners hear the question first, answer its meaning in English, then reveal.
 const PARTICLE_QUESTIONS = [
-  { kana: "なにがすきですか。", romaji: "nani ga suki desu ka.", en: "What do you like?", answer: "I like basketball and weight training.", answerKana: "バスケットボールときんトレがすきです。", answerRomaji: "basuketto booru to kintore ga suki desu." },
+  { kana: "なにがすきですか。", romaji: "nani ga suki desu ka.", en: "What do you like?", answer: "I like basketball and weightlifting.", answerKana: "バスケットボールとウェイトリフティングがすきです。", answerRomaji: "basuketto booru to ueito rifutingu ga suki desu." },
   { kana: "どこにすんでいますか。", romaji: "doko ni sunde imasu ka.", en: "Where do you live?", answer: "I live in San Francisco.", answerKana: "サンフランシスコにすんでいます。", answerRomaji: "san furanshisuko ni sunde imasu." },
   { kana: "どこではたらいていますか。", romaji: "doko de hataraite imasu ka.", en: "Where do you work?", answer: "I work at a startup.", answerKana: "スタートアップではたらいています。", answerRomaji: "sutaato appu de hataraite imasu." },
   { kana: "しごとはなんですか。", romaji: "shigoto wa nan desu ka.", en: "What do you do for work?", answer: "I'm a software engineer.", answerKana: "ソフトウェアエンジニアです。", answerRomaji: "sofutowea enjinia desu." },
   { kana: "なにをべんきょうしていますか。", romaji: "nani o benkyou shite imasu ka.", en: "What are you studying?", answer: "I'm studying Japanese.", answerKana: "にほんごをべんきょうしています。", answerRomaji: "nihongo o benkyou shite imasu." },
-  { kana: "どこできんトレをしますか。", romaji: "doko de kintore o shimasu ka.", en: "Where do you lift?", answer: "I lift at the gym.", answerKana: "ジムできんトレをします。", answerRomaji: "jimu de kintore o shimasu." },
+  { kana: "どこでウェイトリフティングをしますか。", romaji: "doko de ueito rifutingu o shimasu ka.", en: "Where do you lift?", answer: "I lift at the gym.", answerKana: "ジムでウェイトリフティングをします。", answerRomaji: "jimu de ueito rifutingu o shimasu." },
   { kana: "だれとにほんにいきますか。", romaji: "dare to nihon ni ikimasu ka.", en: "Who are you going to Japan with?", answer: "I'm going with my fiancée.", answerKana: "こんやくしゃといきます。", answerRomaji: "kon-yakusha to ikimasu." },
   { kana: "いつにほんにいきますか。", romaji: "itsu nihon ni ikimasu ka.", en: "When are you going to Japan?", answer: "I'm going in September.", answerKana: "くがつにいきます。", answerRomaji: "kugatsu ni ikimasu." },
   { kana: "どこにすんでいましたか。", romaji: "doko ni sunde imashita ka.", en: "Where did you live?", answer: "I lived in Thailand and Indonesia.", answerKana: "タイとインドネシアにすんでいました。", answerRomaji: "tai to indoneshia ni sunde imashita." },
@@ -336,7 +336,7 @@ const PARTICLE_WORDS = [
   { kana: "コーヒー", romaji: "koohii", en: "coffee" },
   { kana: "おちゃ", romaji: "ocha", en: "tea" },
   { kana: "バスケットボール", romaji: "basuketto-booru", en: "basketball" },
-  { kana: "きんトレ", romaji: "kintore", en: "lifting / weight training" },
+  { kana: "ウェイトリフティング", romaji: "ueito rifutingu", en: "weightlifting" },
   { kana: "すき", romaji: "suki", en: "liked / favorite" },
   { kana: "すきな", romaji: "suki-na", en: "favorite / liked" },
   { kana: "こと", romaji: "koto", en: "activity / abstract thing" },
