@@ -121,7 +121,7 @@
   function renderQuestion(){
     var card=quiz.cards[quiz.index];if(!card){finishQuiz();return}quiz.answered=false;
     quiz.currentMode=quiz.mode==="adaptive"?(JL_PROGRESS.strength(card.progressId)>=55?"recognition":"meaning"):quiz.mode;
-    $("#q-progress").textContent=(quiz.retryRound?"Retry · ":"")+(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;$("#memory-cue").hidden=true;$("#quiz-note-editor").hidden=true;$("#continue").hidden=false;$("#hint-tools").hidden=false;$("#question-hint").hidden=true;$("#show-hint").textContent="Hint";$("#show-hint").setAttribute("aria-expanded","false");lastSpaceAt=0;
+    $("#q-progress").textContent=(quiz.retryRound?"Retry · ":"")+(quiz.index+1)+" / "+quiz.cards.length;$("#q-mode").textContent=quiz.currentMode==="meaning"?"kanji → meaning":"meaning → kanji";$("#q-fill").style.width=(quiz.index/quiz.cards.length*100)+"%";$("#feedback").hidden=true;$("#memory-cue").hidden=true;$("#quiz-note-editor").hidden=true;$("#continue").hidden=false;$("#meaning-action").hidden=false;$("#meaning-action").textContent="Check";$("#hint-tools").hidden=false;$("#question-hint").hidden=true;$("#show-hint").textContent="Hint";$("#show-hint").setAttribute("aria-expanded","false");lastSpaceAt=0;
     var meaning=quiz.currentMode==="meaning";$("#meaning-question").hidden=!meaning;$("#recognition-question").hidden=meaning;
     if(meaning){$("#q-kanji").textContent=card.kanji;$("#meaning-input").value="";$("#meaning-input").disabled=false;setTimeout(function(){$("#meaning-input").focus()},50)}
     else{$("#q-keyword").textContent=card.meaning;buildChoices(card)}
@@ -131,13 +131,13 @@
     $("#choices").innerHTML=options.map(function(k){return '<button class="choice" data-id="'+k.id+'">'+k.kanji+'</button>'}).join("");
     $all(".choice").forEach(function(button){button.onclick=function(){submit(button.dataset.id===card.id,button)}});
   }
-  $("#meaning-form").onsubmit=function(e){e.preventDefault();if(!quiz.answered)submit(matches(quiz.cards[quiz.index],$("#meaning-input").value))};
+  $("#meaning-form").onsubmit=function(e){e.preventDefault();if(quiz.answered){advanceQuestion();return}submit(matches(quiz.cards[quiz.index],$("#meaning-input").value))};
   $("#meaning-input").oninput=function(e){if(e.isComposing||quiz.answered||quiz.currentMode!=="meaning")return;if(matches(quiz.cards[quiz.index],this.value))submit(true)};
   function submit(correct,picked){
     if(quiz.answered)return;quiz.answered=true;var card=quiz.cards[quiz.index],rating=correct?"good":"again";
     JL_PROGRESS.record(card.progressId,rating,{subject:"kanji",type:"kanji"});quiz.results.push({card:card,correct:correct});
     $("#meaning-input").disabled=true;$all(".choice").forEach(function(button){button.disabled=true;if(button.dataset.id===card.id)button.classList.add("right")});if(picked&&!correct)picked.classList.add("wrong");$("#hint-tools").hidden=true;
-    var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";setTimeout(function(){$("#continue").focus()},50);
+    var feedback=$("#feedback");feedback.className="feedback "+(correct?"good":"bad");$("#verdict").textContent=correct?"Correct!":"Not quite";$("#correct-answer").innerHTML='<span class="big">'+card.kanji+'</span> = <strong>'+card.meaning+"</strong>";$("#feedback-help").textContent=correct?"Press Enter to continue.":"Press Enter to continue, or double-tap Space to edit your note.";if(correct)$("#memory-cue").hidden=true;else renderMemoryCue(card);feedback.hidden=false;$("#q-fill").style.width=((quiz.index+1)/quiz.cards.length*100)+"%";var meaning=quiz.currentMode==="meaning";$("#continue").hidden=meaning;if(meaning)$("#meaning-action").textContent="Next";setTimeout(function(){$(meaning?"#meaning-action":"#continue").focus()},50);
   }
   function fillPrimitiveChip(chip,part,card,masked){
     var key=normalize(part),glyph=primitiveGlyph(part),cue=PRIMITIVE_CUES[key];if(glyph){chip.classList.add("has-glyph");var shape=document.createElement("span");shape.className="primitive-glyph";shape.setAttribute("aria-hidden","true");shape.textContent=glyph;chip.appendChild(shape)}var label=document.createElement("span");label.className="primitive-label";if(masked)fillMaskedText(label,part,card);else label.textContent=part;chip.appendChild(label);if(cue){chip.classList.add("has-cue");chip.title=part+": one + mouth + rice field";var detail=document.createElement("span");detail.className="primitive-cue";detail.textContent=cue;chip.appendChild(detail)}
@@ -176,7 +176,7 @@
     var existing=notes[card.frame]||"";$("#note-preview").hidden=!existing;$("#note-preview").textContent=existing?"Your note: "+existing:"";$("#quiz-note").value=existing;$("#quiz-note-editor").hidden=true;
   }
   function openQuizNoteEditor(){
-    if(!quiz.answered||!$("#feedback").classList.contains("bad"))return;var card=quiz.cards[quiz.index];$("#quiz-note").value=notes[card.frame]||"";$("#quiz-note-editor").hidden=false;$("#continue").hidden=true;$("#feedback-help").textContent="Enter saves your note and moves to the next kanji.";setTimeout(function(){$("#quiz-note").focus();$("#quiz-note").setSelectionRange($("#quiz-note").value.length,$("#quiz-note").value.length)},20);
+    if(!quiz.answered||!$("#feedback").classList.contains("bad"))return;var card=quiz.cards[quiz.index];$("#quiz-note").value=notes[card.frame]||"";$("#quiz-note-editor").hidden=false;$("#continue").hidden=true;if(quiz.currentMode==="meaning")$("#meaning-action").hidden=true;$("#feedback-help").textContent="Enter saves your note and moves to the next kanji.";setTimeout(function(){$("#quiz-note").focus();$("#quiz-note").setSelectionRange($("#quiz-note").value.length,$("#quiz-note").value.length)},20);
   }
   function advanceQuestion(){
     if(!$("#quiz-note-editor").hidden){var card=quiz.cards[quiz.index];saveNote(card.frame,$("#quiz-note").value)}quiz.index++;renderQuestion();
