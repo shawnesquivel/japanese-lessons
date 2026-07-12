@@ -122,8 +122,8 @@
       </article>
       <article class="pattern-card p-action">
         <span class="tag">Action place · で</span>
-        <p class="big">ジム<span style="color:var(--do);font-weight:700">で</span>ウェイトリフティングをします。</p>
-        <p class="en">I lift at the gym. Use で where an action happens.</p>
+        <p class="big">こうえん<span style="color:var(--do);font-weight:700">で</span>バスケットボールをします。</p>
+        <p class="en">I play basketball at the park. Use で where an action happens.</p>
       </article>
     </div>
     <div class="note"><strong>Home is special:</strong> “go home” normally uses <span class="kana" style="display:inline">いえにかえる</span>, not <span class="kana" style="display:inline">いえにいく</span>. かえる means “return home.”</div>
@@ -151,7 +151,7 @@
           <tr><td class="row-name">Where are you going?</td><td><span class="kana">どこにいきますか。</span><span class="rj">doko ni ikimasu ka.</span></td><td><span class="kana">どこいくの？</span><span class="rj">doko iku no?</span></td></tr>
           <tr><td class="row-name">Where did you go?</td><td><span class="kana">どこにいきましたか。</span><span class="rj">doko ni ikimashita ka.</span></td><td><span class="kana">どこいったの？</span><span class="rj">doko itta no?</span></td></tr>
           <tr><td class="row-name">Where are you?</td><td><span class="kana">どこにいますか。</span><span class="rj">doko ni imasu ka.</span></td><td><span class="kana">どこにいる？</span><span class="rj">doko ni iru?</span></td></tr>
-          <tr><td class="row-name">Where do you lift?</td><td><span class="kana">どこでウェイトリフティングをしますか。</span><span class="rj">doko de ueito rifutingu o shimasu ka.</span></td><td><span class="kana">どこでウェイトリフティングする？</span><span class="rj">doko de ueito rifutingu suru?</span></td></tr>
+          <tr><td class="row-name">Where do you play basketball?</td><td><span class="kana">どこでバスケットボールをしますか。</span><span class="rj">doko de basuketto booru o shimasu ka.</span></td><td><span class="kana">どこでバスケットボールする？</span><span class="rj">doko de basuketto booru suru?</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -225,7 +225,12 @@
     { jp:'いっしょに', rj:'isshoni', en:'together' },
     { jp:'いいね / いいなあ', rj:'ii ne / ii naa', en:'nice / sounds good' },
     { jp:'そっか / そうですか', rj:'sokka / sou desu ka', en:'I see / oh yeah?' },
-    { jp:'じゃあ', rj:'jaa', en:'well then' }
+    { jp:'じゃあ', rj:'jaa', en:'well then' },
+    { jp:'バスケットボール', rj:'basuketto booru', en:'basketball' },
+    { jp:'ウェイトリフティング', rj:'ueito rifutingu', en:'weightlifting' },
+    { jp:'ランニング', rj:'ranningu', en:'running' },
+    { jp:'ハイキング', rj:'haikingu', en:'hiking' },
+    { jp:'キャンプ', rj:'kyanpu', en:'camping' }
   ];
   var CONVERSATIONS = [
     { title:'Conversation 1', context:'Casual · at the office', lines:[
@@ -234,30 +239,30 @@
       {s:'A',jp:'そっか。あとでジムにいかない？',rj:'Sokka. Ato de jimu ni ikanai?',en:'Ah, okay. Wanna go to the gym later?'},
       {s:'B',jp:'いいね！いこう。',rj:'Ii ne! Ikou.',en:"Sounds good! Let's go."}
     ]},
-    { title:'Conversation 2', context:'Formal · coworkers', lines:[
-      {s:'A',jp:'きょう、どこにいきますか。',rj:'Kyou, doko ni ikimasu ka.',en:'Where are you going today?'},
-      {s:'B',jp:'スーパーにいきます。',rj:'Suupaa ni ikimasu.',en:"I'm going to the grocery store."},
-      {s:'A',jp:'いっしょにいきましょうか。',rj:'Isshoni ikimashou ka.',en:'Shall we go together?'},
-      {s:'B',jp:'はい、いきましょう。',rj:'Hai, ikimashou.',en:"Yes, let's go."}
+    { title:'Conversation 2', context:'Polite · after work', lines:[
+      {s:'A',jp:'しごとのあと、どこかにいきますか。',rj:'Shigoto no ato, dokoka ni ikimasu ka.',en:'Are you going anywhere after work?'},
+      {s:'B',jp:'ともだちとレストランにいきます。',rj:'Tomodachi to resutoran ni ikimasu.',en:"I'm going to a restaurant with a friend."},
+      {s:'A',jp:'いいですね。なにをたべますか。',rj:'Ii desu ne. Nani o tabemasu ka.',en:'Sounds nice. What are you going to eat?'},
+      {s:'B',jp:'たぶん、ラーメンをたべます。',rj:'Tabun, raamen o tabemasu.',en:"Probably ramen."}
     ]},
     { title:'Conversation 3', context:'Casual · past tense', lines:[
       {s:'A',jp:'きのうどこいったの？',rj:'Kinou doko itta no?',en:"Where'd you go yesterday?"},
-      {s:'B',jp:'えいがかんにいった。',rj:'Eigakan ni itta.',en:'I went to the movie theater.'},
-      {s:'A',jp:'いいなあ。わたしはいえにかえった。',rj:'Ii naa. Watashi wa ie ni kaetta.',en:'Nice. I just went home.'},
-      {s:'B',jp:'じゃあ、こんどいっしょにいこう。',rj:'Jaa, kondo isshoni ikou.',en:"Well, let's go together next time."}
+      {s:'B',jp:'ともだちとハイキングにいったよ。',rj:'Tomodachi to haikingu ni itta yo.',en:'I went hiking with a friend.'},
+      {s:'A',jp:'いいね。どうだった？',rj:'Ii ne. Dou datta?',en:'Nice. How was it?'},
+      {s:'B',jp:'たのしかったよ。',rj:'Tanoshikatta yo.',en:'It was fun.'}
     ]},
-    { title:'Conversation 4', context:'Mixed · weekend plans', lines:[
-      {s:'A',jp:'しゅうまつ、こうえんにいきませんか。',rj:'Shuumatsu, kouen ni ikimasen ka.',en:'Do you want to go to the park this weekend?'},
-      {s:'B',jp:'すみません、しゅうまつはジムでウェイトリフティングをします。',rj:'Sumimasen, shuumatsu wa jimu de ueito rifutingu o shimasu.',en:"Sorry, I'm lifting at the gym this weekend."},
-      {s:'A',jp:'そうですか。じゃあ、そのあとレストランにいきましょう。',rj:'Sou desu ka. Jaa, sono ato resutoran ni ikimashou.',en:"I see. Then let's go to a restaurant afterward."},
-      {s:'B',jp:'はい、いきましょう。',rj:'Hai, ikimashou.',en:"Yes, let's."}
+    { title:'Conversation 4', context:'Polite · changing a plan', lines:[
+      {s:'A',jp:'どようび、ハイキングにいきませんか。',rj:'Doyoubi, haikingu ni ikimasen ka.',en:'Would you like to go hiking on Saturday?'},
+      {s:'B',jp:'すみません、どようびはちょっと。にちようびはどうですか。',rj:'Sumimasen, doyoubi wa chotto. Nichiyoubi wa dou desu ka.',en:'Sorry, Saturday is a little difficult. How about Sunday?'},
+      {s:'A',jp:'にちようびなら、だいじょうぶです。',rj:'Nichiyoubi nara, daijoubu desu.',en:'Sunday works for me.'},
+      {s:'B',jp:'じゃあ、にちようびにいきましょう。',rj:'Jaa, nichiyoubi ni ikimashou.',en:"Then let's go on Sunday."}
     ]}
   ];
   var QUIZ = [
     {part:'particle',label:'Fill in the blank',q:'こうえん ___ いきます。',a:'こうえんにいきます。',note:'に marks the destination.',qLang:'ja',aLang:'ja'},
     {part:'particle',label:'Fill in the blank',q:'レストラン ___ たべます。',a:'レストランでたべます。',note:'で marks where eating happens.',qLang:'ja',aLang:'ja'},
     {part:'particle',label:'Fill in the blank',q:'かいしゃ ___ います。',a:'かいしゃにいます。',note:'に marks the location of existence.',qLang:'ja',aLang:'ja'},
-    {part:'particle',label:'Fill in the blank',q:'ジム ___ ウェイトリフティングをします。',a:'ジムでウェイトリフティングをします。',note:'で marks where the action happens.',qLang:'ja',aLang:'ja'},
+    {part:'particle',label:'Fill in the blank',q:'こうえん ___ バスケットボールをします。',a:'こうえんでバスケットボールをします。',note:'で marks where the action happens.',qLang:'ja',aLang:'ja'},
     {part:'particle',label:'Fill in the blank',q:'スーパー ___ いきました。',a:'スーパーにいきました。',note:'に marks the destination.',qLang:'ja',aLang:'ja'},
     {part:'particle',label:'Fill in the blank',q:'いえ ___ にほんごをまなびます。',a:'いえでにほんごをまなびます。',note:'で marks where learning happens.',qLang:'ja',aLang:'ja'},
     {part:'particle',label:'Fill in the blank',q:'えいがかん ___ ともだちにあいます。',a:'えいがかんでともだちにあいます。',note:'で marks the meeting place. The person still takes に.',qLang:'ja',aLang:'ja'},
@@ -302,7 +307,7 @@
     {part:'fix',label:'Fix the sentence',q:'レストランにたべます。',a:'レストランでたべます。',note:'Eating is an action, so use で.',qLang:'ja',aLang:'ja'},
     {part:'fix',label:'Fix the sentence',q:'こうえんにいますか。',a:'こうえんにいる？',note:'For a casual question, use いる and rising intonation.',qLang:'ja',aLang:'ja'},
     {part:'fix',label:'Fix the sentence',q:'きのうスーパーにいく。',a:'きのうスーパーにいった。',note:'Yesterday needs the casual past いった.',qLang:'ja',aLang:'ja'},
-    {part:'fix',label:'Fix the sentence',q:'ジムにウェイトリフティングをします。',a:'ジムでウェイトリフティングをします。',note:'The action happens at the gym, so use で.',qLang:'ja',aLang:'ja'},
+    {part:'fix',label:'Fix the sentence',q:'こうえんにバスケットボールをします。',a:'こうえんでバスケットボールをします。',note:'The action happens at the park, so use で.',qLang:'ja',aLang:'ja'},
     {part:'fix',label:'Fix the sentence',q:'どこでいますか。',a:'どこにいますか。',note:'いる / います uses に.',qLang:'ja',aLang:'ja'},
     {part:'fix',label:'Fix the sentence',q:'いっしょにいきますか。',a:'いっしょにいきませんか。',note:'Use the negative question for a softer invitation.',qLang:'ja',aLang:'ja'},
 
@@ -310,7 +315,7 @@
     {part:'reply',label:'Reply naturally',q:'いまどこにいますか。',a:'いえにいます。',note:'Sample: “I am at home.”',qLang:'ja',aLang:'ja'},
     {part:'reply',label:'Reply naturally',q:'あとでジムにいかない？',a:'いいね！いこう。',note:"Sample: “Sounds good! Let's go.”",qLang:'ja',aLang:'ja'},
     {part:'reply',label:'Reply naturally',q:'しゅうまつ、こうえんにいきませんか。',a:'はい、いきましょう。',note:"Sample: “Yes, let's go.”",qLang:'ja',aLang:'ja'},
-    {part:'reply',label:'Reply naturally',q:'どこでウェイトリフティングをする？',a:'ジムでする。',note:'Sample: “I do it at the gym.”',qLang:'ja',aLang:'ja'},
+    {part:'reply',label:'Reply naturally',q:'どこでバスケットボールをする？',a:'ちかくのこうえんでするよ。',note:'Sample: “At a nearby park.”',qLang:'ja',aLang:'ja'},
     {part:'reply',label:'Reply naturally',q:'きょう、どこにいきますか。',a:'スーパーにいきます。',note:"Sample: “I'm going to the grocery store.”",qLang:'ja',aLang:'ja'},
     {part:'reply',label:'Decline naturally',q:'いっしょにえいがかんにいかない？',a:'ごめん、きょうはいけない。',note:"Sample: “Sorry, I can't go today.”",qLang:'ja',aLang:'ja'},
     {part:'reply',label:'Continue the plan',q:'じゃあ、そのあとどうする？',a:'レストランにいこう。',note:"Sample: “Let's go to a restaurant.”",qLang:'ja',aLang:'ja'}

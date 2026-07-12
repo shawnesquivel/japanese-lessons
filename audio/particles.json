@@ -60,17 +60,6 @@
       "voice": "C8e2F6Cm3l58PjXaVpUW"
     },
     {
-      "kana": "どこでウェイトリフティングをしますか。",
-      "romaji": "doko de ueito rifutingu o shimasu ka.",
-      "en": "Where do you lift?",
-      "answer": "I lift at the gym.",
-      "answerKana": "ジムでウェイトリフティングをします。",
-      "answerRomaji": "jimu de ueito rifutingu o shimasu.",
-      "id": "doko-de-ueito-rifutingu-o-shimasu-ka",
-      "audio": "audio/particles/doko-de-ueito-rifutingu-o-shimasu-ka.mp3",
-      "voice": "C8e2F6Cm3l58PjXaVpUW"
-    },
-    {
       "kana": "だれとにほんにいきますか。",
       "romaji": "dare to nihon ni ikimasu ka.",
       "en": "Who are you going to Japan with?",

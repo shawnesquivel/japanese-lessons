@@ -8,6 +8,7 @@
     { href: "index.html", jp: "こそあど", en: "this · that · which" },
     { href: "particles.html", jp: "じょし", en: "particles · は/が/を/も/で/と" },
     { href: "locations.html", jp: "ばしょ", en: "locations · go, be & do" },
+    { href: "conversation.html", jp: "かいわ", en: "real conversation · reply & follow up" },
     { href: "time.html", jp: "じかん", en: "telling time" },
     { href: "age-days-months.html", jp: "さい・ようび", en: "age, days & months" },
     { href: "flashcards.html", jp: "フラッシュ", en: "adaptive vocab review" },

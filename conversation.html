@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Conversations — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="learning.js"></script>
+<script src="audio/conversation.js"></script>
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
+    --a:#3F6E91;--do:#CB4A2B;--ko-bg:#EDF3E4;--so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;--do-bg:#FAE7E1;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button{font:inherit}
+  .wrap{max-width:900px;margin:0 auto;padding:32px 22px 84px}
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  h1{font:400 clamp(46px,11vw,78px)/1 "Zen Antique",serif;letter-spacing:.06em;margin:7px 0}
+  .subtitle{color:var(--ink-soft);text-wrap:pretty}
+  .jump-nav{position:sticky;top:0;z-index:20;display:flex;gap:8px;margin:0 -22px 20px;padding:10px 22px 10px 76px;overflow-x:auto;background:rgba(251,248,241,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(10px);scrollbar-width:thin}
+  .jump-nav a{flex:0 0 auto;min-height:40px;display:inline-flex;align-items:center;padding:7px 13px;border:1px solid var(--line-strong);border-radius:999px;background:#fff;color:var(--ink);font-size:13px;font-weight:700;text-decoration:none;transition-property:background,transform;transition-duration:.12s}
+  .jump-nav a:hover{background:#F3EEE1}.jump-nav a:active{transform:scale(.96)}
+  section{margin-top:48px;scroll-margin-top:70px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kana{font:400 25px/1 "Zen Antique",serif}
+  h2{font-size:22px;line-height:1.3;margin:0;text-wrap:balance}
+  h3{font-size:17px;margin:0 0 5px;text-wrap:balance}
+  p{margin:0 0 14px}.lead{color:var(--ink-soft);text-wrap:pretty}
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+  .vocab-item{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:inset 0 0 0 1px rgba(42,46,36,.1)}
+  .vocab-item .en{font-weight:700}.jp{font:400 1.2em/1.45 "Zen Antique",serif}.rj{display:block;color:var(--ink-soft);font-size:13px}
+  .moves{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .move{background:#fff;border-radius:var(--radius);padding:18px;box-shadow:0 1px 2px rgba(42,46,36,.05),0 6px 20px rgba(42,46,36,.04)}
+  .move .purpose{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .move .jp{display:block;font-size:23px;margin-top:7px}.move .en{color:var(--ink-soft);font-size:14px;margin-top:4px}
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 9px 9px 0;color:var(--ink-soft);font-size:15px;margin:16px 0}
+  .coach-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 14px}
+  .filter{min-height:40px;padding:7px 13px;border:1px solid var(--line-strong);border-radius:999px;background:#fff;color:var(--ink-soft);font:700 13px "Zen Maru Gothic",sans-serif;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
+  .filter:hover{background:#F3EEE1}.filter:active{transform:scale(.96)}.filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .coach-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
+  .session-meta{display:flex;justify-content:space-between;gap:12px;color:var(--ink-soft);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .track{height:7px;border-radius:999px;background:#EEE9DE;overflow:hidden;margin:8px 0 14px}.track-fill{height:100%;background:var(--ko);border-radius:inherit;transition-property:width;transition-duration:.2s}
+  .mission{background:#fff;border-radius:18px;padding:26px;box-shadow:0 1px 2px rgba(42,46,36,.06),0 8px 28px rgba(42,46,36,.05)}
+  .mission-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+  .mission-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .audio-btn{min-width:44px;min-height:44px;border:0;border-radius:50%;background:var(--a-bg);color:#2C4D66;cursor:pointer;font-weight:700;transition-property:background,transform;transition-duration:.12s}
+  .audio-btn:hover{background:#D5E3ED}.audio-btn:active{transform:scale(.96)}.audio-btn.playing{background:var(--a);color:#fff}
+  .ask{font:400 clamp(25px,6vw,34px)/1.45 "Zen Antique",serif;margin:0;text-wrap:balance}
+  .ask-rj{color:var(--ink-soft);font-size:14px;margin-top:3px}
+  .meaning{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line-strong);color:var(--ink-soft)}
+  .helper{margin:16px 0;background:var(--so-bg);border-left:4px solid var(--so);padding:13px 15px;border-radius:0 10px 10px 0}
+  .helper b,.answer-heading{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .reveal-btn{width:100%;min-height:48px;border:0;border-radius:11px;background:var(--ink);color:var(--paper);font-weight:700;cursor:pointer;transition-property:background,transform;transition-duration:.12s}
+  .reveal-btn:hover{background:#3A3F33}.reveal-btn:active{transform:scale(.96)}
+  .answer{display:none;margin-top:22px}.mission.revealed .answer{display:block}.mission.revealed .reveal-btn{display:none}
+  .default-answer{padding-bottom:17px;border-bottom:1px solid var(--line)}
+  .default-answer .jp{display:block;font-size:clamp(24px,6vw,31px)}
+  .answer-en{color:var(--ink-soft);font-size:14px;margin-top:3px}
+  .variations{margin-top:17px}.variation{padding:11px 0;border-top:1px dashed var(--line-strong)}.variation:first-of-type{border-top:0}.variation .jp{display:block;font-size:21px}
+  .continue{margin-top:20px;padding-top:18px;border-top:2px solid var(--ink)}
+  .continue-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .continue-block .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--a);font-weight:700}
+  .continue-block .jp{display:block;font-size:21px;margin-top:5px}.continue-block .en{font-size:14px;color:var(--ink-soft)}
+  .follow-helper{grid-column:1/-1;background:var(--ko-bg);border-left:4px solid var(--ko);padding:13px 15px;border-radius:0 10px 10px 0}
+  .grade{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.grade.show{display:grid}
+  .grade-btn{min-height:48px;border:0;border-radius:11px;font-weight:700;cursor:pointer;transition-property:transform,box-shadow;transition-duration:.12s}.grade-btn:active{transform:scale(.96)}
+  .grade-btn.good{background:var(--ko-bg);color:#3C5E25;box-shadow:inset 0 0 0 1px #C8D9B8}.grade-btn.missed{background:var(--do-bg);color:#9C3119;box-shadow:inset 0 0 0 1px #E8C4B8}
+  .skip{display:block;min-height:40px;margin:6px auto 0;border:0;background:transparent;color:var(--ink-soft);font-size:13px;font-weight:700;cursor:pointer}.skip:active{transform:scale(.96)}
+  .results{background:#fff;border-radius:18px;padding:28px;text-align:center;box-shadow:0 1px 2px rgba(42,46,36,.06),0 8px 28px rgba(42,46,36,.05)}
+  .score{font-size:38px;font-weight:700;font-variant-numeric:tabular-nums}.missed-list{display:grid;gap:8px;text-align:left;margin:16px 0}.missed-item{padding:10px 12px;background:var(--do-bg);border-radius:9px}
+  .result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.result-btn{min-height:42px;border:0;border-radius:10px;padding:9px 15px;background:var(--ink);color:#fff;font-weight:700;cursor:pointer}.result-btn.secondary{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-strong)}.result-btn:active{transform:scale(.96)}
+  :focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  @media(max-width:700px){.wrap{padding-inline:16px}.jump-nav{margin-inline:-16px;padding-left:76px;padding-right:16px}.moves,.continue-grid{grid-template-columns:1fr}.follow-helper{grid-column:auto}.coach-count{width:100%;margin-left:0}.mission{padding:20px}.mission-top{align-items:flex-start}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Japanese · everyday conversation</div>
+    <h1>かいわ</h1>
+    <div class="subtitle">Understand the question, give a real answer, and keep the conversation moving.</div>
+  </header>
+
+  <nav class="jump-nav" aria-label="Conversation sections">
+    <a href="#words">Useful words</a>
+    <a href="#moves">Conversation moves</a>
+    <a href="#coach">Answer practice</a>
+  </nav>
+
+  <section id="words">
+    <div class="sec-head"><span class="sec-kana">ことば</span><h2>Useful activity and conversation words</h2></div>
+    <p class="lead">These are the words that make the practice answers sound like your actual life.</p>
+    <div class="vocab-grid" id="vocab-grid"></div>
+  </section>
+
+  <section id="moves">
+    <div class="sec-head"><span class="sec-kana">つなぐ</span><h2>Four ways to keep talking</h2></div>
+    <p class="lead">A good answer is usually short: answer, add one detail, then return the question or ask one follow-up.</p>
+    <div class="moves" id="moves-grid"></div>
+    <div class="note"><strong>Natural shortcut:</strong> Japanese often leaves out “I” and “you” when the meaning is obvious. To return a question, use the person’s name plus <span class="jp">は？</span>, or simply <span class="jp">〇〇さんは？</span></div>
+  </section>
+
+  <section id="coach">
+    <div class="sec-head"><span class="sec-kana">はなす</span><h2>Conversation coach</h2></div>
+    <p class="lead">Say your answer aloud before revealing it. The English helper tells you what to communicate; it does not force one exact translation.</p>
+    <div class="coach-toolbar" id="filters">
+      <button class="filter active" type="button" data-topic="all">Mix all</button>
+      <button class="filter" type="button" data-topic="hobbies">🏀 Hobbies &amp; sports</button>
+      <button class="filter" type="button" data-topic="past">🗓️ Today &amp; weekend</button>
+      <button class="filter" type="button" data-topic="plans">🤝 Plans &amp; invitations</button>
+      <button class="filter" type="button" data-topic="life">💬 You &amp; your life</button>
+      <span class="coach-count" id="coach-count"></span>
+    </div>
+    <div id="coach-deck"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var VOCAB=[
+    {en:'basketball',jp:'バスケットボール',rj:'basuketto booru'},
+    {en:'weightlifting',jp:'ウェイトリフティング',rj:'ueito rifutingu'},
+    {en:'running',jp:'ランニング',rj:'ranningu'},
+    {en:'hiking',jp:'ハイキング',rj:'haikingu'},
+    {en:'camping',jp:'キャンプ',rj:'kyanpu'},
+    {en:'day off',jp:'やすみのひ',rj:'yasumi no hi'},
+    {en:'after work',jp:'しごとのあと',rj:'shigoto no ato'},
+    {en:'usually / often',jp:'よく',rj:'yoku'},
+    {en:'sometimes',jp:'ときどき',rj:'tokidoki'},
+    {en:'recently',jp:'さいきん',rj:'saikin'},
+    {en:'sounds good',jp:'いいですね',rj:'ii desu ne'},
+    {en:'sounds fun',jp:'たのしそう',rj:'tanoshisou'},
+    {en:'how was it?',jp:'どうでしたか',rj:'dou deshita ka'},
+    {en:'how about Sunday?',jp:'にちようびはどうですか',rj:'nichiyoubi wa dou desu ka'},
+    {en:'definitely / gladly',jp:'ぜひ',rj:'zehi'},
+    {en:'plans',jp:'よてい',rj:'yotei'}
+  ];
+  var MOVES=[
+    {purpose:'React',jp:'いいですね。',rj:'ii desu ne',en:'That sounds good.'},
+    {purpose:'Show interest',jp:'そうなんですね。',rj:'sou nan desu ne',en:'Oh, I see. / Really? (polite)'},
+    {purpose:'Return the question',jp:'〇〇さんは？',rj:'___-san wa?',en:'How about you? Use their name.'},
+    {purpose:'Ask for one detail',jp:'どこでしますか。',rj:'doko de shimasu ka',en:'Where do you do it? Use this only after the activity is already clear.'}
+  ];
+  var MISSIONS=[
+    {
+      id:'conversation:hobbies:intro',topic:'hobbies',label:'Getting to know someone',situation:'A new acquaintance asks about your hobbies.',
+      ask:{jp:'しゅみはなんですか。',rj:'shumi wa nan desu ka',en:'What are your hobbies?'},
+      coach:'Say that you like basketball and weightlifting.',
+      answer:{jp:'バスケットボールとウェイトリフティングがすきです。',rj:'basuketto booru to ueito rifutingu ga suki desu',en:'I like basketball and weightlifting.'},
+      variations:[
+        {jp:'しゅうまつはよくバスケットボールをします。',rj:'shuumatsu wa yoku basuketto booru o shimasu',en:'I often play basketball on weekends.'},
+        {jp:'ランニングやハイキングもすきです。',rj:'ranningu ya haikingu mo suki desu',en:'I also like things like running and hiking.'}
+      ],
+      askBack:{jp:'〇〇さんは？',rj:'___-san wa?',en:'How about you? Use their name.'},
+      follow:{jp:'どこでバスケットボールをしますか。',rj:'doko de basuketto booru o shimasu ka',en:'Where do you play basketball?',coach:'Say that you usually play at a nearby gym.',answer:{jp:'ちかくのジムでよくします。',rj:'chikaku no jimu de yoku shimasu',en:'I often play at a nearby gym.'}}
+    },
+    {
+      id:'conversation:hobbies:day-off',topic:'hobbies',label:'Days off',situation:'You are chatting about how you spend your free time.',
+      ask:{jp:'やすみのひは、なにをしますか。',rj:'yasumi no hi wa, nani o shimasu ka',en:'What do you do on your days off?'},
+      coach:'Say that you play basketball and sometimes go hiking.',
+      answer:{jp:'バスケットボールをします。ときどき、ハイキングにもいきます。',rj:'basuketto booru o shimasu. tokidoki, haikingu ni mo ikimasu',en:'I play basketball. Sometimes I go hiking too.'},
+      variations:[
+        {jp:'よくランニングをします。',rj:'yoku ranningu o shimasu',en:'I often go running.'},
+        {jp:'ときどき、ともだちとキャンプにいきます。',rj:'tokidoki, tomodachi to kyanpu ni ikimasu',en:'Sometimes I go camping with friends.'}
+      ],
+      askBack:{jp:'〇〇さんは、やすみのひになにをしますか。',rj:'___-san wa, yasumi no hi ni nani o shimasu ka',en:'What do you do on your days off?'},
+      follow:{jp:'ハイキングは、どこにいきますか。',rj:'haikingu wa, doko ni ikimasu ka',en:'Where do you go hiking?',coach:'Say that you go somewhere near San Francisco.',answer:{jp:'サンフランシスコのちかくにいきます。',rj:'san furanshisuko no chikaku ni ikimasu',en:'I go somewhere near San Francisco.'}}
+    },
+    {
+      id:'conversation:hobbies:sports',topic:'hobbies',label:'Sports',situation:'Someone knows you are active and asks what sports you do.',
+      ask:{jp:'なにかスポーツをしていますか。',rj:'nanika supootsu o shite imasu ka',en:'Are you into any sports?'},
+      coach:'Say that you play basketball and also go running.',
+      answer:{jp:'バスケットボールをします。ランニングもします。',rj:'basuketto booru o shimasu. ranningu mo shimasu',en:'I play basketball. I go running too.'},
+      variations:[
+        {jp:'ウェイトリフティングをします。',rj:'ueito rifutingu o shimasu',en:'I do weightlifting.'},
+        {jp:'さいきんは、ハイキングもしています。',rj:'saikin wa, haikingu mo shite imasu',en:'Recently, I have been hiking too.'}
+      ],
+      askBack:{jp:'〇〇さんは、どんなスポーツがすきですか。',rj:'___-san wa, donna supootsu ga suki desu ka',en:'What sports do you like?'},
+      follow:{jp:'よくしますか。',rj:'yoku shimasu ka',en:'Do you do it often?',coach:'Say yes, you do it often on weekends.',answer:{jp:'はい、しゅうまつはよくします。',rj:'hai, shuumatsu wa yoku shimasu',en:'Yes, I often do it on weekends.'}}
+    },
+    {
+      id:'conversation:past:today',topic:'past',label:'After work',situation:'A coworker asks what you did today.',
+      ask:{jp:'きょうは、なにをしましたか。',rj:'kyou wa, nani o shimashita ka',en:'What did you do today?'},
+      coach:'Say that you went to the gym after work.',
+      answer:{jp:'しごとのあと、ジムにいきました。',rj:'shigoto no ato, jimu ni ikimashita',en:'I went to the gym after work.'},
+      variations:[
+        {jp:'ともだちとバスケットボールをしました。',rj:'tomodachi to basuketto booru o shimashita',en:'I played basketball with a friend.'},
+        {jp:'きょうはいえでゆっくりしました。',rj:'kyou wa ie de yukkuri shimashita',en:'I relaxed at home today.'}
+      ],
+      askBack:{jp:'〇〇さんは？',rj:'___-san wa?',en:'How about you?'},
+      follow:{jp:'どうでしたか。',rj:'dou deshita ka',en:'How was it?',coach:'Say it was good, but you are a little tired.',answer:{jp:'よかったです。でも、ちょっとつかれました。',rj:'yokatta desu. demo, chotto tsukaremashita',en:'It was good. But I got a little tired.'}}
+    },
+    {
+      id:'conversation:past:weekend',topic:'past',label:'Weekend catch-up',situation:'A friend casually asks about your weekend.',
+      ask:{jp:'しゅうまつ、なにしたの？',rj:'shuumatsu, nani shita no?',en:'What did you do over the weekend?'},
+      coach:'Casually say that you went hiking with a friend.',
+      answer:{jp:'ともだちとハイキングにいったよ。',rj:'tomodachi to haikingu ni itta yo',en:'I went hiking with a friend.'},
+      variations:[
+        {jp:'キャンプにいった。',rj:'kyanpu ni itta',en:'I went camping.'},
+        {jp:'バスケットボールをしたよ。',rj:'basuketto booru o shita yo',en:'I played basketball.'},
+        {jp:'とくになにも。いえでゆっくりしてた。',rj:'toku ni nani mo. ie de yukkuri shiteta',en:'Nothing in particular. I was just relaxing at home.'}
+      ],
+      askBack:{jp:'〇〇は？',rj:'___ wa?',en:'How about you? Casual, using their name.'},
+      follow:{jp:'どうだった？',rj:'dou datta?',en:'How was it?',coach:'Casually say it was fun and the weather was nice.',answer:{jp:'たのしかったよ。てんきもよかった。',rj:'tanoshikatta yo. tenki mo yokatta',en:'It was fun. The weather was nice too.'}}
+    },
+    {
+      id:'conversation:plans:weekend',topic:'plans',label:'Weekend plans',situation:'Someone asks about your upcoming weekend.',
+      ask:{jp:'こんどのしゅうまつ、なにをしますか。',rj:'kondo no shuumatsu, nani o shimasu ka',en:'What are you doing next weekend?'},
+      coach:'Say that you are going hiking with a friend.',
+      answer:{jp:'ともだちとハイキングにいきます。',rj:'tomodachi to haikingu ni ikimasu',en:'I am going hiking with a friend.'},
+      variations:[
+        {jp:'キャンプにいくよていです。',rj:'kyanpu ni iku yotei desu',en:'I am planning to go camping.'},
+        {jp:'まだよていはありません。',rj:'mada yotei wa arimasen',en:'I do not have plans yet.'}
+      ],
+      askBack:{jp:'〇〇さんは、なにをしますか。',rj:'___-san wa, nani o shimasu ka',en:'What are you doing?'},
+      follow:{jp:'どこにいくんですか。',rj:'doko ni ikun desu ka',en:'Where are you going?',coach:'Say it is somewhere near San Francisco.',answer:{jp:'サンフランシスコのちかくです。',rj:'san furanshisuko no chikaku desu',en:'It is near San Francisco.'}}
+    },
+    {
+      id:'conversation:plans:invite',topic:'plans',label:'Making plans',situation:'A friend invites you to play basketball.',
+      ask:{jp:'どようび、いっしょにバスケットボールをしませんか。',rj:'doyoubi, isshoni basuketto booru o shimasen ka',en:'Would you like to play basketball together on Saturday?'},
+      coach:'Accept enthusiastically. Or say Saturday is difficult and suggest Sunday.',
+      answer:{jp:'いいですね。ぜひ！',rj:'ii desu ne. zehi!',en:'That sounds great. Definitely!'},
+      variations:[
+        {jp:'はい、やりましょう！',rj:'hai, yarimashou!',en:'Yes, let us do it!'},
+        {jp:'すみません、どようびはちょっと。にちようびはどうですか。',rj:'sumimasen, doyoubi wa chotto. nichiyoubi wa dou desu ka',en:'Sorry, Saturday is a little difficult. How about Sunday?'}
+      ],
+      askBack:{jp:'どこでしましょうか。',rj:'doko de shimashou ka',en:'Where should we play?'},
+      follow:{jp:'なんじがいいですか。',rj:'nanji ga ii desu ka',en:'What time works for you?',coach:'Suggest 2 p.m.',answer:{jp:'ごごにじはどうですか。',rj:'gogo ni-ji wa dou desu ka',en:'How about 2 p.m.?'}}
+    },
+    {
+      id:'conversation:life:japan',topic:'life',label:'Japan trip',situation:'Someone asks about your upcoming trip.',
+      ask:{jp:'こんど、にほんにいくんですか。',rj:'kondo, nihon ni ikun desu ka',en:'Are you going to Japan soon?'},
+      coach:'Say that you are going in September with your fiancée.',
+      answer:{jp:'はい、くがつにこんやくしゃといきます。',rj:'hai, kugatsu ni kon-yakusha to ikimasu',en:'Yes, I am going in September with my fiancée.'},
+      variations:[
+        {jp:'くがつにかのじょといきます。',rj:'kugatsu ni kanojo to ikimasu',en:'I am going in September with my girlfriend.'},
+        {jp:'はい、こんどはじめていきます。',rj:'hai, kondo hajimete ikimasu',en:'Yes, I am going for the first time.'}
+      ],
+      askBack:{jp:'〇〇さんは、にほんにいったことがありますか。',rj:'___-san wa, nihon ni itta koto ga arimasu ka',en:'Have you ever been to Japan?'},
+      follow:{jp:'にほんで、なにをしたいですか。',rj:'nihon de, nani o shitai desu ka',en:'What do you want to do in Japan?',coach:'Say that you want to eat good food and speak Japanese with family.',answer:{jp:'おいしいものをたべて、かぞくとにほんごではなしたいです。',rj:'oishii mono o tabete, kazoku to nihongo de hanashitai desu',en:'I want to eat good food and speak Japanese with family.'}}
+    },
+    {
+      id:'conversation:life:why-japanese',topic:'life',label:'Learning Japanese',situation:'Someone asks why you are learning Japanese.',
+      ask:{jp:'どうしてにほんごをべんきょうしていますか。',rj:'doushite nihongo o benkyou shite imasu ka',en:'Why are you studying Japanese?'},
+      coach:"Say that you want to speak Japanese with your fiancée's family.",
+      answer:{jp:'こんやくしゃのかぞくとにほんごではなしたいからです。',rj:'kon-yakusha no kazoku to nihongo de hanashitai kara desu',en:"Because I want to speak Japanese with my fiancée's family."},
+      variations:[
+        {jp:'くがつににほんにいくので、べんきょうしています。',rj:'kugatsu ni nihon ni iku node, benkyou shite imasu',en:'I am studying because I am going to Japan in September.'},
+        {jp:'にほんのぶんかがすきだからです。',rj:'nihon no bunka ga suki dakara desu',en:'Because I like Japanese culture.'}
+      ],
+      askBack:{jp:'〇〇さんは、どうしてにほんごをべんきょうしていますか。',rj:'___-san wa, doushite nihongo o benkyou shite imasu ka',en:'Why are you studying Japanese?'},
+      follow:{jp:'だれとにほんごではなしますか。',rj:'dare to nihongo de hanashimasu ka',en:'Who do you speak Japanese with?',coach:"Say that you sometimes speak with your fiancée's family.",answer:{jp:'ときどき、こんやくしゃのかぞくとはなします。',rj:'tokidoki, kon-yakusha no kazoku to hanashimasu',en:"Sometimes I speak with my fiancée's family."}}
+    },
+    {
+      id:'conversation:life:work',topic:'life',label:'Work',situation:'You are meeting someone for the first time.',
+      ask:{jp:'おしごとはなんですか。',rj:'oshigoto wa nan desu ka',en:'What do you do for work?'},
+      coach:'Say that you are a software engineer.',
+      answer:{jp:'ソフトウェアエンジニアです。',rj:'sofutowea enjinia desu',en:'I am a software engineer.'},
+      variations:[
+        {jp:'スタートアップではたらいています。',rj:'sutaato appu de hataraite imasu',en:'I work at a startup.'},
+        {jp:'ソフトウェアのしごとをしています。',rj:'sofutowea no shigoto o shite imasu',en:'I work in software.'}
+      ],
+      askBack:{jp:'〇〇さんは？',rj:'___-san wa?',en:'How about you?'},
+      follow:{jp:'どこではたらいていますか。',rj:'doko de hataraite imasu ka',en:'Where do you work?',coach:'Say that you work at a startup.',answer:{jp:'スタートアップではたらいています。',rj:'sutaato appu de hataraite imasu',en:'I work at a startup.'}}
+    },
+    {
+      id:'conversation:life:home',topic:'life',label:'Where you live',situation:'A new acquaintance asks where you live.',
+      ask:{jp:'どこにすんでいますか。',rj:'doko ni sunde imasu ka',en:'Where do you live?'},
+      coach:'Say that you live in San Francisco now.',
+      answer:{jp:'いまはサンフランシスコにすんでいます。',rj:'ima wa san furanshisuko ni sunde imasu',en:'I live in San Francisco now.'},
+      variations:[
+        {jp:'サンフランシスコにすんでいます。',rj:'san furanshisuko ni sunde imasu',en:'I live in San Francisco.'},
+        {jp:'まえはタイとインドネシアにすんでいました。',rj:'mae wa tai to indoneshia ni sunde imashita',en:'Before, I lived in Thailand and Indonesia.'}
+      ],
+      askBack:{jp:'〇〇さんは、どこにすんでいますか。',rj:'___-san wa, doko ni sunde imasu ka',en:'Where do you live?'},
+      follow:{jp:'しゅっしんはどこですか。',rj:'shusshin wa doko desu ka',en:'Where are you from?',coach:'Say that you were born and raised in Vancouver.',answer:{jp:'バンクーバーでうまれそだちました。',rj:'bankuubaa de umare sodachimashita',en:'I was born and raised in Vancouver.'}}
+    }
+  ];
+
+  function esc(value){return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function shuffle(list){var a=list.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function line(item){return '<span class="jp" lang="ja">'+esc(item.jp)+'</span><span class="rj">'+esc(item.rj)+'</span><div class="answer-en">'+esc(item.en)+'</div>';}
+
+  document.getElementById('vocab-grid').innerHTML=VOCAB.map(function(item){return '<article class="vocab-item"><span class="en">'+esc(item.en)+'</span><span class="jp" lang="ja">'+esc(item.jp)+'</span><span class="rj">'+esc(item.rj)+'</span></article>';}).join('');
+  document.getElementById('moves-grid').innerHTML=MOVES.map(function(item){return '<article class="move"><span class="purpose">'+esc(item.purpose)+'</span><span class="jp" lang="ja">'+esc(item.jp)+'</span><span class="rj">'+esc(item.rj)+'</span><div class="en">'+esc(item.en)+'</div></article>';}).join('');
+
+  var topic='all',queue=[],index=0,correct=0,missed=[],skipped=0,currentSpeech=null;
+  var root=document.getElementById('coach-deck');
+  function source(){return MISSIONS.filter(function(item){return topic==='all'||item.topic===topic;});}
+  function start(items){queue=window.JL_PROGRESS?JL_PROGRESS.order(items||source()):shuffle(items||source());index=0;correct=0;missed=[];skipped=0;draw();}
+  function playQuestion(item,button){
+    var manifest=window.JL_CONVERSATION||{};
+    var entry=(manifest.questions||[]).find(function(q){return q.id===item.id.replace('conversation:','').replace(/:/g,'-');});
+    if(entry&&manifest.hasAudio){
+      var audio=new Audio(entry.audio);button.classList.add('playing');audio.play().catch(function(){speak(item.ask.jp,button);});audio.addEventListener('ended',function(){button.classList.remove('playing');});return;
+    }
+    speak(item.ask.jp,button);
+  }
+  function speak(text,button){
+    if(!('speechSynthesis' in window))return;
+    speechSynthesis.cancel();var utterance=new SpeechSynthesisUtterance(text);utterance.lang='ja-JP';utterance.rate=.82;currentSpeech=utterance;button.classList.add('playing');
+    utterance.onend=utterance.onerror=function(){button.classList.remove('playing');};speechSynthesis.speak(utterance);
+  }
+  function draw(){
+    document.getElementById('coach-count').textContent=source().length+' conversations';
+    if(index>=queue.length){results();return;}
+    var item=queue[index],pct=index/queue.length*100;
+    root.innerHTML='<div class="session-meta"><span>'+(index+1)+' / '+queue.length+'</span><span>Got it '+correct+' · Missed '+missed.length+'</span></div><div class="track"><div class="track-fill" style="width:'+pct+'%"></div></div>'+
+      '<article class="mission" id="mission"><div class="mission-top"><div><div class="mission-label">'+esc(item.label)+'</div><h3>'+esc(item.situation)+'</h3></div><button class="audio-btn" type="button" aria-label="Play the Japanese question" title="Play question">▶</button></div>'+
+      '<p class="ask" lang="ja">'+esc(item.ask.jp)+'</p><div class="ask-rj">'+esc(item.ask.rj)+'</div><div class="meaning"><b>They asked:</b> '+esc(item.ask.en)+'</div>'+
+      '<div class="helper"><b>Your reply goal</b>'+esc(item.coach)+'</div><button class="reveal-btn" type="button">Reveal natural replies</button>'+
+      '<div class="answer"><div class="default-answer"><span class="answer-heading">Natural first answer</span>'+line(item.answer)+'</div><div class="variations"><span class="answer-heading">Other natural replies</span>'+item.variations.map(function(v){return '<div class="variation">'+line(v)+'</div>';}).join('')+'</div>'+
+      '<div class="continue"><span class="answer-heading">Keep it going</span><div class="continue-grid"><div class="continue-block"><span class="tag">Ask them back</span>'+line(item.askBack)+'</div><div class="continue-block"><span class="tag">They may follow up</span>'+line(item.follow)+'</div><div class="follow-helper"><span class="answer-heading">Your next reply goal</span>'+esc(item.follow.coach)+'<div style="margin-top:8px">'+line(item.follow.answer)+'</div></div></div></div></div></article>'+
+      '<div class="grade"><button class="grade-btn good" type="button" data-grade="good">✅ Got it</button><button class="grade-btn missed" type="button" data-grade="again">❌ Missed</button></div><button class="skip" type="button">Skip</button>';
+    var mission=document.getElementById('mission'),grade=root.querySelector('.grade');
+    root.querySelector('.audio-btn').addEventListener('click',function(){playQuestion(item,this);});
+    root.querySelector('.reveal-btn').addEventListener('click',function(){mission.classList.add('revealed');grade.classList.add('show');});
+    root.querySelectorAll('[data-grade]').forEach(function(button){button.addEventListener('click',function(){record(item,button.getAttribute('data-grade'));});});
+    root.querySelector('.skip').addEventListener('click',function(){skipped++;index++;draw();});
+  }
+  function record(item,rating){
+    if(rating==='good')correct++;else missed.push(item);
+    if(window.JL_PROGRESS)JL_PROGRESS.record(item.id,rating,{subject:'conversation',type:'reply'});
+    index++;draw();
+  }
+  function results(){
+    if(window.JL_PROGRESS)JL_PROGRESS.addSession({kind:'conversation',topic:topic,total:correct+missed.length,correct:correct});
+    root.innerHTML='<div class="results"><h3>Conversation round complete</h3><div class="score">'+correct+' / '+(correct+missed.length)+'</div><p class="lead">'+(missed.length?'The replies you missed will return sooner.':'Clean round. Keep saying the replies aloud.')+'</p>'+(missed.length?'<div class="missed-list">'+missed.map(function(item){return '<div class="missed-item">'+esc(item.ask.en)+'</div>';}).join('')+'</div>':'')+'<div class="result-actions">'+(missed.length?'<button class="result-btn" id="review-missed">Review missed</button>':'')+'<button class="result-btn secondary" id="restart">Start new round</button></div>'+(skipped?'<p class="rj" style="margin-top:10px">'+skipped+' skipped</p>':'')+'</div>';
+    var review=document.getElementById('review-missed');if(review)review.addEventListener('click',function(){start(missed.slice());});document.getElementById('restart').addEventListener('click',function(){start();});
+  }
+  document.querySelectorAll('.filter').forEach(function(button){button.addEventListener('click',function(){topic=button.getAttribute('data-topic');document.querySelectorAll('.filter').forEach(function(item){item.classList.remove('active');});button.classList.add('active');start();});});
+  start();
+})();
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

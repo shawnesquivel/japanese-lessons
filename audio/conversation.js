@@ -1,0 +1,7 @@
+window.JL_CONVERSATION = {
+  "generatedAt": null,
+  "voice": "C8e2F6Cm3l58PjXaVpUW",
+  "model": "eleven_multilingual_v2",
+  "hasAudio": false,
+  "questions": []
+};

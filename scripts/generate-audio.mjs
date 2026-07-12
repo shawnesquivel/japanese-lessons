@@ -24,10 +24,12 @@ const AGE_DIR = join(AUDIO_DIR, "age");
 const TIME_DIR = join(AUDIO_DIR, "time");
 const PARTICLES_DIR = join(AUDIO_DIR, "particles");
 const PARTICLE_WORDS_DIR = join(PARTICLES_DIR, "words");
+const CONVERSATION_DIR = join(AUDIO_DIR, "conversation");
 const FLASHCARDS_PATH = join(AUDIO_DIR, "flashcards.json");
 const AGE_MANIFEST_PATH = join(AUDIO_DIR, "age-days-months.json");
 const TIME_MANIFEST_PATH = join(AUDIO_DIR, "time-parts.json");
 const PARTICLES_MANIFEST_PATH = join(AUDIO_DIR, "particles.json");
+const CONVERSATION_MANIFEST_PATH = join(AUDIO_DIR, "conversation.json");
 
 // ---- minimal .env loader (no dependency) ----
 (function loadEnv() {
@@ -183,6 +185,9 @@ const WORDS = [
   { kana: "えいが", romaji: "eiga", en: "movie", group: "particles" },
   { kana: "バスケットボール", romaji: "basuketto-booru", en: "basketball", group: "particles", audio: "audio/particles/words/basuketto-booru.mp3" },
   { kana: "ウェイトリフティング", romaji: "ueito rifutingu", en: "weightlifting", group: "particles", audio: "audio/particles/words/ueito-rifutingu.mp3" },
+  { kana: "ランニング", romaji: "ranningu", en: "running", group: "conversation" },
+  { kana: "ハイキング", romaji: "haikingu", en: "hiking", group: "conversation" },
+  { kana: "キャンプ", romaji: "kyanpu", en: "camping", group: "conversation" },
   { kana: "スタートアップ", romaji: "sutaato-appu", en: "startup", group: "particles" },
   { kana: "としょかん", romaji: "toshokan", en: "library", group: "particles" },
   { kana: "サンフランシスコ", romaji: "san-furanshisuko", en: "San Francisco", group: "particles" },
@@ -195,6 +200,7 @@ const WORDS = [
   { kana: "なに", romaji: "nani", en: "what", group: "particles", audio: "audio/particles/words/nani.mp3" },
   { kana: "いま", romaji: "ima", en: "now", group: "particles", audio: "audio/particles/words/ima.mp3" },
   { kana: "あさ", romaji: "asa", en: "morning", group: "particles" },
+  { kana: "たいてい", romaji: "taitei", en: "usually", group: "particles" },
   { kana: "きょう", romaji: "kyou", en: "today", group: "particles" },
   { kana: "きのう", romaji: "kinou", en: "yesterday", group: "particles" },
   { kana: "あした", romaji: "ashita", en: "tomorrow", group: "particles", audio: "audio/particles/words/ashita.mp3" },
@@ -319,13 +325,28 @@ const PARTICLE_QUESTIONS = [
   { kana: "どこではたらいていますか。", romaji: "doko de hataraite imasu ka.", en: "Where do you work?", answer: "I work at a startup.", answerKana: "スタートアップではたらいています。", answerRomaji: "sutaato appu de hataraite imasu." },
   { kana: "しごとはなんですか。", romaji: "shigoto wa nan desu ka.", en: "What do you do for work?", answer: "I'm a software engineer.", answerKana: "ソフトウェアエンジニアです。", answerRomaji: "sofutowea enjinia desu." },
   { kana: "なにをべんきょうしていますか。", romaji: "nani o benkyou shite imasu ka.", en: "What are you studying?", answer: "I'm studying Japanese.", answerKana: "にほんごをべんきょうしています。", answerRomaji: "nihongo o benkyou shite imasu." },
-  { kana: "どこでウェイトリフティングをしますか。", romaji: "doko de ueito rifutingu o shimasu ka.", en: "Where do you lift?", answer: "I lift at the gym.", answerKana: "ジムでウェイトリフティングをします。", answerRomaji: "jimu de ueito rifutingu o shimasu." },
   { kana: "だれとにほんにいきますか。", romaji: "dare to nihon ni ikimasu ka.", en: "Who are you going to Japan with?", answer: "I'm going with my fiancée.", answerKana: "こんやくしゃといきます。", answerRomaji: "kon-yakusha to ikimasu." },
   { kana: "いつにほんにいきますか。", romaji: "itsu nihon ni ikimasu ka.", en: "When are you going to Japan?", answer: "I'm going in September.", answerKana: "くがつにいきます。", answerRomaji: "kugatsu ni ikimasu." },
   { kana: "どこにすんでいましたか。", romaji: "doko ni sunde imashita ka.", en: "Where did you live?", answer: "I lived in Thailand and Indonesia.", answerKana: "タイとインドネシアにすんでいました。", answerRomaji: "tai to indoneshia ni sunde imashita." },
   { kana: "なにをのみますか。", romaji: "nani o nomimasu ka.", en: "What do you drink?", answer: "I drink coffee and tea.", answerKana: "コーヒーとおちゃをのみます。", answerRomaji: "koohii to ocha o nomimasu." },
   { kana: "ちかくになにがありますか。", romaji: "chikaku ni nani ga arimasu ka.", en: "What is nearby?", answer: "There is a gym nearby.", answerKana: "ちかくにジムがあります。", answerRomaji: "chikaku ni jimu ga arimasu." },
   { kana: "にほんごでだれとはなしたいですか。", romaji: "nihongo de dare to hanashitai desu ka.", en: "Who do you want to speak with in Japanese?", answer: "I want to speak with my fiancée's family.", answerKana: "こんやくしゃのかぞくとはなしたいです。", answerRomaji: "kon-yakusha no kazoku to hanashitai desu." },
+];
+
+// Questions used by the real-conversation coach. The page falls back to the
+// browser's Japanese voice until these ElevenLabs files have been generated.
+const CONVERSATION_QUESTIONS = [
+  { id: "hobbies-intro", kana: "しゅみはなんですか。", romaji: "shumi wa nan desu ka." },
+  { id: "hobbies-day-off", kana: "やすみのひは、なにをしますか。", romaji: "yasumi no hi wa, nani o shimasu ka." },
+  { id: "hobbies-sports", kana: "なにかスポーツをしていますか。", romaji: "nanika supootsu o shite imasu ka." },
+  { id: "past-today", kana: "きょうは、なにをしましたか。", romaji: "kyou wa, nani o shimashita ka." },
+  { id: "past-weekend", kana: "しゅうまつ、なにしたの？", romaji: "shuumatsu, nani shita no?" },
+  { id: "plans-weekend", kana: "こんどのしゅうまつ、なにをしますか。", romaji: "kondo no shuumatsu, nani o shimasu ka." },
+  { id: "plans-invite", kana: "どようび、いっしょにバスケットボールをしませんか。", romaji: "doyoubi, isshoni basuketto booru o shimasen ka." },
+  { id: "life-japan", kana: "こんど、にほんにいくんですか。", romaji: "kondo, nihon ni ikun desu ka." },
+  { id: "life-why-japanese", kana: "どうしてにほんごをべんきょうしていますか。", romaji: "doushite nihongo o benkyou shite imasu ka." },
+  { id: "life-work", kana: "おしごとはなんですか。", romaji: "oshigoto wa nan desu ka." },
+  { id: "life-home", kana: "どこにすんでいますか。", romaji: "doko ni sunde imasu ka." },
 ];
 
 // Isolated-word listening. The page exposes only the sound until reveal.
@@ -365,6 +386,7 @@ const PARTICLE_WORDS = [
   { kana: "ちかく", romaji: "chikaku", en: "nearby" },
   { kana: "いま", romaji: "ima", en: "now" },
   { kana: "あさ", romaji: "asa", en: "morning" },
+  { kana: "たいてい", romaji: "taitei", en: "usually" },
   { kana: "きょう", romaji: "kyou", en: "today" },
   { kana: "きのう", romaji: "kinou", en: "yesterday" },
   { kana: "あした", romaji: "ashita", en: "tomorrow" },
@@ -450,6 +472,11 @@ const timeParts = withMeta(TIME_PARTS, "audio/time", VOICE_B);
 const l5Listen = withMeta(L5_LISTEN, "audio/age", VOICE_B);
 const particleQuestions = withMeta(PARTICLE_QUESTIONS, "audio/particles", VOICE_B);
 const particleWords = withMeta(PARTICLE_WORDS, "audio/particles/words", VOICE_B);
+const conversationQuestions = CONVERSATION_QUESTIONS.map((p) => ({
+  ...p,
+  audio: `audio/conversation/${p.id}.mp3`,
+  voice: VOICE_B,
+}));
 const l5Convo = L5_CONVO.map((p, i) => ({
   ...p,
   id: `c${i + 1}-${slug(p.romaji)}`,
@@ -511,6 +538,16 @@ function writeParticlesManifest(path, questions, words, hasAudio) {
   });
 }
 
+function writeConversationManifest(path, questions, hasAudio) {
+  writeManifestFile(path, "JL_CONVERSATION", {
+    generatedAt: hasAudio ? new Date().toISOString() : null,
+    voice: VOICE_B,
+    model: MODEL,
+    hasAudio,
+    questions,
+  });
+}
+
 async function generateSet(client, label, items) {
   let made = 0;
   let skipped = 0;
@@ -543,6 +580,7 @@ async function main() {
   mkdirSync(TIME_DIR, { recursive: true });
   mkdirSync(PARTICLES_DIR, { recursive: true });
   mkdirSync(PARTICLE_WORDS_DIR, { recursive: true });
+  mkdirSync(CONVERSATION_DIR, { recursive: true });
 
   if (!API_KEY) {
     writeManifest(MANIFEST_PATH, "phrases", phrases, false, "JL_LISTENING");
@@ -550,8 +588,9 @@ async function main() {
     writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, false);
     writeTimeManifest(TIME_MANIFEST_PATH, timeParts, false);
     writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleQuestions, particleWords, false);
+    writeConversationManifest(CONVERSATION_MANIFEST_PATH, conversationQuestions, false);
     console.log("No ELEVENLABS_API_KEY found.");
-    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts + ${particleQuestions.length} particle questions / ${particleWords.length} particle words (hasAudio: false).`);
+    console.log(`Wrote ${phrases.length} phrases + ${words.length} words + ${l5Listen.length} listen / ${l5Convo.length} convo + ${timeParts.length} time parts + ${particleQuestions.length} particle questions / ${particleWords.length} particle words + ${conversationQuestions.length} conversation questions (hasAudio: false).`);
     console.log("The web UI will render the cards; add a key and re-run to enable playback.");
     return;
   }
@@ -567,13 +606,15 @@ async function main() {
   await generateSet(client, "time:parts", timeParts);
   await generateSet(client, "particles:questions", particleQuestions);
   await generateSet(client, "particles:words", particleWords);
+  await generateSet(client, "conversation:questions", conversationQuestions);
 
   writeManifest(MANIFEST_PATH, "phrases", phrases, true, "JL_LISTENING");
   writeManifest(FLASHCARDS_PATH, "words", words, true, "JL_FLASHCARDS");
   writeAgeManifest(AGE_MANIFEST_PATH, l5Listen, l5Convo, true);
   writeTimeManifest(TIME_MANIFEST_PATH, timeParts, true);
   writeParticlesManifest(PARTICLES_MANIFEST_PATH, particleQuestions, particleWords, true);
-  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json, audio/particles.json");
+  writeConversationManifest(CONVERSATION_MANIFEST_PATH, conversationQuestions, true);
+  console.log("\nDone. Manifests: audio/manifest.json, audio/flashcards.json, audio/age-days-months.json, audio/time-parts.json, audio/particles.json, audio/conversation.json");
 }
 
 main().catch((err) => {
