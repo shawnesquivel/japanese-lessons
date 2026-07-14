@@ -378,7 +378,22 @@
   // ======================================================
   (function(){
     var hard=false, rate=1, useAmpm=false, cur=null, answered=false;
-    var correct=0,total=0;
+    var STORE_KEY='japaneseLessons.games.time.listenWrite.v1';
+    function loadScore(){
+      try{
+        var saved=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+        return {
+          correct:Math.max(0, parseInt(saved.correct,10)||0),
+          total:Math.max(0, parseInt(saved.total,10)||0)
+        };
+      }catch(e){ return {correct:0,total:0}; }
+    }
+    function saveScore(){
+      try{ localStorage.setItem(STORE_KEY, JSON.stringify({correct:correct,total:total,updatedAt:Date.now()})); }catch(e){}
+    }
+    var savedScore=loadScore();
+    var correct=savedScore.correct,total=savedScore.total;
+    if(correct>total) correct=total;
     var elGuess=document.getElementById('guess2'), elRes=document.getElementById('result2');
     var elFrac=document.getElementById('sFrac'), elPct=document.getElementById('sPct');
     function updateScore(){
@@ -426,7 +441,7 @@
     function finish(ok){
       answered=true; total++;
       if(ok) correct++;
-      updateScore();
+      updateScore(); saveScore();
       enable(false); bCheck.style.display='none'; bGive.style.display='none';
       bNext.style.display=''; bNext.focus();
     }

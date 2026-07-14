@@ -207,6 +207,24 @@
   document.getElementById('start').onclick=function(){start()};
   document.getElementById('show-answer').onclick=reveal;
   document.querySelectorAll('[data-rating]').forEach(function(btn){btn.onclick=function(){rate(btn.dataset.rating)}});
+  document.addEventListener('keydown',function(e){
+    if(review.hidden)return;
+    var tag=(e.target&&e.target.tagName||'').toLowerCase();
+    if(tag==='input'||tag==='textarea'||tag==='select')return;
+    var answerShown=document.getElementById('answer').classList.contains('show');
+    var key=e.key.toLowerCase();
+    if(key===' '||key==='enter'){e.preventDefault();if(!answerShown)reveal();return;}
+    if(key==='p'){e.preventDefault();document.getElementById('play').click();return;}
+    if(key==='escape'){e.preventDefault();finish();return;}
+    if(!answerShown)return;
+    var ratings={
+      '1':'again','a':'again',
+      '2':'hard','h':'hard',
+      '3':'good','g':'good',
+      '4':'easy','e':'easy'
+    };
+    if(ratings[key]){e.preventDefault();rate(ratings[key]);}
+  });
   document.getElementById('end-review').onclick=finish;document.getElementById('back-dashboard').onclick=function(){results.hidden=true;dashboard.hidden=false;renderAll()};
   document.getElementById('review-again').onclick=function(){results.hidden=true;dashboard.hidden=false;start()};
   document.getElementById('size-seg').onclick=function(e){var b=e.target.closest('[data-size]');if(!b)return;sessionSize=b.dataset.size;document.querySelectorAll('[data-size]').forEach(function(x){x.classList.toggle('active',x===b)})};
