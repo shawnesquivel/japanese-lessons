@@ -4,8 +4,9 @@
 // and marks the current page automatically.
 (function () {
   var LINKS = [
+    { href: "index.html", icon: "⛩️", label: "Home", detail: "welcome tour" },
     { href: "study.html", icon: "🧠", label: "Study", detail: "adaptive arcade" },
-    { href: "index.html", icon: "👉", label: "This & that", detail: "this, that & which" },
+    { href: "kosoado_worksheet.html", icon: "👉", label: "This & that", detail: "this, that & which" },
     { href: "particles.html", icon: "🧩", label: "Particles", detail: "topic, object, place & more" },
     { href: "locations.html", icon: "📍", label: "Locations", detail: "go, be & do" },
     { href: "conversation.html", icon: "💬", label: "Conversations", detail: "reply & follow up" },
