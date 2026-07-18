@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/landing/scene1-torii.webp">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛩️</text></svg>">
 <style>
   :root{
     --paper:#FBF8F1;
@@ -196,13 +197,14 @@
     body.rm .scene{position:static;opacity:1!important;margin:0 0 8px}
     body.rm .scene img{position:static;display:block;width:100%;height:auto;transform:none!important}
     body.rm .scene .tint{display:none}
-    body.rm .copy{position:static;padding:18px min(6vw,72px) 34px}
+    body.rm .copy{position:static;padding:18px min(6vw,72px) 34px;justify-content:center!important}
     body.rm .copy-card{opacity:1!important;transform:none!important;box-shadow:0 6px 20px rgba(20,22,30,.08)}
     body.rm .rail,body.rm .hint{display:none}
   }
 
   @media (max-width:700px){
-    .copy{padding:0 14px;justify-content:center!important}
+    .copy{padding:0 14px;bottom:calc(68px + env(safe-area-inset-bottom));justify-content:center!important}
+    .hint{font-size:11px}
     .copy-card{padding:16px 18px 15px;max-width:none}
     .copy-card p.body{font-size:14px}
     .rail{right:4px}
@@ -389,13 +391,15 @@
       scenes[i].querySelector('img').style.transform =
         'scale(' + scale.toFixed(4) + ') translateY(' + ty.toFixed(2) + '%)';
 
-      // copy: rise in, hold, ease out before the seam
+      // copy: rise in after the seam ends, hold, ease out before the next seam
+      // (seams live in the first ~0.15 / last ~0.15 of p, so the two cards
+      // are never on screen together)
       var card = cards[i];
       if(card){
         var isLast = i === N-1;
-        var inO  = smooth(clamp((p - 0.10) / 0.16, 0, 1));
-        var outO = isLast ? 1 : 1 - smooth(clamp((p - 0.78) / 0.16, 0, 1));
-        if(i === 0){ inO = 1 - smooth(clamp((0.10 - p) / 0.10, 0, 1)); if(p < 0.02) inO = 1; }
+        var inO  = smooth(clamp((p - 0.18) / 0.14, 0, 1));
+        var outO = isLast ? 1 : 1 - smooth(clamp((p - 0.64) / 0.14, 0, 1));
+        if(i === 0) inO = 1; // hero copy greets on landing
         var co = Math.min(inO, outO);
         card.style.opacity = co;
         card.style.transform = 'translateY(' + ((1-inO)*26 - (1-outO)*14).toFixed(1) + 'px)';
