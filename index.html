@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>こそあど Worksheet — Japanese Lessons</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>にほんごレッスン — Learn real Japanese, the cute way</title>
+<meta name="description" content="A free, kawaii, no-textbook way to learn everyday Japanese: bite-size worksheets, adaptive flashcards, listening drills, and a kanji game.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/landing/scene1-torii.webp">
 <style>
   :root{
     --paper:#FBF8F1;
-    --card:#FFFFFF;
     --ink:#2A2E24;
     --ink-soft:#5C6150;
-    --line:#E6DFCF;
     --line-strong:#D6CDB6;
-    --ko:#5C8A3A;   /* near speaker  */
-    --so:#E0962C;   /* near listener */
-    --a:#3F6E91;    /* far           */
-    --do:#CB4A2B;   /* question      */
-    --ko-bg:#EDF3E4;
-    --so-bg:#FBF0DC;
-    --a-bg:#E5EDF3;
-    --do-bg:#FAE7E1;
-    --radius:14px;
+    --sakura:#F6C6D0;
+    --vermilion:#E34234;
+    --matcha:#5C8A3A;
+    --indigo:#3F5E7A;
+    --night:#1E2438;
+    --radius:16px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -32,773 +29,435 @@
     background:var(--paper);
     color:var(--ink);
     font-family:"Zen Maru Gothic",system-ui,sans-serif;
-    font-weight:400;
-    line-height:1.75;
-    font-size:17px;
+    line-height:1.7;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
 
-  /* ---------- header ---------- */
-  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
-  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
-  h1{
-    font-family:"Zen Antique",serif;
-    font-weight:400;
-    font-size:clamp(46px,11vw,82px);
-    margin:6px 0 4px;
-    letter-spacing:.06em;
-    line-height:1;
+  /* ---------- scroll world ---------- */
+  .world{position:relative}
+  .stage{
+    position:sticky;top:0;height:100vh;height:100dvh;
+    overflow:hidden;background:var(--night);
   }
-  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
-
-  /* ---------- section scaffolding ---------- */
-  section{margin-top:46px}
-  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
-  .sec-kanji{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
-  h2{font-size:22px;font-weight:700;margin:0}
-  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
-  p{margin:0 0 14px}
-  .lead{color:var(--ink-soft)}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
-
-  .jp{font-size:1.15em}
-  .romaji{font-weight:500}
-  .en{color:var(--ink-soft)}
-
-  /* ---------- zone chips ---------- */
-  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
-  .c-ko{background:var(--ko-bg);color:#3C5E25}
-  .c-so{background:var(--so-bg);color:#946012}
-  .c-a {background:var(--a-bg);color:#2C4D66}
-  .c-do{background:var(--do-bg);color:#9C3119}
-
-  /* ---------- tables ---------- */
-  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
-  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
-  .tbl thead th{background:#F3EEE1;font-weight:700}
-  .tbl td .jp{display:block;font-size:1.2em;line-height:1.3}
-  .tbl td .rj{font-weight:500}
-  .tbl td .gl{color:var(--ink-soft);font-size:13px;display:block}
-  .rowlabel{background:#F7F3E8;font-weight:700;font-size:14px}
-
-  .grid th.h-ko{color:var(--ko)} .grid th.h-so{color:var(--so)}
-  .grid th.h-a{color:var(--a)}  .grid th.h-do{color:var(--do)}
-  .grid td{text-align:center}
-  .grid .rj{font-size:18px}
-  .grid .gl{font-size:12px}
-  .grid td.z-ko{background:var(--ko-bg)} .grid td.z-so{background:var(--so-bg)}
-  .grid td.z-a{background:var(--a-bg)}   .grid td.z-do{background:var(--do-bg)}
-
-  /* ---------- exercise / flashcards ---------- */
-  .exgroup{margin:22px 0}
-  .ex-tag{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.04em;background:var(--ink);color:var(--paper);padding:3px 12px;border-radius:999px;margin-bottom:4px}
-  .ex-instr{color:var(--ink-soft);font-size:15px;margin:6px 0 14px}
-  ol.q{margin:0;padding-left:0;counter-reset:q;list-style:none}
-  ol.q li{
-    counter-increment:q;
-    display:flex;gap:14px;align-items:flex-start;
-    padding:11px 0;border-bottom:1px dashed var(--line-strong);
-    cursor:pointer;border-radius:8px;transition:background .12s;
+  .scene{
+    position:absolute;inset:0;opacity:0;
+    will-change:opacity;
   }
-  ol.q li:hover{background:#F7F3E8}
-  ol.q li:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  ol.q li::before{
-    content:counter(q);
-    flex:0 0 30px;height:30px;border-radius:50%;
-    background:#F3EEE1;border:1px solid var(--line-strong);
+  .scene:first-child{opacity:1}
+  .scene img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center 42%;
+    will-change:transform;transform-origin:50% 46%;
+  }
+  .scene .tint{
+    position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(20,22,30,.42) 0%,rgba(20,22,30,.06) 38%,rgba(20,22,30,0) 60%);
+    pointer-events:none;
+  }
+
+  /* ---------- copy cards ---------- */
+  .copy{
+    position:absolute;left:0;right:0;
+    bottom:max(34px,env(safe-area-inset-bottom));
+    display:flex;justify-content:flex-start;
+    padding:0 min(6vw,72px);
+    pointer-events:none;
+  }
+  .copy-card{
+    max-width:560px;width:100%;
+    background:rgba(251,248,241,.9);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(214,205,182,.7);
+    border-radius:var(--radius);
+    padding:22px 26px 20px;
+    box-shadow:0 18px 50px rgba(20,22,30,.28);
+    opacity:0;transform:translateY(26px);
+    will-change:opacity,transform;
+    pointer-events:auto;
+  }
+  .copy--right{justify-content:flex-end}
+  .eyebrow{
+    display:inline-block;font-size:12px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:var(--accent,var(--vermilion));
+    border-radius:999px;padding:3px 12px;margin:0 0 10px;
+  }
+  .copy-card h2{
+    font-family:"Zen Antique",serif;font-weight:400;
+    font-size:clamp(24px,3.4vw,38px);line-height:1.2;
+    margin:0 0 6px;letter-spacing:.01em;
+  }
+  .jp-line{
+    font-size:clamp(17px,2vw,21px);margin:0 0 10px;color:var(--ink);
+  }
+  .jp-line .rj{color:var(--ink-soft);font-size:.82em}
+  .copy-card p.body{margin:0 0 12px;color:var(--ink-soft);font-size:15px}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin:0;padding:0;list-style:none}
+  .tags li{
+    font-size:12.5px;font-weight:500;color:var(--ink-soft);
+    background:rgba(214,205,182,.32);border:1px solid rgba(214,205,182,.75);
+    border-radius:999px;padding:2px 11px;
+  }
+  .copy-card a.inline{color:var(--indigo);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--line-strong)}
+  .copy-card a.inline:hover{border-color:var(--indigo)}
+
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:48px;padding:10px 24px;border-radius:999px;
+    font-family:inherit;font-size:16px;font-weight:700;text-decoration:none;
+    transition:transform .12s,box-shadow .12s,background .12s;
+    cursor:pointer;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn-primary{background:var(--vermilion);color:#fff;box-shadow:0 8px 22px rgba(227,66,52,.4)}
+  .btn-primary:hover{background:#C93A2D}
+  .btn-ghost{background:rgba(251,248,241,.85);color:var(--ink);border:1.5px solid var(--line-strong)}
+  .btn-ghost:hover{background:#F3EEE1}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:20;
     display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:14px;color:var(--ink-soft);
+    padding:14px max(18px,env(safe-area-inset-right)) 10px;
+    pointer-events:none;
   }
-  ol.q li .prompt{flex:1}
-  ol.q li .prompt .hint{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px}
-  ol.q li .prompt .q-tag{
-    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;
-    color:var(--ink-soft);background:#F3EEE1;border-radius:999px;
-    padding:1px 8px;margin-bottom:6px;
+  .brand{
+    display:flex;align-items:center;gap:10px;pointer-events:auto;
+    background:rgba(251,248,241,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(214,205,182,.7);border-radius:999px;
+    padding:7px 18px;box-shadow:0 4px 16px rgba(20,22,30,.14);
+    text-decoration:none;color:var(--ink);
   }
-  ol.q li .ans{
-    display:none;margin-top:10px;padding-top:10px;
-    border-top:1px dashed var(--line-strong);
-  }
-  ol.q li .ans .jp{font-size:1.1em;margin-right:8px}
-  ol.q li .ans .rj{font-weight:700;color:var(--ko)}
-  ol.q li .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:6px}
-  ol.q li.revealed .ans{display:block}
-  ol.q li.revealed .tap-hint{display:none}
+  .brand .mark{font-size:20px;line-height:1}
+  .brand b{font-size:15px;letter-spacing:.02em}
+  .brand small{color:var(--ink-soft);font-size:12px}
 
-  /* ---------- practice deck (slide-style) ---------- */
-  .practice-deck{display:grid;gap:14px;margin:18px 0}
-  .practice-card{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:28px 22px;text-align:center;cursor:pointer;
-    transition:background .12s,box-shadow .12s;
+  /* ---------- route rail ---------- */
+  .rail{
+    position:fixed;right:max(10px,env(safe-area-inset-right));top:50%;
+    transform:translateY(-50%);z-index:20;
+    display:flex;flex-direction:column;gap:2px;
   }
-  .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
-  .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
-  .practice-card .q-jp{
-    font-family:"Zen Antique",serif;font-size:clamp(28px,6vw,40px);
-    line-height:1.35;margin:0 0 14px;
+  .rail button{
+    width:44px;height:44px;border:none;background:transparent;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .12s;
   }
-  .practice-card .q-en{color:var(--ink-soft);font-size:15px;margin:0 0 12px}
-  .practice-card .icon{font-size:48px;line-height:1;margin:8px 0 14px}
-  .practice-card .a-jp{
-    display:none;font-family:"Zen Antique",serif;font-size:clamp(24px,5vw,34px);
-    line-height:1.35;margin:14px 0 0;padding-top:14px;
-    border-top:1px dashed var(--line-strong);
+  .rail button:active{transform:scale(.96)}
+  .rail button span{
+    width:10px;height:10px;border-radius:50%;
+    background:rgba(251,248,241,.55);border:1.5px solid rgba(20,22,30,.25);
+    transition:background .18s,transform .18s;
   }
-  .practice-card .a-jp .hl{color:var(--do)}
-  .practice-card .a-en{display:none;color:var(--ink-soft);font-size:14px;margin-top:6px}
-  .practice-card .tap-hint{font-size:12px;color:#B7AE97;margin-top:10px}
-  .practice-card.revealed .a-jp,.practice-card.revealed .a-en{display:block}
-  .practice-card.revealed .tap-hint{display:none}
+  .rail button.on span{background:var(--vermilion);transform:scale(1.35);border-color:rgba(251,248,241,.9)}
+  .rail button:focus-visible{outline:3px solid var(--sakura);outline-offset:-4px;border-radius:12px}
 
-  /* ---------- listening drill ---------- */
-  .listen-deck{display:grid;gap:14px;margin:18px 0}
-  .listen-card{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:18px 20px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;
-    transition:background .12s,box-shadow .12s;
+  /* ---------- scroll hint ---------- */
+  .hint{
+    position:absolute;left:50%;transform:translateX(-50%);
+    bottom:max(12px,env(safe-area-inset-bottom));
+    color:#fff;font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    text-shadow:0 2px 8px rgba(20,22,30,.6);opacity:.95;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    transition:opacity .3s;pointer-events:none;
   }
-  .listen-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
-  .listen-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
-  .listen-play{
-    flex:0 0 auto;width:54px;height:54px;border-radius:50%;
-    border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;
-    font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    transition:transform .1s,background .12s;
+  .hint .arrow{animation:bob 1.6s ease-in-out infinite;font-size:18px}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ---------- petals ---------- */
+  .petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5}
+  .petal{
+    position:absolute;top:-4vh;
+    width:12px;height:10px;border-radius:60% 40% 55% 45%;
+    background:linear-gradient(135deg,#FBD9E0,#F6C6D0);
+    opacity:.85;
+    animation:fall linear infinite;
   }
-  .listen-play:hover{background:#E2EED4}
-  .listen-play:active{transform:scale(.94)}
-  .listen-play:disabled{opacity:.4;cursor:not-allowed}
-  .listen-play.playing{background:var(--ko);color:#fff;border-color:var(--ko)}
-  .listen-body{flex:1;min-width:0}
-  .listen-num{font-size:12px;letter-spacing:.04em;color:var(--ink-soft);font-weight:700}
-  .listen-prompt{color:var(--ink-soft);font-size:14px;margin:2px 0 0}
-  .listen-ans{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)}
-  .listen-ans .kana{font-family:"Zen Antique",serif;font-size:clamp(22px,5vw,30px);line-height:1.3;display:block}
-  .listen-ans .rj{font-weight:700;color:var(--ko);display:block;margin-top:4px}
-  .listen-ans .en{display:block;margin-top:2px;color:var(--ink-soft)}
-  .listen-card.revealed .listen-ans{display:block}
-  .listen-card.revealed .tap-hint{display:none}
-  .listen-card .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:8px}
-  .listen-note{font-size:13px;color:#B7AE97;margin-top:4px}
-  .listen-ctx{margin:10px 0 0;font-size:14px;color:var(--ink-soft)}
-  .zone-map{display:flex;align-items:center;gap:6px;margin:10px 0 0;flex-wrap:wrap}
-  .zone-dot{font-size:12px;padding:3px 10px;border-radius:999px;border:1px dashed var(--line-strong);color:var(--ink-soft);background:#fff}
-  .zone-dot.on{font-weight:700;border-style:solid}
-  .zone-dot.on.z-ko{background:var(--ko-bg);color:#3C5E25;border-color:var(--ko)}
-  .zone-dot.on.z-so{background:var(--so-bg);color:#946012;border-color:var(--so)}
-  .zone-dot.on.z-a{background:var(--a-bg);color:#2C4D66;border-color:var(--a)}
-  .zone-arrow{color:#C9BFA6;font-size:12px}
-  .listen-reply{margin-top:12px;padding:10px 13px;background:#F7F3E8;border-radius:8px}
-  .listen-reply .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
-  .listen-reply .kana{font-family:"Zen Antique",serif;font-size:clamp(18px,4vw,24px);line-height:1.3;display:block}
-  .listen-reply .rj{font-weight:700;color:var(--so);display:block;margin-top:2px}
-  .listen-reply .en{display:block;color:var(--ink-soft);font-size:14px}
+  @keyframes fall{
+    0%{transform:translate3d(0,-4vh,0) rotate(0deg)}
+    100%{transform:translate3d(-14vw,108vh,0) rotate(340deg)}
+  }
 
-  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--night);color:#C8CBD8;text-align:center;
+    padding:26px 20px calc(26px + env(safe-area-inset-bottom));font-size:13.5px;
+  }
+  footer a{color:#F6C6D0;text-decoration:none;border-bottom:1px solid rgba(246,198,208,.4)}
 
-  svg{display:block;width:100%;height:auto}
-  .figcap{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:2px}
-  a.skip{position:absolute;left:-999px}
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  /* ---------- reduced motion: calm stacked layout ---------- */
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .hint .arrow{animation:none}
+    .petals{display:none}
+    body.rm .world{height:auto!important}
+    body.rm .stage{position:static;height:auto;background:var(--paper)}
+    body.rm .scene{position:static;opacity:1!important;margin:0 0 8px}
+    body.rm .scene img{position:static;display:block;width:100%;height:auto;transform:none!important}
+    body.rm .scene .tint{display:none}
+    body.rm .copy{position:static;padding:18px min(6vw,72px) 34px}
+    body.rm .copy-card{opacity:1!important;transform:none!important;box-shadow:0 6px 20px rgba(20,22,30,.08)}
+    body.rm .rail,body.rm .hint{display:none}
+  }
+
+  @media (max-width:700px){
+    .copy{padding:0 14px;justify-content:center!important}
+    .copy-card{padding:16px 18px 15px;max-width:none}
+    .copy-card p.body{font-size:14px}
+    .rail{right:4px}
+    .brand small{display:none}
+  }
 </style>
-<script src="audio/manifest.js"></script>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="eyebrow">Japanese demonstratives · day 3</div>
-    <h1>こそあど</h1>
-    <div class="subtitle">this · that · that over there · which — with fruit &amp; vegetables</div>
-  </header>
-
-  <!-- ===================== LESSON ===================== -->
-  <section id="lesson">
-    <div class="sec-head"><span class="sec-kanji">ならう</span><h2>The lesson</h2></div>
-
-    <p class="lead">Every word in this family starts with one of four sounds. The starting sound tells you <strong>distance from the speaker</strong> — or, for <span class="chip c-do">do-</span>, that you're <em>asking</em>.</p>
-
-    <table class="tbl">
-      <thead><tr><th>Start</th><th>Means</th><th>Picture it as</th></tr></thead>
-      <tbody>
-        <tr><td><span class="chip c-ko">ko-</span></td><td>near the <strong>speaker</strong> (you)</td><td>in your hand</td></tr>
-        <tr><td><span class="chip c-so">so-</span></td><td>near the <strong>listener</strong></td><td>over by them</td></tr>
-        <tr><td><span class="chip c-a">a-</span></td><td><strong>far</strong> from both</td><td>across the street</td></tr>
-        <tr><td><span class="chip c-do">do-</span></td><td>the <strong>question</strong>: which? where?</td><td>you don't know yet</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Where each thing sits</h3>
-    <p class="lead">You are the <strong>Speaker</strong>. The produce below is placed at the three distances. The <span class="chip c-do">do-</span> words are what you say when you don't know which/where.</p>
-
-    <div class="card">
-      <svg viewBox="0 0 700 300" role="img" aria-label="A speaker on the left holds a strawberry (near, ko). A listener on the right stands by a carrot (so). A banana stand is far away (a). A question mark floats above for do.">
-        <!-- ground line -->
-        <line x1="30" y1="232" x2="670" y2="232" stroke="#D6CDB6" stroke-width="1.5"/>
-
-        <!-- far: banana stand -->
-        <rect x="300" y="62" width="100" height="40" rx="10" fill="var(--a-bg)" stroke="var(--a)" stroke-width="1.5"/>
-        <text x="350" y="80" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="#2C4D66">banana</text>
-        <text x="350" y="95" text-anchor="middle" font-family="Zen Maru Gothic" font-size="11" fill="#2C4D66">far stand</text>
-        <text x="350" y="124" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--a)">far → a-</text>
-
-        <!-- speaker (left) -->
-        <circle cx="120" cy="186" r="26" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
-        <rect x="92" y="214" width="56" height="20" rx="10" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
-        <text x="120" y="262" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="var(--ink)">Speaker</text>
-        <text x="120" y="280" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ink-soft)">(this is you)</text>
-        <!-- strawberry near speaker -->
-        <g transform="translate(176,150)">
-          <path d="M0,6 C-12,-2 -12,-14 0,-14 C12,-14 12,-2 0,6 Z" fill="#D8412B"/>
-          <path d="M-6,-13 L0,-20 L6,-13 Z" fill="#5C8A3A"/>
-        </g>
-        <rect x="160" y="166" width="86" height="20" rx="10" fill="var(--ko-bg)"/>
-        <text x="203" y="180" text-anchor="middle" font-family="Zen Maru Gothic" font-size="13" font-weight="700" fill="#3C5E25">strawberry</text>
-        <text x="203" y="202" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ko)">near you → ko-</text>
-
-        <!-- listener (right) -->
-        <circle cx="580" cy="186" r="26" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
-        <rect x="552" y="214" width="56" height="20" rx="10" fill="#EDE7D8" stroke="#C9BFA6" stroke-width="1.5"/>
-        <text x="580" y="262" text-anchor="middle" font-family="Zen Maru Gothic" font-size="14" font-weight="700" fill="var(--ink)">Listener</text>
-        <text x="580" y="280" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--ink-soft)">(other person)</text>
-        <!-- carrot near listener -->
-        <g transform="translate(498,150)">
-          <path d="M0,8 L-7,-12 L7,-12 Z" fill="#E0892C"/>
-          <path d="M-7,-12 q7,-9 14,0" fill="none" stroke="#5C8A3A" stroke-width="3"/>
-        </g>
-        <rect x="462" y="166" width="72" height="20" rx="10" fill="var(--so-bg)"/>
-        <text x="498" y="180" text-anchor="middle" font-family="Zen Maru Gothic" font-size="13" font-weight="700" fill="#946012">carrot</text>
-        <text x="498" y="202" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--so)">near them → so-</text>
-
-        <!-- do? -->
-        <text x="350" y="200" text-anchor="middle" font-family="Zen Antique" font-size="40" fill="var(--do)">？</text>
-        <text x="350" y="222" text-anchor="middle" font-family="Zen Maru Gothic" font-size="12" fill="var(--do)">which? where? → do-</text>
-      </svg>
-      <div class="figcap">Distance is measured from <em>you</em>, the speaker — not from the page.</div>
-    </div>
-
-    <h3>The whole grid</h3>
-    <p class="lead">Four columns (the distances) × three rows (what kind of word). Read a column top-to-bottom and you get a matched set.</p>
-
-    <table class="tbl grid">
-      <thead>
-        <tr>
-          <th></th>
-          <th class="h-ko">near you<br><span style="font-weight:400;font-size:12px">ko-</span></th>
-          <th class="h-so">near them<br><span style="font-weight:400;font-size:12px">so-</span></th>
-          <th class="h-a">far<br><span style="font-weight:400;font-size:12px">a-</span></th>
-          <th class="h-do">question<br><span style="font-weight:400;font-size:12px">do-</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="rowlabel">thing<br>(pronoun)</td>
-          <td class="z-ko"><span class="rj">kore</span><span class="gl">これ · this one</span></td>
-          <td class="z-so"><span class="rj">sore</span><span class="gl">それ · that one</span></td>
-          <td class="z-a"><span class="rj">are</span><span class="gl">あれ · that one</span></td>
-          <td class="z-do"><span class="rj">dore</span><span class="gl">どれ · which one</span></td>
-        </tr>
-        <tr>
-          <td class="rowlabel">+ noun</td>
-          <td class="z-ko"><span class="rj">kono</span><span class="gl">この ___ · this ___</span></td>
-          <td class="z-so"><span class="rj">sono</span><span class="gl">その ___ · that ___</span></td>
-          <td class="z-a"><span class="rj">ano</span><span class="gl">あの ___ · that ___</span></td>
-          <td class="z-do"><span class="rj">dono</span><span class="gl">どの ___ · which ___</span></td>
-        </tr>
-        <tr>
-          <td class="rowlabel">place</td>
-          <td class="z-ko"><span class="rj">koko</span><span class="gl">ここ · here</span></td>
-          <td class="z-so"><span class="rj">soko</span><span class="gl">そこ · there</span></td>
-          <td class="z-a"><span class="rj">asoko</span><span class="gl">あそこ · over there</span></td>
-          <td class="z-do"><span class="rj">doko</span><span class="gl">どこ · where</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="note"><strong>Two things to watch:</strong> the place word for "far" is <span class="romaji">asoko</span> (not "ako") — the one irregular cell. And a <em>+ noun</em> word can never stand alone: it's <span class="romaji">kono ringo</span>, never just "kono."</div>
-
-    <h3>Asking questions</h3>
-    <p class="lead">"What" is its own word: <span class="romaji">なに / なん nani / nan</span> (use <span class="romaji">nan</span> before <span class="romaji">desu</span>). Here are the four patterns your slides showed:</p>
-
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">これは なんですか。</span></td><td><span class="romaji">kore wa nan desu ka.</span></td><td class="en">What is this?</td></tr>
-        <tr><td><span class="jp">どれですか。</span></td><td><span class="romaji">dore desu ka.</span></td><td class="en">Which one is it?</td></tr>
-        <tr><td><span class="jp">どの りんごですか。</span></td><td><span class="romaji">dono ringo desu ka.</span></td><td class="en">Which apple is it?</td></tr>
-        <tr><td><span class="jp">どこですか。</span></td><td><span class="romaji">doko desu ka.</span></td><td class="en">Where is it?</td></tr>
-      </tbody>
-    </table>
-    <p class="lead">Pattern to remember: <strong>[topic] wa [question word] desu ka.</strong> The little <span class="romaji">か ka</span> at the end is the spoken question mark.</p>
-
-    <h3>Where is it?</h3>
-    <p class="lead">Use the <strong>place</strong> row. Ask with <span class="romaji">doko</span>, answer with <span class="romaji">koko / soko / asoko</span>.</p>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">どこですか。</span></td><td><span class="romaji">doko desu ka.</span></td><td class="en">Where is it?</td></tr>
-        <tr><td><span class="jp"><span class="chip c-ko">ここ</span>です。</span></td><td><span class="romaji">koko desu.</span></td><td class="en">(It) is here.</td></tr>
-        <tr><td><span class="jp"><span class="chip c-so">そこ</span>です。</span></td><td><span class="romaji">soko desu.</span></td><td class="en">(It) is there.</td></tr>
-        <tr><td><span class="jp"><span class="chip c-a">あそこ</span>です。</span></td><td><span class="romaji">asoko desu.</span></td><td class="en">(It) is over there.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>What is this?</h3>
-    <p class="lead">Point at something near you and ask. Answer with the noun, or a full sentence.</p>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">これは なんですか。</span></td><td><span class="romaji">kore wa nan desu ka.</span></td><td class="en">What is this?</td></tr>
-        <tr><td><span class="jp">さかな。</span></td><td><span class="romaji">sakana.</span></td><td class="en">(A) fish.</td></tr>
-        <tr><td><span class="jp">これは さかなです。</span></td><td><span class="romaji">kore wa sakana desu.</span></td><td class="en">This is a fish.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Telling what something is</h3>
-    <p class="lead">Use <span class="romaji">kore wa ___ desu</span> to name something near you. Loanwords like tomato stay in katakana.</p>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">これは トマトです。</span></td><td><span class="romaji">kore wa tomato desu.</span></td><td class="en">This is a tomato.</td></tr>
-        <tr><td><span class="jp">これは りんごです。</span></td><td><span class="romaji">kore wa ringo desu.</span></td><td class="en">This is an apple.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Which one?</h3>
-    <p class="lead"><span class="romaji">dono</span> always needs a noun right after it — you can't say "dono" alone in a sentence.</p>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">どの？</span></td><td><span class="romaji">dono?</span></td><td class="en">Which (one)? — casual</td></tr>
-        <tr><td><span class="jp">どの さいふですか。</span></td><td><span class="romaji">dono saifu desu ka.</span></td><td class="en">Which wallet is it?</td></tr>
-        <tr><td><span class="jp">どの りんごですか。</span></td><td><span class="romaji">dono ringo desu ka.</span></td><td class="en">Which apple is it?</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Wanting vs. asking for something</h3>
-    <p class="lead">Two different patterns — don't mix them up:</p>
-    <table class="tbl">
-      <thead><tr><th>Pattern</th><th>Use it for</th></tr></thead>
-      <tbody>
-        <tr><td><span class="jp">___ が ほしい です。</span><span class="romaji">___ ga hoshii desu.</span></td><td class="en"><strong>I want ___</strong> — stating a desire</td></tr>
-        <tr><td><span class="jp">___ をください。</span><span class="romaji">___ o kudasai.</span></td><td class="en"><strong>Please give me ___</strong> — requesting/ordering</td></tr>
-      </tbody>
-    </table>
-
-    <h4 style="margin:18px 0 8px;font-size:15px">"I want" — <span class="romaji">が ほしい です</span></h4>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">___ が ほしい です。</span></td><td><span class="romaji">___ ga hoshii desu.</span></td><td class="en">I want ___.</td></tr>
-        <tr><td><span class="jp">りんご が ほしい です。</span></td><td><span class="romaji">ringo ga hoshii desu.</span></td><td class="en">I want an apple.</td></tr>
-      </tbody>
-    </table>
-
-    <h4 style="margin:18px 0 8px;font-size:15px">"Please give me" — <span class="romaji">を ください</span></h4>
-    <p class="lead">At a shop or restaurant, put the item before <span class="romaji">o kudasai</span>. Add <span class="romaji">onegaishimasu</span> to be extra polite.</p>
-    <table class="tbl">
-      <tbody>
-        <tr><td><span class="jp">___ をください。</span></td><td><span class="romaji">___ o kudasai.</span></td><td class="en">___ please. / Give me ___, please.</td></tr>
-        <tr><td><span class="jp">おねがいします。</span></td><td><span class="romaji">onegaishimasu.</span></td><td class="en">Please. (polite add-on)</td></tr>
-        <tr><td><span class="jp">りんご をください。おねがいします。</span></td><td><span class="romaji">ringo o kudasai. onegaishimasu.</span></td><td class="en">An apple, please.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ===================== PRACTICE ===================== -->
-  <section id="practice">
-    <div class="sec-head"><span class="sec-kanji">れんしゅう</span><h2>Let's practice!</h2></div>
-    <p class="lead">Tap a card to reveal the answer. Order shuffles every refresh.</p>
-
-    <div class="practice-deck" id="practice-deck">
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Where</div>
-        <p class="q-jp">どこですか。</p>
-        <p class="q-en">Where is it?</p>
-        <div class="icon" aria-hidden="true">📷</div>
-        <p class="a-jp"><span class="hl">ここ</span>です。</p>
-        <p class="a-en">koko desu. — (It) is here.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">What is this?</div>
-        <p class="q-jp">これは なんですか。</p>
-        <p class="q-en">What is this?</p>
-        <div class="icon" aria-hidden="true">🐟</div>
-        <p class="a-jp">さかな。</p>
-        <p class="a-en">sakana. — (a) fish</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Naming</div>
-        <p class="q-jp">これは トマトです。</p>
-        <p class="q-en">This is a tomato.</p>
-        <div class="icon" aria-hidden="true">🍅</div>
-        <p class="a-jp"><span class="hl">トマト</span></p>
-        <p class="a-en">tomato — the key word in the sentence</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Which one?</div>
-        <p class="q-jp">どの さいふですか。</p>
-        <p class="q-en">Which wallet is it?</p>
-        <div class="icon" aria-hidden="true">👛👛👛</div>
-        <p class="a-jp"><span class="hl">どの</span>？</p>
-        <p class="a-en">dono? — which (must pair with a noun)</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">I want</div>
-        <p class="q-jp">___ が ほしい です。</p>
-        <p class="q-en">I want ___</p>
-        <p class="a-jp">りんご<span class="hl">が ほしい です</span>。</p>
-        <p class="a-en">ringo ga hoshii desu. — I want an apple.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-
-      <div class="practice-card flashcard" tabindex="0" role="button" aria-expanded="false">
-        <div class="deck-label">Please give me</div>
-        <p class="q-jp">___ をください。<br>おねがいします。</p>
-        <p class="q-en">Please give me ___</p>
-        <p class="a-jp">りんご<span class="hl">をください</span>。</p>
-        <p class="a-en">ringo o kudasai. onegaishimasu. — An apple, please.</p>
-        <p class="tap-hint">tap to reveal</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== LISTENING ===================== -->
-  <section id="listening">
-    <div class="sec-head"><span class="sec-kanji">きく</span><h2>Listening drill</h2></div>
-    <p class="lead">Train your ears. <strong>Tap ▶ to hear the Japanese</strong>, listen a few times, say your own answer out loud — then <strong>tap the card</strong> to check the meaning, romaji, and kana. Order shuffles every refresh.</p>
-    <div class="listen-deck" id="listen-deck">
-      <p class="lead" id="listen-status">Loading audio…</p>
-    </div>
-  </section>
-
-  <!-- ===================== VOCAB ===================== -->
-  <section id="vocab">
-    <div class="sec-head"><span class="sec-kanji">ことば</span><h2>Vocab — fruit &amp; vegetables</h2></div>
-    <p class="lead">You'll use these in the exercises. Loanwords (banana, tomato) are in katakana; the rest are native words.</p>
-    <table class="tbl">
-      <thead><tr><th>English</th><th>Japanese</th><th>Romaji</th></tr></thead>
-      <tbody>
-        <tr><td>apple</td><td class="jp">りんご</td><td class="romaji">ringo</td></tr>
-        <tr><td>strawberry</td><td class="jp">いちご</td><td class="romaji">ichigo</td></tr>
-        <tr><td>grape</td><td class="jp">ぶどう</td><td class="romaji">budou</td></tr>
-        <tr><td>mandarin orange</td><td class="jp">みかん</td><td class="romaji">mikan</td></tr>
-        <tr><td>banana</td><td class="jp">バナナ</td><td class="romaji">banana</td></tr>
-        <tr><td>tomato</td><td class="jp">トマト</td><td class="romaji">tomato</td></tr>
-        <tr><td>carrot</td><td class="jp">にんじん</td><td class="romaji">ninjin</td></tr>
-        <tr><td>potato</td><td class="jp">じゃがいも</td><td class="romaji">jagaimo</td></tr>
-        <tr><td>onion</td><td class="jp">たまねぎ</td><td class="romaji">tamanegi</td></tr>
-        <tr><td>cucumber</td><td class="jp">きゅうり</td><td class="romaji">kyuuri</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ===================== EXERCISES ===================== -->
-  <section id="exercises">
-    <div class="sec-head"><span class="sec-kanji">ためす</span><h2>Exercises</h2></div>
-    <p class="lead">Answer in romaji. Tap any question to reveal the answer. Order and vocab shuffle every refresh.</p>
-
-    <ol class="q" id="quiz-list"></ol>
-
-    <div class="note" style="border-left-color:var(--ko);margin-top:24px">
-      <strong>If you slipped:</strong> a noun right after "this/that" → use the <span class="romaji">kono / sono / ano / dono</span> row, never kore/sore. "Where/here/there" → the <span class="romaji">koko / soko / asoko / doko</span> place row. And the far place word stays irregular: <span class="romaji">asoko</span>.
-    </div>
-  </section>
-
+<div class="topbar">
+  <a class="brand" href="#top" aria-label="Japanese Lessons — back to top">
+    <span class="mark" aria-hidden="true">⛩️</span>
+    <span><b>にほんごレッスン</b> <small>· nihongo lessons</small></span>
+  </a>
 </div>
 
-<script>
-  (function(){
-    var VOCAB = [
-      { en:'apple', jp:'りんご', rj:'ringo' },
-      { en:'strawberry', jp:'いちご', rj:'ichigo' },
-      { en:'grape', jp:'ぶどう', rj:'budou' },
-      { en:'mandarin orange', jp:'みかん', rj:'mikan' },
-      { en:'banana', jp:'バナナ', rj:'banana' },
-      { en:'tomato', jp:'トマト', rj:'tomato' },
-      { en:'carrot', jp:'にんじん', rj:'ninjin' },
-      { en:'potato', jp:'じゃがいも', rj:'jagaimo' },
-      { en:'onion', jp:'たまねぎ', rj:'tamanegi' },
-      { en:'cucumber', jp:'きゅうり', rj:'kyuuri' }
-    ];
+<nav class="rail" id="rail" aria-label="Scenes"></nav>
 
-    function shuffle(list){
-      var a = list.slice();
-      for(var i = a.length - 1; i > 0; i--){
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-      }
-      return a;
-    }
+<div class="world" id="top">
+  <div class="stage" id="stage">
+    <div class="petals" id="petals" aria-hidden="true"></div>
 
-    function pickMany(n, exclude){
-      var pool = VOCAB.filter(function(v){
-        return !exclude || exclude.indexOf(v.rj) === -1;
-      });
-      return shuffle(pool).slice(0, Math.min(n, pool.length));
-    }
+    <!-- ================= scene 1 · torii ================= -->
+    <section class="scene" data-accent="#E34234" data-label="Welcome">
+      <img src="assets/landing/scene1-torii.webp" alt="A miniature clay village at dawn: a big red torii gate, cherry blossoms, a tiny fox waving, Mount Fuji in the distance." fetchpriority="high">
+      <div class="tint"></div>
+      <div class="copy">
+        <div class="copy-card" style="--accent:#E34234">
+          <span class="eyebrow">ようこそ · youkoso · welcome</span>
+          <h2>Welcome to your little Japan.</h2>
+          <p class="jp-line">にほんご、はじめよう！ <span class="rj">nihongo, hajimeyou! — let's start Japanese!</span></p>
+          <p class="body">A free, cute, no-textbook way to learn real everyday Japanese. Bite-size worksheets, games, and audio you can finish with your morning tea — the fox will show you around.</p>
+          <ul class="tags"><li>free forever</li><li>no signup</li><li>no kanji shock</li></ul>
+        </div>
+      </div>
+      <div class="hint" id="hint"><span>scroll to walk in</span><span class="arrow" aria-hidden="true">↓</span></div>
+    </section>
 
-    function esc(s){
-      return String(s)
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;');
-    }
+    <!-- ================= scene 2 · food / vocab ================= -->
+    <section class="scene" data-accent="#C77B32" data-label="Vocabulary">
+      <img src="assets/landing/scene2-bento.webp" alt="A miniature food stall with smiling onigiri rice balls, bento boxes, ramen, and a happy fox hugging an onigiri." loading="lazy">
+      <div class="tint"></div>
+      <div class="copy copy--right">
+        <div class="copy-card" style="--accent:#C77B32">
+          <span class="eyebrow">たべもの · tabemono · food</span>
+          <h2>Learn words you'll actually use.</h2>
+          <p class="jp-line">おにぎり を ください。 <span class="rj">onigiri o kudasai. — one onigiri, please.</span></p>
+          <p class="body">Order onigiri — also called omusubi, same rice ball, two names — pick a bento, ask for ramen. <a class="inline" href="flashcards.html">Adaptive flashcards</a> bring back the words you miss right before you'd forget them.</p>
+          <ul class="tags"><li>flashcards</li><li>adaptive review</li><li>real audio</li></ul>
+        </div>
+      </div>
+    </section>
 
-    function cardHtml(item){
-      var hint = item.hint ? '<span class="hint">' + item.hint + '</span>' : '';
-      return '<li class="flashcard" tabindex="0" role="button" aria-expanded="false">' +
-        '<div class="prompt">' +
-          '<span class="q-tag">' + esc(item.tag) + '</span>' +
-          item.prompt + hint +
-          '<div class="ans">' + item.answer + '</div>' +
-          '<span class="tap-hint">tap for answer</span>' +
-        '</div></li>';
-    }
+    <!-- ================= scene 3 · fox shrine / grammar ================= -->
+    <section class="scene" data-accent="#B0413E" data-label="Grammar">
+      <img src="assets/landing/scene3-shrine.webp" alt="A miniature fox shrine on a hill with a row of red torii gates; a fox teacher sits at a tiny desk in front of fox pupils." loading="lazy">
+      <div class="tint"></div>
+      <div class="copy">
+        <div class="copy-card" style="--accent:#B0413E">
+          <span class="eyebrow">きつねせんせい · kitsune sensei · fox teacher</span>
+          <h2>Grammar, explained like street food.</h2>
+          <p class="jp-line">これ は なん ですか。 <span class="rj">kore wa nan desu ka. — what is this?</span></p>
+          <p class="body">Tiny lessons on <a class="inline" href="kosoado_worksheet.html">this &amp; that</a>, <a class="inline" href="particles.html">particles</a>, <a class="inline" href="locations.html">places</a>, and <a class="inline" href="time.html">time</a> — each one finishable in minutes, and you always answer before the reveal.</p>
+          <ul class="tags"><li>これ・それ・あれ</li><li>は・を・に</li><li>polite → casual</li></ul>
+        </div>
+      </div>
+    </section>
 
-    function ans(jp, rj){
-      return '<span class="jp">' + jp + '</span><span class="rj">' + rj + '</span>';
-    }
+    <!-- ================= scene 4 · kotatsu / listening ================= -->
+    <section class="scene" data-accent="#3F5E7A" data-label="Listening">
+      <img src="assets/landing/scene4-kotatsu.webp" alt="A cozy miniature tatami room where a fox and a round yellow creature listen to a little radio under a kotatsu blanket." loading="lazy">
+      <div class="tint"></div>
+      <div class="copy copy--right">
+        <div class="copy-card" style="--accent:#3F5E7A">
+          <span class="eyebrow">きいてみよう · kiite miyou · listen up</span>
+          <h2>Train your ears under the kotatsu.</h2>
+          <p class="jp-line">もういちど おねがいします。 <span class="rj">mou ichido onegaishimasu. — one more time, please.</span></p>
+          <p class="body">Every lesson ships with listening drills: play the audio, answer out loud, then reveal kana, romaji, and English. One day you'll catch a whole anime line without subtitles — the dream. Our very legally distinct yellow friend approves.</p>
+          <ul class="tags"><li>audio-first drills</li><li>speak out loud</li><li>natural replies</li></ul>
+        </div>
+      </div>
+    </section>
 
-    function buildQuiz(){
-      var w = pickMany(8);
-      while(w.length < 8){ w = w.concat(pickMany(8 - w.length)); }
-      var near = w[0], listener = w[1], far = w[2], q1 = w[3], q2 = w[4], q3 = w[5], q4 = w[6], q5 = w[7];
-      var vocabQuiz = pickMany(5);
-      var requestWord = pickMany(1)[0];
+    <!-- ================= scene 5 · kanji dojo ================= -->
+    <section class="scene" data-accent="#5C8A3A" data-label="Kanji">
+      <img src="assets/landing/scene5-kanji.webp" alt="A miniature calligraphy dojo with a zen garden; a fox proudly holds a giant ink brush over paper with a single brushstroke." loading="lazy">
+      <div class="tint"></div>
+      <div class="copy">
+        <div class="copy-card" style="--accent:#5C8A3A">
+          <span class="eyebrow">かんじ の どうじょう · kanji no doujou · the kanji dojo</span>
+          <h2>Draw your first kanji, fox-style.</h2>
+          <p class="jp-line">かいてみましょう！ <span class="rj">kaite mimashou! — let's try writing it!</span></p>
+          <p class="body">Kanji lives in its own <a class="inline" href="kanji.html">dojo</a>: draw the strokes, learn picture-story mnemonics, and quiz yourself. Everywhere else stays kana-only, so characters never ambush you mid-lesson.</p>
+          <ul class="tags"><li>draw &amp; quiz</li><li>story mnemonics</li><li>its own page</li></ul>
+        </div>
+      </div>
+    </section>
 
-      var items = [
-        { tag:'demonstrative', prompt:'this ' + near.en, hint:'+ noun · in your hand',
-          answer: ans('この ' + near.jp, 'kono ' + near.rj) },
-        { tag:'demonstrative', prompt:'that ' + listener.en, hint:'+ noun · by the listener',
-          answer: ans('その ' + listener.jp, 'sono ' + listener.rj) },
-        { tag:'demonstrative', prompt:'that ' + far.en + ' over there', hint:'+ noun · far away',
-          answer: ans('あの ' + far.jp, 'ano ' + far.rj) },
-        { tag:'demonstrative', prompt:'this', hint:'pronoun · near you',
-          answer: ans('これ', 'kore') },
-        { tag:'demonstrative', prompt:'that one over there', hint:'pronoun · far from both',
-          answer: ans('あれ', 'are') },
-        { tag:'demonstrative', prompt:'here', hint:'place · where you are',
-          answer: ans('ここ', 'koko') },
-        { tag:'demonstrative', prompt:'there', hint:'place · where the listener is',
-          answer: ans('そこ', 'soko') },
-        { tag:'demonstrative', prompt:'over there', hint:'place · far from both',
-          answer: ans('あそこ', 'asoko') },
+    <!-- ================= scene 6 · matsuri / CTA ================= -->
+    <section class="scene" data-accent="#E34234" data-label="Start">
+      <img src="assets/landing/scene6-matsuri.webp" alt="A miniature night festival with glowing lanterns, fireworks, a taiko drum, and the fox in a yukata holding a sparkler." loading="lazy">
+      <div class="tint"></div>
+      <div class="copy">
+        <div class="copy-card" style="--accent:#E34234">
+          <span class="eyebrow">まいにち すこしずつ · mainichi sukoshizutsu · a little every day</span>
+          <h2>Make it a festival, not a chore.</h2>
+          <p class="jp-line">いっしょに べんきょうしましょう。 <span class="rj">issho ni benkyou shimashou. — let's study together.</span></p>
+          <p class="body">XP, streaks, and an adaptive study arcade that brings back exactly what you missed. Five minutes a night keeps the lanterns lit.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="study.html">はじめる · Start learning</a>
+            <a class="btn btn-ghost" href="kosoado_worksheet.html">Peek at a lesson</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
-        { tag:'question', prompt:'What is this?',
-          answer: ans('これは なんですか。', 'kore wa nan desu ka.') },
-        { tag:'question', prompt:'Which one is it?', hint:'pronoun question',
-          answer: ans('どれですか。', 'dore desu ka.') },
-        { tag:'question', prompt:'Which ' + q1.en + ' is it?', hint:'+ noun question',
-          answer: ans('どの ' + q1.jp + 'ですか。', 'dono ' + q1.rj + ' desu ka.') },
-        { tag:'question', prompt:'Where is it?',
-          answer: ans('どこですか。', 'doko desu ka.') },
-        { tag:'question', prompt:'"which ' + q2.en + '"', hint:'just the phrase, no sentence',
-          answer: ans('どの ' + q2.jp, 'dono ' + q2.rj) },
-
-        { tag:'sentence', prompt:'This is a ' + q3.en + '.',
-          answer: ans('これは ' + q3.jp + 'です。', 'kore wa ' + q3.rj + ' desu.') },
-        { tag:'sentence', prompt:'That (by the listener) is a ' + q4.en + '.',
-          answer: ans('それは ' + q4.jp + 'です。', 'sore wa ' + q4.rj + ' desu.') },
-        { tag:'sentence', prompt:'That over there is a ' + far.en + '.',
-          answer: ans('あれは ' + far.jp + 'です。', 'are wa ' + far.rj + ' desu.') },
-        { tag:'sentence', prompt:'What is that (by the listener)?',
-          answer: ans('それは なんですか。', 'sore wa nan desu ka.') },
-        { tag:'sentence', prompt:'Which ' + q5.en + ' is it?',
-          answer: ans('どの ' + q5.jp + 'ですか。', 'dono ' + q5.rj + ' desu ka.') },
-        { tag:'sentence', prompt:'Where is the ' + listener.en + '?', hint: listener.rj + ' wa … ?',
-          answer: ans(listener.jp + 'は どこですか。', listener.rj + ' wa doko desu ka.') },
-
-        { tag:'market', prompt:'Point at the ' + near.en + ' in your hand: "this ' + near.en + '."',
-          answer: ans('この ' + near.jp, 'kono ' + near.rj) },
-        { tag:'market', prompt:'Point at the seller\'s ' + listener.en + ': "that ' + listener.en + '."',
-          answer: ans('その ' + listener.jp, 'sono ' + listener.rj) },
-        { tag:'market', prompt:'Nod toward the far stand: "that ' + far.en + ' (over there)."',
-          answer: ans('あの ' + far.jp, 'ano ' + far.rj) },
-        { tag:'market', prompt:'Ask the seller, holding your item: "What is this?"',
-          answer: ans('これは なんですか。', 'kore wa nan desu ka.') },
-        { tag:'market', prompt:'Ask where the stand is: "Where is it?"',
-          answer: ans('どこですか。', 'doko desu ka.') },
-
-        { tag:'pattern', prompt:'Answer: "It is here."',
-          answer: ans('ここです。', 'koko desu.') },
-        { tag:'pattern', prompt:'What is this? (pointing at a fish)',
-          answer: ans('これは なんですか。', 'kore wa nan desu ka.') + ' → <span class="jp">さかな</span>' },
-        { tag:'pattern', prompt:'This is a ' + q3.en + '.',
-          answer: ans('これは ' + q3.jp + 'です。', 'kore wa ' + q3.rj + ' desu.') },
-        { tag:'pattern', prompt:'Which wallet is it?',
-          answer: ans('どの さいふですか。', 'dono saifu desu ka.') },
-        { tag:'pattern', prompt:'I want a ' + requestWord.en + '. (state a desire)',
-          answer: ans(requestWord.jp + ' が ほしい です。', requestWord.rj + ' ga hoshii desu.') },
-        { tag:'pattern', prompt:'A ' + requestWord.en + ', please. (ask for it)',
-          answer: ans(requestWord.jp + ' をください。おねがいします。', requestWord.rj + ' o kudasai. onegaishimasu.') }
-      ];
-
-      vocabQuiz.forEach(function(v){
-        items.push({
-          tag:'vocab',
-          prompt: v.en,
-          answer: ans(v.jp, v.rj)
-        });
-      });
-
-      return shuffle(items);
-    }
-
-    function bindFlashcards(root){
-      root.querySelectorAll('.flashcard').forEach(function(card){
-        function toggle(){
-          card.classList.toggle('revealed');
-          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
-        }
-        card.addEventListener('click', toggle);
-        card.addEventListener('keydown', function(e){
-          if(e.key === 'Enter' || e.key === ' '){
-            e.preventDefault();
-            toggle();
-          }
-        });
-      });
-    }
-
-    function shuffleChildren(parent){
-      var nodes = Array.prototype.slice.call(parent.children);
-      shuffle(nodes).forEach(function(node){ parent.appendChild(node); });
-    }
-
-    document.getElementById('quiz-list').innerHTML = buildQuiz().map(cardHtml).join('');
-    shuffleChildren(document.getElementById('practice-deck'));
-    bindFlashcards(document);
-  })();
-</script>
+<footer>
+  Made with 🍙 and ☕ — a static, free study site.
+  Jump straight to <a href="study.html">the study arcade</a> or open the menu (top-left) for every lesson.
+</footer>
 
 <script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.getElementById('stage');
+  var world = document.getElementById('top');
+  var scenes = Array.prototype.slice.call(stage.querySelectorAll('.scene'));
+  var cards = scenes.map(function(s){ return s.querySelector('.copy-card'); });
+  var hint = document.getElementById('hint');
+  var N = scenes.length;
+
+  /* ----- reduced motion: plain stacked page, no scrub ----- */
+  if(reduce){
+    document.body.classList.add('rm');
+    buildRail(true);
+    return;
+  }
+
+  /* ----- scroll bands ----- */
+  // weights: how many viewport-heights of scroll each scene owns
+  var weights = [1.5, 1.35, 1.35, 1.35, 1.35, 1.7];
+  var total = weights.reduce(function(a,b){ return a+b; }, 0);
+  var bands = [];
   (function(){
-    var deck = document.getElementById('listen-deck');
-    var status = document.getElementById('listen-status');
-    if(!deck) return;
-
-    function shuffle(list){
-      var a = list.slice();
-      for(var i = a.length - 1; i > 0; i--){
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-      }
-      return a;
-    }
-    function esc(s){
-      return String(s == null ? '' : s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    function zoneMap(zone){
-      if(!zone) return '';
-      var nodes = [['ko','you'],['so','them'],['a','over there']];
-      return '<div class="zone-map" aria-hidden="true">' + nodes.map(function(n){
-        var on = n[0] === zone ? ' on z-' + n[0] : '';
-        return '<span class="zone-dot' + on + '">' + n[1] + '</span>';
-      }).join('<span class="zone-arrow">·</span>') + '</div>';
-    }
-
-    function replyHtml(reply){
-      if(!reply) return '';
-      return '<div class="listen-reply">' +
-        '<span class="lbl">You could reply</span>' +
-        '<span class="kana">' + esc(reply.kana) + '</span>' +
-        '<span class="rj">' + esc(reply.romaji) + '</span>' +
-        '<span class="en">' + esc(reply.en) + '</span>' +
-      '</div>';
-    }
-
-    function render(manifest){
-      var phrases = (manifest && manifest.phrases) || [];
-      if(!phrases.length){ status.textContent = 'No phrases found in manifest.'; return; }
-      var hasAudio = !!(manifest && manifest.hasAudio);
-      var ordered = shuffle(phrases);
-
-      deck.innerHTML = ordered.map(function(p, i){
-        var src = p.audio ? esc(p.audio) : '';
-        return '<div class="listen-card" tabindex="0" role="button" aria-expanded="false">' +
-          '<button class="listen-play" type="button" aria-label="Play audio" data-src="' + src + '"' + (hasAudio ? '' : ' disabled') + '>▶</button>' +
-          '<div class="listen-body">' +
-            '<span class="listen-num">' + (i + 1) + ' / ' + ordered.length + '</span>' +
-            '<p class="listen-prompt">' + (hasAudio ? 'Listen, answer aloud, then tap to reveal.' : 'Audio pending — tap to reveal.') + '</p>' +
-            '<div class="listen-ans">' +
-              '<span class="kana">' + esc(p.kana) + '</span>' +
-              '<span class="rj">' + esc(p.romaji) + '</span>' +
-              '<span class="en">' + esc(p.en) + '</span>' +
-              (p.context ? '<p class="listen-ctx">' + esc(p.context) + '</p>' : '') +
-              zoneMap(p.zone) +
-              replyHtml(p.reply) +
-            '</div>' +
-            '<span class="tap-hint">tap card to reveal</span>' +
-          '</div></div>';
-      }).join('');
-
-      deck.querySelectorAll('.listen-card').forEach(function(card){
-        function toggle(){
-          card.classList.toggle('revealed');
-          card.setAttribute('aria-expanded', card.classList.contains('revealed'));
-        }
-        card.addEventListener('click', function(e){
-          if(e.target.closest('.listen-play')) return;
-          toggle();
-        });
-        card.addEventListener('keydown', function(e){
-          if(document.activeElement && document.activeElement.classList.contains('listen-play')) return;
-          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
-        });
-      });
-
-      var current = null;
-      deck.querySelectorAll('.listen-play').forEach(function(btn){
-        btn.addEventListener('click', function(e){
-          e.stopPropagation();
-          var src = btn.getAttribute('data-src');
-          if(!src) return;
-          if(current){ current.audio.pause(); current.btn.classList.remove('playing'); }
-          var audio = new Audio(src);
-          current = { audio: audio, btn: btn };
-          btn.classList.add('playing');
-          audio.play().catch(function(){ btn.classList.remove('playing'); });
-          audio.addEventListener('ended', function(){ btn.classList.remove('playing'); });
-          audio.addEventListener('error', function(){
-            btn.classList.remove('playing'); btn.disabled = true; btn.textContent = '✕';
-          });
-        });
-      });
-
-      if(!hasAudio){
-        var note = document.createElement('p');
-        note.className = 'listen-note';
-        note.textContent = 'Audio not generated yet — run: npm run generate:audio (after adding your ElevenLabs API key).';
-        deck.appendChild(note);
-      }
-    }
-
-    // On hosted pages, fetch the JSON manifest fresh. The JS global is kept as
-    // the file:// fallback because local fetch() is blocked by browsers.
-    if(location.protocol === 'file:'){
-      if(window.JL_LISTENING) render(window.JL_LISTENING);
-      else status.textContent = 'Audio manifest not found. Run: npm run generate:audio';
-    } else {
-      fetch('audio/manifest.json', { cache: 'no-store' })
-        .then(function(r){ if(!r.ok) throw new Error('no manifest'); return r.json(); })
-        .then(render)
-        .catch(function(){
-          if(window.JL_LISTENING) render(window.JL_LISTENING);
-          else status.textContent = 'Audio manifest not found. Run: npm run generate:audio';
-        });
-    }
+    var acc = 0;
+    for(var i=0;i<N;i++){ bands.push({a: acc/total, b:(acc+weights[i])/total}); acc += weights[i]; }
   })();
+  var FADE = 0.045; // seam crossfade width (normalized)
+
+  function layout(){
+    world.style.height = ((total + 1) * window.innerHeight) + 'px';
+  }
+  layout();
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function(){
+    // ignore height-only resizes on touch (mobile URL bar) to avoid jumps
+    if(Math.abs(window.innerWidth - lastW) < 2 && matchMedia('(pointer:coarse)').matches) return;
+    lastW = window.innerWidth;
+    layout(); paint();
+  });
+
+  function clamp(v,lo,hi){ return v<lo?lo:(v>hi?hi:v); }
+  function smooth(p){ return p*p*(3-2*p); }
+
+  var railBtns = buildRail(false);
+  var active = -1;
+
+  function paint(){
+    var max = world.offsetHeight - window.innerHeight;
+    var t = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+
+    for(var i=0;i<N;i++){
+      var band = bands[i];
+      // fade in across the seam; later scenes stack on top
+      var o = i === 0 ? 1 : smooth(clamp((t - (band.a - FADE)) / (2*FADE), 0, 1));
+      scenes[i].style.opacity = o;
+      // local progress across this scene's band (incl. seam margins)
+      var p = clamp((t - (band.a - FADE)) / (band.b - band.a + 2*FADE), 0, 1);
+      var e = smooth(p);
+      var scale = 1.04 + 0.20 * e;             // the "walk in" dive
+      var ty = (1 - e) * 2.2 - 1.1;            // gentle drift upward, in %
+      scenes[i].querySelector('img').style.transform =
+        'scale(' + scale.toFixed(4) + ') translateY(' + ty.toFixed(2) + '%)';
+
+      // copy: rise in, hold, ease out before the seam
+      var card = cards[i];
+      if(card){
+        var isLast = i === N-1;
+        var inO  = smooth(clamp((p - 0.10) / 0.16, 0, 1));
+        var outO = isLast ? 1 : 1 - smooth(clamp((p - 0.78) / 0.16, 0, 1));
+        if(i === 0){ inO = 1 - smooth(clamp((0.10 - p) / 0.10, 0, 1)); if(p < 0.02) inO = 1; }
+        var co = Math.min(inO, outO);
+        card.style.opacity = co;
+        card.style.transform = 'translateY(' + ((1-inO)*26 - (1-outO)*14).toFixed(1) + 'px)';
+        card.style.pointerEvents = co > 0.5 ? 'auto' : 'none';
+      }
+    }
+
+    if(hint) hint.style.opacity = t < 0.015 ? '0.95' : '0';
+
+    // active rail dot
+    var cur = 0;
+    for(var j=0;j<N;j++){ if(t >= bands[j].a - FADE) cur = j; }
+    if(cur !== active){
+      active = cur;
+      railBtns.forEach(function(b,k){ b.classList.toggle('on', k===cur); });
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){ paint(); ticking = false; });
+  }, { passive:true });
+  paint();
+
+  /* ----- petals ----- */
+  var petals = document.getElementById('petals');
+  if(petals && !matchMedia('(pointer:coarse)').matches){
+    for(var k=0;k<14;k++){
+      var pt = document.createElement('span');
+      pt.className = 'petal';
+      pt.style.left = (Math.random()*104 - 2) + 'vw';
+      pt.style.animationDuration = (9 + Math.random()*10) + 's';
+      pt.style.animationDelay = (-Math.random()*18) + 's';
+      var sc = 0.6 + Math.random()*0.9;
+      pt.style.width = (12*sc) + 'px';
+      pt.style.height = (10*sc) + 'px';
+      pt.style.opacity = 0.4 + Math.random()*0.5;
+      petals.appendChild(pt);
+    }
+  }
+
+  /* ----- route rail ----- */
+  function buildRail(staticMode){
+    var rail = document.getElementById('rail');
+    if(staticMode){ rail.style.display = 'none'; return []; }
+    return scenes.map(function(s, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Go to scene ' + (i+1) + ': ' + (s.getAttribute('data-label') || ''));
+      b.appendChild(document.createElement('span'));
+      b.addEventListener('click', function(){
+        var max = world.offsetHeight - window.innerHeight;
+        var target = (bands[i].a + (bands[i].b - bands[i].a) * 0.42) * max;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      });
+      rail.appendChild(b);
+      return b;
+    });
+  }
+})();
 </script>
 <script src="nav.js?v=emoji-menu-2" defer></script>
 </body>

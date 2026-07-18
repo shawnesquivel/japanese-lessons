@@ -8,8 +8,9 @@ Agents must read [`AGENTS.md`](AGENTS.md) before making changes.
 
 ## Worksheets
 
+- **ようこそ (landing)** — a scroll-through kawaii clay-diorama world (torii, onigiri stall, fox shrine, kotatsu, kanji dojo, night matsuri) that introduces the app. Served at `/` ([`index.html`](index.html), images in [`assets/landing/`](assets/landing/)).
 - **まなぶ (study arcade)** — adaptive mixed practice across vocabulary, sentence building, and listening with XP, streaks, and local progress ([`study.html`](study.html)).
-- **こそあど (kosoado)** — demonstratives (kore/sore/are/dore) practice with fruit & veg vocabulary. Served at `/` ([`index.html`](index.html), also at [`kosoado_worksheet.html`](kosoado_worksheet.html)).
+- **こそあど (kosoado)** — demonstratives (kore/sore/are/dore) practice with fruit & veg vocabulary ([`kosoado_worksheet.html`](kosoado_worksheet.html)).
 - **じょし (particles)** — single-word vocabulary, core particle patterns, scenario-based verb practice, mixed tutor drills, and ElevenLabs question/word listening comprehension ([`particles.html`](particles.html)).
 - **ばしょ (locations)** — **に** vs **で**, formal/casual verb forms, conversational questions, four dialogues, and broad mixed practice ([`locations.html`](locations.html)).
 - **かいわ (real conversation)** — coached everyday exchanges with natural replies, alternate answers, follow-up questions, audio playback, and adaptive review ([`conversation.html`](conversation.html)).
