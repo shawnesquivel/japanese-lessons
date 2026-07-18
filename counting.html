@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>かぞえる — Counting &amp; Numbers — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔢</text></svg>">
+<style>
+  :root{
+    --paper:#FBF8F1;
+    --card:#FFFFFF;
+    --ink:#2A2E24;
+    --ink-soft:#5C6150;
+    --muted:#B7AE97;
+    --line:#E6DFCF;
+    --line-strong:#D6CDB6;
+    --ko:#5C8A3A;
+    --so:#E0962C;
+    --a:#3F6E91;
+    --do:#CB4A2B;
+    --ko-bg:#EDF3E4;
+    --so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;
+    --do-bg:#FAE7E1;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Zen Maru Gothic",system-ui,sans-serif;font-weight:400;
+    line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  h1{font-family:"Zen Antique",serif;font-weight:400;font-size:clamp(46px,11vw,82px);margin:6px 0 4px;letter-spacing:.06em;line-height:1}
+  .subtitle{color:var(--ink-soft);font-size:16px;margin-top:6px}
+
+  section{margin-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:20px}
+  .sec-kana{font-family:"Zen Antique",serif;font-size:26px;color:var(--ink);line-height:1}
+  h2{font-size:22px;font-weight:700;margin:0}
+  h3{font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{color:var(--ink-soft);text-wrap:pretty}
+  .jp{font-size:1.15em}
+  .romaji{font-weight:500}
+  .en{color:var(--ink-soft)}
+
+  .chip{display:inline-block;padding:1px 9px;border-radius:999px;font-weight:500;font-size:14px;line-height:1.6;white-space:nowrap}
+  .c-num{background:var(--a-bg);color:#2C4D66}
+  .c-thing{background:var(--ko-bg);color:#3C5E25}
+  .c-ko{background:var(--so-bg);color:#946012}
+  .c-people{background:var(--do-bg);color:#9C3119}
+
+  .tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:16px}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:9px 11px;text-align:left;vertical-align:middle}
+  .tbl thead th{background:#F3EEE1;font-weight:700}
+  .tbl td .kana{display:block;font-size:1.2em;line-height:1.3;font-family:"Zen Antique",serif}
+  .tbl td .rj{font-weight:500;color:var(--ko)}
+  .tbl td.num{font-weight:700;font-variant-numeric:tabular-nums;width:64px;text-align:center}
+  .tbl tr.gotcha td{background:#FBF3EC}
+  .flag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--do);color:#fff;border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+
+  .pattern{background:#fff;border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;margin:14px 0;text-align:center}
+  .pattern .big{font-family:"Zen Antique",serif;font-size:clamp(22px,6vw,32px);line-height:1.45;margin:0 0 4px}
+  .pattern .rj{color:var(--ink-soft);font-size:14px}
+  .note{background:#F7F3E8;border-left:3px solid var(--so);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);margin:14px 0}
+  .note.win{border-left-color:var(--ko)}
+
+  /* ---------- drill ---------- */
+  .practice-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
+  .drill-filter{
+    min-height:40px;padding:7px 13px;border-radius:999px;border:1px solid var(--line-strong);
+    background:#fff;color:var(--ink-soft);font:600 13px "Zen Maru Gothic",system-ui,sans-serif;
+    cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s;
+  }
+  .drill-filter:hover{background:#F7F3E8}
+  .drill-filter:active{transform:scale(.96)}
+  .drill-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .practice-count{margin-left:auto;color:var(--ink-soft);font-size:14px;font-variant-numeric:tabular-nums}
+  .practice-deck{display:grid;gap:14px;max-width:760px;margin:14px auto}
+  .practice-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    min-height:250px;padding:28px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;
+    transition-property:background,box-shadow,transform;transition-duration:.12s;
+  }
+  .practice-card:hover{background:#FDFCF9;box-shadow:0 2px 8px rgba(42,46,36,.06)}
+  .practice-card:active{transform:scale(.96)}
+  .practice-card:focus-visible{outline:3px solid var(--so);outline-offset:2px}
+  .practice-card .deck-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
+  .practice-card .q-prompt{font-weight:700;font-size:clamp(30px,9vw,52px);margin:6px 0;line-height:1.2;font-variant-numeric:tabular-nums;text-wrap:balance}
+  .practice-card .q-prompt[lang="ja"]{font-family:"Zen Antique",serif;font-weight:400}
+  .practice-card .q-sub{color:var(--ink-soft);font-size:14px;margin:0}
+  .practice-card .answer-main{
+    display:none;margin:14px 0 0;padding-top:14px;border-top:1px dashed var(--line-strong);
+  }
+  .practice-card .answer-main .kana{display:block;font-family:"Zen Antique",serif;font-size:clamp(26px,7vw,40px);line-height:1.3}
+  .practice-card .answer-main .rj{display:block;color:var(--ko);font-weight:700;margin-top:2px}
+  .practice-card .answer-main .meaning{display:block;color:var(--ink);font-size:17px;margin-top:4px}
+  .practice-card .answer-note{display:none;color:var(--ink-soft);font-size:14px;margin-top:8px}
+  .practice-card .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:10px}
+  .practice-card.revealed .answer-main,.practice-card.revealed .answer-note{display:block}
+  .practice-card.revealed .tap-hint{display:none}
+  .session-meta{display:flex;justify-content:space-between;gap:12px;color:var(--ink-soft);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .session-track{height:7px;border-radius:999px;background:#EEE9DE;overflow:hidden}
+  .session-fill{height:100%;background:var(--ko);border-radius:inherit;transition-property:width;transition-duration:.2s}
+  .self-grade{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+  .self-grade.show{display:grid}
+  .grade-btn{min-height:48px;border:0;border-radius:11px;font:700 15px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;transition-property:transform,box-shadow;transition-duration:.12s}
+  .grade-btn:active{transform:scale(.96)}
+  .grade-btn.correct{background:var(--ko-bg);color:#3C5E25;box-shadow:inset 0 0 0 1px #C8D9B8}
+  .grade-btn.missed{background:var(--do-bg);color:#9C3119;box-shadow:inset 0 0 0 1px #E8C4B8}
+  .skip-btn{justify-self:center;min-height:40px;border:0;background:transparent;color:var(--ink-soft);font:600 12px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;padding:8px 14px}
+  .skip-btn:active{transform:scale(.96)}
+  .session-results{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-align:center}
+  .session-results .score{font-size:36px;font-weight:700;margin:8px 0}
+  .missed-list{display:grid;gap:7px;text-align:left;margin:16px 0}
+  .missed-item{padding:9px 12px;border-radius:9px;background:var(--do-bg);font-size:14px}
+  .result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+  .session-btn{min-height:42px;border:0;border-radius:10px;padding:9px 15px;background:var(--ink);color:var(--paper);font:700 13px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;transition-property:transform;transition-duration:.12s}
+  .session-btn.secondary{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-strong)}
+  .session-btn:active{transform:scale(.96)}
+  .tap-hint{display:block;font-size:12px;color:#B7AE97;margin-top:8px}
+
+  @media(max-width:680px){.wrap{padding-inline:16px}.practice-card{padding:22px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+<script src="learning.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Numbers &amp; counters</div>
+    <h1>かぞえる</h1>
+    <div class="subtitle">count anything: numbers, things, and people — then drill them</div>
+  </header>
+
+  <!-- ===================== LESSON ===================== -->
+  <section id="lesson">
+    <div class="sec-head"><span class="sec-kana">ならう</span><h2>The lesson</h2></div>
+
+    <p class="lead">Japanese counting is one system, three layers: the <strong>core numbers</strong> (いち、に、さん…), a <strong>build rule</strong> for everything up to 9,999, and a small set of <strong>counters</strong> that say <em>what kind</em> of thing you're counting.</p>
+
+    <h3>The core ten <span class="chip c-num">0–10</span></h3>
+    <p class="lead">Three numbers have two readings. In everyday speech, prefer <span class="romaji">yon</span>, <span class="romaji">nana</span>, and <span class="romaji">kyuu</span> — the alternatives show up in fixed phrases (like months and times).</p>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0</td><td><span class="kana">れい ／ ゼロ</span><span class="rj">rei / zero</span></td><td class="en">ゼロ is the everyday loanword</td></tr>
+        <tr><td class="num">1</td><td><span class="kana">いち</span><span class="rj">ichi</span></td><td class="en"></td></tr>
+        <tr><td class="num">2</td><td><span class="kana">に</span><span class="rj">ni</span></td><td class="en"></td></tr>
+        <tr><td class="num">3</td><td><span class="kana">さん</span><span class="rj">san</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">4</td><td><span class="kana">よん ／ し</span><span class="rj">yon / shi</span><span class="flag">2 readings</span></td><td class="en">say <strong>yon</strong>; し sounds like death, so it's avoided</td></tr>
+        <tr><td class="num">5</td><td><span class="kana">ご</span><span class="rj">go</span></td><td class="en"></td></tr>
+        <tr><td class="num">6</td><td><span class="kana">ろく</span><span class="rj">roku</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">7</td><td><span class="kana">なな ／ しち</span><span class="rj">nana / shichi</span><span class="flag">2 readings</span></td><td class="en">say <strong>nana</strong>; しち is easy to mishear as いち</td></tr>
+        <tr><td class="num">8</td><td><span class="kana">はち</span><span class="rj">hachi</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">9</td><td><span class="kana">きゅう ／ く</span><span class="rj">kyuu / ku</span><span class="flag">2 readings</span></td><td class="en">say <strong>kyuu</strong>; く sounds like suffering</td></tr>
+        <tr><td class="num">10</td><td><span class="kana">じゅう</span><span class="rj">juu</span></td><td class="en"></td></tr>
+      </tbody>
+    </table>
+
+    <h3>The build rule <span class="chip c-num">11–99</span></h3>
+    <p class="lead">No new words. Say the tens, then the ones — like stacking blocks.</p>
+    <div class="pattern">
+      <p class="big">にじゅうさん ＝ に × じゅう ＋ さん</p>
+      <p class="rj">nijuusan = 2 × 10 + 3 = 23</p>
+    </div>
+    <table class="tbl">
+      <tbody>
+        <tr><td class="num">11</td><td><span class="kana">じゅういち</span><span class="rj">juuichi</span></td><td class="en">10 + 1</td></tr>
+        <tr><td class="num">20</td><td><span class="kana">にじゅう</span><span class="rj">nijuu</span></td><td class="en">2 × 10</td></tr>
+        <tr><td class="num">42</td><td><span class="kana">よんじゅうに</span><span class="rj">yonjuuni</span></td><td class="en">4 × 10 + 2</td></tr>
+        <tr><td class="num">74</td><td><span class="kana">ななじゅうよん</span><span class="rj">nanajuuyon</span></td><td class="en">7 × 10 + 4</td></tr>
+        <tr><td class="num">99</td><td><span class="kana">きゅうじゅうきゅう</span><span class="rj">kyuujuukyuu</span></td><td class="en">9 × 10 + 9</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Hundreds &amp; thousands <span class="chip c-num">quick peek</span></h3>
+    <p class="lead">Same stacking idea, but a few combinations change sound. These five are the only troublemakers up to 10,000.</p>
+    <table class="tbl">
+      <tbody>
+        <tr><td class="num">100</td><td><span class="kana">ひゃく</span><span class="rj">hyaku</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">300</td><td><span class="kana">さんびゃく</span><span class="rj">sanbyaku</span><span class="flag">sound shift</span></td><td class="en">not "sanhyaku"</td></tr>
+        <tr class="gotcha"><td class="num">600</td><td><span class="kana">ろっぴゃく</span><span class="rj">roppyaku</span><span class="flag">sound shift</span></td><td class="en">not "rokuhyaku"</td></tr>
+        <tr class="gotcha"><td class="num">800</td><td><span class="kana">はっぴゃく</span><span class="rj">happyaku</span><span class="flag">sound shift</span></td><td class="en">not "hachihyaku"</td></tr>
+        <tr><td class="num">1000</td><td><span class="kana">せん</span><span class="rj">sen</span></td><td class="en"></td></tr>
+        <tr class="gotcha"><td class="num">3000</td><td><span class="kana">さんぜん</span><span class="rj">sanzen</span><span class="flag">sound shift</span></td><td class="en">not "sansen"</td></tr>
+        <tr class="gotcha"><td class="num">8000</td><td><span class="kana">はっせん</span><span class="rj">hassen</span><span class="flag">sound shift</span></td><td class="en">not "hachisen"</td></tr>
+        <tr><td class="num">10000</td><td><span class="kana">いちまん</span><span class="rj">ichiman</span></td><td class="en">a new unit: 1まん = 10,000</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Counting things <span class="chip c-thing">ひとつ、ふたつ…</span></h3>
+    <p class="lead">For counting objects, Japanese switches to a second, native set. It works for <strong>almost anything</strong> — food, drinks, ideas — which makes it the beginner's best friend. It only goes up to ten.</p>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>#</th><th>Japanese</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><span class="kana">ひとつ</span><span class="rj">hitotsu</span></td><td class="num">6</td><td><span class="kana">むっつ</span><span class="rj">muttsu</span></td></tr>
+        <tr><td class="num">2</td><td><span class="kana">ふたつ</span><span class="rj">futatsu</span></td><td class="num">7</td><td><span class="kana">ななつ</span><span class="rj">nanatsu</span></td></tr>
+        <tr><td class="num">3</td><td><span class="kana">みっつ</span><span class="rj">mittsu</span></td><td class="num">8</td><td><span class="kana">やっつ</span><span class="rj">yattsu</span></td></tr>
+        <tr><td class="num">4</td><td><span class="kana">よっつ</span><span class="rj">yottsu</span></td><td class="num">9</td><td><span class="kana">ここのつ</span><span class="rj">kokonotsu</span></td></tr>
+        <tr><td class="num">5</td><td><span class="kana">いつつ</span><span class="rj">itsutsu</span></td><td class="num">10</td><td><span class="kana">とお</span><span class="rj">too</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Small objects <span class="chip c-ko">〜こ</span></h3>
+    <p class="lead">The counter <span class="romaji">〜こ (ko)</span> counts small, roundish things — onigiri, apples, eggs, potions in a game. It uses the core numbers, with a few squeezed sounds.</p>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Japanese</th><th>#</th><th>Japanese</th></tr></thead>
+      <tbody>
+        <tr class="gotcha"><td class="num">1</td><td><span class="kana">いっこ</span><span class="rj">ikko</span><span class="flag">squeeze</span></td><td class="num">6</td><td><span class="kana">ろっこ</span><span class="rj">rokko</span></td></tr>
+        <tr><td class="num">2</td><td><span class="kana">にこ</span><span class="rj">niko</span></td><td class="num">7</td><td><span class="kana">ななこ</span><span class="rj">nanako</span></td></tr>
+        <tr><td class="num">3</td><td><span class="kana">さんこ</span><span class="rj">sanko</span></td><td class="num">8</td><td><span class="kana">はっこ</span><span class="rj">hakko</span></td></tr>
+        <tr><td class="num">4</td><td><span class="kana">よんこ</span><span class="rj">yonko</span></td><td class="num">9</td><td><span class="kana">きゅうこ</span><span class="rj">kyuuko</span></td></tr>
+        <tr><td class="num">5</td><td><span class="kana">ごこ</span><span class="rj">goko</span></td><td class="num">10</td><td><span class="kana">じゅっこ</span><span class="rj">jukko</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note win"><strong>いっこ or ひとつ?</strong> For "+1 potion" both work: <span class="romaji">ポーション を いっこ (pooshon o ikko)</span> or <span class="romaji">ポーション を ひとつ (pooshon o hitotsu)</span>. When unsure of the right counter, <span class="romaji">ひとつ・ふたつ…</span> is always a safe fallback — Japanese speakers do this too.</div>
+
+    <h3>People <span class="chip c-people">〜にん</span></h3>
+    <p class="lead">People get their own counter, <span class="romaji">〜にん (nin)</span> — but one and two people are irregular words you just memorise.</p>
+    <table class="tbl">
+      <tbody>
+        <tr class="gotcha"><td class="num">1</td><td><span class="kana">ひとり</span><span class="rj">hitori</span><span class="flag">irregular</span></td><td class="en">one person / alone</td></tr>
+        <tr class="gotcha"><td class="num">2</td><td><span class="kana">ふたり</span><span class="rj">futari</span><span class="flag">irregular</span></td><td class="en">two people</td></tr>
+        <tr><td class="num">3</td><td><span class="kana">さんにん</span><span class="rj">sannin</span></td><td class="en">from 3 up it's number + にん</td></tr>
+        <tr class="gotcha"><td class="num">4</td><td><span class="kana">よにん</span><span class="rj">yonin</span><span class="flag">gotcha</span></td><td class="en">よ, not よん — "yonin", not "yonnin"</td></tr>
+        <tr><td class="num">5</td><td><span class="kana">ごにん</span><span class="rj">gonin</span></td><td class="en"></td></tr>
+        <tr><td class="num">7</td><td><span class="kana">ななにん ／ しちにん</span><span class="rj">nananin / shichinin</span></td><td class="en">both are common</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Using a number in a sentence</h3>
+    <p class="lead">The amount goes <strong>after</strong> the thing, right before the verb. This is how you order at a restaurant.</p>
+    <div class="pattern">
+      <p class="big">おにぎり を ふたつ ください。</p>
+      <p class="rj">onigiri o futatsu kudasai. — Two onigiri, please.</p>
+    </div>
+    <table class="tbl">
+      <tbody>
+        <tr><td><span class="jp">りんご を みっつ ください。</span></td><td><span class="romaji">ringo o mittsu kudasai.</span></td><td class="en">Three apples, please.</td></tr>
+        <tr><td><span class="jp">たまご を ろっこ ください。</span></td><td><span class="romaji">tamago o rokko kudasai.</span></td><td class="en">Six eggs, please.</td></tr>
+        <tr><td><span class="jp">ふたり です。</span></td><td><span class="romaji">futari desu.</span></td><td class="en">(A table for) two, please. — at a restaurant door</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== DRILL ===================== -->
+  <section id="drill">
+    <div class="sec-head"><span class="sec-kana">れんしゅう</span><h2>Flashcard drill</h2></div>
+    <p class="lead">One card at a time. Say the answer out loud <strong>before</strong> you reveal, then grade yourself honestly — missed cards come back sooner everywhere on this site.</p>
+
+    <div class="practice-toolbar" id="drill-filters" role="group" aria-label="Choose card groups">
+      <button class="drill-filter active" data-group="all">All</button>
+      <button class="drill-filter" data-group="core">0–10</button>
+      <button class="drill-filter" data-group="tens">11–99</button>
+      <button class="drill-filter" data-group="big">100+</button>
+      <button class="drill-filter" data-group="things">Things ひとつ</button>
+      <button class="drill-filter" data-group="ko">Small こ</button>
+      <button class="drill-filter" data-group="people">People にん</button>
+      <span class="practice-count" id="drill-count"></span>
+    </div>
+
+    <div class="practice-deck" id="drill-deck"></div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ------------------------------------------------------------------ data */
+  // Stable IDs: counting:<group>:<key> — required by learning.js.
+  function card(group, key, en, kana, romaji, note){
+    return { id:'counting:'+group+':'+key, group:group, en:en, kana:kana, romaji:romaji, note:note||'' };
+  }
+
+  var CARDS = [
+    card('core',0,'0','れい ／ ゼロ','rei / zero','ゼロ is the everyday loanword'),
+    card('core',1,'1','いち','ichi'),
+    card('core',2,'2','に','ni'),
+    card('core',3,'3','さん','san'),
+    card('core',4,'4','よん ／ し','yon / shi','prefer よん in daily speech'),
+    card('core',5,'5','ご','go'),
+    card('core',6,'6','ろく','roku'),
+    card('core',7,'7','なな ／ しち','nana / shichi','prefer なな in daily speech'),
+    card('core',8,'8','はち','hachi'),
+    card('core',9,'9','きゅう ／ く','kyuu / ku','prefer きゅう in daily speech'),
+    card('core',10,'10','じゅう','juu'),
+
+    card('tens',11,'11','じゅういち','juuichi','10 + 1'),
+    card('tens',14,'14','じゅうよん','juuyon','10 + 4'),
+    card('tens',17,'17','じゅうなな','juunana','10 + 7'),
+    card('tens',19,'19','じゅうきゅう','juukyuu','10 + 9'),
+    card('tens',20,'20','にじゅう','nijuu','2 × 10'),
+    card('tens',21,'21','にじゅういち','nijuuichi','2 × 10 + 1'),
+    card('tens',25,'25','にじゅうご','nijuugo','2 × 10 + 5'),
+    card('tens',33,'33','さんじゅうさん','sanjuusan','3 × 10 + 3'),
+    card('tens',38,'38','さんじゅうはち','sanjuuhachi','3 × 10 + 8'),
+    card('tens',42,'42','よんじゅうに','yonjuuni','4 × 10 + 2'),
+    card('tens',47,'47','よんじゅうなな','yonjuunana','4 × 10 + 7'),
+    card('tens',55,'55','ごじゅうご','gojuugo','5 × 10 + 5'),
+    card('tens',60,'60','ろくじゅう','rokujuu','6 × 10'),
+    card('tens',68,'68','ろくじゅうはち','rokujuuhachi','6 × 10 + 8'),
+    card('tens',74,'74','ななじゅうよん','nanajuuyon','7 × 10 + 4'),
+    card('tens',81,'81','はちじゅういち','hachijuuichi','8 × 10 + 1'),
+    card('tens',99,'99','きゅうじゅうきゅう','kyuujuukyuu','9 × 10 + 9'),
+
+    card('big',100,'100','ひゃく','hyaku'),
+    card('big',300,'300','さんびゃく','sanbyaku','sound shift — not "sanhyaku"'),
+    card('big',600,'600','ろっぴゃく','roppyaku','sound shift — not "rokuhyaku"'),
+    card('big',800,'800','はっぴゃく','happyaku','sound shift — not "hachihyaku"'),
+    card('big',1000,'1,000','せん','sen'),
+    card('big',3000,'3,000','さんぜん','sanzen','sound shift — not "sansen"'),
+    card('big',8000,'8,000','はっせん','hassen','sound shift — not "hachisen"'),
+    card('big',10000,'10,000','いちまん','ichiman','1まん = 10,000, a new unit'),
+
+    card('things',1,'1 thing','ひとつ','hitotsu','the safe fallback for anything'),
+    card('things',2,'2 things','ふたつ','futatsu'),
+    card('things',3,'3 things','みっつ','mittsu'),
+    card('things',4,'4 things','よっつ','yottsu'),
+    card('things',5,'5 things','いつつ','itsutsu'),
+    card('things',6,'6 things','むっつ','muttsu'),
+    card('things',7,'7 things','ななつ','nanatsu'),
+    card('things',8,'8 things','やっつ','yattsu'),
+    card('things',9,'9 things','ここのつ','kokonotsu'),
+    card('things',10,'10 things','とお','too','no つ on ten'),
+
+    card('ko',1,'1 small object','いっこ','ikko','squeezed — not "ichiko"'),
+    card('ko',2,'2 small objects','にこ','niko'),
+    card('ko',3,'3 small objects','さんこ','sanko'),
+    card('ko',4,'4 small objects','よんこ','yonko'),
+    card('ko',5,'5 small objects','ごこ','goko'),
+    card('ko',6,'6 small objects','ろっこ','rokko','squeezed — not "rokuko"'),
+    card('ko',7,'7 small objects','ななこ','nanako'),
+    card('ko',8,'8 small objects','はっこ','hakko','squeezed — not "hachiko"'),
+    card('ko',9,'9 small objects','きゅうこ','kyuuko'),
+    card('ko',10,'10 small objects','じゅっこ','jukko','squeezed — not "juuko"'),
+
+    card('people',1,'1 person','ひとり','hitori','irregular — also means "alone"'),
+    card('people',2,'2 people','ふたり','futari','irregular'),
+    card('people',3,'3 people','さんにん','sannin'),
+    card('people',4,'4 people','よにん','yonin','よ, not よん'),
+    card('people',5,'5 people','ごにん','gonin'),
+    card('people',6,'6 people','ろくにん','rokunin'),
+    card('people',7,'7 people','ななにん ／ しちにん','nananin / shichinin','both are common'),
+    card('people',8,'8 people','はちにん','hachinin'),
+    card('people',9,'9 people','きゅうにん','kyuunin'),
+    card('people',10,'10 people','じゅうにん','juunin')
+  ];
+
+  var GROUP_LABEL = { core:'core number', tens:'built number', big:'big number', things:'counting things', ko:'small objects — こ', people:'people — にん' };
+
+  /* ------------------------------------------------------------------ utils */
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function shuffle(list){
+    var a=list.slice();
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
+  function pool(){
+    return activeGroup==='all'?CARDS:CARDS.filter(function(c){return c.group===activeGroup});
+  }
+  function orderedPool(){
+    var p=pool();
+    return (window.JL_PROGRESS)?JL_PROGRESS.order(p):shuffle(p);
+  }
+
+  /* ------------------------------------------------------------------ state */
+  var deck=document.getElementById('drill-deck');
+  var activeGroup='all';
+  var items=[],index=0,correct=0,missed=[],skipped=0,startedAt=0;
+  var SESSION_SIZE=12;
+
+  document.getElementById('drill-filters').addEventListener('click',function(e){
+    var b=e.target.closest('[data-group]');if(!b)return;
+    activeGroup=b.dataset.group;
+    document.querySelectorAll('#drill-filters [data-group]').forEach(function(x){x.classList.toggle('active',x===b)});
+    renderStart();
+  });
+
+  function updateCount(){
+    document.getElementById('drill-count').textContent=pool().length+' cards';
+  }
+
+  /* ------------------------------------------------------------------ start screen */
+  function renderStart(){
+    updateCount();
+    deck.innerHTML=
+      '<div class="session-results">'+
+        '<h3 style="margin:0">Ready to count?</h3>'+
+        '<p class="lead" style="margin:10px 0 4px">'+pool().length+' cards in this group. A round is '+SESSION_SIZE+' cards (or fewer), weakest first. Both directions: number → Japanese and Japanese → number.</p>'+
+        '<div class="result-actions" style="margin-top:16px"><button class="session-btn" id="drill-start">Start drill</button></div>'+
+      '</div>';
+    document.getElementById('drill-start').addEventListener('click',function(){startSession()});
+  }
+
+  /* ------------------------------------------------------------------ session */
+  function startSession(custom){
+    var source=custom||orderedPool();
+    items=custom?shuffle(custom):source.slice(0,Math.min(SESSION_SIZE,source.length));
+    if(!custom)items=shuffle(items);
+    items=items.map(function(c){
+      return { card:c, dir: Math.random()<0.6?'en-ja':'ja-en' };
+    });
+    index=0;correct=0;missed=[];skipped=0;startedAt=Date.now();
+    showCard();
+  }
+
+  function showCard(){
+    if(index>=items.length){finish();return}
+    var it=items[index],c=it.card;
+    var front,frontLang='',sub,label;
+    if(it.dir==='en-ja'){
+      front=c.en;sub='say it in Japanese, out loud';label=GROUP_LABEL[c.group];
+    }else{
+      front=c.kana;frontLang=' lang="ja"';sub='what amount is this?';label=GROUP_LABEL[c.group];
+    }
+    deck.innerHTML=
+      '<div class="session-meta"><span>'+(index+1)+' / '+items.length+'</span><span>✅ '+correct+' · ❌ '+missed.length+'</span></div>'+
+      '<div class="session-track"><div class="session-fill" style="width:'+(index/items.length*100)+'%"></div></div>'+
+      '<div class="practice-card" id="active-card" tabindex="0" role="button" aria-expanded="false">'+
+        '<div class="deck-label">'+esc(label)+'</div>'+
+        '<p class="q-prompt"'+frontLang+'>'+esc(front)+'</p>'+
+        '<p class="q-sub">'+esc(sub)+'</p>'+
+        '<div class="answer-main">'+
+          (it.dir==='en-ja'
+            ?'<span class="kana">'+esc(c.kana)+'</span><span class="rj">'+esc(c.romaji)+'</span>'
+            :'<span class="kana">'+esc(c.en)+'</span><span class="rj">'+esc(c.romaji)+'</span>')+
+        '</div>'+
+        (c.note?'<p class="answer-note">'+esc(c.note)+'</p>':'')+
+        '<span class="tap-hint">tap to reveal</span>'+
+      '</div>'+
+      '<div class="self-grade" id="grade"><button class="grade-btn correct" data-outcome="correct">✅ Got it</button><button class="grade-btn missed" data-outcome="missed">❌ Missed</button></div>'+
+      '<button class="skip-btn" data-outcome="skip">Skip</button>';
+
+    var cardEl=document.getElementById('active-card');
+    function reveal(){
+      if(cardEl.classList.contains('revealed'))return;
+      cardEl.classList.add('revealed');
+      cardEl.setAttribute('aria-expanded','true');
+      document.getElementById('grade').classList.add('show');
+    }
+    cardEl.addEventListener('click',reveal);
+    cardEl.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();reveal();}
+    });
+    deck.querySelectorAll('[data-outcome]').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        grade(btn.dataset.outcome,it);
+      });
+    });
+  }
+
+  function grade(outcome,it){
+    if(outcome==='correct'){
+      correct++;
+      if(window.JL_PROGRESS)JL_PROGRESS.record(it.card.id,'good',{subject:'counting',type:'flashcard'});
+    }else if(outcome==='missed'){
+      missed.push(it.card);
+      if(window.JL_PROGRESS)JL_PROGRESS.record(it.card.id,'again',{subject:'counting',type:'flashcard'});
+    }else{
+      skipped++;
+    }
+    index++;
+    showCard();
+  }
+
+  function finish(){
+    var attempted=correct+missed.length;
+    if(window.JL_PROGRESS&&attempted){
+      JL_PROGRESS.addSession({kind:'counting',total:attempted,good:correct,again:missed.length,durationMs:Date.now()-startedAt});
+    }
+    deck.innerHTML=
+      '<div class="session-results">'+
+        '<h3 style="margin:0">Round complete</h3>'+
+        '<div class="score">✅ '+correct+' · ❌ '+missed.length+'</div>'+
+        '<p class="lead">'+(missed.length?'Run the missed cards again while the sounds are still warm.':'Clean round. These numbers are starting to stick.')+'</p>'+
+        (missed.length?'<div class="missed-list">'+missed.map(function(c){return '<div class="missed-item"><strong>'+esc(c.en)+'</strong> — '+esc(c.kana)+' <span class="romaji">'+esc(c.romaji)+'</span></div>'}).join('')+'</div>':'')+
+        '<div class="result-actions">'+
+          (missed.length?'<button class="session-btn" id="drill-missed">Review missed</button>':'')+
+          '<button class="session-btn secondary" id="drill-again">New round</button>'+
+        '</div>'+
+        (skipped?'<p class="tap-hint">'+skipped+' skipped</p>':'')+
+      '</div>';
+    var mb=document.getElementById('drill-missed');
+    if(mb)mb.addEventListener('click',function(){startSession(missed.slice())});
+    document.getElementById('drill-again').addEventListener('click',function(){startSession()});
+  }
+
+  renderStart();
+})();
+</script>
+<script src="nav.js?v=emoji-menu-2" defer></script>
+</body>
+</html>

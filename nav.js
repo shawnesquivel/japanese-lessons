@@ -10,6 +10,7 @@
     { href: "particles.html", icon: "🧩", label: "Particles", detail: "topic, object, place & more" },
     { href: "locations.html", icon: "📍", label: "Locations", detail: "go, be & do" },
     { href: "conversation.html", icon: "💬", label: "Conversations", detail: "reply & follow up" },
+    { href: "counting.html", icon: "🔢", label: "Counting", detail: "numbers & counters" },
     { href: "time.html", icon: "🕒", label: "Time", detail: "telling time" },
     { href: "age-days-months.html", icon: "📅", label: "Calendar", detail: "age, days & months" },
     { href: "flashcards.html", icon: "🃏", label: "Vocabulary", detail: "adaptive review" },

@@ -13,6 +13,7 @@ Agents must read [`AGENTS.md`](AGENTS.md) before making changes.
 - **こそあど (kosoado)** — demonstratives (kore/sore/are/dore) practice with fruit & veg vocabulary ([`kosoado_worksheet.html`](kosoado_worksheet.html)).
 - **じょし (particles)** — single-word vocabulary, core particle patterns, scenario-based verb practice, mixed tutor drills, and ElevenLabs question/word listening comprehension ([`particles.html`](particles.html)).
 - **ばしょ (locations)** — **に** vs **で**, formal/casual verb forms, conversational questions, four dialogues, and broad mixed practice ([`locations.html`](locations.html)).
+- **かぞえる (counting)** — numbers 0–10,000, counting things (ひとつ…), small objects (〜こ), and people (〜にん), with one-card-at-a-time flashcard drills in both directions ([`counting.html`](counting.html)).
 - **かいわ (real conversation)** — coached everyday exchanges with natural replies, alternate answers, follow-up questions, audio playback, and adaptive review ([`conversation.html`](conversation.html)).
 - **はじめまして (introduction)** — a personal self-introduction shown line by line in kana, romaji, and English ([`introduction.html`](introduction.html)).
 - **じこしょうかい (about me)** — reusable personal sentence bank for grounding examples in real life ([`about.html`](about.html), source: [`about-me.js`](about-me.js)).
