@@ -378,12 +378,22 @@
   // ======================================================
   (function(){
     var hard=false, rate=1, useAmpm=false, cur=null, answered=false;
+    var SCORE_KEY='jl.game2.score';
     var correct=0,total=0;
+    (function loadScore(){
+      try{
+        var saved=JSON.parse(localStorage.getItem(SCORE_KEY)||'null');
+        if(saved && typeof saved.correct==='number' && typeof saved.total==='number'){
+          correct=saved.correct; total=saved.total;
+        }
+      }catch(e){}
+    })();
     var elGuess=document.getElementById('guess2'), elRes=document.getElementById('result2');
     var elFrac=document.getElementById('sFrac'), elPct=document.getElementById('sPct');
     function updateScore(){
       elFrac.textContent = correct + '/' + total;
       elPct.textContent = total ? Math.round(correct/total*100) + '%' : '—';
+      try{ localStorage.setItem(SCORE_KEY, JSON.stringify({correct:correct,total:total})); }catch(e){}
     }
     updateScore();
     var bPlay=document.getElementById('play2'), bReplay=document.getElementById('replay2'),

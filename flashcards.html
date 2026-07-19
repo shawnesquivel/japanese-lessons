@@ -104,6 +104,7 @@
 
   <section class="review" id="review" hidden>
     <div class="review-meta"><span id="review-progress">1 / 10</span><span id="review-due"></span></div>
+    <p class="kbd-hint" style="text-align:center;font-size:12px;color:var(--ink-soft);margin:4px 0 0">Keyboard: <b>Space</b>/<b>Enter</b> reveal · <b>1-4</b> rate · <b>P</b> play audio · <b>Esc</b> end</p>
     <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
     <article class="study-card">
       <span class="front-label" id="front-label"></span>
@@ -216,6 +217,28 @@
   };
   document.getElementById('export').onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='japanese-lessons-progress.json';a.click();URL.revokeObjectURL(a.href)};
   document.getElementById('reset-progress').onclick=function(){if(confirm('Reset all learning progress for every subject?')){JL_PROGRESS.reset();renderAll()}};
+  // ---------- keyboard controls ----------
+  // Space / Enter → reveal answer; 1-4 or A/H/G/E → rate; P → play audio;
+  // Esc → end review. Active only while a review card is on screen.
+  var RATING_KEYS={'1':'again','2':'hard','3':'good','4':'easy',
+                   'a':'again','h':'hard','g':'good','e':'easy'};
+  document.addEventListener('keydown',function(ev){
+    if(review.hidden) return;
+    var t=ev.target;
+    if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return;
+    if(ev.metaKey||ev.ctrlKey||ev.altKey) return;
+    var answerShown=document.getElementById('answer').classList.contains('show');
+    var k=ev.key;
+    if(k===' '||k==='Enter'){
+      if(!answerShown){ ev.preventDefault(); reveal(); }
+      return;
+    }
+    if(k==='p'||k==='P'){ ev.preventDefault(); document.getElementById('play').click(); return; }
+    if(k==='Escape'){ ev.preventDefault(); finish(); return; }
+    var r=RATING_KEYS[k.toLowerCase()];
+    if(r && answerShown){ ev.preventDefault(); rate(r); }
+  });
+
   function use(manifest){allWords=((manifest&&manifest.words)||[]).map(adapter);hasAudio=!!(manifest&&manifest.hasAudio);renderAll()}
   if(window.JL_FLASHCARDS)use(window.JL_FLASHCARDS);else fetch('audio/flashcards.json').then(function(r){return r.json()}).then(use);
 })();
