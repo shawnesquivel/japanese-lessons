@@ -1323,15 +1323,8 @@
         var selectedQa = { answer: false, ask: false };
         var deckMode = "vocab"; // "vocab" | "qa"
 
-        var PREFS_KEY = "genkiVocab.prefs.v2";
+        var PREFS_KEY = "genkiVocab.prefs.v3";
         var prefs = { showCategory: false, showDirection: false };
-        try {
-          var saved = JSON.parse(localStorage.getItem(PREFS_KEY));
-          if (saved && typeof saved === "object") {
-            // Category stays off by default; only restore direction.
-            prefs.showDirection = !!saved.showDirection;
-          }
-        } catch (_) {}
 
         var queue = [];
         var idx = 0;
@@ -1368,7 +1361,7 @@
         var exitBtn = document.getElementById("exitBtn");
 
         showCategoryInput.checked = false;
-        showDirectionInput.checked = prefs.showDirection;
+        showDirectionInput.checked = false;
 
         function savePrefs() {
           prefs.showCategory = showCategoryInput.checked;
