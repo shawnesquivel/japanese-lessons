@@ -38,6 +38,8 @@
 
   .flash{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);flex:1 1 auto;min-height:min(52vh,420px);padding:28px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(42,46,36,.05);user-select:none;transition-property:transform,background;transition-duration:.12s}
   .flash:active{transform:scale(.98)}
+  .flash.marked-good{box-shadow:0 0 0 3px var(--ko),0 2px 10px rgba(42,46,36,.05);background:var(--ko-bg)}
+  .flash.marked-good .hint{color:var(--ko);font-weight:700}
   .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);font-weight:700;background:var(--a-bg);border-radius:8px;padding:3px 10px;margin-bottom:16px}
   .tag.off{display:none}
   .jp{font:400 clamp(34px,10vw,52px)/1.25 "Zen Antique",serif;margin:0}
@@ -292,6 +294,8 @@
   var missed = [];
   var correctCount = 0;
   var ratedCount = 0;
+  var advancing = false;
+  var advanceTimer = 0;
 
   var filters = document.getElementById("filters");
   var startBtn = document.getElementById("start");
@@ -412,8 +416,18 @@
     beginSession(missed);
   }
 
+  function clearAdvance() {
+    if (advanceTimer) {
+      clearTimeout(advanceTimer);
+      advanceTimer = 0;
+    }
+    advancing = false;
+    card.classList.remove("marked-good");
+  }
+
   function showCard() {
     if (idx >= queue.length) return finish();
+    clearAdvance();
     var item = queue[idx];
     revealed = false;
     rateRow.classList.remove("on");
@@ -438,6 +452,7 @@
   }
 
   function reveal() {
+    if (advancing) return;
     if (revealed) return;
     revealed = true;
     jp.classList.remove("hidden");
@@ -448,11 +463,7 @@
     card.focus();
   }
 
-  function rate(ok) {
-    if (!revealed) {
-      reveal();
-      return;
-    }
+  function commitRate(ok) {
     var item = queue[idx];
     ratedCount++;
     if (ok) {
@@ -471,7 +482,34 @@
     card.focus();
   }
 
+  function rate(ok) {
+    if (advancing) return;
+    // Period on a hidden card: flash the answer as correct for 1s, then next.
+    if (ok && !revealed) {
+      revealed = true;
+      advancing = true;
+      jp.classList.remove("hidden");
+      rj.classList.remove("hidden");
+      en.classList.remove("hidden");
+      rateRow.classList.remove("on");
+      card.classList.add("marked-good");
+      hint.textContent = "✅ Correct";
+      advanceTimer = setTimeout(function () {
+        advanceTimer = 0;
+        advancing = false;
+        commitRate(true);
+      }, 1000);
+      return;
+    }
+    if (!revealed) {
+      reveal();
+      return;
+    }
+    commitRate(ok);
+  }
+
   function back() {
+    if (advancing) return;
     if (idx <= 0) {
       showCard();
       card.focus();
@@ -483,6 +521,7 @@
   }
 
   function skip() {
+    if (advancing) return;
     idx++;
     showCard();
     card.focus();
