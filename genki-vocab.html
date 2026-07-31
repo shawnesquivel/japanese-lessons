@@ -1264,8 +1264,8 @@
           { id: "family", label: "Family", emoji: "👨‍👩‍👧‍👦" },
         ];
         var QA_GROUPS = [
-          { id: "answer", label: "Answer me", emoji: "🗣️" },
-          { id: "ask", label: "Ask in JP", emoji: "❓" },
+          { id: "answer", label: "Practice replies", emoji: "🗣️" },
+          { id: "ask", label: "Build questions", emoji: "❓" },
         ];
 
         var GROUP_LABEL = {};
@@ -1347,10 +1347,12 @@
               parts.push(GROUP_LABEL[item.group] || item.group);
             if (showDirectionInput.checked)
               parts.push(item.side === "en" ? "EN → JP" : "JP → EN");
-          } else if (showCategoryInput.checked || deckMode === "qa") {
-            // Q&A: show drill type only when Category toggle is on (default off)
-            if (showCategoryInput.checked)
-              parts.push(GROUP_LABEL[item.group] || item.group);
+          } else if (showCategoryInput.checked) {
+            parts.push(
+              item.kind === "qa-answer"
+                ? "Reply in Japanese"
+                : "English → Japanese question",
+            );
           }
           tag.textContent = parts.join(" · ");
           tag.classList.toggle("off", !parts.length);
@@ -1558,6 +1560,9 @@
 
         function renderQaReveal(item) {
           if (item.kind === "qa-answer") {
+            if (showCategoryInput.checked) {
+              tag.textContent = "Sample answer";
+            }
             var formal = (item.answer && item.answer.formal) || {};
             var html =
               '<div class="qa-block"><p class="qa-label">Question means</p>' +
@@ -1584,6 +1589,9 @@
             return;
           }
           if (item.kind === "qa-ask") {
+            if (showCategoryInput.checked) {
+              tag.textContent = "Japanese question";
+            }
             qaPanel.innerHTML =
               '<div class="qa-block"><p class="qa-label">Ask in Japanese</p>' +
               '<p class="qa-jp">' +
