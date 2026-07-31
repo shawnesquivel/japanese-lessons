@@ -162,6 +162,7 @@
       }
 
       .flash {
+        position: relative;
         background: var(--card);
         border: 1px solid var(--line-strong);
         border-radius: var(--radius);
@@ -178,6 +179,45 @@
         user-select: none;
         transition-property: transform, background;
         transition-duration: 0.12s;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 40px;
+        min-width: 40px;
+        padding: 8px 12px;
+        border: 1px solid var(--line-strong);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--ink-soft);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition-property: transform, background, color, border-color;
+        transition-duration: 0.12s;
+      }
+      .copy-btn svg {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 auto;
+      }
+      .copy-btn:hover {
+        color: var(--ink);
+        border-color: var(--ink-soft);
+      }
+      .copy-btn:active {
+        transform: scale(0.96);
+      }
+      .copy-btn.copied {
+        color: var(--ko);
+        border-color: var(--ko);
+        background: var(--ko-bg);
       }
       .flash:active {
         transform: scale(0.98);
@@ -757,6 +797,18 @@
             role="button"
             aria-label="Flashcard. Tap or Space to reveal."
           >
+            <button
+              type="button"
+              class="copy-btn"
+              id="copyBtn"
+              aria-label="Copy flashcard text"
+            >
+              <span id="copyLabel">Copy</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
             <span class="tag" id="tag"></span>
             <p class="jp" id="jp"></p>
             <p class="rj" id="rj"></p>
@@ -1359,6 +1411,9 @@
         var modes = document.getElementById("modes");
         var selectionStatus = document.getElementById("selectionStatus");
         var exitBtn = document.getElementById("exitBtn");
+        var copyBtn = document.getElementById("copyBtn");
+        var copyLabel = document.getElementById("copyLabel");
+        var copyResetTimer = 0;
 
         showCategoryInput.checked = false;
         showDirectionInput.checked = false;
@@ -1603,6 +1658,75 @@
         function hideQaPanel() {
           qaPanel.classList.remove("on");
           qaPanel.innerHTML = "";
+        }
+
+        function formatCardText(item) {
+          if (!item) return "";
+          if (item.kind === "qa-ask") {
+            return [item.ask.en, "", item.ask.jp, item.ask.rj].join("\n");
+          }
+          if (item.kind === "qa-answer") {
+            var formal = (item.answer && item.answer.formal) || {};
+            var lines = [
+              item.ask.jp,
+              item.ask.rj,
+              "",
+              item.ask.en,
+              "",
+              formal.jp,
+              formal.rj,
+              formal.en,
+            ];
+            if (item.answer && item.answer.note) lines.push(item.answer.note);
+            return lines.join("\n");
+          }
+          var vocabLines = [item.jp, item.rj, item.en];
+          if (item.note) vocabLines.push(item.note);
+          return vocabLines.join("\n");
+        }
+
+        function copyCardText(e) {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          if (!queue.length || idx >= queue.length) return;
+          var text = formatCardText(queue[idx]);
+          if (!text) return;
+
+          function markCopied() {
+            copyBtn.classList.add("copied");
+            copyLabel.textContent = "Copied";
+            if (copyResetTimer) clearTimeout(copyResetTimer);
+            copyResetTimer = setTimeout(function () {
+              copyBtn.classList.remove("copied");
+              copyLabel.textContent = "Copy";
+              copyResetTimer = 0;
+            }, 1200);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(markCopied).catch(function () {
+              fallbackCopy(text, markCopied);
+            });
+          } else {
+            fallbackCopy(text, markCopied);
+          }
+        }
+
+        function fallbackCopy(text, onDone) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            if (onDone) onDone();
+          } catch (_) {}
+          document.body.removeChild(ta);
         }
 
         function renderQaReveal(item) {
@@ -1863,7 +1987,9 @@
           .addEventListener("click", function () {
             rate(true);
           });
-        card.addEventListener("click", function () {
+        copyBtn.addEventListener("click", copyCardText);
+        card.addEventListener("click", function (e) {
+          if (e.target.closest && e.target.closest("#copyBtn")) return;
           if (!revealed) reveal();
         });
 
