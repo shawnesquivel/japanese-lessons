@@ -1,608 +1,1749 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GENKI — Japanese Lessons</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GENKI — Japanese Lessons</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
 <script src="learning.js"></script>
+<script src="genki-l1-qa-data.js"></script>
 <script src="nav.js" defer></script>
-<style>
-  :root{
-    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
-    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
-    --a:#3F6E91;--do:#CB4A2B;--ko-bg:#EDF3E4;--so-bg:#FBF0DC;
-    --a-bg:#E5EDF3;--radius:14px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;min-height:100vh;min-height:100dvh;background:var(--paper);color:var(--ink);font:400 16px/1.55 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  button{font:inherit}
-  .wrap{max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:12px 16px 20px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:max(20px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
-  body.quizzing .wrap{padding-top:10px}
-
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 0 10px 56px;flex:0 0 auto}
-  .brand{min-width:0}
-  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:0}
-  h1{font:400 28px/1 "Zen Antique",serif;letter-spacing:.04em;margin:2px 0 0}
-  body.quizzing h1{font-size:22px}
-  .icon-btn{min-width:40px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:12px;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
-  .icon-btn:active{transform:scale(.96)}
-
-  .stage{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
-  .prog{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-soft);font-weight:700;margin:0 0 10px}
-  .prog .bar{flex:1;height:5px;border-radius:999px;background:var(--line);overflow:hidden}
-  .prog .bar i{display:block;height:100%;background:var(--ko);width:0;transition:width .2s}
-
-  .flash{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);flex:1 1 auto;min-height:min(52vh,420px);padding:28px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(42,46,36,.05);user-select:none;transition-property:transform,background;transition-duration:.12s}
-  .flash:active{transform:scale(.98)}
-  .flash.marked-good{box-shadow:0 0 0 3px var(--ko),0 2px 10px rgba(42,46,36,.05);background:var(--ko-bg)}
-  .flash.marked-good .hint{color:var(--ko);font-weight:700}
-  .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);font-weight:700;background:var(--a-bg);border-radius:8px;padding:3px 10px;margin-bottom:16px}
-  .tag.off{display:none}
-  .jp{font:400 clamp(34px,10vw,52px)/1.25 "Zen Antique",serif;margin:0}
-  .rj{color:var(--ink-soft);font-size:16px;margin-top:8px}
-  .en{font-size:24px;font-weight:700;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);width:100%;max-width:28ch}
-  .flash.side-en .en{font-size:clamp(28px,8vw,40px);margin-top:0;padding-top:0;border-top:0}
-  .flash.side-en .jp{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);width:100%}
-  .flash .hidden{visibility:hidden}
-  .hint{margin-top:16px;color:var(--ink-soft);font-size:13px}
-
-  .dock{flex:0 0 auto;margin-top:12px}
-  .rate-row{display:none;gap:8px;margin-bottom:10px}
-  .rate-row.on{display:flex}
-  .rate{flex:1;min-height:48px;padding:10px 12px;border-radius:12px;border:2px solid;background:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
-  .rate:active{transform:scale(.96)}
-  .rate kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px;min-height:20px;padding:0 6px;border-radius:5px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;font-family:inherit;margin-left:4px}
-  .rate.miss{border-color:var(--do);color:var(--do)}
-  .rate.miss:hover{background:var(--do-bg,#FAE7E1)}
-  .rate.good{border-color:var(--ko);color:var(--ko)}
-  .rate.good:hover{background:var(--ko-bg)}
-  .actions{display:flex;gap:8px}
-  .actions .btn{flex:1;min-width:0}
-
-  .btn{min-height:44px;padding:10px 14px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s;font-size:14px}
-  .btn:active{transform:scale(.96)}
-  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
-  .btn.ghost:hover{background:#F3EEE1}
-  .btn.big{width:100%;min-height:48px;font-size:16px}
-
-  .setup{flex:0 0 auto;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
-  body.quizzing .setup-groups,
-  body.quizzing #start,
-  body.quizzing .foot{display:none}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 12px}
-  .chip{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:13px;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
-  .chip:hover{background:#F3EEE1}
-  .chip:active{transform:scale(.96)}
-  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-
-  .toggles{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 12px}
-  .toggle{display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:4px 9px;border-radius:999px;background:#fff;border:1px solid var(--line-strong);cursor:pointer;user-select:none;font-size:11px;font-weight:700;color:var(--ink-soft);transition-property:transform,background;transition-duration:.12s}
-  .toggle:active{transform:scale(.96)}
-  .toggle input{position:absolute;opacity:0;pointer-events:none}
-  .toggle .track{position:relative;width:28px;height:16px;border-radius:999px;background:var(--line-strong);flex:0 0 auto;transition:background .15s}
-  .toggle .track::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:transform .15s}
-  .toggle input:checked + .track{background:var(--ko)}
-  .toggle input:checked + .track::after{transform:translateX(12px)}
-  .toggle input:focus-visible + .track{outline:3px solid var(--so);outline-offset:2px}
-
-  .end{text-align:center;padding:24px 8px;flex:1;display:flex;flex-direction:column;justify-content:center}
-  .end .score{font:400 clamp(48px,14vw,72px)/1 "Zen Antique",serif;margin:8px 0}
-  .end .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 18px}
-  .chip-stat{background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-soft)}
-  .foot{margin-top:14px;text-align:center;color:var(--ink-soft);font-size:12px}
-
-  .modal{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;padding:16px;background:rgba(42,46,36,.4)}
-  .modal.open{display:flex}
-  .modal-sheet{width:100%;max-width:420px;background:var(--paper);border:2px solid var(--ink);border-radius:18px 18px 14px 14px;padding:18px 16px 16px;box-shadow:0 -8px 30px rgba(42,46,36,.18)}
-  .modal-sheet h2{font:400 28px/1 "Zen Antique",serif;margin:0 0 6px}
-  .modal-sheet p{margin:0 0 14px;color:var(--ink-soft);font-size:14px}
-  .keys{display:grid;gap:8px;margin:0 0 14px}
-  .key{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;border-radius:12px;background:#fff;border:1px solid var(--line-strong);font-size:14px;color:var(--ink);font-weight:700}
-  .key kbd{display:inline-flex;align-items:center;justify-content:center;min-width:52px;min-height:28px;padding:0 8px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;font-family:inherit}
-  @media(min-width:560px){
-    .wrap{padding-top:20px}
-    .flash{min-height:380px}
-    .modal{align-items:center}
-    .modal-sheet{border-radius:18px}
-  }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="topbar">
-    <div class="brand">
-      <p class="eyebrow">Lesson 1 · たんご</p>
-      <h1>GENKI</h1>
-    </div>
-    <button type="button" class="icon-btn" id="keysBtn" aria-haspopup="dialog">Shortcuts</button>
-  </div>
-
-  <div class="stage">
-    <div id="session" hidden>
-      <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
-      <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap or Space to reveal.">
-        <span class="tag" id="tag"></span>
-        <p class="jp" id="jp"></p>
-        <p class="rj" id="rj"></p>
-        <p class="en hidden" id="en"></p>
-        <p class="hint" id="hint">Tap or Space to reveal</p>
-      </div>
-      <div class="dock">
-        <div class="rate-row" id="rateRow">
-          <button class="rate miss" id="missBtn" tabindex="-1">❌ Miss <kbd>,</kbd></button>
-          <button class="rate good" id="goodBtn" tabindex="-1">✅ Got it <kbd>.</kbd></button>
-        </div>
-        <div class="actions">
-          <button class="btn ghost" id="backBtn" tabindex="-1">←</button>
-          <button class="btn ghost" id="revealBtn" tabindex="-1">Reveal</button>
-          <button class="btn ghost" id="skipBtn" tabindex="-1">→</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="end" id="end" hidden>
-      <p class="eyebrow">Deck complete</p>
-      <div class="score" id="score"></div>
-      <div class="chips" id="endChips"></div>
-      <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
-      <button class="btn big ghost" id="again" style="margin-top:10px">Study full deck again</button>
-    </div>
-  </div>
-
-  <div class="setup" id="setup">
-    <div class="setup-groups" id="setupGroups">
-      <div class="filters" id="filters" role="group" aria-label="Vocabulary groups"></div>
-    </div>
-    <div class="toggles" id="toggles">
-      <label class="toggle">
-        <input type="checkbox" id="showCategory">
-        <span class="track" aria-hidden="true"></span>
-        <span>Category</span>
-      </label>
-      <label class="toggle">
-        <input type="checkbox" id="showDirection">
-        <span class="track" aria-hidden="true"></span>
-        <span>JP/EN direction</span>
-      </label>
-    </div>
-    <button class="btn big" id="start">Start flashcards</button>
-    <p class="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
-  </div>
-</div>
-
-<div class="modal" id="keysModal" role="dialog" aria-modal="true" aria-labelledby="keysTitle" hidden>
-  <div class="modal-sheet">
-    <h2 id="keysTitle">Shortcuts</h2>
-    <p>Keyboard controls for this deck.</p>
-    <div class="keys">
-      <div class="key"><kbd>Space</kbd> Reveal answer</div>
-      <div class="key"><kbd>,</kbd> Miss / incorrect</div>
-      <div class="key"><kbd>.</kbd> Got it / correct</div>
-      <div class="key"><kbd>←</kbd> Previous card</div>
-      <div class="key"><kbd>→</kbd> Skip</div>
-    </div>
-    <button class="btn big" id="keysClose" type="button">Got it</button>
-  </div>
-</div>
-
-<script>
-(function () {
-  "use strict";
-
-  var VOCAB = [
-    // Main vocabulary
-    { id: "genki-l1-ano", group: "core", jp: "あの", rj: "ano", en: "um..." },
-    { id: "genki-l1-ima", group: "core", jp: "いま", rj: "ima", en: "now" },
-    { id: "genki-l1-eego", group: "core", jp: "えいご", rj: "eego", en: "English (language)" },
-    { id: "genki-l1-ee", group: "core", jp: "ええ", rj: "ee", en: "yes" },
-    { id: "genki-l1-gakusee", group: "core", jp: "がくせい", rj: "gakusee", en: "student" },
-    { id: "genki-l1-go", group: "core", jp: "～ご", rj: "...go", en: "language (e.g. にほんご)" },
-    { id: "genki-l1-kookoo", group: "core", jp: "こうこう", rj: "kookoo", en: "high school" },
-    { id: "genki-l1-gogo", group: "core", jp: "ごご", rj: "gogo", en: "P.M." },
-    { id: "genki-l1-gozen", group: "core", jp: "ごぜん", rj: "gozen", en: "A.M." },
-    { id: "genki-l1-sai", group: "core", jp: "～さい", rj: "...sai", en: "... years old" },
-    { id: "genki-l1-san", group: "core", jp: "～さん", rj: "...san", en: "Mr./Ms. ..." },
-    { id: "genki-l1-ji", group: "core", jp: "～じ", rj: "...ji", en: "o'clock (e.g. いちじ)" },
-    { id: "genki-l1-jin", group: "core", jp: "～じん", rj: "...jin", en: "people (e.g. にほんじん)" },
-    { id: "genki-l1-sensee", group: "core", jp: "せんせい", rj: "sensee", en: "teacher; Professor ..." },
-    { id: "genki-l1-senmon", group: "core", jp: "せんもん", rj: "senmon", en: "major" },
-    { id: "genki-l1-soodesu", group: "core", jp: "そうです", rj: "soo desu", en: "That's right." },
-    { id: "genki-l1-daigaku", group: "core", jp: "だいがく", rj: "daigaku", en: "college; university" },
-    { id: "genki-l1-denwa", group: "core", jp: "でんわ", rj: "denwa", en: "telephone" },
-    { id: "genki-l1-tomodachi", group: "core", jp: "ともだち", rj: "tomodachi", en: "friend" },
-    { id: "genki-l1-namae", group: "core", jp: "なまえ", rj: "namae", en: "name" },
-    { id: "genki-l1-nan", group: "core", jp: "なん／なに", rj: "nan / nani", en: "what" },
-    { id: "genki-l1-nihon", group: "core", jp: "にほん", rj: "Nihon", en: "Japan" },
-    { id: "genki-l1-nensee", group: "core", jp: "～ねんせい", rj: "...nensee", en: "... year student (e.g. いちねんせい)" },
-    { id: "genki-l1-hai", group: "core", jp: "はい", rj: "hai", en: "yes" },
-    { id: "genki-l1-han", group: "core", jp: "はん", rj: "han", en: "half (e.g. にじはん)" },
-    { id: "genki-l1-bangoo", group: "core", jp: "ばんごう", rj: "bangoo", en: "number" },
-    { id: "genki-l1-ryuugakusee", group: "core", jp: "りゅうがくせい", rj: "ryuugakusee", en: "international student" },
-    { id: "genki-l1-watashi", group: "core", jp: "わたし", rj: "watashi", en: "I" },
-
-    // Countries
-    { id: "genki-l1-amerika", group: "countries", jp: "アメリカ", rj: "Amerika", en: "U.S.A." },
-    { id: "genki-l1-igirisu", group: "countries", jp: "イギリス", rj: "Igirisu", en: "Britain" },
-    { id: "genki-l1-oosutoraria", group: "countries", jp: "オーストラリア", rj: "Oosutoraria", en: "Australia" },
-    { id: "genki-l1-kankoku", group: "countries", jp: "かんこく", rj: "Kankoku", en: "Korea" },
-    { id: "genki-l1-sueeden", group: "countries", jp: "スウェーデン", rj: "Sueeden", en: "Sweden" },
-    { id: "genki-l1-chuugoku", group: "countries", jp: "ちゅうごく", rj: "Chuugoku", en: "China" },
-
-    // Majors
-    { id: "genki-l1-kagaku", group: "majors", jp: "かがく", rj: "kagaku", en: "science" },
-    { id: "genki-l1-ajiakenkyuu", group: "majors", jp: "アジアけんきゅう", rj: "ajiakenkyuu", en: "Asian studies" },
-    { id: "genki-l1-keezai", group: "majors", jp: "けいざい", rj: "keezai", en: "economics" },
-    { id: "genki-l1-kokusaikankee", group: "majors", jp: "こくさいかんけい", rj: "kokusaikankee", en: "international relations" },
-    { id: "genki-l1-konpyuutaa", group: "majors", jp: "コンピューター", rj: "konpyuutaa", en: "computer" },
-    { id: "genki-l1-jinruigaku", group: "majors", jp: "じんるいがく", rj: "jinruigaku", en: "anthropology" },
-    { id: "genki-l1-seeji", group: "majors", jp: "せいじ", rj: "seeji", en: "politics" },
-    { id: "genki-l1-bijinesu", group: "majors", jp: "ビジネス", rj: "bijinesu", en: "business" },
-    { id: "genki-l1-bungaku", group: "majors", jp: "ぶんがく", rj: "bungaku", en: "literature" },
-    { id: "genki-l1-rekishi", group: "majors", jp: "れきし", rj: "rekishi", en: "history" },
-
-    // Occupations
-    { id: "genki-l1-shigoto", group: "occupations", jp: "しごと", rj: "shigoto", en: "job; work; occupation" },
-    { id: "genki-l1-isha", group: "occupations", jp: "いしゃ", rj: "isha", en: "doctor" },
-    { id: "genki-l1-kaishain", group: "occupations", jp: "かいしゃいん", rj: "kaishain", en: "office worker" },
-    { id: "genki-l1-kookoosee", group: "occupations", jp: "こうこうせい", rj: "kookoosee", en: "high school student" },
-    { id: "genki-l1-shufu", group: "occupations", jp: "しゅふ", rj: "shufu", en: "housewife" },
-    { id: "genki-l1-daigakuinsee", group: "occupations", jp: "だいがくいんせい", rj: "daigakuinsee", en: "graduate student" },
-    { id: "genki-l1-daigakusee", group: "occupations", jp: "だいがくせい", rj: "daigakusee", en: "college student" },
-    { id: "genki-l1-bengoshi", group: "occupations", jp: "べんごし", rj: "bengoshi", en: "lawyer" },
-
-    // Family
-    { id: "genki-l1-okaasan", group: "family", jp: "おかあさん", rj: "okaasan", en: "mother" },
-    { id: "genki-l1-otoosan", group: "family", jp: "おとうさん", rj: "otoosan", en: "father" },
-    { id: "genki-l1-oneesan", group: "family", jp: "おねえさん", rj: "oneesan", en: "older sister" },
-    { id: "genki-l1-oniisan", group: "family", jp: "おにいさん", rj: "oniisan", en: "older brother" },
-    { id: "genki-l1-imooto", group: "family", jp: "いもうと", rj: "imooto", en: "younger sister" },
-    { id: "genki-l1-otooto", group: "family", jp: "おとうと", rj: "otooto", en: "younger brother" }
-  ];
-
-  var GROUPS = [
-    { id: "core", label: "Core" },
-    { id: "countries", label: "Countries" },
-    { id: "majors", label: "Majors" },
-    { id: "occupations", label: "Jobs" },
-    { id: "family", label: "Family" }
-  ];
-
-  var GROUP_LABEL = {};
-  GROUPS.forEach(function (g) { GROUP_LABEL[g.id] = g.label; });
-
-  var selected = {};
-  GROUPS.forEach(function (g) { selected[g.id] = true; });
-
-  var PREFS_KEY = "genkiVocab.prefs.v1";
-  var prefs = { showCategory: false, showDirection: false };
-  try {
-    var saved = JSON.parse(localStorage.getItem(PREFS_KEY));
-    if (saved && typeof saved === "object") {
-      prefs.showCategory = !!saved.showCategory;
-      prefs.showDirection = !!saved.showDirection;
-    }
-  } catch (_) {}
-
-  var queue = [];
-  var idx = 0;
-  var revealed = false;
-  var startedAt = 0;
-  var missed = [];
-  var correctCount = 0;
-  var ratedCount = 0;
-  var advancing = false;
-  var advanceTimer = 0;
-
-  var filters = document.getElementById("filters");
-  var startBtn = document.getElementById("start");
-  var session = document.getElementById("session");
-  var end = document.getElementById("end");
-  var card = document.getElementById("card");
-  var tag = document.getElementById("tag");
-  var jp = document.getElementById("jp");
-  var rj = document.getElementById("rj");
-  var en = document.getElementById("en");
-  var hint = document.getElementById("hint");
-  var count = document.getElementById("count");
-  var bar = document.getElementById("bar");
-  var rateRow = document.getElementById("rateRow");
-  var redoBtn = document.getElementById("redoMissed");
-  var showCategoryInput = document.getElementById("showCategory");
-  var showDirectionInput = document.getElementById("showDirection");
-  var keysModal = document.getElementById("keysModal");
-
-  showCategoryInput.checked = prefs.showCategory;
-  showDirectionInput.checked = prefs.showDirection;
-
-  function savePrefs() {
-    prefs.showCategory = showCategoryInput.checked;
-    prefs.showDirection = showDirectionInput.checked;
-    localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-    applyTagVisibility();
-  }
-
-  function applyTagVisibility() {
-    if (!queue.length || idx >= queue.length) {
-      tag.classList.add("off");
-      return;
-    }
-    var item = queue[idx];
-    var parts = [];
-    if (showCategoryInput.checked) parts.push(GROUP_LABEL[item.group] || item.group);
-    if (showDirectionInput.checked) parts.push(item.side === "en" ? "EN → JP" : "JP → EN");
-    tag.textContent = parts.join(" · ");
-    tag.classList.toggle("off", !parts.length);
-  }
-
-  showCategoryInput.addEventListener("change", savePrefs);
-  showDirectionInput.addEventListener("change", savePrefs);
-
-  function shuffle(arr) {
-    var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
-
-  function renderFilters() {
-    filters.innerHTML = GROUPS.map(function (g) {
-      return '<button type="button" class="chip' + (selected[g.id] ? " on" : "") + '" data-g="' + g.id + '">' +
-        g.label + "</button>";
-    }).join("");
-  }
-
-  function openKeys() {
-    keysModal.hidden = false;
-    keysModal.classList.add("open");
-  }
-  function closeKeys() {
-    keysModal.classList.remove("open");
-    keysModal.hidden = true;
-  }
-  document.getElementById("keysBtn").addEventListener("click", openKeys);
-  document.getElementById("keysClose").addEventListener("click", closeKeys);
-  keysModal.addEventListener("click", function (e) {
-    if (e.target === keysModal) closeKeys();
-  });
-
-  filters.addEventListener("click", function (e) {
-    var btn = e.target.closest(".chip");
-    if (!btn) return;
-    var g = btn.getAttribute("data-g");
-    selected[g] = !selected[g];
-    var any = GROUPS.some(function (x) { return selected[x.id]; });
-    if (!any) selected[g] = true;
-    renderFilters();
-  });
-
-  function activeDeck() {
-    return VOCAB.filter(function (v) { return selected[v.group]; });
-  }
-
-  function withSides(items) {
-    return shuffle(items).map(function (v) {
-      return Object.assign({}, v, { side: Math.random() < 0.5 ? "jp" : "en" });
-    });
-  }
-
-  function beginSession(items) {
-    queue = withSides(items);
-    if (!queue.length) return;
-    idx = 0;
-    missed = [];
-    correctCount = 0;
-    ratedCount = 0;
-    startedAt = Date.now();
-    document.body.classList.add("quizzing");
-    startBtn.hidden = true;
-    end.hidden = true;
-    session.hidden = false;
-    showCard();
-    card.focus();
-  }
-
-  function start() {
-    beginSession(activeDeck());
-  }
-
-  function startMissed() {
-    if (!missed.length) return;
-    beginSession(missed);
-  }
-
-  function clearAdvance() {
-    if (advanceTimer) {
-      clearTimeout(advanceTimer);
-      advanceTimer = 0;
-    }
-    advancing = false;
-    card.classList.remove("marked-good");
-  }
-
-  function showCard() {
-    if (idx >= queue.length) return finish();
-    clearAdvance();
-    var item = queue[idx];
-    revealed = false;
-    rateRow.classList.remove("on");
-    applyTagVisibility();
-    jp.textContent = item.jp;
-    rj.textContent = item.rj;
-    en.textContent = item.en;
-    card.classList.toggle("side-en", item.side === "en");
-    card.classList.toggle("side-jp", item.side !== "en");
-    if (item.side === "en") {
-      en.classList.remove("hidden");
-      jp.classList.add("hidden");
-      rj.classList.add("hidden");
-    } else {
-      jp.classList.remove("hidden");
-      rj.classList.remove("hidden");
-      en.classList.add("hidden");
-    }
-    hint.textContent = "Tap or Space to reveal";
-    count.textContent = (idx + 1) + " / " + queue.length;
-    bar.style.width = Math.round(idx / queue.length * 100) + "%";
-  }
-
-  function reveal() {
-    if (advancing) return;
-    if (revealed) return;
-    revealed = true;
-    jp.classList.remove("hidden");
-    rj.classList.remove("hidden");
-    en.classList.remove("hidden");
-    rateRow.classList.add("on");
-    hint.textContent = "";
-    card.focus();
-  }
-
-  function commitRate(ok) {
-    var item = queue[idx];
-    ratedCount++;
-    if (ok) {
-      correctCount++;
-      if (window.JL_PROGRESS && JL_PROGRESS.record) {
-        JL_PROGRESS.record(item.id, "good", { subject: "Genki L1 Vocab", type: "flashcard" });
+    <style>
+      :root {
+        --paper: #fbf8f1;
+        --card: #fff;
+        --ink: #2a2e24;
+        --ink-soft: #5c6150;
+        --line: #e6dfcf;
+        --line-strong: #d6cdb6;
+        --ko: #5c8a3a;
+        --so: #e0962c;
+        --a: #3f6e91;
+        --do: #cb4a2b;
+        --ko-bg: #edf3e4;
+        --so-bg: #fbf0dc;
+        --a-bg: #e5edf3;
+        --radius: 14px;
       }
-    } else {
-      missed.push(Object.assign({}, item));
-      if (window.JL_PROGRESS && JL_PROGRESS.record) {
-        JL_PROGRESS.record(item.id, "again", { subject: "Genki L1 Vocab", type: "flashcard" });
+      * {
+        box-sizing: border-box;
       }
-    }
-    idx++;
-    showCard();
-    card.focus();
-  }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          400 16px/1.55 "Zen Maru Gothic",
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      button {
+        font: inherit;
+      }
+      .wrap {
+        max-width: 520px;
+        margin: 0 auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 12px 16px 20px;
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        display: flex;
+        flex-direction: column;
+      }
+      body.quizzing .wrap {
+        padding-top: 10px;
+      }
 
-  function rate(ok) {
-    if (advancing) return;
-    // Period on a hidden card: flash the answer as correct for 1s, then next.
-    if (ok && !revealed) {
-      revealed = true;
-      advancing = true;
-      jp.classList.remove("hidden");
-      rj.classList.remove("hidden");
-      en.classList.remove("hidden");
-      rateRow.classList.remove("on");
-      card.classList.add("marked-good");
-      hint.textContent = "✅ Correct";
-      advanceTimer = setTimeout(function () {
-        advanceTimer = 0;
-        advancing = false;
-        commitRate(true);
-      }, 1000);
-      return;
-    }
-    if (!revealed) {
-      reveal();
-      return;
-    }
-    commitRate(ok);
-  }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 4px 0 10px 56px;
+        flex: 0 0 auto;
+      }
+      .brand {
+        min-width: 0;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        font-weight: 700;
+        margin: 0;
+      }
+      h1 {
+        font:
+          400 28px/1 "Zen Antique",
+          serif;
+        letter-spacing: 0.04em;
+        margin: 2px 0 0;
+      }
+      body.quizzing h1 {
+        font-size: 22px;
+      }
+      .icon-btn {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 0 12px;
+        border-radius: 10px;
+        border: 1px solid var(--line-strong);
+        background: #fff;
+        color: var(--ink-soft);
+        font-weight: 700;
+        font-size: 12px;
+        cursor: pointer;
+        transition-property: transform, background;
+        transition-duration: 0.12s;
+      }
+      .icon-btn:active {
+        transform: scale(0.96);
+      }
 
-  function back() {
-    if (advancing) return;
-    if (idx <= 0) {
-      showCard();
-      card.focus();
-      return;
-    }
-    idx--;
-    showCard();
-    card.focus();
-  }
+      .stage {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .prog {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        color: var(--ink-soft);
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .prog .bar {
+        flex: 1;
+        height: 5px;
+        border-radius: 999px;
+        background: var(--line);
+        overflow: hidden;
+      }
+      .prog .bar i {
+        display: block;
+        height: 100%;
+        background: var(--ko);
+        width: 0;
+        transition: width 0.2s;
+      }
 
-  function skip() {
-    if (advancing) return;
-    idx++;
-    showCard();
-    card.focus();
-  }
+      .flash {
+        background: var(--card);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius);
+        flex: 1 1 auto;
+        min-height: min(52vh, 420px);
+        padding: 28px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(42, 46, 36, 0.05);
+        user-select: none;
+        transition-property: transform, background;
+        transition-duration: 0.12s;
+      }
+      .flash:active {
+        transform: scale(0.98);
+      }
+      .flash.marked-good {
+        box-shadow:
+          0 0 0 3px var(--ko),
+          0 2px 10px rgba(42, 46, 36, 0.05);
+        background: var(--ko-bg);
+      }
+      .flash.marked-good .hint {
+        color: var(--ko);
+        font-weight: 700;
+      }
+      .tag {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--a);
+        font-weight: 700;
+        background: var(--a-bg);
+        border-radius: 8px;
+        padding: 3px 10px;
+        margin-bottom: 16px;
+      }
+      .tag.off {
+        display: none;
+      }
+      .jp {
+        font:
+          400 clamp(34px, 10vw, 52px)/1.25 "Zen Antique",
+          serif;
+        margin: 0;
+      }
+      .rj {
+        color: var(--ink-soft);
+        font-size: 16px;
+        margin-top: 8px;
+      }
+      .en {
+        font-size: 24px;
+        font-weight: 700;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        width: 100%;
+        max-width: 28ch;
+      }
+      .flash.side-en .en {
+        font-size: clamp(28px, 8vw, 40px);
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+      .flash.side-en .jp {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        width: 100%;
+      }
+      .flash .hidden {
+        visibility: hidden;
+      }
+      .flash .gone {
+        display: none !important;
+      }
+      .hint {
+        margin-top: 16px;
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+      .qa-panel {
+        display: none;
+        width: 100%;
+        max-width: 34ch;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        text-align: left;
+      }
+      .qa-panel.on {
+        display: block;
+      }
+      .qa-panel .qa-label {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+      .qa-panel .qa-block {
+        margin: 0 0 14px;
+      }
+      .qa-panel .qa-block:last-child {
+        margin-bottom: 0;
+      }
+      .qa-panel .qa-jp {
+        font:
+          400 22px/1.4 "Zen Antique",
+          serif;
+        margin: 0;
+      }
+      .qa-panel .qa-rj {
+        color: var(--ink-soft);
+        font-size: 14px;
+        margin: 4px 0 0;
+      }
+      .qa-panel .qa-en {
+        font-weight: 700;
+        margin: 4px 0 0;
+        font-size: 15px;
+      }
+      .qa-panel .qa-note {
+        margin: 8px 0 0;
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+      .modes {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin: 0 0 12px;
+      }
+      .mode {
+        min-height: 40px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        background: #fff;
+        color: var(--ink-soft);
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition-property: background, color, border-color, transform;
+        transition-duration: 0.12s;
+      }
+      .mode:active {
+        transform: scale(0.96);
+      }
+      .mode.on {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
+      body.mode-qa .toggles {
+        display: none;
+      }
 
-  function finish() {
-    session.hidden = true;
-    end.hidden = false;
-    rateRow.classList.remove("on");
-    document.body.classList.add("quizzing");
-    startBtn.hidden = true;
-    bar.style.width = "100%";
-    var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
-    var pct = ratedCount ? Math.round(correctCount / ratedCount * 100) : 0;
-    document.getElementById("score").textContent = (ratedCount ? pct + "%" : "—");
-    document.getElementById("endChips").innerHTML =
-      '<span class="chip-stat">' + correctCount + " correct</span>" +
-      '<span class="chip-stat">' + missed.length + " missed</span>" +
-      '<span class="chip-stat">' + queue.length + " cards · " + secs + "s</span>";
-    redoBtn.hidden = !missed.length;
-    redoBtn.textContent = "Redo " + missed.length + " incorrect";
-    if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
-      JL_PROGRESS.addSession({ kind: "flashcards", durationMs: Date.now() - startedAt });
-    }
-  }
+      .dock {
+        flex: 0 0 auto;
+        margin-top: 12px;
+      }
+      .rate-row {
+        display: none;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .rate-row.on {
+        display: flex;
+      }
+      .rate {
+        flex: 1;
+        min-height: 48px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 2px solid;
+        background: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        transition-property: transform, background;
+        transition-duration: 0.12s;
+      }
+      .rate:active {
+        transform: scale(0.96);
+      }
+      .rate kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 22px;
+        min-height: 20px;
+        padding: 0 6px;
+        border-radius: 5px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: inherit;
+        margin-left: 4px;
+      }
+      .rate.miss {
+        border-color: var(--do);
+        color: var(--do);
+      }
+      .rate.miss:hover {
+        background: var(--do-bg, #fae7e1);
+      }
+      .rate.good {
+        border-color: var(--ko);
+        color: var(--ko);
+      }
+      .rate.good:hover {
+        background: var(--ko-bg);
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+      .actions .btn {
+        flex: 1;
+        min-width: 0;
+      }
 
-  startBtn.addEventListener("click", start);
-  redoBtn.addEventListener("click", startMissed);
-  document.getElementById("again").addEventListener("click", function () {
-    document.body.classList.remove("quizzing");
-    startBtn.hidden = false;
-    end.hidden = true;
-    session.hidden = true;
-    renderFilters();
-  });
-  document.getElementById("backBtn").addEventListener("click", back);
-  document.getElementById("revealBtn").addEventListener("click", function () {
-    if (!revealed) reveal();
-  });
-  document.getElementById("skipBtn").addEventListener("click", skip);
-  document.getElementById("missBtn").addEventListener("click", function () { rate(false); });
-  document.getElementById("goodBtn").addEventListener("click", function () { rate(true); });
-  card.addEventListener("click", function () {
-    if (!revealed) reveal();
-  });
+      .btn {
+        min-height: 44px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 2px solid var(--ink);
+        background: var(--ink);
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        transition-property: transform, background;
+        transition-duration: 0.12s;
+        font-size: 14px;
+      }
+      .btn:active {
+        transform: scale(0.96);
+      }
+      .btn.ghost {
+        background: #fff;
+        color: var(--ink);
+        border-color: var(--line-strong);
+      }
+      .btn.ghost:hover {
+        background: #f3eee1;
+      }
+      .btn.big {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+      }
 
-  // Space on a focused <button> fires click on keyup — block that so Space
-  // only drives reveal via the keydown handler below.
-  document.addEventListener("keyup", function (e) {
-    if (session.hidden) return;
-    if (e.code === "Space" || e.key === " ") e.preventDefault();
-  });
+      .setup {
+        flex: 0 0 auto;
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+      body.quizzing .setup-groups,
+      body.quizzing .modes,
+      body.quizzing #start,
+      body.quizzing .foot {
+        display: none;
+      }
+      .filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 0 12px;
+      }
+      .chip {
+        min-height: 40px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        background: #fff;
+        color: var(--ink-soft);
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition-property: background, color, border-color, transform;
+        transition-duration: 0.12s;
+      }
+      .chip:hover {
+        background: #f3eee1;
+      }
+      .chip:active {
+        transform: scale(0.96);
+      }
+      .chip.on {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && keysModal.classList.contains("open")) {
-      e.preventDefault();
-      closeKeys();
-      return;
-    }
-    if (session.hidden || keysModal.classList.contains("open")) return;
-    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.closest(".toggle"))) return;
-    if (e.code === "Space" || e.key === " ") {
-      e.preventDefault();
-      if (!revealed) reveal();
-    } else if (e.key === "," || e.code === "Comma") {
-      e.preventDefault();
-      rate(false);
-    } else if (e.key === "." || e.code === "Period") {
-      e.preventDefault();
-      rate(true);
-    } else if (e.code === "ArrowLeft" || e.key === "ArrowLeft") {
-      e.preventDefault();
-      back();
-    } else if (e.code === "ArrowRight" || e.key === "ArrowRight") {
-      e.preventDefault();
-      skip();
-    }
-  });
+      .toggles {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 0 12px;
+      }
+      .toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 32px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--line-strong);
+        cursor: pointer;
+        user-select: none;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ink-soft);
+        transition-property: transform, background;
+        transition-duration: 0.12s;
+      }
+      .toggle:active {
+        transform: scale(0.96);
+      }
+      .toggle input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .toggle .track {
+        position: relative;
+        width: 28px;
+        height: 16px;
+        border-radius: 999px;
+        background: var(--line-strong);
+        flex: 0 0 auto;
+        transition: background 0.15s;
+      }
+      .toggle .track::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+        transition: transform 0.15s;
+      }
+      .toggle input:checked + .track {
+        background: var(--ko);
+      }
+      .toggle input:checked + .track::after {
+        transform: translateX(12px);
+      }
+      .toggle input:focus-visible + .track {
+        outline: 3px solid var(--so);
+        outline-offset: 2px;
+      }
 
-  renderFilters();
-})();
-</script>
-</body>
+      .end {
+        text-align: center;
+        padding: 24px 8px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .end .score {
+        font:
+          400 clamp(48px, 14vw, 72px)/1 "Zen Antique",
+          serif;
+        margin: 8px 0;
+      }
+      .end .chips {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 12px 0 18px;
+      }
+      .chip-stat {
+        background: #fff;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink-soft);
+      }
+      .foot {
+        margin-top: 14px;
+        text-align: center;
+        color: var(--ink-soft);
+        font-size: 12px;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 16px;
+        background: rgba(42, 46, 36, 0.4);
+      }
+      .modal.open {
+        display: flex;
+      }
+      .modal-sheet {
+        width: 100%;
+        max-width: 420px;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        border-radius: 18px 18px 14px 14px;
+        padding: 18px 16px 16px;
+        box-shadow: 0 -8px 30px rgba(42, 46, 36, 0.18);
+      }
+      .modal-sheet h2 {
+        font:
+          400 28px/1 "Zen Antique",
+          serif;
+        margin: 0 0 6px;
+      }
+      .modal-sheet p {
+        margin: 0 0 14px;
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+      .keys {
+        display: grid;
+        gap: 8px;
+        margin: 0 0 14px;
+      }
+      .key {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 44px;
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid var(--line-strong);
+        font-size: 14px;
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .key kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 52px;
+        min-height: 28px;
+        padding: 0 8px;
+        border-radius: 7px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: inherit;
+      }
+      @media (min-width: 560px) {
+        .wrap {
+          padding-top: 20px;
+        }
+        .flash {
+          min-height: 380px;
+        }
+        .modal {
+          align-items: center;
+        }
+        .modal-sheet {
+          border-radius: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <p class="eyebrow">Lesson 1 · たんご</p>
+          <h1>GENKI</h1>
+        </div>
+        <button
+          type="button"
+          class="icon-btn"
+          id="keysBtn"
+          aria-haspopup="dialog"
+        >
+          Shortcuts
+        </button>
+      </div>
+
+      <div class="stage">
+        <div id="session" hidden>
+          <div class="prog">
+            <span id="count">0 / 0</span>
+            <div class="bar"><i id="bar"></i></div>
+          </div>
+          <div
+            class="flash"
+            id="card"
+            tabindex="0"
+            role="button"
+            aria-label="Flashcard. Tap or Space to reveal."
+          >
+            <span class="tag" id="tag"></span>
+            <p class="jp" id="jp"></p>
+            <p class="rj" id="rj"></p>
+            <p class="en hidden" id="en"></p>
+            <div class="qa-panel" id="qaPanel" aria-live="polite"></div>
+            <p class="hint" id="hint">Tap or Space to reveal</p>
+          </div>
+          <div class="dock">
+            <div class="rate-row" id="rateRow">
+              <button class="rate miss" id="missBtn" tabindex="-1">
+                ❌ Miss <kbd>,</kbd>
+              </button>
+              <button class="rate good" id="goodBtn" tabindex="-1">
+                ✅ Got it <kbd>.</kbd>
+              </button>
+            </div>
+            <div class="actions">
+              <button class="btn ghost" id="backBtn" tabindex="-1">←</button>
+              <button class="btn ghost" id="revealBtn" tabindex="-1">
+                Reveal
+              </button>
+              <button class="btn ghost" id="skipBtn" tabindex="-1">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="end" id="end" hidden>
+          <p class="eyebrow">Deck complete</p>
+          <div class="score" id="score"></div>
+          <div class="chips" id="endChips"></div>
+          <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
+          <button class="btn big ghost" id="again" style="margin-top: 10px">
+            Study full deck again
+          </button>
+        </div>
+      </div>
+
+      <div class="setup" id="setup">
+        <div class="modes" id="modes" role="group" aria-label="Deck type">
+          <button type="button" class="mode on" data-mode="vocab">Vocab</button>
+          <button type="button" class="mode" data-mode="qa">Review Q&amp;A</button>
+        </div>
+        <div class="setup-groups" id="setupGroups">
+          <div
+            class="filters"
+            id="filters"
+            role="group"
+            aria-label="Vocabulary groups"
+          ></div>
+        </div>
+        <div class="toggles" id="toggles">
+          <label class="toggle">
+            <input type="checkbox" id="showCategory" />
+            <span class="track" aria-hidden="true"></span>
+            <span>Category</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="showDirection" />
+            <span class="track" aria-hidden="true"></span>
+            <span>JP/EN direction</span>
+          </label>
+        </div>
+        <button class="btn big" id="start">Start flashcards</button>
+        <p class="foot" id="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
+      </div>
+    </div>
+
+    <div
+      class="modal"
+      id="keysModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="keysTitle"
+      hidden
+    >
+      <div class="modal-sheet">
+        <h2 id="keysTitle">Shortcuts</h2>
+        <p>Keyboard controls for this deck.</p>
+        <div class="keys">
+          <div class="key"><kbd>Space</kbd> Reveal answer</div>
+          <div class="key"><kbd>,</kbd> Miss / incorrect</div>
+          <div class="key"><kbd>.</kbd> Got it / correct</div>
+          <div class="key"><kbd>←</kbd> Previous card</div>
+          <div class="key"><kbd>→</kbd> Skip</div>
+        </div>
+        <button class="btn big" id="keysClose" type="button">Got it</button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var VOCAB = [
+          // Main vocabulary
+          {
+            id: "genki-l1-ano",
+            group: "core",
+            jp: "あの",
+            rj: "ano",
+            en: "um...",
+          },
+          {
+            id: "genki-l1-ima",
+            group: "core",
+            jp: "いま",
+            rj: "ima",
+            en: "now",
+          },
+          {
+            id: "genki-l1-eego",
+            group: "core",
+            jp: "えいご",
+            rj: "eego",
+            en: "English (language)",
+          },
+          { id: "genki-l1-ee", group: "core", jp: "ええ", rj: "ee", en: "yes" },
+          {
+            id: "genki-l1-gakusee",
+            group: "core",
+            jp: "がくせい",
+            rj: "gakusee",
+            en: "student",
+          },
+          {
+            id: "genki-l1-go",
+            group: "core",
+            jp: "～ご",
+            rj: "...go",
+            en: "language (e.g. にほんご)",
+          },
+          {
+            id: "genki-l1-kookoo",
+            group: "core",
+            jp: "こうこう",
+            rj: "kookoo",
+            en: "high school",
+          },
+          {
+            id: "genki-l1-gogo",
+            group: "core",
+            jp: "ごご",
+            rj: "gogo",
+            en: "P.M.",
+          },
+          {
+            id: "genki-l1-gozen",
+            group: "core",
+            jp: "ごぜん",
+            rj: "gozen",
+            en: "A.M.",
+          },
+          {
+            id: "genki-l1-sai",
+            group: "core",
+            jp: "～さい",
+            rj: "...sai",
+            en: "... years old",
+          },
+          {
+            id: "genki-l1-san",
+            group: "core",
+            jp: "～さん",
+            rj: "...san",
+            en: "Mr./Ms. ...",
+          },
+          {
+            id: "genki-l1-ji",
+            group: "core",
+            jp: "～じ",
+            rj: "...ji",
+            en: "o'clock (e.g. いちじ)",
+          },
+          {
+            id: "genki-l1-jin",
+            group: "core",
+            jp: "～じん",
+            rj: "...jin",
+            en: "people (e.g. にほんじん)",
+          },
+          {
+            id: "genki-l1-sensee",
+            group: "core",
+            jp: "せんせい",
+            rj: "sensee",
+            en: "teacher; Professor ...",
+          },
+          {
+            id: "genki-l1-senmon",
+            group: "core",
+            jp: "せんもん",
+            rj: "senmon",
+            en: "major",
+          },
+          {
+            id: "genki-l1-soodesu",
+            group: "core",
+            jp: "そうです",
+            rj: "soo desu",
+            en: "That's right.",
+          },
+          {
+            id: "genki-l1-daigaku",
+            group: "core",
+            jp: "だいがく",
+            rj: "daigaku",
+            en: "college; university",
+          },
+          {
+            id: "genki-l1-denwa",
+            group: "core",
+            jp: "でんわ",
+            rj: "denwa",
+            en: "telephone",
+          },
+          {
+            id: "genki-l1-tomodachi",
+            group: "core",
+            jp: "ともだち",
+            rj: "tomodachi",
+            en: "friend",
+          },
+          {
+            id: "genki-l1-namae",
+            group: "core",
+            jp: "なまえ",
+            rj: "namae",
+            en: "name",
+          },
+          {
+            id: "genki-l1-nan",
+            group: "core",
+            jp: "なん／なに",
+            rj: "nan / nani",
+            en: "what",
+          },
+          {
+            id: "genki-l1-nihon",
+            group: "core",
+            jp: "にほん",
+            rj: "Nihon",
+            en: "Japan",
+          },
+          {
+            id: "genki-l1-nensee",
+            group: "core",
+            jp: "～ねんせい",
+            rj: "...nensee",
+            en: "... year student (e.g. いちねんせい)",
+          },
+          {
+            id: "genki-l1-hai",
+            group: "core",
+            jp: "はい",
+            rj: "hai",
+            en: "yes",
+          },
+          {
+            id: "genki-l1-han",
+            group: "core",
+            jp: "はん",
+            rj: "han",
+            en: "half (e.g. にじはん)",
+          },
+          {
+            id: "genki-l1-bangoo",
+            group: "core",
+            jp: "ばんごう",
+            rj: "bangoo",
+            en: "number",
+          },
+          {
+            id: "genki-l1-ryuugakusee",
+            group: "core",
+            jp: "りゅうがくせい",
+            rj: "ryuugakusee",
+            en: "international student",
+          },
+          {
+            id: "genki-l1-watashi",
+            group: "core",
+            jp: "わたし",
+            rj: "watashi",
+            en: "I",
+          },
+
+          // Countries
+          {
+            id: "genki-l1-amerika",
+            group: "countries",
+            jp: "アメリカ",
+            rj: "Amerika",
+            en: "U.S.A.",
+          },
+          {
+            id: "genki-l1-igirisu",
+            group: "countries",
+            jp: "イギリス",
+            rj: "Igirisu",
+            en: "Britain",
+          },
+          {
+            id: "genki-l1-oosutoraria",
+            group: "countries",
+            jp: "オーストラリア",
+            rj: "Oosutoraria",
+            en: "Australia",
+          },
+          {
+            id: "genki-l1-kankoku",
+            group: "countries",
+            jp: "かんこく",
+            rj: "Kankoku",
+            en: "Korea",
+          },
+          {
+            id: "genki-l1-sueeden",
+            group: "countries",
+            jp: "スウェーデン",
+            rj: "Sueeden",
+            en: "Sweden",
+          },
+          {
+            id: "genki-l1-chuugoku",
+            group: "countries",
+            jp: "ちゅうごく",
+            rj: "Chuugoku",
+            en: "China",
+          },
+
+          // Majors
+          {
+            id: "genki-l1-kagaku",
+            group: "majors",
+            jp: "かがく",
+            rj: "kagaku",
+            en: "science",
+          },
+          {
+            id: "genki-l1-ajiakenkyuu",
+            group: "majors",
+            jp: "アジアけんきゅう",
+            rj: "ajiakenkyuu",
+            en: "Asian studies",
+          },
+          {
+            id: "genki-l1-keezai",
+            group: "majors",
+            jp: "けいざい",
+            rj: "keezai",
+            en: "economics",
+          },
+          {
+            id: "genki-l1-kokusaikankee",
+            group: "majors",
+            jp: "こくさいかんけい",
+            rj: "kokusaikankee",
+            en: "international relations",
+          },
+          {
+            id: "genki-l1-konpyuutaa",
+            group: "majors",
+            jp: "コンピューター",
+            rj: "konpyuutaa",
+            en: "computer",
+          },
+          {
+            id: "genki-l1-jinruigaku",
+            group: "majors",
+            jp: "じんるいがく",
+            rj: "jinruigaku",
+            en: "anthropology",
+          },
+          {
+            id: "genki-l1-seeji",
+            group: "majors",
+            jp: "せいじ",
+            rj: "seeji",
+            en: "politics",
+          },
+          {
+            id: "genki-l1-bijinesu",
+            group: "majors",
+            jp: "ビジネス",
+            rj: "bijinesu",
+            en: "business",
+          },
+          {
+            id: "genki-l1-bungaku",
+            group: "majors",
+            jp: "ぶんがく",
+            rj: "bungaku",
+            en: "literature",
+          },
+          {
+            id: "genki-l1-rekishi",
+            group: "majors",
+            jp: "れきし",
+            rj: "rekishi",
+            en: "history",
+          },
+
+          // Occupations
+          {
+            id: "genki-l1-shigoto",
+            group: "occupations",
+            jp: "しごと",
+            rj: "shigoto",
+            en: "job; work; occupation",
+          },
+          {
+            id: "genki-l1-isha",
+            group: "occupations",
+            jp: "いしゃ",
+            rj: "isha",
+            en: "doctor",
+          },
+          {
+            id: "genki-l1-kaishain",
+            group: "occupations",
+            jp: "かいしゃいん",
+            rj: "kaishain",
+            en: "office worker",
+          },
+          {
+            id: "genki-l1-kookoosee",
+            group: "occupations",
+            jp: "こうこうせい",
+            rj: "kookoosee",
+            en: "high school student",
+          },
+          {
+            id: "genki-l1-shufu",
+            group: "occupations",
+            jp: "しゅふ",
+            rj: "shufu",
+            en: "housewife",
+          },
+          {
+            id: "genki-l1-daigakuinsee",
+            group: "occupations",
+            jp: "だいがくいんせい",
+            rj: "daigakuinsee",
+            en: "graduate student",
+          },
+          {
+            id: "genki-l1-daigakusee",
+            group: "occupations",
+            jp: "だいがくせい",
+            rj: "daigakusee",
+            en: "college student",
+          },
+          {
+            id: "genki-l1-bengoshi",
+            group: "occupations",
+            jp: "べんごし",
+            rj: "bengoshi",
+            en: "lawyer",
+          },
+
+          // Family
+          {
+            id: "genki-l1-okaasan",
+            group: "family",
+            jp: "おかあさん",
+            rj: "okaasan",
+            en: "mother",
+          },
+          {
+            id: "genki-l1-otoosan",
+            group: "family",
+            jp: "おとうさん",
+            rj: "otoosan",
+            en: "father",
+          },
+          {
+            id: "genki-l1-oneesan",
+            group: "family",
+            jp: "おねえさん",
+            rj: "oneesan",
+            en: "older sister",
+          },
+          {
+            id: "genki-l1-oniisan",
+            group: "family",
+            jp: "おにいさん",
+            rj: "oniisan",
+            en: "older brother",
+          },
+          {
+            id: "genki-l1-imooto",
+            group: "family",
+            jp: "いもうと",
+            rj: "imooto",
+            en: "younger sister",
+          },
+          {
+            id: "genki-l1-otooto",
+            group: "family",
+            jp: "おとうと",
+            rj: "otooto",
+            en: "younger brother",
+          },
+        ];
+
+        var GROUPS = [
+          { id: "core", label: "Core" },
+          { id: "countries", label: "Countries" },
+          { id: "majors", label: "Majors" },
+          { id: "occupations", label: "Jobs" },
+          { id: "family", label: "Family" },
+        ];
+        var QA_GROUPS = [
+          { id: "answer", label: "Answer me" },
+          { id: "ask", label: "Ask in JP" },
+        ];
+
+        var GROUP_LABEL = {};
+        GROUPS.forEach(function (g) {
+          GROUP_LABEL[g.id] = g.label;
+        });
+        QA_GROUPS.forEach(function (g) {
+          GROUP_LABEL[g.id] = g.label;
+        });
+
+        var selected = {};
+        GROUPS.forEach(function (g) {
+          selected[g.id] = true;
+        });
+        var selectedQa = { answer: true, ask: true };
+        var deckMode = "vocab"; // "vocab" | "qa"
+
+        var PREFS_KEY = "genkiVocab.prefs.v1";
+        var prefs = { showCategory: false, showDirection: false };
+        try {
+          var saved = JSON.parse(localStorage.getItem(PREFS_KEY));
+          if (saved && typeof saved === "object") {
+            prefs.showCategory = !!saved.showCategory;
+            prefs.showDirection = !!saved.showDirection;
+          }
+        } catch (_) {}
+
+        var queue = [];
+        var idx = 0;
+        var revealed = false;
+        var startedAt = 0;
+        var missed = [];
+        var correctCount = 0;
+        var ratedCount = 0;
+        var advancing = false;
+        var advanceTimer = 0;
+
+        var filters = document.getElementById("filters");
+        var startBtn = document.getElementById("start");
+        var session = document.getElementById("session");
+        var end = document.getElementById("end");
+        var card = document.getElementById("card");
+        var tag = document.getElementById("tag");
+        var jp = document.getElementById("jp");
+        var rj = document.getElementById("rj");
+        var en = document.getElementById("en");
+        var qaPanel = document.getElementById("qaPanel");
+        var hint = document.getElementById("hint");
+        var count = document.getElementById("count");
+        var bar = document.getElementById("bar");
+        var rateRow = document.getElementById("rateRow");
+        var redoBtn = document.getElementById("redoMissed");
+        var showCategoryInput = document.getElementById("showCategory");
+        var showDirectionInput = document.getElementById("showDirection");
+        var keysModal = document.getElementById("keysModal");
+        var foot = document.getElementById("foot");
+        var modes = document.getElementById("modes");
+
+        showCategoryInput.checked = prefs.showCategory;
+        showDirectionInput.checked = prefs.showDirection;
+
+        function savePrefs() {
+          prefs.showCategory = showCategoryInput.checked;
+          prefs.showDirection = showDirectionInput.checked;
+          localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+          applyTagVisibility();
+        }
+
+        function applyTagVisibility() {
+          if (!queue.length || idx >= queue.length) {
+            tag.classList.add("off");
+            return;
+          }
+          var item = queue[idx];
+          var parts = [];
+          if (item.kind === "vocab") {
+            if (showCategoryInput.checked)
+              parts.push(GROUP_LABEL[item.group] || item.group);
+            if (showDirectionInput.checked)
+              parts.push(item.side === "en" ? "EN → JP" : "JP → EN");
+          } else if (showCategoryInput.checked || deckMode === "qa") {
+            // Q&A: show drill type only when Category toggle is on (default off)
+            if (showCategoryInput.checked)
+              parts.push(GROUP_LABEL[item.group] || item.group);
+          }
+          tag.textContent = parts.join(" · ");
+          tag.classList.toggle("off", !parts.length);
+        }
+
+        showCategoryInput.addEventListener("change", savePrefs);
+        showDirectionInput.addEventListener("change", savePrefs);
+
+        function shuffle(arr) {
+          var a = arr.slice();
+          for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = a[i];
+            a[i] = a[j];
+            a[j] = t;
+          }
+          return a;
+        }
+
+        function esc(s) {
+          return String(s || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        }
+
+        function setMode(mode) {
+          deckMode = mode;
+          document.body.classList.toggle("mode-qa", mode === "qa");
+          Array.prototype.forEach.call(modes.querySelectorAll(".mode"), function (btn) {
+            btn.classList.toggle("on", btn.getAttribute("data-mode") === mode);
+          });
+          foot.textContent =
+            mode === "qa"
+              ? "Genki I Lesson 1 review Q&A · your polite answers"
+              : "Genki I Lesson 1 vocabulary · personal study copy";
+          renderFilters();
+        }
+
+        modes.addEventListener("click", function (e) {
+          var btn = e.target.closest(".mode");
+          if (!btn) return;
+          setMode(btn.getAttribute("data-mode"));
+        });
+
+        function renderFilters() {
+          if (deckMode === "qa") {
+            filters.innerHTML = QA_GROUPS.map(function (g) {
+              return (
+                '<button type="button" class="chip' +
+                (selectedQa[g.id] ? " on" : "") +
+                '" data-g="' +
+                g.id +
+                '">' +
+                g.label +
+                "</button>"
+              );
+            }).join("");
+            return;
+          }
+          filters.innerHTML = GROUPS.map(function (g) {
+            return (
+              '<button type="button" class="chip' +
+              (selected[g.id] ? " on" : "") +
+              '" data-g="' +
+              g.id +
+              '">' +
+              g.label +
+              "</button>"
+            );
+          }).join("");
+        }
+
+        function openKeys() {
+          keysModal.hidden = false;
+          keysModal.classList.add("open");
+        }
+        function closeKeys() {
+          keysModal.classList.remove("open");
+          keysModal.hidden = true;
+        }
+        document.getElementById("keysBtn").addEventListener("click", openKeys);
+        document
+          .getElementById("keysClose")
+          .addEventListener("click", closeKeys);
+        keysModal.addEventListener("click", function (e) {
+          if (e.target === keysModal) closeKeys();
+        });
+
+        filters.addEventListener("click", function (e) {
+          var btn = e.target.closest(".chip");
+          if (!btn) return;
+          var g = btn.getAttribute("data-g");
+          if (deckMode === "qa") {
+            selectedQa[g] = !selectedQa[g];
+            if (!selectedQa.answer && !selectedQa.ask) selectedQa[g] = true;
+          } else {
+            selected[g] = !selected[g];
+            var any = GROUPS.some(function (x) {
+              return selected[x.id];
+            });
+            if (!any) selected[g] = true;
+          }
+          renderFilters();
+        });
+
+        function buildQaCards() {
+          var cards = [];
+          var decks = (window.GENKI_QA && GENKI_QA.decks) || [];
+          decks.forEach(function (deck) {
+            (deck.prompts || []).forEach(function (p) {
+              var drills = p.drills && p.drills.length ? p.drills : ["answer", "ask"];
+              if (selectedQa.answer && drills.indexOf("answer") !== -1) {
+                cards.push({
+                  kind: "qa-answer",
+                  id: "genki-qa-" + deck.id + "-" + p.id + "-answer",
+                  group: "answer",
+                  ask: p.ask,
+                  answer: p.answer,
+                });
+              }
+              if (selectedQa.ask && drills.indexOf("ask") !== -1) {
+                cards.push({
+                  kind: "qa-ask",
+                  id: "genki-qa-" + deck.id + "-" + p.id + "-ask",
+                  group: "ask",
+                  ask: p.ask,
+                });
+              }
+            });
+          });
+          return cards;
+        }
+
+        function activeDeck() {
+          if (deckMode === "qa") return buildQaCards();
+          return VOCAB.filter(function (v) {
+            return selected[v.group];
+          }).map(function (v) {
+            return Object.assign({}, v, { kind: "vocab" });
+          });
+        }
+
+        function prepareQueue(items) {
+          if (deckMode === "qa") return shuffle(items);
+          return shuffle(items).map(function (v) {
+            return Object.assign({}, v, {
+              side: Math.random() < 0.5 ? "jp" : "en",
+            });
+          });
+        }
+
+        function beginSession(items) {
+          queue = prepareQueue(items);
+          if (!queue.length) return;
+          idx = 0;
+          missed = [];
+          correctCount = 0;
+          ratedCount = 0;
+          startedAt = Date.now();
+          document.body.classList.add("quizzing");
+          startBtn.hidden = true;
+          end.hidden = true;
+          session.hidden = false;
+          showCard();
+          card.focus();
+        }
+
+        function start() {
+          beginSession(activeDeck());
+        }
+
+        function startMissed() {
+          if (!missed.length) return;
+          beginSession(missed);
+        }
+
+        function clearAdvance() {
+          if (advanceTimer) {
+            clearTimeout(advanceTimer);
+            advanceTimer = 0;
+          }
+          advancing = false;
+          card.classList.remove("marked-good");
+        }
+
+        function hideQaPanel() {
+          qaPanel.classList.remove("on");
+          qaPanel.innerHTML = "";
+        }
+
+        function renderQaReveal(item) {
+          if (item.kind === "qa-answer") {
+            var formal = (item.answer && item.answer.formal) || {};
+            var html =
+              '<div class="qa-block"><p class="qa-label">Question means</p>' +
+              '<p class="qa-en">' +
+              esc(item.ask.en) +
+              "</p></div>" +
+              '<div class="qa-block"><p class="qa-label">Your answer · formal</p>' +
+              '<p class="qa-jp">' +
+              esc(formal.jp) +
+              "</p>" +
+              '<p class="qa-rj">' +
+              esc(formal.rj) +
+              "</p>" +
+              '<p class="qa-en">' +
+              esc(formal.en) +
+              "</p>";
+            if (item.answer && item.answer.note) {
+              html +=
+                '<p class="qa-note">' + esc(item.answer.note) + "</p>";
+            }
+            html += "</div>";
+            qaPanel.innerHTML = html;
+            qaPanel.classList.add("on");
+            return;
+          }
+          if (item.kind === "qa-ask") {
+            qaPanel.innerHTML =
+              '<div class="qa-block"><p class="qa-label">Ask in Japanese</p>' +
+              '<p class="qa-jp">' +
+              esc(item.ask.jp) +
+              "</p>" +
+              '<p class="qa-rj">' +
+              esc(item.ask.rj) +
+              "</p></div>";
+            qaPanel.classList.add("on");
+          }
+        }
+
+        function showCard() {
+          if (idx >= queue.length) return finish();
+          clearAdvance();
+          var item = queue[idx];
+          revealed = false;
+          rateRow.classList.remove("on");
+          hideQaPanel();
+          applyTagVisibility();
+          card.classList.remove("side-en", "side-jp");
+          jp.classList.remove("gone", "hidden");
+          rj.classList.remove("gone", "hidden");
+          en.classList.remove("gone", "hidden");
+
+          if (item.kind === "qa-answer") {
+            jp.textContent = item.ask.jp;
+            rj.textContent = item.ask.rj;
+            en.textContent = "";
+            en.classList.add("gone");
+            hint.textContent = "Say your answer · tap to check";
+          } else if (item.kind === "qa-ask") {
+            jp.textContent = "";
+            rj.textContent = "";
+            en.textContent = item.ask.en;
+            jp.classList.add("gone");
+            rj.classList.add("gone");
+            en.classList.remove("hidden");
+            card.classList.add("side-en");
+            hint.textContent = "How do you ask this in Japanese?";
+          } else {
+            jp.textContent = item.jp;
+            rj.textContent = item.rj;
+            en.textContent = item.en;
+            card.classList.toggle("side-en", item.side === "en");
+            card.classList.toggle("side-jp", item.side !== "en");
+            if (item.side === "en") {
+              en.classList.remove("hidden");
+              jp.classList.add("hidden");
+              rj.classList.add("hidden");
+            } else {
+              jp.classList.remove("hidden");
+              rj.classList.remove("hidden");
+              en.classList.add("hidden");
+            }
+            hint.textContent = "Tap or Space to reveal";
+          }
+          count.textContent = idx + 1 + " / " + queue.length;
+          bar.style.width = Math.round((idx / queue.length) * 100) + "%";
+        }
+
+        function reveal() {
+          if (advancing) return;
+          if (revealed) return;
+          revealed = true;
+          var item = queue[idx];
+          if (item.kind === "qa-answer" || item.kind === "qa-ask") {
+            renderQaReveal(item);
+          } else {
+            jp.classList.remove("hidden");
+            rj.classList.remove("hidden");
+            en.classList.remove("hidden");
+          }
+          rateRow.classList.add("on");
+          hint.textContent = "";
+          card.focus();
+        }
+
+        function commitRate(ok) {
+          var item = queue[idx];
+          var subject =
+            item.kind && item.kind.indexOf("qa") === 0
+              ? "Genki L1 Review Q&A"
+              : "Genki L1 Vocab";
+          ratedCount++;
+          if (ok) {
+            correctCount++;
+            if (window.JL_PROGRESS && JL_PROGRESS.record) {
+              JL_PROGRESS.record(item.id, "good", {
+                subject: subject,
+                type: "flashcard",
+              });
+            }
+          } else {
+            missed.push(Object.assign({}, item));
+            if (window.JL_PROGRESS && JL_PROGRESS.record) {
+              JL_PROGRESS.record(item.id, "again", {
+                subject: subject,
+                type: "flashcard",
+              });
+            }
+          }
+          idx++;
+          showCard();
+          card.focus();
+        }
+
+        function rate(ok) {
+          if (advancing) return;
+          // Period on a hidden card: flash the answer as correct for 1s, then next.
+          if (ok && !revealed) {
+            revealed = true;
+            advancing = true;
+            var item = queue[idx];
+            if (item.kind === "qa-answer" || item.kind === "qa-ask") {
+              renderQaReveal(item);
+            } else {
+              jp.classList.remove("hidden");
+              rj.classList.remove("hidden");
+              en.classList.remove("hidden");
+            }
+            rateRow.classList.remove("on");
+            card.classList.add("marked-good");
+            hint.textContent = "✅ Correct";
+            advanceTimer = setTimeout(function () {
+              advanceTimer = 0;
+              advancing = false;
+              commitRate(true);
+            }, 1000);
+            return;
+          }
+          if (!revealed) {
+            reveal();
+            return;
+          }
+          commitRate(ok);
+        }
+
+        function back() {
+          if (advancing) return;
+          if (idx <= 0) {
+            showCard();
+            card.focus();
+            return;
+          }
+          idx--;
+          showCard();
+          card.focus();
+        }
+
+        function skip() {
+          if (advancing) return;
+          idx++;
+          showCard();
+          card.focus();
+        }
+
+        function finish() {
+          session.hidden = true;
+          end.hidden = false;
+          rateRow.classList.remove("on");
+          document.body.classList.add("quizzing");
+          startBtn.hidden = true;
+          bar.style.width = "100%";
+          var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+          var pct = ratedCount
+            ? Math.round((correctCount / ratedCount) * 100)
+            : 0;
+          document.getElementById("score").textContent = ratedCount
+            ? pct + "%"
+            : "—";
+          document.getElementById("endChips").innerHTML =
+            '<span class="chip-stat">' +
+            correctCount +
+            " correct</span>" +
+            '<span class="chip-stat">' +
+            missed.length +
+            " missed</span>" +
+            '<span class="chip-stat">' +
+            queue.length +
+            " cards · " +
+            secs +
+            "s</span>";
+          redoBtn.hidden = !missed.length;
+          redoBtn.textContent = "Redo " + missed.length + " incorrect";
+          if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
+            JL_PROGRESS.addSession({
+              kind: "flashcards",
+              durationMs: Date.now() - startedAt,
+            });
+          }
+        }
+
+        startBtn.addEventListener("click", start);
+        redoBtn.addEventListener("click", startMissed);
+        document.getElementById("again").addEventListener("click", function () {
+          document.body.classList.remove("quizzing");
+          startBtn.hidden = false;
+          end.hidden = true;
+          session.hidden = true;
+          renderFilters();
+        });
+        document.getElementById("backBtn").addEventListener("click", back);
+        document
+          .getElementById("revealBtn")
+          .addEventListener("click", function () {
+            if (!revealed) reveal();
+          });
+        document.getElementById("skipBtn").addEventListener("click", skip);
+        document
+          .getElementById("missBtn")
+          .addEventListener("click", function () {
+            rate(false);
+          });
+        document
+          .getElementById("goodBtn")
+          .addEventListener("click", function () {
+            rate(true);
+          });
+        card.addEventListener("click", function () {
+          if (!revealed) reveal();
+        });
+
+        // Space on a focused <button> fires click on keyup — block that so Space
+        // only drives reveal via the keydown handler below.
+        document.addEventListener("keyup", function (e) {
+          if (session.hidden) return;
+          if (e.code === "Space" || e.key === " ") e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && keysModal.classList.contains("open")) {
+            e.preventDefault();
+            closeKeys();
+            return;
+          }
+          if (session.hidden || keysModal.classList.contains("open")) return;
+          if (
+            e.target &&
+            (e.target.tagName === "INPUT" ||
+              e.target.tagName === "TEXTAREA" ||
+              e.target.closest(".toggle"))
+          )
+            return;
+          if (e.code === "Space" || e.key === " ") {
+            e.preventDefault();
+            if (!revealed) reveal();
+          } else if (e.key === "," || e.code === "Comma") {
+            e.preventDefault();
+            rate(false);
+          } else if (e.key === "." || e.code === "Period") {
+            e.preventDefault();
+            rate(true);
+          } else if (e.code === "ArrowLeft" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            back();
+          } else if (e.code === "ArrowRight" || e.key === "ArrowRight") {
+            e.preventDefault();
+            skip();
+          }
+        });
+
+        setMode("vocab");
+      })();
+    </script>
+  </body>
 </html>
