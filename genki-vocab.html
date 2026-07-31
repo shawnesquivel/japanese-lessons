@@ -66,8 +66,9 @@
   <header>
     <p class="eyebrow">Lesson 1 · たんご</p>
     <h1>GENKI</h1>
-    <p class="subtitle">Hiragana + romaji. Space reveals English. Right skips.</p>
+    <p class="subtitle">Hiragana + romaji. Space reveals English. ← back · → skip.</p>
     <div class="keys" aria-hidden="true">
+      <span class="key"><kbd>←</kbd> back</span>
       <span class="key"><kbd>Space</kbd> reveal</span>
       <span class="key"><kbd>→</kbd> skip</span>
     </div>
@@ -78,14 +79,15 @@
 
   <div id="session" hidden>
     <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
-    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space to reveal, Right to skip.">
+    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space to reveal, Left back, Right skip.">
       <span class="tag" id="tag"></span>
       <p class="jp" id="jp"></p>
       <p class="rj" id="rj"></p>
       <p class="en hidden" id="en"></p>
-      <p class="hint" id="hint">Space to reveal · → to skip</p>
+      <p class="hint" id="hint">← back · Space reveal · → skip</p>
     </div>
     <div class="actions">
+      <button class="btn ghost" id="backBtn" tabindex="-1">← Back</button>
       <button class="btn ghost" id="revealBtn" tabindex="-1">Reveal</button>
       <button class="btn ghost" id="skipBtn" tabindex="-1">Skip →</button>
     </div>
@@ -261,7 +263,7 @@
     rj.textContent = item.rj;
     en.textContent = item.en;
     en.classList.add("hidden");
-    hint.textContent = "Space to reveal · → to skip";
+    hint.textContent = "← back · Space reveal · → skip";
     count.textContent = (idx + 1) + " / " + queue.length;
     bar.style.width = Math.round(idx / queue.length * 100) + "%";
   }
@@ -270,11 +272,24 @@
     if (revealed) return;
     revealed = true;
     en.classList.remove("hidden");
-    hint.textContent = "Space or → for next";
+    hint.textContent = "← back · Space or → for next";
     if (window.JL_PROGRESS && JL_PROGRESS.record) {
       JL_PROGRESS.record(queue[idx].id, "good", { subject: "Genki L1 Vocab", type: "flashcard" });
     }
     seen++;
+    card.focus();
+  }
+
+  function back() {
+    if (idx <= 0) {
+      revealed = false;
+      en.classList.add("hidden");
+      hint.textContent = "← back · Space reveal · → skip";
+      card.focus();
+      return;
+    }
+    idx--;
+    showCard();
     card.focus();
   }
 
@@ -302,6 +317,7 @@
     end.hidden = true;
     renderFilters();
   });
+  document.getElementById("backBtn").addEventListener("click", back);
   document.getElementById("revealBtn").addEventListener("click", function () {
     if (!revealed) reveal(); else skip();
   });
@@ -323,6 +339,9 @@
     if (e.code === "Space" || e.key === " ") {
       e.preventDefault();
       if (!revealed) reveal(); else skip();
+    } else if (e.code === "ArrowLeft" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      back();
     } else if (e.code === "ArrowRight" || e.key === "ArrowRight") {
       e.preventDefault();
       skip();
