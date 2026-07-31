@@ -33,6 +33,9 @@
       * {
         box-sizing: border-box;
       }
+      [hidden] {
+        display: none !important;
+      }
       html,
       body {
         height: 100%;
@@ -120,6 +123,9 @@
         display: flex;
         flex-direction: column;
         min-height: 0;
+      }
+      body:not(.quizzing) .stage {
+        display: none;
       }
       .prog {
         display: flex;
@@ -409,8 +415,12 @@
       .setup {
         flex: 0 0 auto;
         margin-top: auto;
-        padding-top: 16px;
-        border-top: 1px solid var(--line);
+        padding: 18px;
+        border-radius: 22px;
+        background: #fff;
+        box-shadow:
+          0 1px 2px rgba(42, 46, 36, 0.05),
+          0 12px 34px rgba(42, 46, 36, 0.08);
       }
       body.quizzing .setup-groups,
       body.quizzing .modes,
@@ -418,24 +428,29 @@
       body.quizzing .foot {
         display: none;
       }
+      body.completed .setup {
+        display: none;
+      }
       .filters {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: 0 0 12px;
+        margin: 0 0 14px;
       }
       .chip {
-        min-height: 40px;
-        padding: 7px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--line-strong);
-        background: #fff;
-        color: var(--ink-soft);
+        position: relative;
+        min-height: 58px;
+        padding: 9px 12px;
+        border-radius: 14px;
+        border: 0;
+        background: var(--paper);
+        color: var(--ink);
         font-weight: 700;
         font-size: 13px;
+        text-align: left;
         cursor: pointer;
-        transition-property: background, color, border-color, transform;
+        box-shadow: inset 0 0 0 1px var(--line);
+        transition-property: background, color, box-shadow, transform;
         transition-duration: 0.12s;
       }
       .chip:hover {
@@ -445,9 +460,57 @@
         transform: scale(0.96);
       }
       .chip.on {
-        background: var(--ink);
+        background: var(--ko-bg);
+        color: var(--ink);
+        box-shadow: inset 0 0 0 2px var(--ko);
+      }
+      .chip.on::after {
+        content: "✓";
+        position: absolute;
+        top: 9px;
+        right: 10px;
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--ko);
         color: #fff;
-        border-color: var(--ink);
+        font-size: 12px;
+      }
+      .chip-emoji {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 19px;
+        line-height: 1;
+      }
+      .setup-copy {
+        margin-bottom: 14px;
+      }
+      .setup-copy h2 {
+        margin: 0;
+        font: 400 25px/1.15 "Zen Antique", serif;
+        text-wrap: balance;
+      }
+      .setup-copy p {
+        margin: 5px 0 0;
+        color: var(--ink-soft);
+        font-size: 13px;
+        text-wrap: pretty;
+      }
+      .selection-status {
+        min-height: 20px;
+        margin: 2px 0 10px;
+        color: var(--ink-soft);
+        font-size: 12px;
+        text-align: center;
+      }
+      .btn:disabled {
+        background: var(--line);
+        color: var(--ink-soft);
+        border-color: var(--line);
+        cursor: not-allowed;
+        opacity: 0.8;
       }
 
       .toggles {
@@ -534,6 +597,12 @@
         justify-content: center;
         flex-wrap: wrap;
         margin: 12px 0 18px;
+      }
+      .end-actions {
+        display: grid;
+        gap: 10px;
+        width: 100%;
+        margin-top: 4px;
       }
       .chip-stat {
         background: #fff;
@@ -623,6 +692,9 @@
         .flash {
           min-height: 380px;
         }
+        .filters {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
         .modal {
           align-items: center;
         }
@@ -689,20 +761,32 @@
         </div>
 
         <div class="end" id="end" hidden>
-          <p class="eyebrow">Deck complete</p>
+          <p class="eyebrow">🎉 Deck complete</p>
           <div class="score" id="score"></div>
           <div class="chips" id="endChips"></div>
-          <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
-          <button class="btn big ghost" id="again" style="margin-top: 10px">
-            Study full deck again
-          </button>
+          <div class="end-actions">
+            <button class="btn big" id="redoMissed" hidden>
+              🔁 Review missed cards
+            </button>
+            <button class="btn big ghost" id="again">
+              ⚙️ Choose another deck
+            </button>
+          </div>
         </div>
       </div>
 
       <div class="setup" id="setup">
+        <div class="setup-copy">
+          <h2>What do you want to practice?</h2>
+          <p>Choose a deck, then select one or more topics below.</p>
+        </div>
         <div class="modes" id="modes" role="group" aria-label="Deck type">
-          <button type="button" class="mode on" data-mode="vocab">Vocab</button>
-          <button type="button" class="mode" data-mode="qa">Review Q&amp;A</button>
+          <button type="button" class="mode on" data-mode="vocab">
+            🗂️ Vocab
+          </button>
+          <button type="button" class="mode" data-mode="qa">
+            💬 Review Q&amp;A
+          </button>
         </div>
         <div class="setup-groups" id="setupGroups">
           <div
@@ -724,7 +808,12 @@
             <span>JP/EN direction</span>
           </label>
         </div>
-        <button class="btn big" id="start">Start flashcards</button>
+        <p class="selection-status" id="selectionStatus">
+          Select at least one topic
+        </p>
+        <button class="btn big" id="start" disabled>
+          Select topics to start
+        </button>
         <p class="foot" id="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
       </div>
     </div>
@@ -1168,15 +1257,15 @@
         ];
 
         var GROUPS = [
-          { id: "core", label: "Core" },
-          { id: "countries", label: "Countries" },
-          { id: "majors", label: "Majors" },
-          { id: "occupations", label: "Jobs" },
-          { id: "family", label: "Family" },
+          { id: "core", label: "Core", emoji: "🧠" },
+          { id: "countries", label: "Countries", emoji: "🌏" },
+          { id: "majors", label: "Majors", emoji: "🎓" },
+          { id: "occupations", label: "Jobs", emoji: "💼" },
+          { id: "family", label: "Family", emoji: "👨‍👩‍👧‍👦" },
         ];
         var QA_GROUPS = [
-          { id: "answer", label: "Answer me" },
-          { id: "ask", label: "Ask in JP" },
+          { id: "answer", label: "Answer me", emoji: "🗣️" },
+          { id: "ask", label: "Ask in JP", emoji: "❓" },
         ];
 
         var GROUP_LABEL = {};
@@ -1189,9 +1278,9 @@
 
         var selected = {};
         GROUPS.forEach(function (g) {
-          selected[g.id] = true;
+          selected[g.id] = false;
         });
-        var selectedQa = { answer: true, ask: true };
+        var selectedQa = { answer: false, ask: false };
         var deckMode = "vocab"; // "vocab" | "qa"
 
         var PREFS_KEY = "genkiVocab.prefs.v1";
@@ -1234,6 +1323,7 @@
         var keysModal = document.getElementById("keysModal");
         var foot = document.getElementById("foot");
         var modes = document.getElementById("modes");
+        var selectionStatus = document.getElementById("selectionStatus");
 
         showCategoryInput.checked = prefs.showCategory;
         showDirectionInput.checked = prefs.showDirection;
@@ -1307,31 +1397,49 @@
         });
 
         function renderFilters() {
-          if (deckMode === "qa") {
-            filters.innerHTML = QA_GROUPS.map(function (g) {
+          var groups = deckMode === "qa" ? QA_GROUPS : GROUPS;
+          var state = deckMode === "qa" ? selectedQa : selected;
+          filters.innerHTML = groups.map(function (g) {
               return (
                 '<button type="button" class="chip' +
-                (selectedQa[g.id] ? " on" : "") +
+                (state[g.id] ? " on" : "") +
                 '" data-g="' +
                 g.id +
+                '" aria-pressed="' +
+                String(!!state[g.id]) +
                 '">' +
+                '<span class="chip-emoji" aria-hidden="true">' +
+                g.emoji +
+                "</span>" +
                 g.label +
                 "</button>"
               );
             }).join("");
-            return;
-          }
-          filters.innerHTML = GROUPS.map(function (g) {
-            return (
-              '<button type="button" class="chip' +
-              (selected[g.id] ? " on" : "") +
-              '" data-g="' +
-              g.id +
-              '">' +
-              g.label +
-              "</button>"
-            );
-          }).join("");
+          updateStartState();
+        }
+
+        function selectedCount() {
+          var state = deckMode === "qa" ? selectedQa : selected;
+          var groups = deckMode === "qa" ? QA_GROUPS : GROUPS;
+          return groups.filter(function (g) {
+            return state[g.id];
+          }).length;
+        }
+
+        function updateStartState() {
+          var countSelected = selectedCount();
+          startBtn.disabled = countSelected === 0;
+          startBtn.textContent =
+            countSelected === 0
+              ? "Select topics to start"
+              : "Start " + (deckMode === "qa" ? "review" : "flashcards") + " →";
+          selectionStatus.textContent =
+            countSelected === 0
+              ? "Select at least one topic"
+              : countSelected +
+                " " +
+                (countSelected === 1 ? "topic" : "topics") +
+                " selected";
         }
 
         function openKeys() {
@@ -1356,13 +1464,8 @@
           var g = btn.getAttribute("data-g");
           if (deckMode === "qa") {
             selectedQa[g] = !selectedQa[g];
-            if (!selectedQa.answer && !selectedQa.ask) selectedQa[g] = true;
           } else {
             selected[g] = !selected[g];
-            var any = GROUPS.some(function (x) {
-              return selected[x.id];
-            });
-            if (!any) selected[g] = true;
           }
           renderFilters();
         });
@@ -1421,6 +1524,7 @@
           correctCount = 0;
           ratedCount = 0;
           startedAt = Date.now();
+          document.body.classList.remove("completed");
           document.body.classList.add("quizzing");
           startBtn.hidden = true;
           end.hidden = true;
@@ -1642,6 +1746,7 @@
           end.hidden = false;
           rateRow.classList.remove("on");
           document.body.classList.add("quizzing");
+          document.body.classList.add("completed");
           startBtn.hidden = true;
           bar.style.width = "100%";
           var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
@@ -1664,7 +1769,7 @@
             secs +
             "s</span>";
           redoBtn.hidden = !missed.length;
-          redoBtn.textContent = "Redo " + missed.length + " incorrect";
+          redoBtn.textContent = "🔁 Review " + missed.length + " missed";
           if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
             JL_PROGRESS.addSession({
               kind: "flashcards",
@@ -1677,6 +1782,7 @@
         redoBtn.addEventListener("click", startMissed);
         document.getElementById("again").addEventListener("click", function () {
           document.body.classList.remove("quizzing");
+          document.body.classList.remove("completed");
           startBtn.hidden = false;
           end.hidden = true;
           session.hidden = true;
