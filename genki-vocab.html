@@ -27,7 +27,8 @@
 
   .keys{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 0}
   .key{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 12px;border-radius:10px;background:#fff;border:1px solid var(--line-strong);font-size:13px;color:var(--ink-soft);font-weight:700}
-  .key kbd{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:28px;padding:0 8px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700}
+  .key kbd, .subtitle kbd, .rate kbd{display:inline-flex;align-items:center;justify-content:center;min-width:28px;min-height:24px;padding:0 7px;border-radius:6px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;font-family:inherit}
+  .subtitle kbd{min-width:22px;min-height:20px;vertical-align:middle}
 
   .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:20px 0 8px}
   .chip{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:13px;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
@@ -56,10 +57,20 @@
   .flash .hidden{visibility:hidden}
   .hint{margin-top:18px;color:var(--ink-soft);font-size:14px}
 
-  .actions{display:flex;gap:10px;margin-top:14px}
-  .actions .btn{flex:1}
+  .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .actions .btn{flex:1;min-width:100px}
+  .rate-row{display:none;gap:10px;margin-top:14px}
+  .rate-row.on{display:flex}
+  .rate{flex:1;min-height:48px;padding:10px 14px;border-radius:12px;border:2px solid;background:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .rate:active{transform:scale(.96)}
+  .rate.miss{border-color:var(--do);color:var(--do)}
+  .rate.miss:hover{background:var(--do-bg,#FAE7E1)}
+  .rate.good{border-color:var(--ko);color:var(--ko)}
+  .rate.good:hover{background:var(--ko-bg)}
   .end{text-align:center;margin-top:18px}
   .end .score{font:400 clamp(40px,10vw,64px)/1 "Zen Antique",serif;margin:8px 0}
+  .end .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0 18px}
+  .chip-stat{background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;font-size:14px;font-weight:700;color:var(--ink-soft)}
   .foot{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:13px}
 </style>
 </head>
@@ -68,10 +79,12 @@
   <header>
     <p class="eyebrow">Lesson 1 · たんご</p>
     <h1>GENKI</h1>
-    <p class="subtitle">Random Japanese↔English. Space reveals. ← back · → skip.</p>
+    <p class="subtitle">Random Japanese↔English. Space reveals · <kbd>,</kbd> miss · <kbd>.</kbd> got it.</p>
     <div class="keys" aria-hidden="true">
       <span class="key"><kbd>←</kbd> back</span>
       <span class="key"><kbd>Space</kbd> reveal</span>
+      <span class="key"><kbd>,</kbd> miss</span>
+      <span class="key"><kbd>.</kbd> got it</span>
       <span class="key"><kbd>→</kbd> skip</span>
     </div>
   </header>
@@ -81,12 +94,16 @@
 
   <div id="session" hidden>
     <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
-    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space to reveal, Left back, Right skip.">
+    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space reveal, comma miss, period got it.">
       <span class="tag" id="tag"></span>
       <p class="jp" id="jp"></p>
       <p class="rj" id="rj"></p>
       <p class="en hidden" id="en"></p>
-      <p class="hint" id="hint">← back · Space reveal · → skip</p>
+      <p class="hint" id="hint">Space to reveal</p>
+    </div>
+    <div class="rate-row" id="rateRow">
+      <button class="rate miss" id="missBtn" tabindex="-1">❌ Miss <kbd>,</kbd></button>
+      <button class="rate good" id="goodBtn" tabindex="-1">✅ Got it <kbd>.</kbd></button>
     </div>
     <div class="actions">
       <button class="btn ghost" id="backBtn" tabindex="-1">← Back</button>
@@ -98,7 +115,9 @@
   <div class="end" id="end" hidden>
     <p class="eyebrow">Deck complete</p>
     <div class="score" id="score"></div>
-    <button class="btn big" id="again">Study again</button>
+    <div class="chips" id="endChips"></div>
+    <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
+    <button class="btn big ghost" id="again" style="margin-top:10px">Study full deck again</button>
   </div>
 
   <p class="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
@@ -195,8 +214,10 @@
   var queue = [];
   var idx = 0;
   var revealed = false;
-  var seen = 0;
   var startedAt = 0;
+  var missed = [];
+  var correctCount = 0;
+  var ratedCount = 0;
 
   var filters = document.getElementById("filters");
   var startBtn = document.getElementById("start");
@@ -210,6 +231,8 @@
   var hint = document.getElementById("hint");
   var count = document.getElementById("count");
   var bar = document.getElementById("bar");
+  var rateRow = document.getElementById("rateRow");
+  var redoBtn = document.getElementById("redoMissed");
 
   function shuffle(arr) {
     var a = arr.slice();
@@ -242,13 +265,19 @@
     return VOCAB.filter(function (v) { return selected[v.group]; });
   }
 
-  function start() {
-    queue = shuffle(activeDeck()).map(function (v) {
+  function withSides(items) {
+    return shuffle(items).map(function (v) {
       return Object.assign({}, v, { side: Math.random() < 0.5 ? "jp" : "en" });
     });
+  }
+
+  function beginSession(items) {
+    queue = withSides(items);
     if (!queue.length) return;
     idx = 0;
-    seen = 0;
+    missed = [];
+    correctCount = 0;
+    ratedCount = 0;
     startedAt = Date.now();
     startBtn.hidden = true;
     filters.hidden = true;
@@ -258,10 +287,20 @@
     card.focus();
   }
 
+  function start() {
+    beginSession(activeDeck());
+  }
+
+  function startMissed() {
+    if (!missed.length) return;
+    beginSession(missed);
+  }
+
   function showCard() {
     if (idx >= queue.length) return finish();
     var item = queue[idx];
     revealed = false;
+    rateRow.classList.remove("on");
     tag.textContent = (GROUP_LABEL[item.group] || item.group) +
       (item.side === "en" ? " · EN → JP" : " · JP → EN");
     jp.textContent = item.jp;
@@ -278,7 +317,7 @@
       rj.classList.remove("hidden");
       en.classList.add("hidden");
     }
-    hint.textContent = "← back · Space reveal · → skip";
+    hint.textContent = "Space to reveal · , miss · . got it";
     count.textContent = (idx + 1) + " / " + queue.length;
     bar.style.width = Math.round(idx / queue.length * 100) + "%";
   }
@@ -289,11 +328,31 @@
     jp.classList.remove("hidden");
     rj.classList.remove("hidden");
     en.classList.remove("hidden");
-    hint.textContent = "← back · Space or → for next";
-    if (window.JL_PROGRESS && JL_PROGRESS.record) {
-      JL_PROGRESS.record(queue[idx].id, "good", { subject: "Genki L1 Vocab", type: "flashcard" });
+    rateRow.classList.add("on");
+    hint.textContent = ", miss · . got it · → skip";
+    card.focus();
+  }
+
+  function rate(ok) {
+    if (!revealed) {
+      reveal();
+      return;
     }
-    seen++;
+    var item = queue[idx];
+    ratedCount++;
+    if (ok) {
+      correctCount++;
+      if (window.JL_PROGRESS && JL_PROGRESS.record) {
+        JL_PROGRESS.record(item.id, "good", { subject: "Genki L1 Vocab", type: "flashcard" });
+      }
+    } else {
+      missed.push(Object.assign({}, item));
+      if (window.JL_PROGRESS && JL_PROGRESS.record) {
+        JL_PROGRESS.record(item.id, "again", { subject: "Genki L1 Vocab", type: "flashcard" });
+      }
+    }
+    idx++;
+    showCard();
     card.focus();
   }
 
@@ -317,15 +376,24 @@
   function finish() {
     session.hidden = true;
     end.hidden = false;
+    rateRow.classList.remove("on");
     bar.style.width = "100%";
     var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
-    document.getElementById("score").textContent = queue.length + " cards · " + secs + "s";
+    var pct = ratedCount ? Math.round(correctCount / ratedCount * 100) : 0;
+    document.getElementById("score").textContent = (ratedCount ? pct + "%" : "—");
+    document.getElementById("endChips").innerHTML =
+      '<span class="chip-stat">' + correctCount + " correct</span>" +
+      '<span class="chip-stat">' + missed.length + " missed</span>" +
+      '<span class="chip-stat">' + queue.length + " cards · " + secs + "s</span>";
+    redoBtn.hidden = !missed.length;
+    redoBtn.textContent = "Redo " + missed.length + " incorrect";
     if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
       JL_PROGRESS.addSession({ kind: "flashcards", durationMs: Date.now() - startedAt });
     }
   }
 
   startBtn.addEventListener("click", start);
+  redoBtn.addEventListener("click", startMissed);
   document.getElementById("again").addEventListener("click", function () {
     startBtn.hidden = false;
     filters.hidden = false;
@@ -334,15 +402,17 @@
   });
   document.getElementById("backBtn").addEventListener("click", back);
   document.getElementById("revealBtn").addEventListener("click", function () {
-    if (!revealed) reveal(); else skip();
+    if (!revealed) reveal();
   });
   document.getElementById("skipBtn").addEventListener("click", skip);
+  document.getElementById("missBtn").addEventListener("click", function () { rate(false); });
+  document.getElementById("goodBtn").addEventListener("click", function () { rate(true); });
   card.addEventListener("click", function () {
-    if (!revealed) reveal(); else skip();
+    if (!revealed) reveal();
   });
 
   // Space on a focused <button> fires click on keyup — block that so Space
-  // only drives reveal/next via the keydown handler below.
+  // only drives reveal via the keydown handler below.
   document.addEventListener("keyup", function (e) {
     if (session.hidden) return;
     if (e.code === "Space" || e.key === " ") e.preventDefault();
@@ -353,7 +423,13 @@
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
     if (e.code === "Space" || e.key === " ") {
       e.preventDefault();
-      if (!revealed) reveal(); else skip();
+      if (!revealed) reveal();
+    } else if (e.key === "," || e.code === "Comma") {
+      e.preventDefault();
+      rate(false);
+    } else if (e.key === "." || e.code === "Period") {
+      e.preventDefault();
+      rate(true);
     } else if (e.code === "ArrowLeft" || e.key === "ArrowLeft") {
       e.preventDefault();
       back();
