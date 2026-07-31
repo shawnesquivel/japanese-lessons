@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENKI — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="learning.js"></script>
+<script src="nav.js" defer></script>
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
+    --a:#3F6E91;--do:#CB4A2B;--ko-bg:#EDF3E4;--so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button{font:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:28px 22px 72px}
+  header{text-align:center;padding:22px 0 16px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  h1{font:400 clamp(48px,12vw,76px)/1 "Zen Antique",serif;letter-spacing:.06em;margin:6px 0}
+  .subtitle{color:var(--ink-soft);margin:0}
+
+  .keys{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 0}
+  .key{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 12px;border-radius:10px;background:#fff;border:1px solid var(--line-strong);font-size:13px;color:var(--ink-soft);font-weight:700}
+  .key kbd{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:28px;padding:0 8px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:20px 0 8px}
+  .chip{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:13px;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
+  .chip:hover{background:#F3EEE1}
+  .chip:active{transform:scale(.96)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .btn{min-height:48px;padding:12px 22px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .btn:active{transform:scale(.96)}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+  .btn.ghost:hover{background:#F3EEE1}
+  .btn.big{width:100%;margin-top:14px;font-size:18px}
+
+  .prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft);font-weight:700;margin:18px 0 10px}
+  .prog .bar{flex:1;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+  .prog .bar i{display:block;height:100%;background:var(--ko);width:0;transition:width .2s}
+
+  .flash{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);min-height:340px;padding:28px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(42,46,36,.05);user-select:none;transition-property:transform,background;transition-duration:.12s}
+  .flash:active{transform:scale(.98)}
+  .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);font-weight:700;background:var(--a-bg);border-radius:8px;padding:3px 10px;margin-bottom:18px}
+  .jp{font:400 clamp(36px,9vw,54px)/1.25 "Zen Antique",serif;margin:0}
+  .rj{color:var(--ink-soft);font-size:18px;margin-top:10px}
+  .en{font-size:28px;font-weight:700;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);width:100%;max-width:28ch}
+  .en.hidden{visibility:hidden}
+  .hint{margin-top:18px;color:var(--ink-soft);font-size:14px}
+
+  .actions{display:flex;gap:10px;margin-top:14px}
+  .actions .btn{flex:1}
+  .end{text-align:center;margin-top:18px}
+  .end .score{font:400 clamp(40px,10vw,64px)/1 "Zen Antique",serif;margin:8px 0}
+  .foot{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Lesson 1 · たんご</p>
+    <h1>GENKI</h1>
+    <p class="subtitle">Hiragana + romaji. Space reveals English. Right skips.</p>
+    <div class="keys" aria-hidden="true">
+      <span class="key"><kbd>Space</kbd> reveal</span>
+      <span class="key"><kbd>→</kbd> skip</span>
+    </div>
+  </header>
+
+  <div class="filters" id="filters" role="group" aria-label="Vocabulary groups"></div>
+  <button class="btn big" id="start">Start flashcards</button>
+
+  <div id="session" hidden>
+    <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
+    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space to reveal, Right to skip.">
+      <span class="tag" id="tag"></span>
+      <p class="jp" id="jp"></p>
+      <p class="rj" id="rj"></p>
+      <p class="en hidden" id="en"></p>
+      <p class="hint" id="hint">Space to reveal · → to skip</p>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" id="revealBtn" tabindex="-1">Reveal</button>
+      <button class="btn ghost" id="skipBtn" tabindex="-1">Skip →</button>
+    </div>
+  </div>
+
+  <div class="end" id="end" hidden>
+    <p class="eyebrow">Deck complete</p>
+    <div class="score" id="score"></div>
+    <button class="btn big" id="again">Study again</button>
+  </div>
+
+  <p class="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var VOCAB = [
+    // Main vocabulary
+    { id: "genki-l1-ano", group: "core", jp: "あの", rj: "ano", en: "um..." },
+    { id: "genki-l1-ima", group: "core", jp: "いま", rj: "ima", en: "now" },
+    { id: "genki-l1-eego", group: "core", jp: "えいご", rj: "eego", en: "English (language)" },
+    { id: "genki-l1-ee", group: "core", jp: "ええ", rj: "ee", en: "yes" },
+    { id: "genki-l1-gakusee", group: "core", jp: "がくせい", rj: "gakusee", en: "student" },
+    { id: "genki-l1-go", group: "core", jp: "～ご", rj: "...go", en: "language (e.g. にほんご)" },
+    { id: "genki-l1-kookoo", group: "core", jp: "こうこう", rj: "kookoo", en: "high school" },
+    { id: "genki-l1-gogo", group: "core", jp: "ごご", rj: "gogo", en: "P.M." },
+    { id: "genki-l1-gozen", group: "core", jp: "ごぜん", rj: "gozen", en: "A.M." },
+    { id: "genki-l1-sai", group: "core", jp: "～さい", rj: "...sai", en: "... years old" },
+    { id: "genki-l1-san", group: "core", jp: "～さん", rj: "...san", en: "Mr./Ms. ..." },
+    { id: "genki-l1-ji", group: "core", jp: "～じ", rj: "...ji", en: "o'clock (e.g. いちじ)" },
+    { id: "genki-l1-jin", group: "core", jp: "～じん", rj: "...jin", en: "people (e.g. にほんじん)" },
+    { id: "genki-l1-sensee", group: "core", jp: "せんせい", rj: "sensee", en: "teacher; Professor ..." },
+    { id: "genki-l1-senmon", group: "core", jp: "せんもん", rj: "senmon", en: "major" },
+    { id: "genki-l1-soodesu", group: "core", jp: "そうです", rj: "soo desu", en: "That's right." },
+    { id: "genki-l1-daigaku", group: "core", jp: "だいがく", rj: "daigaku", en: "college; university" },
+    { id: "genki-l1-denwa", group: "core", jp: "でんわ", rj: "denwa", en: "telephone" },
+    { id: "genki-l1-tomodachi", group: "core", jp: "ともだち", rj: "tomodachi", en: "friend" },
+    { id: "genki-l1-namae", group: "core", jp: "なまえ", rj: "namae", en: "name" },
+    { id: "genki-l1-nan", group: "core", jp: "なん／なに", rj: "nan / nani", en: "what" },
+    { id: "genki-l1-nihon", group: "core", jp: "にほん", rj: "Nihon", en: "Japan" },
+    { id: "genki-l1-nensee", group: "core", jp: "～ねんせい", rj: "...nensee", en: "... year student (e.g. いちねんせい)" },
+    { id: "genki-l1-hai", group: "core", jp: "はい", rj: "hai", en: "yes" },
+    { id: "genki-l1-han", group: "core", jp: "はん", rj: "han", en: "half (e.g. にじはん)" },
+    { id: "genki-l1-bangoo", group: "core", jp: "ばんごう", rj: "bangoo", en: "number" },
+    { id: "genki-l1-ryuugakusee", group: "core", jp: "りゅうがくせい", rj: "ryuugakusee", en: "international student" },
+    { id: "genki-l1-watashi", group: "core", jp: "わたし", rj: "watashi", en: "I" },
+
+    // Countries
+    { id: "genki-l1-amerika", group: "countries", jp: "アメリカ", rj: "Amerika", en: "U.S.A." },
+    { id: "genki-l1-igirisu", group: "countries", jp: "イギリス", rj: "Igirisu", en: "Britain" },
+    { id: "genki-l1-oosutoraria", group: "countries", jp: "オーストラリア", rj: "Oosutoraria", en: "Australia" },
+    { id: "genki-l1-kankoku", group: "countries", jp: "かんこく", rj: "Kankoku", en: "Korea" },
+    { id: "genki-l1-sueeden", group: "countries", jp: "スウェーデン", rj: "Sueeden", en: "Sweden" },
+    { id: "genki-l1-chuugoku", group: "countries", jp: "ちゅうごく", rj: "Chuugoku", en: "China" },
+
+    // Majors
+    { id: "genki-l1-kagaku", group: "majors", jp: "かがく", rj: "kagaku", en: "science" },
+    { id: "genki-l1-ajiakenkyuu", group: "majors", jp: "アジアけんきゅう", rj: "ajiakenkyuu", en: "Asian studies" },
+    { id: "genki-l1-keezai", group: "majors", jp: "けいざい", rj: "keezai", en: "economics" },
+    { id: "genki-l1-kokusaikankee", group: "majors", jp: "こくさいかんけい", rj: "kokusaikankee", en: "international relations" },
+    { id: "genki-l1-konpyuutaa", group: "majors", jp: "コンピューター", rj: "konpyuutaa", en: "computer" },
+    { id: "genki-l1-jinruigaku", group: "majors", jp: "じんるいがく", rj: "jinruigaku", en: "anthropology" },
+    { id: "genki-l1-seeji", group: "majors", jp: "せいじ", rj: "seeji", en: "politics" },
+    { id: "genki-l1-bijinesu", group: "majors", jp: "ビジネス", rj: "bijinesu", en: "business" },
+    { id: "genki-l1-bungaku", group: "majors", jp: "ぶんがく", rj: "bungaku", en: "literature" },
+    { id: "genki-l1-rekishi", group: "majors", jp: "れきし", rj: "rekishi", en: "history" },
+
+    // Occupations
+    { id: "genki-l1-shigoto", group: "occupations", jp: "しごと", rj: "shigoto", en: "job; work; occupation" },
+    { id: "genki-l1-isha", group: "occupations", jp: "いしゃ", rj: "isha", en: "doctor" },
+    { id: "genki-l1-kaishain", group: "occupations", jp: "かいしゃいん", rj: "kaishain", en: "office worker" },
+    { id: "genki-l1-kookoosee", group: "occupations", jp: "こうこうせい", rj: "kookoosee", en: "high school student" },
+    { id: "genki-l1-shufu", group: "occupations", jp: "しゅふ", rj: "shufu", en: "housewife" },
+    { id: "genki-l1-daigakuinsee", group: "occupations", jp: "だいがくいんせい", rj: "daigakuinsee", en: "graduate student" },
+    { id: "genki-l1-daigakusee", group: "occupations", jp: "だいがくせい", rj: "daigakusee", en: "college student" },
+    { id: "genki-l1-bengoshi", group: "occupations", jp: "べんごし", rj: "bengoshi", en: "lawyer" },
+
+    // Family
+    { id: "genki-l1-okaasan", group: "family", jp: "おかあさん", rj: "okaasan", en: "mother" },
+    { id: "genki-l1-otoosan", group: "family", jp: "おとうさん", rj: "otoosan", en: "father" },
+    { id: "genki-l1-oneesan", group: "family", jp: "おねえさん", rj: "oneesan", en: "older sister" },
+    { id: "genki-l1-oniisan", group: "family", jp: "おにいさん", rj: "oniisan", en: "older brother" },
+    { id: "genki-l1-imooto", group: "family", jp: "いもうと", rj: "imooto", en: "younger sister" },
+    { id: "genki-l1-otooto", group: "family", jp: "おとうと", rj: "otooto", en: "younger brother" }
+  ];
+
+  var GROUPS = [
+    { id: "core", label: "Core" },
+    { id: "countries", label: "Countries" },
+    { id: "majors", label: "Majors" },
+    { id: "occupations", label: "Jobs" },
+    { id: "family", label: "Family" }
+  ];
+
+  var GROUP_LABEL = {};
+  GROUPS.forEach(function (g) { GROUP_LABEL[g.id] = g.label; });
+
+  var selected = {};
+  GROUPS.forEach(function (g) { selected[g.id] = true; });
+
+  var queue = [];
+  var idx = 0;
+  var revealed = false;
+  var seen = 0;
+  var startedAt = 0;
+
+  var filters = document.getElementById("filters");
+  var startBtn = document.getElementById("start");
+  var session = document.getElementById("session");
+  var end = document.getElementById("end");
+  var card = document.getElementById("card");
+  var tag = document.getElementById("tag");
+  var jp = document.getElementById("jp");
+  var rj = document.getElementById("rj");
+  var en = document.getElementById("en");
+  var hint = document.getElementById("hint");
+  var count = document.getElementById("count");
+  var bar = document.getElementById("bar");
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function renderFilters() {
+    filters.innerHTML = GROUPS.map(function (g) {
+      var n = VOCAB.filter(function (v) { return v.group === g.id; }).length;
+      return '<button type="button" class="chip' + (selected[g.id] ? " on" : "") + '" data-g="' + g.id + '">' +
+        g.label + " · " + n + "</button>";
+    }).join("");
+  }
+
+  filters.addEventListener("click", function (e) {
+    var btn = e.target.closest(".chip");
+    if (!btn) return;
+    var g = btn.getAttribute("data-g");
+    selected[g] = !selected[g];
+    var any = GROUPS.some(function (x) { return selected[x.id]; });
+    if (!any) selected[g] = true;
+    renderFilters();
+  });
+
+  function activeDeck() {
+    return VOCAB.filter(function (v) { return selected[v.group]; });
+  }
+
+  function start() {
+    queue = shuffle(activeDeck());
+    if (!queue.length) return;
+    idx = 0;
+    seen = 0;
+    startedAt = Date.now();
+    startBtn.hidden = true;
+    filters.hidden = true;
+    end.hidden = true;
+    session.hidden = false;
+    showCard();
+    card.focus();
+  }
+
+  function showCard() {
+    if (idx >= queue.length) return finish();
+    var item = queue[idx];
+    revealed = false;
+    tag.textContent = GROUP_LABEL[item.group] || item.group;
+    jp.textContent = item.jp;
+    rj.textContent = item.rj;
+    en.textContent = item.en;
+    en.classList.add("hidden");
+    hint.textContent = "Space to reveal · → to skip";
+    count.textContent = (idx + 1) + " / " + queue.length;
+    bar.style.width = Math.round(idx / queue.length * 100) + "%";
+  }
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    en.classList.remove("hidden");
+    hint.textContent = "Space or → for next";
+    if (window.JL_PROGRESS && JL_PROGRESS.record) {
+      JL_PROGRESS.record(queue[idx].id, "good", { subject: "Genki L1 Vocab", type: "flashcard" });
+    }
+    seen++;
+    card.focus();
+  }
+
+  function skip() {
+    idx++;
+    showCard();
+    card.focus();
+  }
+
+  function finish() {
+    session.hidden = true;
+    end.hidden = false;
+    bar.style.width = "100%";
+    var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+    document.getElementById("score").textContent = queue.length + " cards · " + secs + "s";
+    if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
+      JL_PROGRESS.addSession({ kind: "flashcards", durationMs: Date.now() - startedAt });
+    }
+  }
+
+  startBtn.addEventListener("click", start);
+  document.getElementById("again").addEventListener("click", function () {
+    startBtn.hidden = false;
+    filters.hidden = false;
+    end.hidden = true;
+    renderFilters();
+  });
+  document.getElementById("revealBtn").addEventListener("click", function () {
+    if (!revealed) reveal(); else skip();
+  });
+  document.getElementById("skipBtn").addEventListener("click", skip);
+  card.addEventListener("click", function () {
+    if (!revealed) reveal(); else skip();
+  });
+
+  // Space on a focused <button> fires click on keyup — block that so Space
+  // only drives reveal/next via the keydown handler below.
+  document.addEventListener("keyup", function (e) {
+    if (session.hidden) return;
+    if (e.code === "Space" || e.key === " ") e.preventDefault();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (session.hidden) return;
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+    if (e.code === "Space" || e.key === " ") {
+      e.preventDefault();
+      if (!revealed) reveal(); else skip();
+    } else if (e.code === "ArrowRight" || e.key === "ArrowRight") {
+      e.preventDefault();
+      skip();
+    }
+  });
+
+  renderFilters();
+})();
+</script>
+</body>
+</html>
