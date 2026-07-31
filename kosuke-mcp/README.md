@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-The MCP endpoint is `http://localhost:3000/mcp` and the mcp-use inspector is available at `http://localhost:3000/inspector`.
+The MCP endpoint is `http://localhost:3000/mcp` and the mcp-use inspector is available at `http://localhost:3000/mcp/inspector`.
 
 Use another port with `PORT=3100 npm run dev`. Pack data defaults to `data/packs.json`; set `KOSUKE_DATA_FILE` to override it.
 
