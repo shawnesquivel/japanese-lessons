@@ -51,7 +51,9 @@
   .jp{font:400 clamp(36px,9vw,54px)/1.25 "Zen Antique",serif;margin:0}
   .rj{color:var(--ink-soft);font-size:18px;margin-top:10px}
   .en{font-size:28px;font-weight:700;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);width:100%;max-width:28ch}
-  .en.hidden{visibility:hidden}
+  .flash.side-en .en{font-size:clamp(30px,7vw,42px);margin-top:0;padding-top:0;border-top:0}
+  .flash.side-en .jp{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);width:100%}
+  .flash .hidden{visibility:hidden}
   .hint{margin-top:18px;color:var(--ink-soft);font-size:14px}
 
   .actions{display:flex;gap:10px;margin-top:14px}
@@ -66,7 +68,7 @@
   <header>
     <p class="eyebrow">Lesson 1 · たんご</p>
     <h1>GENKI</h1>
-    <p class="subtitle">Hiragana + romaji. Space reveals English. ← back · → skip.</p>
+    <p class="subtitle">Random Japanese↔English. Space reveals. ← back · → skip.</p>
     <div class="keys" aria-hidden="true">
       <span class="key"><kbd>←</kbd> back</span>
       <span class="key"><kbd>Space</kbd> reveal</span>
@@ -241,7 +243,9 @@
   }
 
   function start() {
-    queue = shuffle(activeDeck());
+    queue = shuffle(activeDeck()).map(function (v) {
+      return Object.assign({}, v, { side: Math.random() < 0.5 ? "jp" : "en" });
+    });
     if (!queue.length) return;
     idx = 0;
     seen = 0;
@@ -258,11 +262,22 @@
     if (idx >= queue.length) return finish();
     var item = queue[idx];
     revealed = false;
-    tag.textContent = GROUP_LABEL[item.group] || item.group;
+    tag.textContent = (GROUP_LABEL[item.group] || item.group) +
+      (item.side === "en" ? " · EN → JP" : " · JP → EN");
     jp.textContent = item.jp;
     rj.textContent = item.rj;
     en.textContent = item.en;
-    en.classList.add("hidden");
+    card.classList.toggle("side-en", item.side === "en");
+    card.classList.toggle("side-jp", item.side !== "en");
+    if (item.side === "en") {
+      en.classList.remove("hidden");
+      jp.classList.add("hidden");
+      rj.classList.add("hidden");
+    } else {
+      jp.classList.remove("hidden");
+      rj.classList.remove("hidden");
+      en.classList.add("hidden");
+    }
     hint.textContent = "← back · Space reveal · → skip";
     count.textContent = (idx + 1) + " / " + queue.length;
     bar.style.width = Math.round(idx / queue.length * 100) + "%";
@@ -271,6 +286,8 @@
   function reveal() {
     if (revealed) return;
     revealed = true;
+    jp.classList.remove("hidden");
+    rj.classList.remove("hidden");
     en.classList.remove("hidden");
     hint.textContent = "← back · Space or → for next";
     if (window.JL_PROGRESS && JL_PROGRESS.record) {
@@ -282,9 +299,7 @@
 
   function back() {
     if (idx <= 0) {
-      revealed = false;
-      en.classList.add("hidden");
-      hint.textContent = "← back · Space reveal · → skip";
+      showCard();
       card.focus();
       return;
     }
