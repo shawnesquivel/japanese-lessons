@@ -500,11 +500,12 @@
         grid-auto-rows: 1fr;
         gap: 8px;
         margin: 0 0 14px;
-        /* Reserve the vocab deck's grid area so the panel keeps one height. */
-        min-height: 190px;
+        /* Grow with topic count; Q&A keeps a short stacked layout. */
+        min-height: 0;
       }
       body.mode-qa .filters {
         grid-template-columns: minmax(0, 1fr);
+        min-height: 124px;
       }
       .chip {
         position: relative;
@@ -763,7 +764,6 @@
         }
         .filters {
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          min-height: 124px;
         }
         .modal {
           align-items: center;
@@ -778,7 +778,7 @@
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
-          <p class="eyebrow">Lesson 1 · たんご</p>
+          <p class="eyebrow">Lessons 1–2 · たんご</p>
           <h1>GENKI</h1>
         </div>
         <div class="topbar-actions">
@@ -908,7 +908,7 @@
         <button class="btn big" id="start" disabled>
           Select topics to start
         </button>
-        <p class="foot" id="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
+        <p class="foot" id="foot">Genki I Lessons 1–2 vocabulary · personal study copy</p>
       </div>
     </div>
 
@@ -1364,14 +1364,361 @@
             rj: "otooto",
             en: "younger brother",
           },
+
+          // Lesson 2 · Words that point
+          {
+            id: "genki-l2-kore",
+            group: "pointing",
+            jp: "これ",
+            rj: "kore",
+            en: "this one",
+          },
+          {
+            id: "genki-l2-sore",
+            group: "pointing",
+            jp: "それ",
+            rj: "sore",
+            en: "that one",
+          },
+          {
+            id: "genki-l2-are",
+            group: "pointing",
+            jp: "あれ",
+            rj: "are",
+            en: "that one (over there)",
+          },
+          {
+            id: "genki-l2-dore",
+            group: "pointing",
+            jp: "どれ",
+            rj: "dore",
+            en: "which one",
+          },
+          {
+            id: "genki-l2-kono",
+            group: "pointing",
+            jp: "この",
+            rj: "kono",
+            en: "this...",
+          },
+          {
+            id: "genki-l2-sono",
+            group: "pointing",
+            jp: "その",
+            rj: "sono",
+            en: "that...",
+          },
+          {
+            id: "genki-l2-ano-that",
+            group: "pointing",
+            jp: "あの",
+            rj: "ano",
+            en: "that... (over there)",
+          },
+          {
+            id: "genki-l2-dono",
+            group: "pointing",
+            jp: "どの",
+            rj: "dono",
+            en: "which...",
+          },
+          {
+            id: "genki-l2-asoko",
+            group: "pointing",
+            jp: "あそこ",
+            rj: "asoko",
+            en: "over there",
+          },
+          {
+            id: "genki-l2-doko",
+            group: "pointing",
+            jp: "どこ",
+            rj: "doko",
+            en: "where",
+          },
+          {
+            id: "genki-l2-dare",
+            group: "pointing",
+            jp: "だれ",
+            rj: "dare",
+            en: "who",
+          },
+
+          // Lesson 2 · Food
+          {
+            id: "genki-l2-oishii",
+            group: "food",
+            jp: "おいしい",
+            rj: "oishii",
+            en: "delicious",
+          },
+          {
+            id: "genki-l2-sakana",
+            group: "food",
+            jp: "さかな",
+            rj: "sakana",
+            en: "fish",
+          },
+          {
+            id: "genki-l2-tonkatsu",
+            group: "food",
+            jp: "とんかつ",
+            rj: "tonkatsu",
+            en: "pork cutlet",
+          },
+          {
+            id: "genki-l2-niku",
+            group: "food",
+            jp: "にく",
+            rj: "niku",
+            en: "meat",
+          },
+          {
+            id: "genki-l2-menyuu",
+            group: "food",
+            jp: "メニュー",
+            rj: "menyuu",
+            en: "menu",
+          },
+          {
+            id: "genki-l2-yasai",
+            group: "food",
+            jp: "やさい",
+            rj: "yasai",
+            en: "vegetable",
+          },
+
+          // Lesson 2 · Things
+          {
+            id: "genki-l2-enpitsu",
+            group: "things",
+            jp: "えんぴつ",
+            rj: "enpitsu",
+            en: "pencil",
+          },
+          {
+            id: "genki-l2-kasa",
+            group: "things",
+            jp: "かさ",
+            rj: "kasa",
+            en: "umbrella",
+          },
+          {
+            id: "genki-l2-kaban",
+            group: "things",
+            jp: "かばん",
+            rj: "kaban",
+            en: "bag",
+          },
+          {
+            id: "genki-l2-kutsu",
+            group: "things",
+            jp: "くつ",
+            rj: "kutsu",
+            en: "shoes",
+          },
+          {
+            id: "genki-l2-saifu",
+            group: "things",
+            jp: "さいふ",
+            rj: "saifu",
+            en: "wallet",
+          },
+          {
+            id: "genki-l2-jiinzu",
+            group: "things",
+            jp: "ジーンズ",
+            rj: "jiinzu",
+            en: "jeans",
+          },
+          {
+            id: "genki-l2-jisho",
+            group: "things",
+            jp: "じしょ",
+            rj: "jisho",
+            en: "dictionary",
+          },
+          {
+            id: "genki-l2-jitensha",
+            group: "things",
+            jp: "じてんしゃ",
+            rj: "jitensha",
+            en: "bicycle",
+          },
+          {
+            id: "genki-l2-shinbun",
+            group: "things",
+            jp: "しんぶん",
+            rj: "shinbun",
+            en: "newspaper",
+          },
+          {
+            id: "genki-l2-teepu",
+            group: "things",
+            jp: "テープ",
+            rj: "teepu",
+            en: "tape",
+          },
+          {
+            id: "genki-l2-tokee",
+            group: "things",
+            jp: "とけい",
+            rj: "tokee",
+            en: "watch; clock",
+          },
+          {
+            id: "genki-l2-toreenaa",
+            group: "things",
+            jp: "トレーナー",
+            rj: "toreenaa",
+            en: "sweat shirt",
+          },
+          {
+            id: "genki-l2-nooto",
+            group: "things",
+            jp: "ノート",
+            rj: "nooto",
+            en: "notebook",
+          },
+          {
+            id: "genki-l2-pen",
+            group: "things",
+            jp: "ペン",
+            rj: "pen",
+            en: "pen",
+          },
+          {
+            id: "genki-l2-booshi",
+            group: "things",
+            jp: "ぼうし",
+            rj: "booshi",
+            en: "hat; cap",
+          },
+          {
+            id: "genki-l2-hon",
+            group: "things",
+            jp: "ほん",
+            rj: "hon",
+            en: "book",
+          },
+
+          // Lesson 2 · Places
+          {
+            id: "genki-l2-otearai",
+            group: "places",
+            jp: "おてあらい",
+            rj: "otearai",
+            en: "restroom",
+          },
+          {
+            id: "genki-l2-kissaten",
+            group: "places",
+            jp: "きっさてん",
+            rj: "kissaten",
+            en: "cafe",
+          },
+          {
+            id: "genki-l2-ginkoo",
+            group: "places",
+            jp: "ぎんこう",
+            rj: "ginkoo",
+            en: "bank",
+          },
+          {
+            id: "genki-l2-toshokan",
+            group: "places",
+            jp: "としょかん",
+            rj: "toshokan",
+            en: "library",
+          },
+          {
+            id: "genki-l2-yuubinkyoku",
+            group: "places",
+            jp: "ゆうびんきょく",
+            rj: "yuubinkyoku",
+            en: "post office",
+          },
+
+          // Lesson 2 · Money
+          {
+            id: "genki-l2-ikura",
+            group: "money",
+            jp: "いくら",
+            rj: "ikura",
+            en: "how much",
+          },
+          {
+            id: "genki-l2-en",
+            group: "money",
+            jp: "～えん",
+            rj: "...en",
+            en: "... yen",
+          },
+          {
+            id: "genki-l2-takai",
+            group: "money",
+            jp: "たかい",
+            rj: "takai",
+            en: "expensive",
+          },
+
+          // Lesson 2 · Expressions
+          {
+            id: "genki-l2-irasshaimase",
+            group: "expressions",
+            jp: "いらっしゃいませ",
+            rj: "irasshaimase",
+            en: "Welcome (to our store)",
+          },
+          {
+            id: "genki-l2-onegaishimasu",
+            group: "expressions",
+            jp: "（～を）おねがいします",
+            rj: "(... o) onegaishimasu",
+            en: "..., please.",
+          },
+          {
+            id: "genki-l2-kudasai",
+            group: "expressions",
+            jp: "（～を）ください",
+            rj: "(... o) kudasai",
+            en: "Please give me...",
+          },
+          {
+            id: "genki-l2-jaa",
+            group: "expressions",
+            jp: "じゃあ",
+            rj: "jaa",
+            en: "then...; if that is the case...",
+          },
+          {
+            id: "genki-l2-doozo",
+            group: "expressions",
+            jp: "（～を）どうぞ",
+            rj: "(... o) doozo",
+            en: "Here it is.",
+          },
+          {
+            id: "genki-l2-doomo",
+            group: "expressions",
+            jp: "どうも",
+            rj: "doomo",
+            en: "Thank you.",
+          },
         ];
 
         var GROUPS = [
           { id: "core", label: "Core", emoji: "🧠" },
+          { id: "pointing", label: "Pointing", emoji: "👉" },
+          { id: "food", label: "Food", emoji: "🍱" },
+          { id: "things", label: "Things", emoji: "🎒" },
+          { id: "places", label: "Places", emoji: "📍" },
           { id: "countries", label: "Countries", emoji: "🌏" },
           { id: "majors", label: "Majors", emoji: "🎓" },
           { id: "occupations", label: "Jobs", emoji: "💼" },
           { id: "family", label: "Family", emoji: "👨‍👩‍👧‍👦" },
+          { id: "money", label: "Money", emoji: "💴" },
+          { id: "expressions", label: "Phrases", emoji: "💬" },
         ];
         var QA_GROUPS = [
           { id: "answer", label: "Practice replies", emoji: "🗣️" },
@@ -1496,7 +1843,7 @@
           foot.textContent =
             mode === "qa"
               ? "Genki I Lesson 1 review Q&A · your polite answers"
-              : "Genki I Lesson 1 vocabulary · personal study copy";
+              : "Genki I Lessons 1–2 vocabulary · personal study copy";
           renderFilters();
         }
 
