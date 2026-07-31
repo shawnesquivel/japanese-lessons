@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "python3 -m http.server 8080",
     "generate:audio": "node scripts/generate-audio.mjs",
-    "generate:audio:force": "node scripts/generate-audio.mjs --force"
+    "generate:audio:force": "node scripts/generate-audio.mjs --force",
+    "mcp:dev": "npm --prefix kosuke-mcp run dev",
+    "mcp:build": "npm --prefix kosuke-mcp run build",
+    "mcp:test": "npm --prefix kosuke-mcp test",
+    "mcp:start": "npm --prefix kosuke-mcp start"
   },
   "devDependencies": {
     "@elevenlabs/elevenlabs-js": "^2.54.0"

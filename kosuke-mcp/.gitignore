@@ -1,0 +1,7 @@
+node_modules
+dist
+data/packs.json
+.env
+.env.local
+.mcp-use
+mcp-env.d.ts

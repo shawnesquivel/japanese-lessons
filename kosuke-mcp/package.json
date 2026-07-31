@@ -1,0 +1,28 @@
+{
+  "name": "kosuke-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript MCP server for creating and sharing portable Kosuke flashcard packs",
+  "scripts": {
+    "dev": "mcp-use dev --entry src/server.ts --no-open",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "npm run typecheck && mcp-use build --entry src/server.ts",
+    "start": "mcp-use start --with-inspector",
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "mcp-use": "2.0.0-beta.66",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tsx": "4.23.1",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
