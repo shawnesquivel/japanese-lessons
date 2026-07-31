@@ -17,133 +17,174 @@
     --a-bg:#E5EDF3;--radius:14px;
   }
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  html,body{height:100%}
+  body{margin:0;min-height:100vh;min-height:100dvh;background:var(--paper);color:var(--ink);font:400 16px/1.55 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   button{font:inherit}
-  .wrap{max-width:640px;margin:0 auto;padding:28px 22px 72px}
-  header{text-align:center;padding:22px 0 16px;border-bottom:2px solid var(--ink)}
-  .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
-  h1{font:400 clamp(48px,12vw,76px)/1 "Zen Antique",serif;letter-spacing:.06em;margin:6px 0}
-  .subtitle{color:var(--ink-soft);margin:0}
+  .wrap{max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:12px 16px 20px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:max(20px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+  body.quizzing .wrap{padding-top:10px}
 
-  .keys{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 0}
-  .key{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 12px;border-radius:10px;background:#fff;border:1px solid var(--line-strong);font-size:13px;color:var(--ink-soft);font-weight:700}
-  .key kbd, .subtitle kbd, .rate kbd{display:inline-flex;align-items:center;justify-content:center;min-width:28px;min-height:24px;padding:0 7px;border-radius:6px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;font-family:inherit}
-  .subtitle kbd{min-width:22px;min-height:20px;vertical-align:middle}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 0 10px 56px;flex:0 0 auto}
+  .brand{min-width:0}
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:0}
+  h1{font:400 28px/1 "Zen Antique",serif;letter-spacing:.04em;margin:2px 0 0}
+  body.quizzing h1{font-size:22px}
+  .icon-btn{min-width:40px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:12px;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .icon-btn:active{transform:scale(.96)}
 
-  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:20px 0 8px}
+  .stage{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+  .prog{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-soft);font-weight:700;margin:0 0 10px}
+  .prog .bar{flex:1;height:5px;border-radius:999px;background:var(--line);overflow:hidden}
+  .prog .bar i{display:block;height:100%;background:var(--ko);width:0;transition:width .2s}
+
+  .flash{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);flex:1 1 auto;min-height:min(52vh,420px);padding:28px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(42,46,36,.05);user-select:none;transition-property:transform,background;transition-duration:.12s}
+  .flash:active{transform:scale(.98)}
+  .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);font-weight:700;background:var(--a-bg);border-radius:8px;padding:3px 10px;margin-bottom:16px}
+  .tag.off{display:none}
+  .jp{font:400 clamp(34px,10vw,52px)/1.25 "Zen Antique",serif;margin:0}
+  .rj{color:var(--ink-soft);font-size:16px;margin-top:8px}
+  .en{font-size:24px;font-weight:700;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);width:100%;max-width:28ch}
+  .flash.side-en .en{font-size:clamp(28px,8vw,40px);margin-top:0;padding-top:0;border-top:0}
+  .flash.side-en .jp{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);width:100%}
+  .flash .hidden{visibility:hidden}
+  .hint{margin-top:16px;color:var(--ink-soft);font-size:13px}
+
+  .dock{flex:0 0 auto;margin-top:12px}
+  .rate-row{display:none;gap:8px;margin-bottom:10px}
+  .rate-row.on{display:flex}
+  .rate{flex:1;min-height:48px;padding:10px 12px;border-radius:12px;border:2px solid;background:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .rate:active{transform:scale(.96)}
+  .rate kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px;min-height:20px;padding:0 6px;border-radius:5px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;font-family:inherit;margin-left:4px}
+  .rate.miss{border-color:var(--do);color:var(--do)}
+  .rate.miss:hover{background:var(--do-bg,#FAE7E1)}
+  .rate.good{border-color:var(--ko);color:var(--ko)}
+  .rate.good:hover{background:var(--ko-bg)}
+  .actions{display:flex;gap:8px}
+  .actions .btn{flex:1;min-width:0}
+
+  .btn{min-height:44px;padding:10px 14px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s;font-size:14px}
+  .btn:active{transform:scale(.96)}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+  .btn.ghost:hover{background:#F3EEE1}
+  .btn.big{width:100%;min-height:48px;font-size:16px}
+
+  .setup{flex:0 0 auto;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+  body.quizzing .setup-groups,
+  body.quizzing #start,
+  body.quizzing .foot{display:none}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 12px}
   .chip{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);font-weight:700;font-size:13px;cursor:pointer;transition-property:background,color,border-color,transform;transition-duration:.12s}
   .chip:hover{background:#F3EEE1}
   .chip:active{transform:scale(.96)}
   .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-  .toggles{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
-  .toggle{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:6px 12px;border-radius:12px;background:#fff;border:1px solid var(--line-strong);cursor:pointer;user-select:none;font-size:13px;font-weight:700;color:var(--ink-soft);transition-property:transform,background;transition-duration:.12s}
+  .toggles{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 12px}
+  .toggle{display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:4px 9px;border-radius:999px;background:#fff;border:1px solid var(--line-strong);cursor:pointer;user-select:none;font-size:11px;font-weight:700;color:var(--ink-soft);transition-property:transform,background;transition-duration:.12s}
   .toggle:active{transform:scale(.96)}
   .toggle input{position:absolute;opacity:0;pointer-events:none}
-  .toggle .track{position:relative;width:40px;height:24px;border-radius:999px;background:var(--line-strong);flex:0 0 auto;transition:background .15s}
-  .toggle .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:transform .15s}
+  .toggle .track{position:relative;width:28px;height:16px;border-radius:999px;background:var(--line-strong);flex:0 0 auto;transition:background .15s}
+  .toggle .track::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:transform .15s}
   .toggle input:checked + .track{background:var(--ko)}
-  .toggle input:checked + .track::after{transform:translateX(16px)}
+  .toggle input:checked + .track::after{transform:translateX(12px)}
   .toggle input:focus-visible + .track{outline:3px solid var(--so);outline-offset:2px}
-  .tag.off{display:none}
 
-  .btn{min-height:48px;padding:12px 22px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
-  .btn:active{transform:scale(.96)}
-  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
-  .btn.ghost:hover{background:#F3EEE1}
-  .btn.big{width:100%;margin-top:14px;font-size:18px}
+  .end{text-align:center;padding:24px 8px;flex:1;display:flex;flex-direction:column;justify-content:center}
+  .end .score{font:400 clamp(48px,14vw,72px)/1 "Zen Antique",serif;margin:8px 0}
+  .end .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 18px}
+  .chip-stat{background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+  .foot{margin-top:14px;text-align:center;color:var(--ink-soft);font-size:12px}
 
-  .prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft);font-weight:700;margin:18px 0 10px}
-  .prog .bar{flex:1;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
-  .prog .bar i{display:block;height:100%;background:var(--ko);width:0;transition:width .2s}
-
-  .flash{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);min-height:340px;padding:28px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(42,46,36,.05);user-select:none;transition-property:transform,background;transition-duration:.12s}
-  .flash:active{transform:scale(.98)}
-  .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);font-weight:700;background:var(--a-bg);border-radius:8px;padding:3px 10px;margin-bottom:18px}
-  .jp{font:400 clamp(36px,9vw,54px)/1.25 "Zen Antique",serif;margin:0}
-  .rj{color:var(--ink-soft);font-size:18px;margin-top:10px}
-  .en{font-size:28px;font-weight:700;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);width:100%;max-width:28ch}
-  .flash.side-en .en{font-size:clamp(30px,7vw,42px);margin-top:0;padding-top:0;border-top:0}
-  .flash.side-en .jp{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);width:100%}
-  .flash .hidden{visibility:hidden}
-  .hint{margin-top:18px;color:var(--ink-soft);font-size:14px}
-
-  .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-  .actions .btn{flex:1;min-width:100px}
-  .rate-row{display:none;gap:10px;margin-top:14px}
-  .rate-row.on{display:flex}
-  .rate{flex:1;min-height:48px;padding:10px 14px;border-radius:12px;border:2px solid;background:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
-  .rate:active{transform:scale(.96)}
-  .rate.miss{border-color:var(--do);color:var(--do)}
-  .rate.miss:hover{background:var(--do-bg,#FAE7E1)}
-  .rate.good{border-color:var(--ko);color:var(--ko)}
-  .rate.good:hover{background:var(--ko-bg)}
-  .end{text-align:center;margin-top:18px}
-  .end .score{font:400 clamp(40px,10vw,64px)/1 "Zen Antique",serif;margin:8px 0}
-  .end .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0 18px}
-  .chip-stat{background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;font-size:14px;font-weight:700;color:var(--ink-soft)}
-  .foot{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:13px}
+  .modal{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;padding:16px;background:rgba(42,46,36,.4)}
+  .modal.open{display:flex}
+  .modal-sheet{width:100%;max-width:420px;background:var(--paper);border:2px solid var(--ink);border-radius:18px 18px 14px 14px;padding:18px 16px 16px;box-shadow:0 -8px 30px rgba(42,46,36,.18)}
+  .modal-sheet h2{font:400 28px/1 "Zen Antique",serif;margin:0 0 6px}
+  .modal-sheet p{margin:0 0 14px;color:var(--ink-soft);font-size:14px}
+  .keys{display:grid;gap:8px;margin:0 0 14px}
+  .key{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;border-radius:12px;background:#fff;border:1px solid var(--line-strong);font-size:14px;color:var(--ink);font-weight:700}
+  .key kbd{display:inline-flex;align-items:center;justify-content:center;min-width:52px;min-height:28px;padding:0 8px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;font-family:inherit}
+  @media(min-width:560px){
+    .wrap{padding-top:20px}
+    .flash{min-height:380px}
+    .modal{align-items:center}
+    .modal-sheet{border-radius:18px}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <p class="eyebrow">Lesson 1 · たんご</p>
-    <h1>GENKI</h1>
-    <p class="subtitle">Random Japanese↔English. Space reveals · <kbd>,</kbd> miss · <kbd>.</kbd> got it.</p>
-    <div class="keys" aria-hidden="true">
-      <span class="key"><kbd>←</kbd> back</span>
-      <span class="key"><kbd>Space</kbd> reveal</span>
-      <span class="key"><kbd>,</kbd> miss</span>
-      <span class="key"><kbd>.</kbd> got it</span>
-      <span class="key"><kbd>→</kbd> skip</span>
+  <div class="topbar">
+    <div class="brand">
+      <p class="eyebrow">Lesson 1 · たんご</p>
+      <h1>GENKI</h1>
     </div>
-  </header>
-
-  <div class="filters" id="filters" role="group" aria-label="Vocabulary groups"></div>
-  <div class="toggles" id="toggles">
-    <label class="toggle">
-      <input type="checkbox" id="showCategory">
-      <span class="track" aria-hidden="true"></span>
-      <span>Show category</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" id="showDirection">
-      <span class="track" aria-hidden="true"></span>
-      <span>Show JP/EN direction</span>
-    </label>
+    <button type="button" class="icon-btn" id="keysBtn" aria-haspopup="dialog">Shortcuts</button>
   </div>
-  <button class="btn big" id="start">Start flashcards</button>
 
-  <div id="session" hidden>
-    <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
-    <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Space reveal, comma miss, period got it.">
-      <span class="tag" id="tag"></span>
-      <p class="jp" id="jp"></p>
-      <p class="rj" id="rj"></p>
-      <p class="en hidden" id="en"></p>
-      <p class="hint" id="hint">Space to reveal</p>
+  <div class="stage">
+    <div id="session" hidden>
+      <div class="prog"><span id="count">0 / 0</span><div class="bar"><i id="bar"></i></div></div>
+      <div class="flash" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap or Space to reveal.">
+        <span class="tag" id="tag"></span>
+        <p class="jp" id="jp"></p>
+        <p class="rj" id="rj"></p>
+        <p class="en hidden" id="en"></p>
+        <p class="hint" id="hint">Tap or Space to reveal</p>
+      </div>
+      <div class="dock">
+        <div class="rate-row" id="rateRow">
+          <button class="rate miss" id="missBtn" tabindex="-1">❌ Miss <kbd>,</kbd></button>
+          <button class="rate good" id="goodBtn" tabindex="-1">✅ Got it <kbd>.</kbd></button>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" id="backBtn" tabindex="-1">←</button>
+          <button class="btn ghost" id="revealBtn" tabindex="-1">Reveal</button>
+          <button class="btn ghost" id="skipBtn" tabindex="-1">→</button>
+        </div>
+      </div>
     </div>
-    <div class="rate-row" id="rateRow">
-      <button class="rate miss" id="missBtn" tabindex="-1">❌ Miss <kbd>,</kbd></button>
-      <button class="rate good" id="goodBtn" tabindex="-1">✅ Got it <kbd>.</kbd></button>
-    </div>
-    <div class="actions">
-      <button class="btn ghost" id="backBtn" tabindex="-1">← Back</button>
-      <button class="btn ghost" id="revealBtn" tabindex="-1">Reveal</button>
-      <button class="btn ghost" id="skipBtn" tabindex="-1">Skip →</button>
+
+    <div class="end" id="end" hidden>
+      <p class="eyebrow">Deck complete</p>
+      <div class="score" id="score"></div>
+      <div class="chips" id="endChips"></div>
+      <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
+      <button class="btn big ghost" id="again" style="margin-top:10px">Study full deck again</button>
     </div>
   </div>
 
-  <div class="end" id="end" hidden>
-    <p class="eyebrow">Deck complete</p>
-    <div class="score" id="score"></div>
-    <div class="chips" id="endChips"></div>
-    <button class="btn big" id="redoMissed" hidden>Redo incorrect</button>
-    <button class="btn big ghost" id="again" style="margin-top:10px">Study full deck again</button>
+  <div class="setup" id="setup">
+    <div class="setup-groups" id="setupGroups">
+      <div class="filters" id="filters" role="group" aria-label="Vocabulary groups"></div>
+    </div>
+    <div class="toggles" id="toggles">
+      <label class="toggle">
+        <input type="checkbox" id="showCategory">
+        <span class="track" aria-hidden="true"></span>
+        <span>Category</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="showDirection">
+        <span class="track" aria-hidden="true"></span>
+        <span>JP/EN direction</span>
+      </label>
+    </div>
+    <button class="btn big" id="start">Start flashcards</button>
+    <p class="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
   </div>
+</div>
 
-  <p class="foot">Genki I Lesson 1 vocabulary · personal study copy</p>
+<div class="modal" id="keysModal" role="dialog" aria-modal="true" aria-labelledby="keysTitle" hidden>
+  <div class="modal-sheet">
+    <h2 id="keysTitle">Shortcuts</h2>
+    <p>Keyboard controls for this deck.</p>
+    <div class="keys">
+      <div class="key"><kbd>Space</kbd> Reveal answer</div>
+      <div class="key"><kbd>,</kbd> Miss / incorrect</div>
+      <div class="key"><kbd>.</kbd> Got it / correct</div>
+      <div class="key"><kbd>←</kbd> Previous card</div>
+      <div class="key"><kbd>→</kbd> Skip</div>
+    </div>
+    <button class="btn big" id="keysClose" type="button">Got it</button>
+  </div>
 </div>
 
 <script>
@@ -268,6 +309,7 @@
   var redoBtn = document.getElementById("redoMissed");
   var showCategoryInput = document.getElementById("showCategory");
   var showDirectionInput = document.getElementById("showDirection");
+  var keysModal = document.getElementById("keysModal");
 
   showCategoryInput.checked = prefs.showCategory;
   showDirectionInput.checked = prefs.showDirection;
@@ -306,11 +348,24 @@
 
   function renderFilters() {
     filters.innerHTML = GROUPS.map(function (g) {
-      var n = VOCAB.filter(function (v) { return v.group === g.id; }).length;
       return '<button type="button" class="chip' + (selected[g.id] ? " on" : "") + '" data-g="' + g.id + '">' +
-        g.label + " · " + n + "</button>";
+        g.label + "</button>";
     }).join("");
   }
+
+  function openKeys() {
+    keysModal.hidden = false;
+    keysModal.classList.add("open");
+  }
+  function closeKeys() {
+    keysModal.classList.remove("open");
+    keysModal.hidden = true;
+  }
+  document.getElementById("keysBtn").addEventListener("click", openKeys);
+  document.getElementById("keysClose").addEventListener("click", closeKeys);
+  keysModal.addEventListener("click", function (e) {
+    if (e.target === keysModal) closeKeys();
+  });
 
   filters.addEventListener("click", function (e) {
     var btn = e.target.closest(".chip");
@@ -340,8 +395,8 @@
     correctCount = 0;
     ratedCount = 0;
     startedAt = Date.now();
+    document.body.classList.add("quizzing");
     startBtn.hidden = true;
-    filters.hidden = true;
     end.hidden = true;
     session.hidden = false;
     showCard();
@@ -377,7 +432,7 @@
       rj.classList.remove("hidden");
       en.classList.add("hidden");
     }
-    hint.textContent = "Space to reveal · , miss · . got it";
+    hint.textContent = "Tap or Space to reveal";
     count.textContent = (idx + 1) + " / " + queue.length;
     bar.style.width = Math.round(idx / queue.length * 100) + "%";
   }
@@ -389,7 +444,7 @@
     rj.classList.remove("hidden");
     en.classList.remove("hidden");
     rateRow.classList.add("on");
-    hint.textContent = ", miss · . got it · → skip";
+    hint.textContent = "";
     card.focus();
   }
 
@@ -437,6 +492,8 @@
     session.hidden = true;
     end.hidden = false;
     rateRow.classList.remove("on");
+    document.body.classList.add("quizzing");
+    startBtn.hidden = true;
     bar.style.width = "100%";
     var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
     var pct = ratedCount ? Math.round(correctCount / ratedCount * 100) : 0;
@@ -455,9 +512,10 @@
   startBtn.addEventListener("click", start);
   redoBtn.addEventListener("click", startMissed);
   document.getElementById("again").addEventListener("click", function () {
+    document.body.classList.remove("quizzing");
     startBtn.hidden = false;
-    filters.hidden = false;
     end.hidden = true;
+    session.hidden = true;
     renderFilters();
   });
   document.getElementById("backBtn").addEventListener("click", back);
@@ -479,7 +537,12 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    if (session.hidden) return;
+    if (e.key === "Escape" && keysModal.classList.contains("open")) {
+      e.preventDefault();
+      closeKeys();
+      return;
+    }
+    if (session.hidden || keysModal.classList.contains("open")) return;
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.closest(".toggle"))) return;
     if (e.code === "Space" || e.key === " ") {
       e.preventDefault();
