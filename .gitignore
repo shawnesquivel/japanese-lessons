@@ -3,3 +3,6 @@ node_modules
 .env
 .env.local
 .DS_Store
+
+# Genki CD audio: copyrighted, keep local only (audio works via local files)
+audio/genki/

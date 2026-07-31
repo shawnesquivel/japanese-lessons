@@ -17,6 +17,7 @@
     { href: "kanji.html", icon: "🖌️", label: "Kanji Game", detail: "draw, learn & quiz" },
     { href: "introduction.html", icon: "👋", label: "Introductions", detail: "personal introduction" },
     { href: "about.html", icon: "🙋", label: "About me", detail: "example bank" },
+    { href: "genki.html", icon: "🎧", label: "Genki L1 Listening", detail: "workbook ↔ CD map" },
     { href: "games.html", icon: "🎮", label: "Games", detail: "practice games" },
   ];
 
