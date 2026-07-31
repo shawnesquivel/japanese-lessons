@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genki L1 Listening — Japanese Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="learning.js"></script>
+<script src="genki-w01-data.js"></script>
+<script src="nav.js" defer></script>
+<style>
+  :root{
+    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;
+    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;
+    --a:#3F6E91;--do:#CB4A2B;--ko-bg:#EDF3E4;--so-bg:#FBF0DC;
+    --a-bg:#E5EDF3;--do-bg:#FAE7E1;--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button{font:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 22px 84px}
+  header{text-align:center;padding:28px 0 18px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  h1{font:400 clamp(40px,9vw,64px)/1.05 "Zen Antique",serif;letter-spacing:.04em;margin:7px 0}
+  .subtitle{color:var(--ink-soft);max-width:56ch;margin:0 auto}
+
+  .map{margin:26px 0;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--card);overflow:hidden}
+  .map h2{margin:0;padding:12px 16px;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);background:#F7F3E8}
+  .map-row{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:12px 16px;border-top:1px solid var(--line);align-items:start}
+  .map-row:first-of-type{border-top:0}
+  .map-badge{width:34px;height:34px;border-radius:9px;background:var(--a-bg);color:var(--a);display:flex;align-items:center;justify-content:center;font-weight:700}
+  .map-row b{font-size:15px}
+  .map-row small{display:block;color:var(--ink-soft);font-size:13px;line-height:1.5}
+  .map-row code{background:#F3EEE1;border-radius:6px;padding:1px 7px;font-size:12.5px}
+
+  .btn{min-height:48px;padding:12px 22px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
+  .btn:active{transform:scale(.96)}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+  .btn.ghost:hover{background:#F3EEE1}
+  .btn.big{width:100%;font-size:18px;margin-top:18px}
+  .skip{background:none;border:0;color:var(--ink-soft);text-decoration:underline;font-size:14px;cursor:pointer;min-height:40px;padding:6px 12px}
+
+  .card{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px;margin-top:18px;box-shadow:0 2px 10px rgba(42,46,36,.05)}
+  .prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft);font-weight:700}
+  .prog .bar{flex:1;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+  .prog .bar i{display:block;height:100%;background:var(--ko);transition:width .25s}
+  .ex-tag{background:var(--a-bg);color:var(--a);border-radius:8px;padding:2px 10px}
+
+  .prompt{margin:14px 0 4px;font-size:19px;font-weight:700;text-wrap:pretty}
+  .hint{color:var(--ink-soft);font-size:14px;margin:0 0 12px}
+
+  .play-row{display:flex;align-items:center;gap:14px;margin:16px 0}
+  .play-btn{width:64px;height:64px;min-width:64px;border-radius:50%;border:2px solid var(--ink);background:var(--so-bg);font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition-property:transform,background;transition-duration:.12s}
+  .play-btn:hover{background:#F6E3BE}
+  .play-btn:active{transform:scale(.96)}
+  .play-btn.playing{background:var(--so);color:#fff;border-color:var(--so)}
+  .replay{min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line-strong);background:#fff;cursor:pointer;font-weight:700;color:var(--ink-soft);transition-property:transform,background;transition-duration:.12s}
+  .replay:hover{background:#F3EEE1}
+  .replay:active{transform:scale(.96)}
+
+  .opts{display:grid;gap:10px;margin-top:8px}
+  .opt{min-height:52px;text-align:left;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line-strong);background:#fff;cursor:pointer;transition-property:transform,background,border-color;transition-duration:.12s}
+  .opt:hover{background:#F7F3E8}
+  .opt:active{transform:scale(.96)}
+  .opt .jp{font:400 19px/1.4 "Zen Antique",serif;display:block}
+  .opt .rj{color:var(--ink-soft);font-size:13px}
+  .opt.picked{border-color:var(--a);background:var(--a-bg)}
+  .opt.correct{border-color:var(--ko);background:var(--ko-bg)}
+  .opt.wrong{border-color:var(--do);background:var(--do-bg)}
+  .opt:disabled{cursor:default}
+
+  .ncards{display:grid;gap:10px;margin-top:8px}
+  @media(min-width:560px){.ncards{grid-template-columns:repeat(3,1fr)}}
+  .ncard{border:1.5px solid var(--line-strong);border-radius:12px;background:#fff;padding:14px;cursor:pointer;text-align:center;transition-property:transform,background,border-color;transition-duration:.12s}
+  .ncard:hover{background:#F7F3E8}
+  .ncard:active{transform:scale(.96)}
+  .ncard .nm{font:400 18px/1.4 "Zen Antique",serif}
+  .ncard .rj{color:var(--ink-soft);font-size:12px}
+  .ncard .dt{font-size:14px;margin-top:6px}
+  .ncard .dt small{display:block;color:var(--ink-soft);font-size:12px}
+  .ncard.picked{border-color:var(--a);background:var(--a-bg)}
+  .ncard.correct{border-color:var(--ko);background:var(--ko-bg)}
+  .ncard.wrong{border-color:var(--do);background:var(--do-bg)}
+
+  .answer-row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  input.answer{flex:1;min-width:200px;min-height:52px;font:400 20px/1 "Zen Maru Gothic",sans-serif;padding:10px 16px;border:1.5px solid var(--line-strong);border-radius:12px;background:#fff;color:var(--ink)}
+  input.answer:focus{outline:3px solid var(--so);outline-offset:1px;border-color:var(--so)}
+
+  .reveal{margin-top:16px;border-radius:12px;padding:16px;border:1.5px solid var(--line)}
+  .reveal.ok{background:var(--ko-bg);border-color:var(--ko)}
+  .reveal.no{background:var(--do-bg);border-color:var(--do)}
+  .reveal.wait{background:#F7F3E8}
+  .reveal .verdict{font-weight:700;font-size:15px}
+  .reveal .jp{font:400 22px/1.5 "Zen Antique",serif;margin-top:6px}
+  .reveal .rj{color:var(--ink-soft);font-size:14px}
+  .reveal .en{margin-top:4px;font-weight:700}
+  .rate-row{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .rate{min-height:48px;padding:10px 18px;border-radius:12px;border:2px solid;cursor:pointer;font-weight:700;transition-property:transform,background;transition-duration:.12s;background:#fff}
+  .rate:active{transform:scale(.96)}
+  .rate.good{border-color:var(--ko);color:var(--ko)}
+  .rate.good:hover{background:var(--ko-bg)}
+  .rate.miss{border-color:var(--do);color:var(--do)}
+  .rate.miss:hover{background:var(--do-bg)}
+
+  .end{text-align:center;margin-top:26px}
+  .end .score{font:400 clamp(48px,12vw,80px)/1 "Zen Antique",serif;margin:10px 0}
+  .end .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 22px}
+  .chip{background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;font-size:14px;font-weight:700;color:var(--ink-soft)}
+  .foot-note{margin-top:26px;color:var(--ink-soft);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Genki I · proof of concept</p>
+    <h1>Lesson 1 Listening</h1>
+    <p class="subtitle">Workbook p. 12 listening drills, driven by the real CD audio — each track sliced into per-question clips by transcript timestamps.</p>
+  </header>
+  <main id="app" aria-live="polite"></main>
+  <p class="foot-note">Audio: Genki1_ListeningComprehension(Workbook) W01-A~D · personal study copy, not redistributed.</p>
+</div>
+<audio id="player" preload="auto"></audio>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = window.GENKI_W01;
+  var app = document.getElementById("app");
+  var player = document.getElementById("player");
+  var KIND_LABEL = { choice: "pick what you hear", reply: "free reply", input: "type what you hear", card: "match the card" };
+  var META = { subject: "Genki L1 Listening", type: "audio-only comprehension" };
+
+  var queue = [];
+  var idx = 0;
+  var missed = [];
+  var results = { correct: 0, answered: 0 };
+  var startedAt = 0;
+  var current = null;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function stopAudio() {
+    player.pause();
+    player.ontimeupdate = null;
+  }
+
+  function playClip(ex, item, btn) {
+    stopAudio();
+    if (player.getAttribute("src") !== ex.file) {
+      player.src = ex.file;
+      player.load();
+    }
+    var doPlay = function () {
+      var p = player.play();
+      if (p && p.catch) p.catch(function () {});
+      if (btn) btn.classList.add("playing");
+    };
+    var seekThenPlay = function () {
+      player.ontimeupdate = function () {
+        if (player.currentTime >= item.end) {
+          player.pause();
+          player.ontimeupdate = null;
+          if (btn) btn.classList.remove("playing");
+        }
+      };
+      if (Math.abs(player.currentTime - item.start) < 0.05) {
+        doPlay();
+      } else {
+        player.addEventListener("seeked", function onSeeked() {
+          player.removeEventListener("seeked", onSeeked);
+          doPlay();
+        });
+        player.currentTime = item.start;
+      }
+    };
+    if (player.readyState >= 1) seekThenPlay();
+    else player.addEventListener("loadedmetadata", function h() {
+      player.removeEventListener("loadedmetadata", h);
+      seekThenPlay();
+    });
+    player.onpause = function () { if (btn) btn.classList.remove("playing"); };
+  }
+
+  function record(item, rating) {
+    if (window.JL_PROGRESS && JL_PROGRESS.record) JL_PROGRESS.record(item.id, rating, META);
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function bankEntry(ex, jp) {
+    for (var i = 0; i < ex.bank.length; i++) if (ex.bank[i].jp === jp) return ex.bank[i];
+    return null;
+  }
+
+  // ---------- start screen: the audio <-> workbook map ----------
+  function renderStart() {
+    stopAudio();
+    var ids = [];
+    DATA.exercises.forEach(function (ex) { ex.items.forEach(function (it) { ids.push(it.id); }); });
+    var sum = (window.JL_PROGRESS && JL_PROGRESS.summary) ? JL_PROGRESS.summary(ids) : null;
+    var rows = DATA.exercises.map(function (ex) {
+      return '<div class="map-row"><div class="map-badge">' + ex.letter + '</div>' +
+        '<div><b>' + esc(ex.title) + '</b> · <code>' + ex.file.split("/").pop() + '</code> · ' + KIND_LABEL[ex.kind] +
+        '<small>' + esc(ex.instruction) + ' (' + ex.items.length + ' item' + (ex.items.length > 1 ? "s" : "") + ')</small></div></div>';
+    }).join("");
+    app.innerHTML =
+      '<section class="map" aria-label="Audio to workbook mapping">' +
+      '<h2>Track ↔ exercise map · workbook p. 12</h2>' + rows + '</section>' +
+      (sum && sum.studied ? '<p class="hint" style="text-align:center">' + sum.studied + '/' + sum.total + ' cards studied · ' + sum.accuracy + '% accuracy · ' + sum.due + ' due</p>' : "") +
+      '<button class="btn big" id="start">Start listening session · 24 cards</button>';
+    document.getElementById("start").addEventListener("click", function () {
+      buildQueue(DATA.exercises);
+      startedAt = Date.now();
+      idx = 0;
+      renderCard();
+    });
+  }
+
+  function buildQueue(exercises) {
+    queue = [];
+    exercises.forEach(function (ex) {
+      shuffle(ex.items).forEach(function (item) { queue.push({ ex: ex, item: item }); });
+    });
+    missed = [];
+    results = { correct: 0, answered: 0 };
+  }
+
+  // ---------- card ----------
+  function renderCard() {
+    stopAudio();
+    if (idx >= queue.length) return renderEnd();
+    current = queue[idx];
+    var ex = current.ex, item = current.item;
+    var total = queue.length;
+    var body = "";
+
+    if (ex.kind === "choice") body = choiceBody(ex, item);
+    else if (ex.kind === "reply") body = replyBody(ex, item);
+    else if (ex.kind === "input") body = inputBody(ex, item);
+    else body = cardBody(ex, item);
+
+    app.innerHTML =
+      '<div class="prog"><span class="ex-tag">Exercise ' + ex.letter + '</span>' +
+      '<div class="bar"><i style="width:' + Math.round(idx / total * 100) + '%"></i></div>' +
+      '<span>' + (idx + 1) + ' / ' + total + '</span></div>' +
+      '<section class="card">' +
+      '<p class="prompt">' + esc(ex.title) + '</p>' +
+      '<p class="hint">' + esc(ex.instruction) + '</p>' +
+      '<div class="play-row">' +
+      '<button class="play-btn" id="play" aria-label="Play audio clip">▶</button>' +
+      '<button class="replay" id="replay">↻ replay</button>' +
+      '<span class="hint" id="clip-note">clip ' + (item.n != null ? "#" + item.n : "") + ' · ' + ex.file.split("/").pop() + ' ' + item.start.toFixed(0) + '–' + item.end.toFixed(0) + 's</span>' +
+      '</div>' + body +
+      '<div style="text-align:right;margin-top:10px"><button class="skip" id="skip">Skip →</button></div>' +
+      '</section>';
+
+    var playBtn = document.getElementById("play");
+    playBtn.addEventListener("click", function () { playClip(ex, item, playBtn); });
+    document.getElementById("replay").addEventListener("click", function () { playClip(ex, item, playBtn); });
+    document.getElementById("skip").addEventListener("click", function () { idx++; renderCard(); });
+    playClip(ex, item, playBtn);
+  }
+
+  function mountRate(item, container) {
+    container.querySelectorAll(".rate").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var good = btn.classList.contains("good");
+        record(item, good ? "good" : "again");
+        results.answered++;
+        if (good) results.correct++; else missed.push(current);
+        idx++;
+        renderCard();
+      });
+    });
+  }
+
+  function nextButton(item, ok) {
+    record(item, ok ? "good" : "again");
+    results.answered++;
+    if (ok) results.correct++; else missed.push(current);
+    var btn = document.getElementById("next");
+    btn.addEventListener("click", function () { idx++; renderCard(); });
+    btn.focus();
+  }
+
+  // ---- kind: choice (A) ----
+  function choiceBody(ex, item) {
+    var correct = bankEntry(ex, item.answer);
+    var distractors = shuffle(ex.bank.filter(function (b) { return b.jp !== item.answer; })).slice(0, 3);
+    var opts = shuffle([correct].concat(distractors));
+    var html = '<div class="opts" role="group" aria-label="Answer choices">' +
+      opts.map(function (o, i) {
+        return '<button class="opt" data-jp="' + esc(o.jp) + '"><span class="jp">' + esc(o.jp) + '</span><span class="rj">' + esc(o.rj) + '</span></button>';
+      }).join("") + '</div><div id="fb"></div>';
+    setTimeout(function () {
+      document.querySelectorAll(".opt").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          stopAudio();
+          var ok = btn.getAttribute("data-jp") === item.answer;
+          document.querySelectorAll(".opt").forEach(function (b) {
+            b.disabled = true;
+            if (b.getAttribute("data-jp") === item.answer) b.classList.add("correct");
+          });
+          if (!ok) btn.classList.add("wrong");
+          showReveal(ok, correct.jp, correct.rj, correct.en);
+          nextButton(item, ok);
+        });
+      });
+    }, 0);
+    return html;
+  }
+
+  // ---- kind: reply (B) ----
+  function replyBody(ex, item) {
+    var html = '<p class="prompt" style="font-size:17px">' + esc(item.q) + '</p>' +
+      '<div class="rate-row"><button class="btn ghost" id="reveal">Reveal answer</button></div><div id="fb"></div>';
+    setTimeout(function () {
+      document.getElementById("reveal").addEventListener("click", function () {
+        stopAudio();
+        showReveal(null, item.jp, item.rj, item.en);
+        document.getElementById("reveal").remove();
+        document.getElementById("fb").insertAdjacentHTML("beforeend",
+          '<div class="rate-row"><button class="rate good">✅ Got it</button>' +
+          '<button class="rate miss">❌ Missed</button></div>');
+        mountRate(item, document.getElementById("fb"));
+      });
+    }, 0);
+    return html;
+  }
+
+  // ---- kind: input (C) ----
+  function inputBody(ex, item) {
+    var html = '<p class="hint">Whose number? ' + esc(item.name) + 'さん</p>' +
+      '<div class="answer-row"><input class="answer" id="ans" inputmode="numeric" autocomplete="off" placeholder="____-____" aria-label="Type the phone number you heard">' +
+      '<button class="btn" id="check">Check</button></div><div id="fb"></div>';
+    setTimeout(function () {
+      var input = document.getElementById("ans");
+      var go = function () {
+        var got = input.value.replace(/[^0-9０-９]/g, "").replace(/[０-９]/g, function (c) {
+          return String.fromCharCode(c.charCodeAt(0) - 0xFF10 + 0x30);
+        });
+        var want = item.digits.replace(/-/g, "");
+        if (!got) { input.focus(); return; }
+        stopAudio();
+        var ok = got === want;
+        input.disabled = true;
+        document.getElementById("check").disabled = true;
+        showReveal(ok, item.jp + "（" + item.digits + "）", item.rj, ok ? "Correct number." : "You typed " + input.value + " — correct: " + item.digits);
+        nextButton(item, ok);
+      };
+      document.getElementById("check").addEventListener("click", go);
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+      input.focus();
+    }, 0);
+    return html;
+  }
+
+  // ---- kind: card (D) ----
+  function cardBody(ex, item) {
+    var html = '<div class="ncards" role="group" aria-label="Name card choices">' +
+      ex.cards.map(function (c) {
+        return '<button class="ncard" data-cid="' + c.cid + '">' +
+          '<span class="nm">' + esc(c.name) + '</span><span class="rj">' + esc(c.rj) + '</span>' +
+          '<span class="dt">' + esc(c.school) + '<small>' + esc(c.schoolEn) + '</small></span>' +
+          '<span class="dt">' + esc(c.year) + '<small>' + esc(c.yearEn) + '</small></span>' +
+          '</button>';
+      }).join("") + '</div><div id="fb"></div>';
+    setTimeout(function () {
+      document.querySelectorAll(".ncard").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          stopAudio();
+          var cid = btn.getAttribute("data-cid");
+          var ok = cid === item.answer;
+          document.querySelectorAll(".ncard").forEach(function (b) {
+            b.disabled = true;
+            if (b.getAttribute("data-cid") === item.answer) b.classList.add("correct");
+          });
+          if (!ok) btn.classList.add("wrong");
+          var c = ex.cards.filter(function (x) { return x.cid === item.answer; })[0];
+          showReveal(ok, item.jp, item.rj, "It was " + c.rj + ". " + item.en);
+          nextButton(item, ok);
+        });
+      });
+    }, 0);
+    return html;
+  }
+
+  function showReveal(ok, jp, rj, en) {
+    var cls = ok === null ? "wait" : ok ? "ok" : "no";
+    var verdict = ok === null ? "Answer" : ok ? "✅ Correct" : "❌ Not quite";
+    document.getElementById("fb").innerHTML =
+      '<div class="reveal ' + cls + '"><div class="verdict">' + verdict + '</div>' +
+      '<div class="jp">' + esc(jp) + '</div><div class="rj">' + esc(rj) + '</div>' +
+      '<div class="en">' + esc(en) + '</div></div>' +
+      (ok === null ? "" : '<div class="rate-row"><button class="btn" id="next">Next →</button></div>');
+  }
+
+  // ---------- end ----------
+  function renderEnd() {
+    stopAudio();
+    if (window.JL_PROGRESS && JL_PROGRESS.addSession) {
+      JL_PROGRESS.addSession({ kind: "listening", durationMs: Date.now() - startedAt });
+    }
+    var pct = results.answered ? Math.round(results.correct / results.answered * 100) : 0;
+    app.innerHTML =
+      '<section class="card end">' +
+      '<p class="eyebrow">Session complete</p>' +
+      '<div class="score">' + pct + '%</div>' +
+      '<div class="chips"><span class="chip">' + results.correct + ' / ' + results.answered + ' correct</span>' +
+      '<span class="chip">' + missed.length + ' missed</span>' +
+      '<span class="chip">' + Math.round((Date.now() - startedAt) / 1000) + 's</span></div>' +
+      (missed.length ?
+        '<button class="btn big" id="review">Review ' + missed.length + ' missed card' + (missed.length > 1 ? "s" : "") + '</button>' : "") +
+      '<div class="rate-row" style="justify-content:center"><button class="btn ghost" id="again">Restart full set</button>' +
+      '<button class="btn ghost" id="home">Back to map</button></div>' +
+      '</section>';
+    if (missed.length) {
+      document.getElementById("review").addEventListener("click", function () {
+        queue = shuffle(missed);
+        missed = [];
+        results = { correct: 0, answered: 0 };
+        idx = 0;
+        startedAt = Date.now();
+        renderCard();
+      });
+    }
+    document.getElementById("again").addEventListener("click", function () {
+      buildQueue(DATA.exercises);
+      idx = 0;
+      startedAt = Date.now();
+      renderCard();
+    });
+    document.getElementById("home").addEventListener("click", renderStart);
+  }
+
+  renderStart();
+})();
+</script>
+</body>
+</html>
