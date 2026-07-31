@@ -36,6 +36,17 @@
   .chip:active{transform:scale(.96)}
   .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 
+  .toggles{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
+  .toggle{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:6px 12px;border-radius:12px;background:#fff;border:1px solid var(--line-strong);cursor:pointer;user-select:none;font-size:13px;font-weight:700;color:var(--ink-soft);transition-property:transform,background;transition-duration:.12s}
+  .toggle:active{transform:scale(.96)}
+  .toggle input{position:absolute;opacity:0;pointer-events:none}
+  .toggle .track{position:relative;width:40px;height:24px;border-radius:999px;background:var(--line-strong);flex:0 0 auto;transition:background .15s}
+  .toggle .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:transform .15s}
+  .toggle input:checked + .track{background:var(--ko)}
+  .toggle input:checked + .track::after{transform:translateX(16px)}
+  .toggle input:focus-visible + .track{outline:3px solid var(--so);outline-offset:2px}
+  .tag.off{display:none}
+
   .btn{min-height:48px;padding:12px 22px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;transition-property:transform,background;transition-duration:.12s}
   .btn:active{transform:scale(.96)}
   .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
@@ -90,6 +101,18 @@
   </header>
 
   <div class="filters" id="filters" role="group" aria-label="Vocabulary groups"></div>
+  <div class="toggles" id="toggles">
+    <label class="toggle">
+      <input type="checkbox" id="showCategory">
+      <span class="track" aria-hidden="true"></span>
+      <span>Show category</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" id="showDirection">
+      <span class="track" aria-hidden="true"></span>
+      <span>Show JP/EN direction</span>
+    </label>
+  </div>
   <button class="btn big" id="start">Start flashcards</button>
 
   <div id="session" hidden>
@@ -211,6 +234,16 @@
   var selected = {};
   GROUPS.forEach(function (g) { selected[g.id] = true; });
 
+  var PREFS_KEY = "genkiVocab.prefs.v1";
+  var prefs = { showCategory: false, showDirection: false };
+  try {
+    var saved = JSON.parse(localStorage.getItem(PREFS_KEY));
+    if (saved && typeof saved === "object") {
+      prefs.showCategory = !!saved.showCategory;
+      prefs.showDirection = !!saved.showDirection;
+    }
+  } catch (_) {}
+
   var queue = [];
   var idx = 0;
   var revealed = false;
@@ -233,6 +266,34 @@
   var bar = document.getElementById("bar");
   var rateRow = document.getElementById("rateRow");
   var redoBtn = document.getElementById("redoMissed");
+  var showCategoryInput = document.getElementById("showCategory");
+  var showDirectionInput = document.getElementById("showDirection");
+
+  showCategoryInput.checked = prefs.showCategory;
+  showDirectionInput.checked = prefs.showDirection;
+
+  function savePrefs() {
+    prefs.showCategory = showCategoryInput.checked;
+    prefs.showDirection = showDirectionInput.checked;
+    localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+    applyTagVisibility();
+  }
+
+  function applyTagVisibility() {
+    if (!queue.length || idx >= queue.length) {
+      tag.classList.add("off");
+      return;
+    }
+    var item = queue[idx];
+    var parts = [];
+    if (showCategoryInput.checked) parts.push(GROUP_LABEL[item.group] || item.group);
+    if (showDirectionInput.checked) parts.push(item.side === "en" ? "EN → JP" : "JP → EN");
+    tag.textContent = parts.join(" · ");
+    tag.classList.toggle("off", !parts.length);
+  }
+
+  showCategoryInput.addEventListener("change", savePrefs);
+  showDirectionInput.addEventListener("change", savePrefs);
 
   function shuffle(arr) {
     var a = arr.slice();
@@ -301,8 +362,7 @@
     var item = queue[idx];
     revealed = false;
     rateRow.classList.remove("on");
-    tag.textContent = (GROUP_LABEL[item.group] || item.group) +
-      (item.side === "en" ? " · EN → JP" : " · JP → EN");
+    applyTagVisibility();
     jp.textContent = item.jp;
     rj.textContent = item.rj;
     en.textContent = item.en;
@@ -420,7 +480,7 @@
 
   document.addEventListener("keydown", function (e) {
     if (session.hidden) return;
-    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.closest(".toggle"))) return;
     if (e.code === "Space" || e.key === " ") {
       e.preventDefault();
       if (!revealed) reveal();
