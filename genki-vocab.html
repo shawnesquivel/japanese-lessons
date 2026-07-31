@@ -117,6 +117,16 @@
       .icon-btn:active {
         transform: scale(0.96);
       }
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .exit-btn {
+        font-size: 18px;
+        line-height: 1;
+        color: var(--ink);
+      }
 
       .stage {
         flex: 1 1 auto;
@@ -427,13 +437,10 @@
           0 1px 2px rgba(42, 46, 36, 0.05),
           0 12px 34px rgba(42, 46, 36, 0.08);
       }
-      body.quizzing .setup-groups,
-      body.quizzing .modes,
-      body.quizzing #start,
-      body.quizzing .foot {
+      body.quizzing .setup {
         display: none;
       }
-      body.completed .setup {
+      body.quizzing .actions {
         display: none;
       }
       .filters {
@@ -716,14 +723,25 @@
           <p class="eyebrow">Lesson 1 · たんご</p>
           <h1>GENKI</h1>
         </div>
-        <button
-          type="button"
-          class="icon-btn"
-          id="keysBtn"
-          aria-haspopup="dialog"
-        >
-          Shortcuts
-        </button>
+        <div class="topbar-actions">
+          <button
+            type="button"
+            class="icon-btn exit-btn"
+            id="exitBtn"
+            aria-label="Exit flashcards"
+            hidden
+          >
+            ✕
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            id="keysBtn"
+            aria-haspopup="dialog"
+          >
+            Shortcuts
+          </button>
+        </div>
       </div>
 
       <div class="stage">
@@ -1305,12 +1323,12 @@
         var selectedQa = { answer: false, ask: false };
         var deckMode = "vocab"; // "vocab" | "qa"
 
-        var PREFS_KEY = "genkiVocab.prefs.v1";
+        var PREFS_KEY = "genkiVocab.prefs.v2";
         var prefs = { showCategory: false, showDirection: false };
         try {
           var saved = JSON.parse(localStorage.getItem(PREFS_KEY));
           if (saved && typeof saved === "object") {
-            prefs.showCategory = !!saved.showCategory;
+            // Category stays off by default; only restore direction.
             prefs.showDirection = !!saved.showDirection;
           }
         } catch (_) {}
@@ -1347,8 +1365,9 @@
         var foot = document.getElementById("foot");
         var modes = document.getElementById("modes");
         var selectionStatus = document.getElementById("selectionStatus");
+        var exitBtn = document.getElementById("exitBtn");
 
-        showCategoryInput.checked = prefs.showCategory;
+        showCategoryInput.checked = false;
         showDirectionInput.checked = prefs.showDirection;
 
         function savePrefs() {
@@ -1541,6 +1560,17 @@
           });
         }
 
+        function exitToSetup() {
+          clearAdvance();
+          document.body.classList.remove("quizzing");
+          document.body.classList.remove("completed");
+          startBtn.hidden = false;
+          end.hidden = true;
+          session.hidden = true;
+          exitBtn.hidden = true;
+          renderFilters();
+        }
+
         function beginSession(items) {
           queue = prepareQueue(items);
           if (!queue.length) return;
@@ -1554,6 +1584,7 @@
           startBtn.hidden = true;
           end.hidden = true;
           session.hidden = false;
+          exitBtn.hidden = false;
           showCard();
           card.focus();
         }
@@ -1787,6 +1818,7 @@
           document.body.classList.add("quizzing");
           document.body.classList.add("completed");
           startBtn.hidden = true;
+          exitBtn.hidden = true;
           bar.style.width = "100%";
           var secs = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
           var pct = ratedCount
@@ -1819,14 +1851,8 @@
 
         startBtn.addEventListener("click", start);
         redoBtn.addEventListener("click", startMissed);
-        document.getElementById("again").addEventListener("click", function () {
-          document.body.classList.remove("quizzing");
-          document.body.classList.remove("completed");
-          startBtn.hidden = false;
-          end.hidden = true;
-          session.hidden = true;
-          renderFilters();
-        });
+        exitBtn.addEventListener("click", exitToSetup);
+        document.getElementById("again").addEventListener("click", exitToSetup);
         document.getElementById("backBtn").addEventListener("click", back);
         document
           .getElementById("revealBtn")
