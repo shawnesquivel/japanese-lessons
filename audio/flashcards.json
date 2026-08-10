@@ -1128,6 +1128,393 @@
       "id": "hachimitsu",
       "audio": "audio/words/hachimitsu.mp3",
       "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "よる",
+      "romaji": "yoru",
+      "en": "night",
+      "group": "dining",
+      "id": "yoru",
+      "audio": "audio/words/yoru.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "そと",
+      "romaji": "soto",
+      "en": "outside",
+      "group": "dining",
+      "id": "soto",
+      "audio": "audio/words/soto.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おそと",
+      "romaji": "osoto",
+      "en": "outside (polite)",
+      "group": "dining",
+      "id": "osoto",
+      "audio": "audio/words/osoto.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "てんない",
+      "romaji": "tennai",
+      "en": "inside the restaurant",
+      "group": "dining",
+      "id": "tennai",
+      "audio": "audio/words/tennai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "なか",
+      "romaji": "naka",
+      "en": "inside",
+      "group": "dining",
+      "id": "naka",
+      "audio": "audio/words/naka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごちゅうもん",
+      "romaji": "go chuumon",
+      "en": "order (polite)",
+      "group": "dining",
+      "id": "go-chuumon",
+      "audio": "audio/words/go-chuumon.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おきまり",
+      "romaji": "okimari",
+      "en": "decided / ready to order",
+      "group": "dining",
+      "id": "okimari",
+      "audio": "audio/words/okimari.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おきまりですか。",
+      "romaji": "okimari desu ka.",
+      "en": "Have you decided?",
+      "group": "dining",
+      "id": "okimari-desu-ka",
+      "audio": "audio/words/okimari-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "およびください。",
+      "romaji": "oyobi kudasai.",
+      "en": "Please call us / let us know",
+      "group": "dining",
+      "id": "oyobi-kudasai",
+      "audio": "audio/words/oyobi-kudasai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おいくつですか。",
+      "romaji": "oikutsu desu ka.",
+      "en": "How many? (items)",
+      "group": "dining",
+      "id": "oikutsu-desu-ka",
+      "audio": "audio/words/oikutsu-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ふたつ、おねがいします。",
+      "romaji": "futatsu onegai shimasu.",
+      "en": "Two, please",
+      "group": "dining",
+      "id": "futatsu-onegai-shimasu",
+      "audio": "audio/words/futatsu-onegai-shimasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "シェアします。",
+      "romaji": "shea shimasu.",
+      "en": "We'll share",
+      "group": "dining",
+      "id": "shea-shimasu",
+      "audio": "audio/words/shea-shimasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いじょうでよろしいですか。",
+      "romaji": "ijou de yoroshii desu ka.",
+      "en": "Is that all?",
+      "group": "dining",
+      "id": "ijou-de-yoroshii-desu-ka",
+      "audio": "audio/words/ijou-de-yoroshii-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いじょうです。",
+      "romaji": "ijou desu.",
+      "en": "That's all",
+      "group": "dining",
+      "id": "ijou-desu",
+      "audio": "audio/words/ijou-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おねがいします。",
+      "romaji": "onegai shimasu.",
+      "en": "Please",
+      "group": "dining",
+      "id": "onegai-shimasu",
+      "audio": "audio/words/onegai-shimasu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おすみですか。",
+      "romaji": "osumi desu ka.",
+      "en": "Are you done?",
+      "group": "dining",
+      "id": "osumi-desu-ka",
+      "audio": "audio/words/osumi-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごちそうさまでした。",
+      "romaji": "gochisousama deshita.",
+      "en": "Thank you for the meal",
+      "group": "dining",
+      "id": "gochisousama-deshita",
+      "audio": "audio/words/gochisousama-deshita.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "おかいけいはどこですか。",
+      "romaji": "okaikei wa doko desu ka.",
+      "en": "Where is the checkout?",
+      "group": "dining",
+      "id": "okaikei-wa-doko-desu-ka",
+      "audio": "audio/words/okaikei-wa-doko-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこではらいますか。",
+      "romaji": "doko de haraimasu ka.",
+      "en": "Where do we pay?",
+      "group": "dining",
+      "id": "doko-de-haraimasu-ka",
+      "audio": "audio/words/doko-de-haraimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "たばこ",
+      "romaji": "tabako",
+      "en": "cigarettes / smoking",
+      "group": "dining",
+      "id": "tabako",
+      "audio": "audio/words/tabako.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ごちゅうもんおきまりですか。",
+      "romaji": "go chuumon okimari desu ka.",
+      "en": "Have you decided on your order?",
+      "group": "dining",
+      "id": "go-chuumon-okimari-desu-ka",
+      "audio": "audio/words/go-chuumon-okimari-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ちょっとまってください。",
+      "romaji": "chotto matte kudasai.",
+      "en": "Please wait a moment",
+      "group": "dining",
+      "id": "chotto-matte-kudasai",
+      "audio": "audio/words/chotto-matte-kudasai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "まだです。",
+      "romaji": "mada desu.",
+      "en": "Not yet",
+      "group": "dining",
+      "id": "mada-desu",
+      "audio": "audio/words/mada-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "コーラ",
+      "romaji": "koora",
+      "en": "cola / coke",
+      "group": "dining",
+      "id": "koora",
+      "audio": "audio/words/koora.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "サラダ",
+      "romaji": "sarada",
+      "en": "salad",
+      "group": "dining",
+      "id": "sarada",
+      "audio": "audio/words/sarada.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ついか",
+      "romaji": "tsuika",
+      "en": "anything else? (extra order)",
+      "group": "dining",
+      "id": "tsuika",
+      "audio": "audio/words/tsuika.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "かいすう",
+      "romaji": "kaisuu",
+      "en": "number of checks / payments",
+      "group": "dining",
+      "id": "kaisuu",
+      "audio": "audio/words/kaisuu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "いっかい",
+      "romaji": "ikkai",
+      "en": "once / one check",
+      "group": "dining",
+      "id": "ikkai",
+      "audio": "audio/words/ikkai.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "どこからきたの。",
+      "romaji": "doko kara kita no.",
+      "en": "Where are you from? (casual)",
+      "group": "dining",
+      "id": "doko-kara-kita-no",
+      "audio": "audio/words/doko-kara-kita-no.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "カナダしゅっしんです。",
+      "romaji": "canada shusshin desu.",
+      "en": "I'm from Canada",
+      "group": "dining",
+      "id": "canada-shusshin-desu",
+      "audio": "audio/words/canada-shusshin-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "カナダからきました。",
+      "romaji": "canada kara kimashita.",
+      "en": "I came from Canada",
+      "group": "dining",
+      "id": "canada-kara-kimashita",
+      "audio": "audio/words/canada-kara-kimashita.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にほんはどうですか。",
+      "romaji": "nihon wa dou desu ka.",
+      "en": "How is Japan?",
+      "group": "dining",
+      "id": "nihon-wa-dou-desu-ka",
+      "audio": "audio/words/nihon-wa-dou-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "すごい。",
+      "romaji": "sugoi.",
+      "en": "Amazing / great",
+      "group": "dining",
+      "id": "sugoi",
+      "audio": "audio/words/sugoi.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "あつい",
+      "romaji": "atsui",
+      "en": "hot (weather)",
+      "group": "dining",
+      "id": "atsui",
+      "audio": "audio/words/atsui.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "たべものはおいしい。",
+      "romaji": "tabemono wa oishii.",
+      "en": "The food is delicious",
+      "group": "dining",
+      "id": "tabemono-wa-oishii",
+      "audio": "audio/words/tabemono-wa-oishii.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "にほんははじめてですか。",
+      "romaji": "nihon wa hajimete desu ka.",
+      "en": "Is this your first time in Japan?",
+      "group": "dining",
+      "id": "nihon-wa-hajimete-desu-ka",
+      "audio": "audio/words/nihon-wa-hajimete-desu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "さんかいめです。",
+      "romaji": "sankai me desu.",
+      "en": "It's my third time",
+      "group": "dining",
+      "id": "sankai-me-desu",
+      "audio": "audio/words/sankai-me-desu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "なんでこのあついじきにきたの。",
+      "romaji": "nande kono atsui jiki ni kita no.",
+      "en": "Why did you come in this hot season?",
+      "group": "dining",
+      "id": "nande-kono-atsui-jiki-ni-kita-no",
+      "audio": "audio/words/nande-kono-atsui-jiki-ni-kita-no.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "はじめてきたのはいつ。",
+      "romaji": "hajimete kita no wa itsu.",
+      "en": "When was your first time here?",
+      "group": "dining",
+      "id": "hajimete-kita-no-wa-itsu",
+      "audio": "audio/words/hajimete-kita-no-wa-itsu.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "えいごはなしますか。",
+      "romaji": "eigo hanashimasu ka.",
+      "en": "Do you speak English?",
+      "group": "dining",
+      "id": "eigo-hanashimasu-ka",
+      "audio": "audio/words/eigo-hanashimasu-ka.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "ゆっくり",
+      "romaji": "yukkuri",
+      "en": "slowly",
+      "group": "dining",
+      "id": "yukkuri",
+      "audio": "audio/words/yukkuri.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "うれしい",
+      "romaji": "ureshii",
+      "en": "happy / glad",
+      "group": "dining",
+      "id": "ureshii",
+      "audio": "audio/words/ureshii.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
+    },
+    {
+      "kana": "しつもん",
+      "romaji": "shitsumon",
+      "en": "question",
+      "group": "dining",
+      "id": "shitsumon",
+      "audio": "audio/words/shitsumon.mp3",
+      "voice": "C8e2F6Cm3l58PjXaVpUW"
     }
   ]
 }
