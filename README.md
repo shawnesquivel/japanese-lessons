@@ -20,6 +20,14 @@ Agents must read [`AGENTS.md`](AGENTS.md) before making changes.
 - **Flashcards** — Anki-style adaptive vocabulary review with audio, ratings, due dates, and a mastery map ([`flashcards.html`](flashcards.html)).
 - **Kanji Game** — a separate kanji-only track with drawing, adaptive quizzes, RTK-aligned primitive cues, shared local mnemonic notes, and one-round missed-card recovery ([`kanji.html`](kanji.html)).
 
+## Kosuke flashcard packs
+
+The flashcard page now includes a local pack library, a lightweight pack builder, JSON import/export, hints, reusable source metadata, ElevenLabs-ready audio URLs, and focused missed-card recovery. The starter library includes a 28-card pack transcribed from the photographed textbook vocabulary page.
+
+The portable v1 pack contract lives in [`flashcard-packs.js`](flashcard-packs.js). Packs keep stable IDs so all scheduling continues through [`learning.js`](learning.js).
+
+[`kosuke-mcp/`](kosuke-mcp/) is a separate TypeScript MCP server built with `mcp-use`. It exposes tools that let ChatGPT, Claude, or another MCP client create, extend, search, inspect, and export packs without turning the static learner site into a backend app. See [`docs/kosuke-architecture.md`](docs/kosuke-architecture.md) for the product boundary and roadmap.
+
 ## Learning progress
 
 [`learning.js`](learning.js) stores scheduling, XP, streaks, and mastery locally in the browser. Missed items return sooner; stable items are spaced farther apart. Progress can be exported from the adaptive study pages.

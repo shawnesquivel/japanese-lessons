@@ -3,103 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adaptive Flashcards — Japanese Lessons</title>
+<title>Kosuke Flashcards — Japanese Lessons</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Zen+Antique&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FBF8F1;--card:#fff;--ink:#2A2E24;--ink-soft:#5C6150;--muted:#B7AE97;
-    --line:#E6DFCF;--line-strong:#D6CDB6;--ko:#5C8A3A;--so:#E0962C;--a:#3F6E91;--do:#CB4A2B;
-    --ko-bg:#EDF3E4;--so-bg:#FBF0DC;--a-bg:#E5EDF3;--do-bg:#FAE7E1;--radius:14px;
-    --shadow:0 1px 2px rgba(42,46,36,.05),0 7px 24px rgba(42,46,36,.06);
+    --paper:#F8F4EA;--card:#FFFDF8;--ink:#24291F;--ink-soft:#636858;--muted:#B7AE97;
+    --line:#E4DCC9;--line-strong:#CEC3AA;--leaf:#4E7C38;--sun:#E89C36;--sky:#3E718E;--red:#C64B31;
+    --leaf-bg:#EAF2E2;--sun-bg:#FBEDD4;--sky-bg:#E5EEF3;--red-bg:#F9E7E1;
+    --shadow:0 0 0 1px rgba(0,0,0,.05),0 1px 2px -1px rgba(0,0,0,.06),0 10px 30px rgba(42,46,36,.07);
+    --shadow-hover:0 0 0 1px rgba(0,0,0,.08),0 2px 4px -1px rgba(0,0,0,.08),0 14px 34px rgba(42,46,36,.1);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1000px 420px at 85% -10%,rgba(92,138,58,.06),transparent 60%),var(--paper);color:var(--ink);font:400 17px/1.7 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1040px;margin:0 auto;padding:32px 22px 80px}
-  header{text-align:center;padding:24px 0 20px;border-bottom:2px solid var(--ink)}
-  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
-  h1{font:400 clamp(42px,9vw,70px)/1 "Zen Antique",serif;margin:7px 0}
-  .subtitle,.lead{color:var(--ink-soft);text-wrap:pretty}
-  h2{font-size:19px;margin:0;text-wrap:balance}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:24px 0}
-  .stat,.panel{background:var(--card);border-radius:16px;box-shadow:var(--shadow)}
-  .stat{padding:16px 18px}.stat strong{font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums;display:block}.stat span{font-size:12px;color:var(--ink-soft)}
-  .level-track,.progress-track{height:7px;background:#EEE9DE;border-radius:999px;overflow:hidden}
-  .level-fill,.progress-fill{height:100%;background:var(--ko);border-radius:inherit;transition:width .25s}
-  .level-track{margin-top:8px}
-  .panel{padding:22px;margin:18px 0}
-  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-  .panel-sub{font-size:13px;color:var(--ink-soft);margin:3px 0 14px}
-  .controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
-  .btn,.chip,.rate{
-    min-height:40px;border:0;border-radius:10px;padding:9px 15px;background:#fff;color:var(--ink);
-    font:700 14px "Zen Maru Gothic",system-ui,sans-serif;cursor:pointer;
-    box-shadow:inset 0 0 0 1px rgba(42,46,36,.15),0 1px 2px rgba(42,46,36,.04);
-    transition-property:transform,background,color,box-shadow,opacity;transition-duration:.14s;
+  html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{margin:0;background:radial-gradient(800px 380px at 93% -8%,rgba(232,156,54,.15),transparent 58%),radial-gradient(740px 360px at 2% 24%,rgba(78,124,56,.1),transparent 62%),var(--paper);color:var(--ink);font:400 16px/1.65 "Zen Maru Gothic",system-ui,sans-serif}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:url("data:image/svg+xml,%3Csvg width='140' height='140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E")}
+  button,input,textarea{font:inherit}
+  button{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:34px 22px 90px;position:relative}
+  .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:28px;align-items:end;padding:34px 0 28px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font:500 12px/1.3 "DM Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf)}
+  h1{font:400 clamp(44px,8vw,76px)/1 "Zen Antique",serif;margin:8px 0 12px;text-wrap:balance}
+  h1 span{color:var(--leaf)}
+  h2,h3{line-height:1.25;text-wrap:balance}
+  h2{font-size:20px;margin:0}
+  h3{font-size:16px;margin:0}
+  p,.lead,.panel-sub{color:var(--ink-soft);text-wrap:pretty}
+  .hero p{font-size:17px;margin:0;max-width:680px}
+  .hero-note{background:var(--ink);color:var(--paper);border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+  .hero-note strong{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+  .hero-note span{font-size:12px;opacity:.72}
+  .hero-note .mono{font:400 11px/1.5 "DM Mono",monospace;margin-top:10px;color:#DCE5D5}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0}
+  .stat,.panel,.pack-card,.study-card,.result-card{background:var(--card);box-shadow:var(--shadow)}
+  .stat{padding:15px 17px;border-radius:14px}
+  .stat strong{display:block;font-size:25px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat span{font-size:11px;color:var(--ink-soft)}
+  .panel{border-radius:22px;padding:22px;margin:18px 0}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+  .panel-sub{font-size:13px;margin:4px 0 0}
+  .btn,.chip,.rate,.icon-btn{
+    min-height:44px;border:0;border-radius:11px;padding:10px 15px;background:#fff;color:var(--ink);
+    font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.11),0 1px 2px rgba(0,0,0,.05);
+    transition-property:transform,background-color,color,box-shadow,opacity;transition-duration:.14s;transition-timing-function:ease-out;
   }
-  .btn:hover,.chip:hover,.rate:hover{box-shadow:inset 0 0 0 1px rgba(42,46,36,.26),0 2px 7px rgba(42,46,36,.08)}
-  .btn:active,.chip:active,.rate:active{transform:scale(.96)}
-  .btn.primary{background:var(--ink);color:var(--paper);box-shadow:none}.btn.danger{color:var(--do)}
-  .chip{border-radius:999px;font-size:13px;text-transform:capitalize}.chip.active{background:var(--ink);color:var(--paper);box-shadow:none}
-  .seg{display:flex;gap:4px;flex-wrap:wrap}.seg .btn.active{background:var(--ko-bg);box-shadow:inset 0 0 0 2px var(--ko);color:#3C5E25}
-  .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.setup-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:7px}
-  .groups{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
-  .review{max-width:700px;margin:24px auto}.review[hidden],.dashboard[hidden],.results[hidden]{display:none}
-  .review-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);font-weight:700;margin-bottom:8px}
-  .progress-track{margin-bottom:16px}.progress-fill{width:0}
-  .study-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);min-height:370px;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  .front-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
-  .front-prompt{font-size:clamp(30px,7vw,52px);font-weight:700;line-height:1.2;margin:17px 0;text-wrap:balance}
-  .audio-only{font-size:20px;color:var(--ink-soft);font-weight:700}
-  .play{width:64px;height:64px;border-radius:50%;border:1px solid var(--line-strong);background:var(--ko-bg);color:#3C5E25;font-size:24px;cursor:pointer;transition-property:transform,background,color;transition-duration:.14s}
-  .play:active{transform:scale(.96)}.play.playing{background:var(--ko);color:#fff}.play:disabled{opacity:.4}
-  .answer{display:none;width:100%;margin-top:20px;padding-top:20px;border-top:1px dashed var(--line-strong)}
-  .answer.show{display:block}.answer .kana{font:400 clamp(42px,9vw,68px)/1.2 "Zen Antique",serif}.answer .romaji{color:var(--ko);font-weight:700;margin-top:4px}.answer .english{font-size:18px;margin-top:8px}
-  .show-answer{margin-top:18px}.rating{display:none;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}.rating.show{display:grid}
-  .rate{padding:10px 8px}.rate small{display:block;font-size:10px;font-weight:500;color:inherit;opacity:.75}.again{background:var(--do-bg);color:#9C3119}.hard{background:var(--so-bg);color:#946012}.good{background:var(--a-bg);color:#2C4D66}.easy{background:var(--ko-bg);color:#3C5E25}
-  .mastery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:7px}
-  .mastery-tile{min-height:58px;border:0;border-radius:10px;background:#EEE9DE;color:var(--ink);cursor:pointer;padding:5px;font-family:"Zen Antique",serif;font-size:20px;position:relative;transition-property:transform,box-shadow;transition-duration:.12s}
-  .mastery-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.mastery-tile:active{transform:scale(.96)}
-  .mastery-tile::after{content:attr(data-next);position:absolute;right:4px;bottom:2px;font:700 8px "Zen Maru Gothic",sans-serif;opacity:.7}
-  .session-row{display:flex;gap:12px;align-items:center;padding:9px 0;font-size:13px}.session-row+.session-row{border-top:1px solid var(--line)}.session-row .score{margin-left:auto;font-weight:700}
-  .results{text-align:center;max-width:620px;margin:30px auto}.result-score{font-size:48px;font-weight:700}.result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-  @media(max-width:680px){.setup-grid{grid-template-columns:1fr}.rating{grid-template-columns:1fr 1fr}.study-card{padding:22px;min-height:330px}.wrap{padding-inline:16px}}
+  .btn:hover,.chip:hover,.rate:hover,.icon-btn:hover{box-shadow:0 0 0 1px rgba(0,0,0,.18),0 3px 9px rgba(0,0,0,.08)}
+  .btn:active,.chip:active,.rate:active,.icon-btn:active{transform:scale(.96)}
+  .btn:focus-visible,.chip:focus-visible,.rate:focus-visible,.icon-btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid rgba(232,156,54,.42);outline-offset:2px}
+  .btn.primary{background:var(--ink);color:var(--paper);box-shadow:none}
+  .btn.leaf{background:var(--leaf);color:#fff;box-shadow:none}
+  .btn.danger{color:var(--red)}
+  .btn.small{min-height:40px;padding:7px 11px;font-size:12px}
+  .controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .pack-card{border-radius:18px;padding:18px;cursor:pointer;text-align:left;border:0;min-height:170px;display:flex;flex-direction:column;transition-property:transform,box-shadow;transition-duration:.16s}
+  .pack-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+  .pack-card:active{transform:scale(.96)}
+  .pack-card.active{box-shadow:0 0 0 2px var(--leaf),0 10px 30px rgba(42,46,36,.08)}
+  .pack-card .pack-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .pack-card .pack-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--leaf-bg);font-size:20px}
+  .pack-card .pack-count{font:500 11px "DM Mono",monospace;color:var(--ink-soft)}
+  .pack-card h3{margin:14px 0 6px;font-size:17px}
+  .pack-card p{font-size:12px;line-height:1.5;margin:0}
+  .pack-card .pack-author{margin-top:auto;padding-top:12px;font:400 10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+  .pack-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .pack-actions .btn{flex:1}
+  .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .setup-label{font:500 10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:7px}
+  .seg{display:flex;gap:5px;flex-wrap:wrap}
+  .seg .btn.active{background:var(--leaf-bg);box-shadow:0 0 0 2px var(--leaf);color:#335621}
+  .group-row{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 10px}
+  .chip{border-radius:999px;min-height:40px;font-size:12px;text-transform:capitalize}
+  .chip.active{background:var(--ink);color:var(--paper);box-shadow:none}
+  .check-row{display:flex;gap:9px;align-items:center;min-height:44px;font-size:13px;color:var(--ink-soft);cursor:pointer}
+  .check-row input{width:19px;height:19px;accent-color:var(--leaf)}
+  .mastery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:7px}
+  .mastery-tile{min-height:62px;border:0;border-radius:11px;background:#EEE9DE;color:var(--ink);cursor:pointer;padding:6px;font-family:"Zen Antique",serif;font-size:20px;position:relative;transition-property:transform,box-shadow;transition-duration:.12s}
+  .mastery-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .mastery-tile:active{transform:scale(.96)}
+  .mastery-tile::after{content:attr(data-next);position:absolute;right:4px;bottom:2px;font:700 8px "Zen Maru Gothic",sans-serif;opacity:.65}
+  .session-row{display:flex;gap:12px;align-items:center;padding:10px 0;font-size:12px}
+  .session-row+.session-row{border-top:1px solid var(--line)}
+  .session-row .score{margin-left:auto;font-weight:700}
+  .review,.results{max-width:720px;margin:28px auto}
+  .review[hidden],.dashboard[hidden],.results[hidden]{display:none}
+  .review-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);font-weight:700;margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .progress-track{height:7px;background:#E9E3D7;border-radius:999px;overflow:hidden;margin-bottom:16px}
+  .progress-fill{height:100%;width:0;background:var(--leaf);border-radius:inherit;transition-property:width;transition-duration:.2s}
+  .study-card{border-radius:26px;min-height:410px;padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+  .front-label{font:500 10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .front-prompt{font-size:clamp(30px,7vw,52px);font-weight:700;line-height:1.2;margin:18px 0;text-wrap:balance}
+  .audio-prompt{font-size:17px;color:var(--ink-soft);font-weight:700}
+  .play{width:62px;height:62px;border:0;border-radius:50%;background:var(--leaf-bg);color:#31541F;font-size:22px;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.1),0 3px 8px rgba(0,0,0,.06);transition-property:transform,background-color,color;transition-duration:.14s}
+  .play span{display:inline-block;margin-left:3px}
+  .play:active{transform:scale(.96)}
+  .play.playing{background:var(--leaf);color:#fff}
+  .play[hidden]{display:none}
+  .hint{display:none;max-width:500px;margin:8px auto 0;padding:10px 14px;border-radius:12px;background:var(--sun-bg);font-size:13px;color:#744B12}
+  .hint.show{display:block}
+  .answer{display:none;width:100%;margin-top:20px;padding-top:22px;border-top:1px dashed var(--line-strong)}
+  .answer.show{display:block}
+  .answer .kana{font:400 clamp(42px,9vw,68px)/1.2 "Zen Antique",serif}
+  .answer .romaji{color:var(--leaf);font-weight:700;margin-top:4px}
+  .answer .english{font-size:18px;margin-top:7px}
+  .answer .example{display:none;margin:15px auto 0;max-width:520px;border-radius:14px;background:var(--sky-bg);padding:12px;font-size:13px}
+  .answer .example.show{display:block}
+  .show-answer{margin-top:18px}
+  .reveal-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+  .rating{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .rating.show{display:grid}
+  .rate{min-height:58px;padding:10px}
+  .rate small{display:block;font-size:10px;font-weight:500;color:inherit;opacity:.75}
+  .missed{background:var(--red-bg);color:#91301B}
+  .got{background:var(--leaf-bg);color:#31541F}
+  .skip-row{text-align:center;margin:8px 0 0}
+  .skip{min-width:86px;background:transparent;box-shadow:none;color:var(--ink-soft);font-size:12px}
+  .result-card{border-radius:24px;padding:30px;text-align:center}
+  .result-score{font-size:42px;font-weight:700;font-variant-numeric:tabular-nums}
+  .result-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  dialog{width:min(760px,calc(100vw - 28px));max-height:calc(100vh - 32px);border:0;border-radius:24px;padding:0;background:var(--card);color:var(--ink);box-shadow:0 24px 80px rgba(25,29,21,.24)}
+  dialog::backdrop{background:rgba(36,41,31,.5);backdrop-filter:blur(3px)}
+  .dialog-inner{padding:24px}
+  .dialog-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}
+  .icon-btn{width:44px;padding:0;font-size:20px;flex:0 0 auto}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:block}
+  .field.full{grid-column:1/-1}
+  .field span{display:block;font-size:11px;font-weight:700;margin-bottom:5px;color:var(--ink-soft)}
+  input,textarea{width:100%;min-height:44px;border:1px solid var(--line-strong);border-radius:10px;background:#fff;color:var(--ink);padding:9px 11px}
+  textarea{min-height:72px;resize:vertical}
+  .card-rows{display:grid;gap:8px;margin:14px 0}
+  .card-row{display:grid;grid-template-columns:1fr 1fr 1.3fr 44px;gap:7px;align-items:center;padding:8px;border-radius:16px;background:#F2EDE2}
+  .card-row input{min-width:0}
+  .dialog-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:16px}
+  .toast{position:fixed;right:18px;bottom:18px;z-index:50;max-width:min(380px,calc(100vw - 36px));padding:12px 15px;border-radius:13px;background:var(--ink);color:var(--paper);box-shadow:var(--shadow);font-size:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition-property:opacity,transform;transition-duration:.18s}
+  .toast.show{opacity:1;transform:translateY(0)}
+  @media(max-width:820px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.packs{grid-template-columns:1fr 1fr}}
+  @media(max-width:620px){.wrap{padding-inline:14px}.packs,.setup-grid,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.pack-card{min-height:150px}.card-row{grid-template-columns:1fr 1fr 44px}.card-row input:nth-child(3){grid-column:1/3}.study-card{padding:24px 18px;min-height:370px}.rating{grid-template-columns:1fr}.hero{padding-top:46px}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="audio/flashcards.js"></script>
+<script src="packs/textbook-vocabulary-1.js"></script>
+<script src="flashcard-packs.js"></script>
 <script src="learning.js"></script>
 </head>
 <body>
 <main class="wrap">
-  <header>
-    <div class="eyebrow">Adaptive review · local-first</div>
-    <h1>フラッシュカード</h1>
-    <div class="subtitle">Missed words return sooner. Strong words wait longer.</div>
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Kosuke · local-first flashcards</div>
+      <h1><span>こすけ</span> フラッシュカード</h1>
+      <p>Build a pack from a lesson or screenshot, keep it on your device, and practice the words that need you most.</p>
+    </div>
+    <aside class="hero-note">
+      <strong id="hero-pack-count">0 packs</strong>
+      <span>Portable, remixable, and ready for AI tutors.</span>
+      <div class="mono">PACK → PRACTICE → REMEMBER</div>
+    </aside>
   </header>
 
   <div class="stats" id="stats"></div>
 
   <section class="dashboard" id="dashboard">
-    <div class="panel">
-      <div class="panel-head"><div><h2>Start a review</h2><p class="panel-sub">Due and weak cards are automatically prioritized.</p></div><button class="btn primary" id="start">Start review</button></div>
+    <section class="panel">
+      <div class="panel-head">
+        <div><div class="eyebrow">Your library</div><h2>Choose a flashcard pack</h2><p class="panel-sub">Starter packs live alongside packs you build or import.</p></div>
+        <div class="controls">
+          <button class="btn" id="import-pack">Import pack</button>
+          <button class="btn primary" id="open-builder">＋ New pack</button>
+          <input type="file" id="pack-file" accept=".json,.kosuke.json,application/json" hidden>
+        </div>
+      </div>
+      <div class="packs" id="packs"></div>
+      <div class="pack-actions">
+        <button class="btn" id="export-pack">Download selected pack</button>
+        <button class="btn danger" id="delete-pack" hidden>Delete selected pack</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><div class="eyebrow">Adaptive session</div><h2 id="review-title">Start a review</h2><p class="panel-sub">Due, unseen, and frequently missed cards come first.</p></div><button class="btn leaf" id="start">Start review →</button></div>
       <div class="setup-grid">
         <div><span class="setup-label">Session size</span><div class="seg" id="size-seg"><button class="btn active" data-size="10">10</button><button class="btn" data-size="20">20</button><button class="btn" data-size="all">All due</button></div></div>
-        <div><span class="setup-label">Prompt direction</span><div class="seg" id="mode-seg"><button class="btn active" data-mode="mixed">Mixed</button><button class="btn" data-mode="en-ja">English → Japanese</button><button class="btn" data-mode="audio-en">Audio → English</button></div></div>
+        <div><span class="setup-label">Prompt direction</span><div class="seg" id="mode-seg"><button class="btn active" data-mode="mixed">Mixed</button><button class="btn" data-mode="en-ja">English → Japanese</button><button class="btn" data-mode="ja-en">Japanese → English</button><button class="btn" data-mode="audio-en">Audio → English</button></div></div>
       </div>
-      <div class="groups" id="groups"></div>
-      <label style="display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-soft)"><input type="checkbox" id="due-only" checked> Due and new cards only</label>
-    </div>
+      <div class="group-row" id="groups"></div>
+      <label class="check-row"><input type="checkbox" id="due-only" checked> Due and new cards only</label>
+    </section>
 
-    <div class="panel">
-      <div class="panel-head"><div><h2>Mastery map</h2><p class="panel-sub">Red means weak. Green means stable. Click any tile to review it.</p></div><span id="map-count" class="panel-sub"></span></div>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Mastery map</h2><p class="panel-sub">Warm colors need attention. Green cards are becoming stable.</p></div><span id="map-count" class="panel-sub"></span></div>
       <div class="mastery-grid" id="mastery-grid"></div>
-    </div>
+    </section>
 
-    <div class="panel">
-      <div class="panel-head"><h2>Recent sessions</h2><div class="controls"><button class="btn" id="export">Export progress</button><button class="btn danger" id="reset-progress">Reset</button></div></div>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Recent sessions</h2><p class="panel-sub">Scheduling and history stay in this browser.</p></div><div class="controls"><button class="btn" id="export-progress">Export progress</button><button class="btn danger" id="reset-progress">Reset progress</button></div></div>
       <div id="sessions"></div>
-    </div>
+    </section>
   </section>
 
   <section class="review" id="review" hidden>
@@ -108,116 +209,194 @@
     <article class="study-card">
       <span class="front-label" id="front-label"></span>
       <div class="front-prompt" id="front-prompt"></div>
-      <button class="play" id="play" type="button" aria-label="Play Japanese audio">▶</button>
-      <div class="answer" id="answer"><div class="kana" id="answer-kana"></div><div class="romaji" id="answer-romaji"></div><div class="english" id="answer-english"></div></div>
-      <button class="btn primary show-answer" id="show-answer">Show answer</button>
+      <button class="play" id="play" type="button" aria-label="Play audio"><span aria-hidden="true">▶</span></button>
+      <div class="hint" id="hint"></div>
+      <div class="reveal-actions" id="reveal-actions">
+        <button class="btn" id="show-hint" hidden>Show a hint</button>
+        <button class="btn primary" id="show-answer">Reveal answer</button>
+      </div>
+      <div class="answer" id="answer">
+        <div class="kana" id="answer-kana"></div>
+        <div class="romaji" id="answer-romaji"></div>
+        <div class="english" id="answer-english"></div>
+        <div class="example" id="answer-example"></div>
+      </div>
     </article>
     <div class="rating" id="rating">
-      <button class="rate again" data-rating="again">Again<small>about 1 minute</small></button>
-      <button class="rate hard" data-rating="hard">Hard<small>short interval</small></button>
-      <button class="rate good" data-rating="good">Good<small>normal interval</small></button>
-      <button class="rate easy" data-rating="easy">Easy<small>long interval</small></button>
+      <button class="rate missed" data-rating="again">❌ Missed<small>Bring it back soon</small></button>
+      <button class="rate got" data-rating="good">✅ Got it<small>Space it farther out</small></button>
     </div>
-    <p style="text-align:center"><button class="btn" id="end-review">End review</button></p>
+    <p class="skip-row"><button class="btn skip" id="skip">Skip</button> <button class="btn skip" id="end-review">End session</button></p>
   </section>
 
-  <section class="results panel" id="results" hidden>
-    <h2>Review complete</h2>
-    <div class="result-score" id="result-score"></div>
-    <p class="lead" id="result-copy"></p>
-    <div class="result-actions"><button class="btn primary" id="review-again">Review more</button><button class="btn" id="back-dashboard">Dashboard</button></div>
+  <section class="results" id="results" hidden>
+    <div class="result-card">
+      <div class="eyebrow">Session complete</div>
+      <h2 id="result-heading">Nice work</h2>
+      <div class="result-score" id="result-score"></div>
+      <p id="result-copy"></p>
+      <div class="result-actions"><button class="btn primary" id="review-missed" hidden>Review missed cards</button><button class="btn" id="review-again">Review more</button><button class="btn" id="back-dashboard">Dashboard</button></div>
+    </div>
   </section>
 </main>
 
+<dialog id="builder">
+  <form class="dialog-inner" id="builder-form">
+    <div class="dialog-head">
+      <div><div class="eyebrow">Pack builder</div><h2>Make a reusable pack</h2><p class="panel-sub">Add kana, romaji, and one plain English meaning. You can always add audio later.</p></div>
+      <button class="icon-btn" id="close-builder" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="form-grid">
+      <label class="field"><span>Pack title</span><input name="title" required maxlength="120" placeholder="Lesson one essentials"></label>
+      <label class="field"><span>Author</span><input name="author" maxlength="100" value="You"></label>
+      <label class="field full"><span>Description</span><textarea name="description" maxlength="400" placeholder="What this pack helps you practice"></textarea></label>
+    </div>
+    <div class="panel-head" style="margin-top:18px;margin-bottom:8px"><div><h3>Cards</h3><p class="panel-sub">The answer stays hidden during review.</p></div><button class="btn small" id="add-card" type="button">＋ Add card</button></div>
+    <div class="card-rows" id="card-rows"></div>
+    <div class="dialog-actions"><button class="btn" id="cancel-builder" type="button">Cancel</button><button class="btn leaf" type="submit">Save pack</button></div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
 (function(){
-  var allWords=[],hasAudio=false,activeGroup='all',sessionSize=10,mode='mixed',queue=[],index=0,completed=0,ratings={again:0,hard:0,good:0,easy:0},currentAudio=null,currentDirection='en-ja';
-  var dashboard=document.getElementById('dashboard'),review=document.getElementById('review'),results=document.getElementById('results');
-  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-  function adapter(word){return Object.assign({},word,{id:'vocab:'+word.id,subject:'vocab',type:'flashcard'})}
-  function visible(){return activeGroup==='all'?allWords:allWords.filter(function(w){return w.group===activeGroup})}
-  function summary(){return JL_PROGRESS.summary(visible().map(function(w){return w.id}))}
-  function statColor(id){
-    var s=JL_PROGRESS.strength(id);
-    if(!JL_PROGRESS.card(id).reviews)return '#EEE9DE';
-    var hue=s<50?8+(38*s/50):46+(94*(s-50)/50);
-    return 'hsl('+Math.round(hue)+',56%,'+(68-Math.min(18,s*.18))+'%)';
+  "use strict";
+  var activePackId="",activeGroup="all",sessionSize=10,mode="mixed",queue=[],index=0,completed=0,skipped=0,ratings={again:0,good:0},missed=[],currentAudio=null,currentDirection="en-ja",sessionStarted=0;
+  var dashboard=document.getElementById("dashboard"),review=document.getElementById("review"),results=document.getElementById("results"),builder=document.getElementById("builder");
+
+  function esc(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+  function toast(message){var el=document.getElementById("toast");el.textContent=message;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){el.classList.remove("show")},2600)}
+  function pack(){return KOSUKE_PACKS.get(activePackId)}
+  function words(){
+    var selected=pack();if(!selected)return[];
+    return selected.cards.map(function(card){return Object.assign({},card,{id:"kosuke:"+selected.id+":"+card.id,packId:selected.id,group:(card.tags&&card.tags[0])||"general",en:card.english,audioUrl:card.audio&&card.audio.url})});
+  }
+  function visible(){var all=words();return activeGroup==="all"?all:all.filter(function(word){return word.tags&&word.tags.indexOf(activeGroup)!==-1})}
+  function summary(){return JL_PROGRESS.summary(visible().map(function(word){return word.id}))}
+  function isCustom(id){return KOSUKE_PACKS.all().some(function(item){return item.id===id})&&!window.KOSUKE_STARTER_PACKS.some(function(item){return item.id===id})&&id!=="japanese-lessons-core"}
+  function color(id){var strength=JL_PROGRESS.strength(id);if(!JL_PROGRESS.card(id).reviews)return"#EEE9DE";var hue=strength<50?8+(38*strength/50):46+(94*(strength-50)/50);return"hsl("+Math.round(hue)+",55%,"+(70-Math.min(19,strength*.19))+"%)"}
+
+  function allPacks(){
+    var list=[KOSUKE_PACKS.fromLegacy(window.JL_FLASHCARDS||{words:[]})].concat(KOSUKE_PACKS.all());
+    var seen={};return list.filter(function(item){if(seen[item.id])return false;seen[item.id]=true;return true});
+  }
+  function ensurePack(){var list=allPacks();if(!list.some(function(item){return item.id===activePackId}))activePackId=(list[1]||list[0]||{}).id||""}
+  function renderPacks(){
+    var list=allPacks();document.getElementById("hero-pack-count").textContent=list.length+" pack"+(list.length===1?"":"s");
+    document.getElementById("packs").innerHTML=list.map(function(item,i){
+      var icon=i===0?"🌿":item.source.type==="textbook-image"?"📖":"✨";
+      return'<button class="pack-card'+(item.id===activePackId?" active":"")+'" data-pack="'+esc(item.id)+'"><span class="pack-top"><span class="pack-icon" aria-hidden="true">'+icon+'</span><span class="pack-count">'+item.cards.length+' cards</span></span><h3>'+esc(item.title)+'</h3><p>'+esc(item.description||"A personal flashcard pack.")+'</p><span class="pack-author">by '+esc(item.author||"Kosuke")+'</span></button>';
+    }).join("");
+    document.querySelectorAll("[data-pack]").forEach(function(button){button.onclick=function(){activePackId=button.dataset.pack;activeGroup="all";renderAll()}});
+    document.getElementById("delete-pack").hidden=!isCustom(activePackId);
   }
   function renderStats(){
     var s=summary();
-    document.getElementById('stats').innerHTML=
-      '<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div>'+
-      '<div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>words studied</span></div>'+
-      '<div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div>'+
-      '<div class="stat"><strong>'+s.accuracy+'%</strong><span>review accuracy</span></div>'+
-      '<div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div>'+
-      '<div class="stat"><strong>Lv. '+s.level+'</strong><span>'+s.xp+' XP</span><div class="level-track"><div class="level-fill" style="width:'+s.levelProgress+'%"></div></div></div>';
+    document.getElementById("stats").innerHTML='<div class="stat"><strong>'+s.due+'</strong><span>due or new</span></div><div class="stat"><strong>'+s.studied+' / '+s.total+'</strong><span>cards studied</span></div><div class="stat"><strong>'+s.mastered+'</strong><span>mastered</span></div><div class="stat"><strong>'+s.accuracy+'%</strong><span>accuracy</span></div><div class="stat"><strong>'+s.streak+'</strong><span>day streak</span></div>';
   }
   function renderGroups(){
-    var groups=['all'];allWords.forEach(function(w){if(groups.indexOf(w.group)===-1)groups.push(w.group)});
-    document.getElementById('groups').innerHTML=groups.map(function(g){return '<button class="chip'+(g===activeGroup?' active':'')+'" data-group="'+esc(g)+'">'+esc(g)+'</button>'}).join('');
-    document.querySelectorAll('[data-group]').forEach(function(btn){btn.onclick=function(){activeGroup=btn.dataset.group;renderAll()}});
+    var tags=["all"];words().forEach(function(word){(word.tags||[]).forEach(function(tag){if(tags.indexOf(tag)===-1)tags.push(tag)})});
+    document.getElementById("groups").innerHTML=tags.map(function(tag){return'<button class="chip'+(tag===activeGroup?" active":"")+'" data-group="'+esc(tag)+'">'+esc(tag)+'</button>'}).join("");
+    document.querySelectorAll("[data-group]").forEach(function(button){button.onclick=function(){activeGroup=button.dataset.group;renderAll()}});
   }
   function renderMap(){
-    var words=visible();document.getElementById('map-count').textContent=words.length+' cards';
-    document.getElementById('mastery-grid').innerHTML=words.map(function(w){return '<button class="mastery-tile" data-card="'+esc(w.id)+'" data-next="'+JL_PROGRESS.nextLabel(w.id)+'" title="'+esc(w.en)+' · '+JL_PROGRESS.strength(w.id)+'%" style="background:'+statColor(w.id)+'">'+esc(w.kana)+'</button>'}).join('');
-    document.querySelectorAll('[data-card]').forEach(function(btn){btn.onclick=function(){start([allWords.find(function(w){return w.id===btn.dataset.card})])}});
+    var list=visible();document.getElementById("map-count").textContent=list.length+" cards";
+    document.getElementById("mastery-grid").innerHTML=list.map(function(word){return'<button class="mastery-tile" data-card="'+esc(word.id)+'" data-next="'+JL_PROGRESS.nextLabel(word.id)+'" aria-label="Review this card" style="background:'+color(word.id)+'">'+esc(word.kana)+'</button>'}).join("");
+    document.querySelectorAll("[data-card]").forEach(function(button){button.onclick=function(){start([words().find(function(word){return word.id===button.dataset.card})])}});
   }
   function renderSessions(){
-    var list=JL_PROGRESS.sessions().filter(function(s){return s.kind==='vocab'}).slice(-8).reverse();
-    document.getElementById('sessions').innerHTML=list.length?list.map(function(s){return '<div class="session-row"><span>'+new Date(s.ts).toLocaleDateString()+'</span><span>'+s.total+' cards</span><span class="score">'+s.good+' good · '+s.again+' again</span></div>'}).join(''):'<p class="lead">No reviews yet. Your first session starts the mastery map.</p>';
+    var list=JL_PROGRESS.sessions().filter(function(item){return item.kind==="kosuke-flashcards"}).slice(-7).reverse();
+    document.getElementById("sessions").innerHTML=list.length?list.map(function(item){return'<div class="session-row"><span>'+new Date(item.ts).toLocaleDateString()+'</span><span>'+item.total+' answered</span><span class="score">'+item.good+' got it · '+item.again+' missed</span></div>'}).join(""):'<p class="lead">No Kosuke reviews yet. Your first session will start the mastery map.</p>';
   }
-  function renderAll(){renderStats();renderGroups();renderMap();renderSessions()}
+  function renderAll(){
+    ensurePack();renderPacks();renderStats();renderGroups();renderMap();renderSessions();
+    var selected=pack();document.getElementById("review-title").textContent=selected?"Review “"+selected.title+"”":"Start a review";
+  }
   function chooseQueue(){
-    var pool=visible();if(document.getElementById('due-only').checked)pool=JL_PROGRESS.due(pool);else pool=JL_PROGRESS.order(pool);
-    var count=sessionSize==='all'?pool.length:Math.min(+sessionSize,pool.length);
-    return pool.slice(0,count);
+    var pool=visible();if(document.getElementById("due-only").checked)pool=JL_PROGRESS.due(pool);else pool=JL_PROGRESS.order(pool);
+    var count=sessionSize==="all"?pool.length:Math.min(Number(sessionSize),pool.length);return pool.slice(0,count);
   }
   function start(custom){
-    queue=custom||chooseQueue();if(!queue.length){alert('Nothing is due in this group yet. Turn off “Due and new cards only” to study ahead.');return}
-    index=0;completed=0;ratings={again:0,hard:0,good:0,easy:0};dashboard.hidden=true;results.hidden=true;review.hidden=false;showCard();
+    queue=(custom||chooseQueue()).filter(Boolean);if(!queue.length){toast("Nothing is due here. Turn off “Due and new cards only” to study ahead.");return}
+    index=0;completed=0;skipped=0;ratings={again:0,good:0};missed=[];sessionStarted=Date.now();dashboard.hidden=true;results.hidden=true;review.hidden=false;showCard();
+  }
+  function directionFor(card){
+    if(mode==="audio-en"&&!card.audioUrl)return"en-ja";
+    if(mode!=="mixed")return mode;
+    if(card.audioUrl&&Math.random()<.22)return"audio-en";
+    return Math.random()<.68?"en-ja":"ja-en";
   }
   function showCard(){
-    var w=queue[index];if(!w){finish();return}
-    currentDirection=mode==='mixed'?(Math.random()<.72?'en-ja':'audio-en'):mode;
-    document.getElementById('review-progress').textContent=(completed+1)+' / '+queue.length;
-    document.getElementById('progress-fill').style.width=(completed/Math.max(1,queue.length)*100)+'%';
-    document.getElementById('review-due').textContent='next: '+JL_PROGRESS.nextLabel(w.id);
-    document.getElementById('front-label').textContent=currentDirection==='audio-en'?'Audio → English':'English → Japanese';
-    document.getElementById('front-prompt').innerHTML=currentDirection==='audio-en'?'<span class="audio-only">Listen and recall the English meaning</span>':esc(w.en);
-    document.getElementById('answer-kana').textContent=w.kana;document.getElementById('answer-romaji').textContent=w.romaji;document.getElementById('answer-english').textContent=w.en;
-    document.getElementById('answer').classList.remove('show');document.getElementById('rating').classList.remove('show');document.getElementById('show-answer').hidden=false;
-    var play=document.getElementById('play');play.dataset.src=w.audio||'';play.disabled=!hasAudio;play.style.display=currentDirection==='audio-en'?'block':'block';
-    if(currentDirection==='audio-en')setTimeout(function(){play.click()},100);
+    var word=queue[index];if(!word){finish();return}
+    if(currentAudio){currentAudio.pause();currentAudio=null}
+    currentDirection=directionFor(word);
+    document.getElementById("review-progress").textContent=(index+1)+" / "+queue.length;
+    document.getElementById("progress-fill").style.width=(index/Math.max(1,queue.length)*100)+"%";
+    document.getElementById("review-due").textContent="next: "+JL_PROGRESS.nextLabel(word.id);
+    var label=currentDirection==="audio-en"?"Audio → English":currentDirection==="ja-en"?"Japanese → English":"English → Japanese";
+    document.getElementById("front-label").textContent=label;
+    document.getElementById("front-prompt").innerHTML=currentDirection==="audio-en"?'<span class="audio-prompt">Listen, then recall the English meaning.</span>':esc(currentDirection==="ja-en"?word.kana:word.english);
+    document.getElementById("answer-kana").textContent=word.kana;document.getElementById("answer-romaji").textContent=word.romaji;document.getElementById("answer-english").textContent=word.english;
+    var example=document.getElementById("answer-example");example.classList.remove("show");example.textContent="";
+    if(word.example&&word.example.kana){example.textContent=word.example.kana+" · "+word.example.romaji+" · "+word.example.english;example.classList.add("show")}
+    document.getElementById("answer").classList.remove("show");document.getElementById("rating").classList.remove("show");document.getElementById("reveal-actions").hidden=false;
+    var hint=document.getElementById("hint");hint.textContent=word.hint||"";hint.classList.remove("show");document.getElementById("show-hint").hidden=!word.hint;
+    var play=document.getElementById("play");play.dataset.src=word.audioUrl||"";play.hidden=!word.audioUrl;
+    if(currentDirection==="audio-en"&&word.audioUrl)setTimeout(function(){play.click()},120);
   }
-  function reveal(){document.getElementById('answer').classList.add('show');document.getElementById('rating').classList.add('show');document.getElementById('show-answer').hidden=true}
+  function reveal(){document.getElementById("answer").classList.add("show");document.getElementById("rating").classList.add("show");document.getElementById("reveal-actions").hidden=true}
   function rate(rating){
-    var w=queue[index];JL_PROGRESS.record(w.id,rating,{subject:'vocab',type:'flashcard'});ratings[rating]++;completed++;
-    if(rating==='again'&&queue.length<60)queue.splice(Math.min(index+3,queue.length),0,w);
+    var word=queue[index];JL_PROGRESS.record(word.id,rating,{subject:"vocab",type:"kosuke-flashcard"});ratings[rating]++;completed++;
+    if(rating==="again"&&!missed.some(function(item){return item.id===word.id}))missed.push(word);
     index++;showCard();
   }
+  function skip(){skipped++;index++;showCard()}
   function finish(){
-    if(!completed){review.hidden=true;dashboard.hidden=false;renderAll();return}
+    if(!completed&&!skipped){review.hidden=true;dashboard.hidden=false;renderAll();return}
     review.hidden=true;results.hidden=false;
-    JL_PROGRESS.addSession({kind:'vocab',total:completed,good:ratings.good+ratings.easy,again:ratings.again,ratings:ratings});
-    document.getElementById('result-score').textContent=(ratings.good+ratings.easy)+' solid · '+ratings.again+' again';
-    document.getElementById('result-copy').textContent=ratings.again?'Missed cards have been moved forward and will return sooner.':'Clean review. These cards are now spaced farther out.';
-    renderAll();
+    JL_PROGRESS.addSession({kind:"kosuke-flashcards",packId:activePackId,total:completed,good:ratings.good,again:ratings.again,skipped:skipped,durationMs:Date.now()-sessionStarted});
+    document.getElementById("result-score").textContent=ratings.good+" got it · "+ratings.again+" missed";
+    document.getElementById("result-copy").textContent=missed.length?"Your missed cards are ready for one focused recovery round.":"Clean review. These cards will return after a longer interval.";
+    document.getElementById("review-missed").hidden=!missed.length;renderAll();
   }
-  document.getElementById('start').onclick=function(){start()};
-  document.getElementById('show-answer').onclick=reveal;
-  document.querySelectorAll('[data-rating]').forEach(function(btn){btn.onclick=function(){rate(btn.dataset.rating)}});
-  document.getElementById('end-review').onclick=finish;document.getElementById('back-dashboard').onclick=function(){results.hidden=true;dashboard.hidden=false;renderAll()};
-  document.getElementById('review-again').onclick=function(){results.hidden=true;dashboard.hidden=false;start()};
-  document.getElementById('size-seg').onclick=function(e){var b=e.target.closest('[data-size]');if(!b)return;sessionSize=b.dataset.size;document.querySelectorAll('[data-size]').forEach(function(x){x.classList.toggle('active',x===b)})};
-  document.getElementById('mode-seg').onclick=function(e){var b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(function(x){x.classList.toggle('active',x===b)})};
-  document.getElementById('play').onclick=function(){
-    var btn=this,src=btn.dataset.src;if(!src)return;if(currentAudio)currentAudio.pause();currentAudio=new Audio(src);btn.classList.add('playing');currentAudio.play().catch(function(){btn.classList.remove('playing')});currentAudio.onended=function(){btn.classList.remove('playing')};
+  function addCardRow(values){
+    values=values||{};var row=document.createElement("div");row.className="card-row";
+    row.innerHTML='<input name="kana" required maxlength="160" placeholder="かな" aria-label="Kana" value="'+esc(values.kana||"")+'"><input name="romaji" required maxlength="200" placeholder="romaji" aria-label="Romaji" value="'+esc(values.romaji||"")+'"><input name="english" required maxlength="300" placeholder="plain English" aria-label="English meaning" value="'+esc(values.english||"")+'"><button class="icon-btn remove-row" type="button" aria-label="Remove card">−</button>';
+    row.querySelector(".remove-row").onclick=function(){if(document.querySelectorAll(".card-row").length>1)row.remove();else toast("A pack needs at least one card.")};
+    document.getElementById("card-rows").appendChild(row);
+  }
+  function openBuilder(){document.getElementById("builder-form").reset();document.querySelector('[name="author"]').value="You";document.getElementById("card-rows").innerHTML="";addCardRow();addCardRow();addCardRow();builder.showModal()}
+  function closeBuilder(){builder.close()}
+
+  document.getElementById("start").onclick=function(){start()};
+  document.getElementById("show-answer").onclick=reveal;
+  document.getElementById("show-hint").onclick=function(){document.getElementById("hint").classList.add("show");this.hidden=true};
+  document.querySelectorAll("[data-rating]").forEach(function(button){button.onclick=function(){rate(button.dataset.rating)}});
+  document.getElementById("skip").onclick=skip;document.getElementById("end-review").onclick=finish;
+  document.getElementById("back-dashboard").onclick=function(){results.hidden=true;dashboard.hidden=false;renderAll()};
+  document.getElementById("review-again").onclick=function(){results.hidden=true;dashboard.hidden=false;start()};
+  document.getElementById("review-missed").onclick=function(){var recovery=missed.slice();results.hidden=true;start(recovery)};
+  document.getElementById("size-seg").onclick=function(event){var button=event.target.closest("[data-size]");if(!button)return;sessionSize=button.dataset.size;document.querySelectorAll("[data-size]").forEach(function(item){item.classList.toggle("active",item===button)})};
+  document.getElementById("mode-seg").onclick=function(event){var button=event.target.closest("[data-mode]");if(!button)return;mode=button.dataset.mode;document.querySelectorAll("[data-mode]").forEach(function(item){item.classList.toggle("active",item===button)})};
+  document.getElementById("play").onclick=function(){var button=this,src=button.dataset.src;if(!src)return;if(currentAudio)currentAudio.pause();currentAudio=new Audio(src);button.classList.add("playing");currentAudio.play().catch(function(){button.classList.remove("playing");toast("Audio could not be played.")});currentAudio.onended=function(){button.classList.remove("playing")}};
+  document.getElementById("export-progress").onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:"application/json"}),link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="kosuke-progress.json";link.click();URL.revokeObjectURL(link.href)};
+  document.getElementById("reset-progress").onclick=function(){if(confirm("Reset all learning progress for every subject?")){JL_PROGRESS.reset();renderAll();toast("Progress reset.")}};
+  document.getElementById("export-pack").onclick=function(){var selected=pack();if(selected){KOSUKE_PACKS.download(selected);toast("Pack downloaded.")}};
+  document.getElementById("delete-pack").onclick=function(){var selected=pack();if(selected&&confirm("Delete “"+selected.title+"” from this device?")){KOSUKE_PACKS.remove(selected.id);activePackId="";renderAll();toast("Pack deleted.")}};
+  document.getElementById("import-pack").onclick=function(){document.getElementById("pack-file").click()};
+  document.getElementById("pack-file").onchange=function(){var input=this;if(!input.files[0])return;KOSUKE_PACKS.importFile(input.files[0]).then(function(imported){activePackId=imported.id;activeGroup="all";renderAll();toast("Imported “"+imported.title+"”.")}).catch(function(error){toast(error.message)}).finally(function(){input.value=""})};
+  document.getElementById("open-builder").onclick=openBuilder;document.getElementById("close-builder").onclick=closeBuilder;document.getElementById("cancel-builder").onclick=closeBuilder;document.getElementById("add-card").onclick=function(){addCardRow();document.querySelector(".card-row:last-child input").focus()};
+  builder.addEventListener("click",function(event){if(event.target===builder)closeBuilder()});
+  document.getElementById("builder-form").onsubmit=function(event){
+    event.preventDefault();var form=new FormData(event.currentTarget),rows=Array.from(document.querySelectorAll(".card-row"));
+    try{
+      var created=KOSUKE_PACKS.upsert({title:form.get("title"),author:form.get("author"),description:form.get("description"),source:{type:"manual",title:"Built in Kosuke"},cards:rows.map(function(row){return{kana:row.querySelector('[name="kana"]').value,romaji:row.querySelector('[name="romaji"]').value,english:row.querySelector('[name="english"]').value}})});
+      activePackId=created.id;activeGroup="all";closeBuilder();renderAll();toast("Saved “"+created.title+"”.");
+    }catch(error){toast(error.message)}
   };
-  document.getElementById('export').onclick=function(){var blob=new Blob([JL_PROGRESS.exportData()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='japanese-lessons-progress.json';a.click();URL.revokeObjectURL(a.href)};
-  document.getElementById('reset-progress').onclick=function(){if(confirm('Reset all learning progress for every subject?')){JL_PROGRESS.reset();renderAll()}};
-  function use(manifest){allWords=((manifest&&manifest.words)||[]).map(adapter);hasAudio=!!(manifest&&manifest.hasAudio);renderAll()}
-  if(window.JL_FLASHCARDS)use(window.JL_FLASHCARDS);else fetch('audio/flashcards.json').then(function(r){return r.json()}).then(use);
+
+  renderAll();
 })();
 </script>
 <script src="nav.js?v=emoji-menu-2" defer></script>
